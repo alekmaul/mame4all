@@ -1,0 +1,248 @@
+
+MAME4ALL 2.7 (30/04/2012)
+-------------------------
+- Añadidas algunas optimizaciones en ensamblador.
+- WIZ: A veces no se activaba el MMU-HACK. Solucionado con wARM v2.
+- CAANOO: Solucionados los cuelgues al salir de un juego para seleccionar otro.
+- CAANOO: Añadido wARM v2. Gracias a Notaz.
+
+MAME4ALL 2.6 (09/04/2011)
+-------------------------
+- Añadido soporte para TV-Out en la WIZ.
+- Añadido port para CAANOO (basado en el port de Simon).
+
+MAME4ALL 2.5 (09/03/2010)
+-------------------------
+- Añadido control de volumen al selector de juegos. Además el volumen por defecto se ha disminuido.
+- Corregido fallo en juegos que contienen múltiples cores FM. Evita cuelgues al salir de estos juegos.
+- Nueva opción para habilitar el coreo DRZ80 solo para CPUs de audio. Mejora la compatibilidad de DRZ80.
+  Esta opción se habilita automaticamente para ganar velocidad en muchos juegos (ejemplo: varios de Capcom, Sega y Midway).
+- Muchas otras correcciones tomadas del código de Slaanesh (ports de MAME4ALL para GP32 y Dingoo).
+- Añadidos nuevos skins de los ports para GP32 y Dingoo (creados por Antiriad y Slaanesh).
+- Añadido script para usar 64 MB de memoria virtual adicional (fichero de intercambio en la tarjeta SD).
+  Reducirá la vida de la tarjeta SD. ¡Úsalo bajo tu propia responsabilidad!.
+- GP2X: La memoria alta se usa preferentemente para evitar cuelgues debido a fallos en el manejo de memoria.
+  No usado para el ejecutable de Neo·Geo (para poder ejecutar los juegos más pesados).
+- WIZ: Añadido soporte para timer hardware. No habilitado (parece relentizar un poco el emulador).
+- Limpieza del código fuente para evitar definiciones específicas de los ports en el código común. Mejorados los makefile.
+- Integración preliminar del core ARMNEC (creado por Oopsware).
+  Algunos juegos arrancan pero todavía no es nada jugable. Deshabilitado por ahora.
+
+MAME4ALL 2.4 (05/08/2009)
+-------------------------
+Mejoras en el port para GP2X WIZ:
+- Escalado completo de pantalla (Rampage, Popeye, Super Sprint, etc).
+  El anterior escalado horizontal con filtrado lineal también se usa internamente cuando es necesario.
+- Funcionan más juegos grandes de Neo·Geo. Ejemplos: Art of Fighting 3, Fatal Fury y Pulstar.
+  Aún así todavía hay juegos que funcionan en la GP2X y no en la WIZ debido a falta de memoria.
+  (blazstar, kof96, mslug2, ninjamas, ragnagrd, rbff1 and shocktro)
+- La memoria alta se usa preferentemente. Si se llena la memoria alta, se pasa a usar la memoria
+  de Linux. Extrañamente el emulador funciona más rápido de esta manera, y también desaparecen
+  los bloqueos en ciertos juegos.
+- No más bloqueos al salir de los juegos al menú de selección (ejemplos: Out Run, Shinobi, etc).
+
+MAME4ALL 2.3 (11/07/2009)
+-------------------------
+Cambios por Franxis:
+- WIZ: Añadida opción de VSync. Gracias a Exophase.
+- WIZ: Se utiliza modo de video de 120 Hz para resolver los problemas de temporización del firmware 1.1.0 y para mejorar
+  el rendimiento cuando se activa la opción de VSync. Además la línea diagonal de la pantalla es menos visible.
+  Gracias a Exophase y Notaz por la librería pollux_set.
+- WIZ: Se reemplaza MMUHack por la librería wARM. Gracias a Notaz.
+- WIZ: Añadida la opción de RAM tweaks para ganar más rendimiento. Gracias a Notaz por la librería pollux_set.
+- WIZ: La opción para corregir completamente la línea diagonal de la pantalla ahora esta accesible en el menú "Video Aspect".
+- WIZ: Más RAM disponible ya que los buffers de video se colocan en el área del kernel de la memoria alta (0x2A00000).
+- Mejoras en los controles: Defender, Stargate, Vindicators, Battle Zone, Sarge, Assault, TNK III, Ikari Warriors,
+  Victory Road, Guerrilla War, Bermuda Triangle, Heavy Barrel, Midnight Resistance, Robotron, Inferno, Splat!,
+  Forgotten Worlds, Gondomania, Mad Planets, Top Gunner, Tron, Kozmik Kroozr, Discs of Tron, Crater Raider,
+  Zwackery, Search and Rescue, Ikari III, Time Soldiers, Battle Field, Aztarac, Black Widow, Rescue Rider,
+  Crazy Climber 2, Bandido, Sheriff, Smash T.V., Total Carnage, Wild Western, Front Line, The Tin Star, Mars,
+  Rescue, Minefield, Lost Tomb, Space Dungeon, The Return of Ishtar, Crazy Climber, Cloak & Dagger, Fire Trap,
+  Krull, Screw Loose, Karate Champ.
+- Corregidos los cuelgues en los juegos de Midway que utilizan la CPU TMS34010 (causados por accesos a memoria no alineados).
+  Además las frecuencias de las CPU se han reducido para ganar velocidad.
+- Añadido acceso al profiler (L+MENU) y al contador de FPS (R+SELECT).
+
+Cambios por Slaanesh:
+- Nuevos romsets añadidos: Momoko 120% (momoko), Fire Truck (firetrk), Fairyland Story (flstory), Fairyland Story (Japan) (flstoryj),
+  Kuri Kinton (World) (kurikint), Kuri Kinton (prototype) (kurikina), Play Girls (plgirls), Play Girls 2 (plgirls2),
+  Cuby Bop (cubybop), Tube-It (tubeit), Raimais (Japan) (raimais).
+- Mejoras en el sonido de los juegos Taito L-System. Añade sonido en algunos juegos en los que antes era inexistente (ejemplo: Fighting Hawk).
+- Mejoras en el sonido de X-Men. Añadido soporte para la CPU de sonido K05439.
+
+MAME4ALL 2.2 (13/06/2009)
+-------------------------
+Cambios por Franxis:
+- Nuevo sistema de temporizadores basado en enteros en lugar de reales. ¡Proporciona más rendimiento!
+  (entre un 10% y un 25% dependiendo del juego). He estado trabajando en él intermitentemente en él durante los últimos
+  meses y por fin funciona correctamente. Por favor avisad si algo ha dejado de funcionar.
+- Eliminado el hack de sonido de los juegos de M72. Ha dejado de ser necesario ya que funcionan perfectamente con el nuevo
+  sistema de temporizadores.
+- Optimizaciones en los los cores de sonido (mezclado y recorte de los samples).
+- Los juegos de Neo·Geo solo se compilan en el ejecutable 'neomame'.
+- Añadidos algunos trucos más para reducir el tamaño de los ejecutables.
+- Corregido el ícono para que se mueste correctamente en los últimos firmwares de GP2X y WIZ.
+- WIZ: Añadida opción para usar sonido de 11 y 15 KHz. El Linux de la WIZ todavía no soporta tales frecuencias.
+  Realmente se convierten a 22 KHz durante la reproducción de sonido. En cualquier caso se gana más rendimiento.
+
+Cambios por Slaanesh:
+- Añadidos nuevos romsets de MAME 0.37b16:
+  Knuckle Joe (set 1) (kncljoe)
+  Knuckle Joe (set 2) (kncljoea)
+- Actualizado el driver de Taito F2. Se añade el escalado de sprites a juegos como Dead Connection.
+- Mejorado el sonido de Rygar. Aunque todavía no es perfecto.
+- Actualizado el driver de Blockout. Aunque todavía se bloquea en la fase de bonus.
+
+MAME4ALL 2.1 (31/05/2009)
+-------------------------
+- Mejoras en el port para la GP2X WIZ:
+  Añadido el módulo kernel MMU Hack de Notaz. Proporciona más rendimiento.
+  Añadidas más frecuencias de CPU seleccionables en el frontend.
+  Se puede utilizar el botón MENU como disparo en el modo de video rotado.
+  Opción para dibujar la pantalla rotada para solucionar la linea diagonal pero con impacto en el rendimiento.
+- Algunas optimizaciones y fallos corregidos en los temporizadores.
+- Menos frame-skip (cambiado el threshold para considerar velocidad real en el código de auto-frameskip, de 99% a 92%).
+- Slaanesh ha añadido el Discrete Sound System. Por ahora solo se usa en el Canyon Bomber, que por fin tiene sonido (aunque es lento).
+
+MAME4ALL 2.0 (16/05/2009)
+-------------------------
+- Nuevo port para la GP2X WIZ:
+  + Más rápido que el de GP2X.
+  + Contiene algunas características nuevas, como el escalado horizontal con interpolación de color en el modo de 16 bit.
+  Gracias a EvilDragon por enviarme la unidad de desarrollo de GPH.
+  Gracias a Puck2099 por toda la información de la WIZ así como por su librería Pico.
+  Gracias a Orkie por toda la ayuda y por su librería Castor.
+  Gracias a Exophase por su librería MMU Hack.
+  Gracias a Pickle y KungPhoo por toda la información sobre el sonido.
+  Gracias a Rlyeh por la GP2X minimal_lib, usada como base para el código de la WIZ.
+  Gracias a Zenzuke por el artwork para la WIZ.
+- Todos los módulos fuente de cada uno de los drivers se compilan a la vez para permitir al compilador
+  mejorar la localización del código y el uso de cache. Algunos juegos funcionan más rápido ahora.
+- Corregido un fallo en el código de auto-frameskip. En algunos juegos el frame-skip se incrementaba por error
+  debido al redondeo (99% - 100%).
+- Operaciones con reales de doble precisión (double) se reemplazan por precisión simple (float) en varias partes
+  del código. Mejora en el rendimiento.
+- Mejores opciones de compilación. Todo es un poco más rápido ahora.
+- Muchos cambios internos y limpieza del código fuente. Ejecutables más pequeños.  
+- Hack en la frecuencia de reloj del Mortal Kombat. Funciona mucho más rápido.
+- Hack en el sonido de los juegos de M72 (Hammerin' Harry, etc). El sonido digitalizado se desactiva al usar la
+  opción de sonido 'fast'. Así funciona mucho más rápido.
+- Slaanesh ha añadido el soporte para algunos juegos de Argus (MAME 0.37b11): 
+  Argus (argus)
+  Butasan (Japan) (butasan)
+  Valtric (valtric)
+
+MAME4ALL 1.6 (28/12/2008)
+-------------------------
+- Los cores en ensamblador se seleccionan automáticamente (utilizando una lista de compatibilidad interna).
+- Gran cantidad de optimizaciones y hacks realizadas en los cores de sonido (sólo se activan con la opción de sonido "fast").
+- Cambios en el manejador de memoria de Neo·Geo para conseguir jugar más juegos con la limitada memoria RAM de la GP2X (64 MB).
+  Además hay un ejecutable separado que se utiliza internamente para ganar más RAM.
+  Nuevos títulos jugables: aof3,blazstar,fatfury3,kizuna,kof95,kof96,mslug2,ninjamas,pulstar,ragnagrd,rbff1,samsho3,shocktro,whp.
+- Se desactivan los efectos de raster en algunos juegos de Neo·Geo para ganar velocidad.
+- Optimizaciones en los juegos M72 (R-Type, Hammerin' Harry, Ninja Spirit, etc).
+- Diversas optimizaciones en los manejadores de memoria, sprites, tilemaps, timers e interfaces de las CPU.
+- Correcciones en el sonido de algunos juegos (por ejemplo Frogger). Además se solucionan algunos cuelgues.
+- Corregidas las relentizaciones del Psycho Nicks Oscar.
+
+MAME4ALL 1.5 (15/11/2008)
+-------------------------
+Cambios por Franxis:
+- Optimizaciones en los cores FM y en el mezclador de sonido.
+- Reemplazado el core Jarek YM2151 por el de Tatsuyuki (menos exacto pero más rápido).
+- El frameskip máximo en el modo automático es ahora 7 (para jugar correctamente a los juegos más pesados).
+- Corregidos los bloqueos al activar el modo Sync Off (frameskip manual sin limitador de velocidad).
+
+Cambios por Slaanesh:
+- Juegos de Deniam añadidos (MAME 0.37b6):
+  + Logic Pro (logicpro)
+  + Logic Pro 2 (Japan) (logicpr2)
+  + Karian Cross (karianx)
+
+MAME4ALL 1.4 (04/09/2008)
+-------------------------
+Cambios por Headoverheels:
+- Corregida la prioridad de los gráficos del Xain'd Sleena.
+- Añadidos 7 nuevos romsets de MAME 0.37b7:
+  + Batsugun Special Ver. (batugnsp)
+  + Exerizer (Japan) (bootleg) (exerizrb)
+  + Mahou Daisakusen (Japan) (mahoudai)
+  + Pipi & Bibis / Whoopee (Japan) [bootleg ?] (pipibibi)
+  + Shippu Mahou Daisakusen (Japan) (shippumd)
+  + Sky Fox (skyfox)
+  + Truxton II / Tatsujin II / Tatsujin Oh (Japan) (tatsujn2)
+
+Cambios por Slaanesh:
+Uso de Cyclone para juegos con el procesador M68010.
+Esto produce una gran mejora en la velocidad de juegos como Gauntlet, Marble Madness y otros juegos de Atari.
+
+Cambios por Franxis:
+Corregida la frecuencia de las CPUs del Raiden (reducida de 20 a 10 MHz). Aun así todavía es lento.
+
+MAME4ALL 1.3 (05/04/2008)
+-------------------------
+Cambios por Headoverheels:
+- Añadidos nuevos juegos de Gaelco (MAME 0.37b7): Big Karnak (bigkarnk) y Biomechanical Toy (biomtoy).
+- Añadidos nuevos juegos de SunA 8 bit (MAME 0.37b15): Hard Head (hardhead), Hard Head (Bootleg) (hardhedb) y Rough Ranger (rranger).
+- Optimizaciones en Xain'd Sleena.
+- Corregido el bug en NEC CPU que causaba relentizaciones en Raiden (MAME 0.37b15).
+- Corregidos algunos fallos en la emulación de I86/NEC CPU, incluyendo los problemas de los efectos de raster en Geostorm y el bug de los 99 créditos en Lethal Thunder (MAME 0.66).
+
+Cambios por Franxis:
+- Soporte para cheats.
+- Soporte de auto-fire. Gracias al código de AGAWA Koji.
+- Corregido el Jackal.
+
+Cambios por Slaanesh:
+- Optimizaciones en Commando (ahora usa tilemaps).
+
+MAME4ALL 1.2 (18/03/2008)
+-------------------------
+Corregidos los siguientes fallos:
+- Corregido el problema de ejecución de juegos aleatorios.
+- Los problemas aleatorios en el control mediante joypads USB debería de desaparecer.
+- Los cuatro jugadores se pueden controlar con el joypad integrado de la GP2X.
+- Los creditos y start de los cuatro jugadores se pueden controlar con el joypad de la GP2X (ver leeme.txt).
+- Corregido el problema con los juegos de Namco System 1.
+- Mejorada la visualización de los juegos vectoriales usando antialias y filtro translúcido.
+- Corregida la orientación de pantalla en los juegos Dodonpachi y Dangun Feveron.
+
+MAME4ALL 1.1 (16/03/2008)
+-------------------------
+Corregidos los siguientes fallos:
+- Mejorada la compatibilidad del DrZ80 (Neo·Geo games, Bubble Bobble, Tokio, etc).
+- Soporte para High Scores. Gracias a PalMAME por el fichero hiscore.dat.
+- Corregida la visualización en los juegos vectoriales.
+- Corregida la orientación de video en la versión bootleg de Bubble Bobble (Bobble Bobble).
+- Bubble Bobble ya puede jugarse al 100% con el core DrZ80. Recomiendo usar las versiones bootleg
+  (Bobble Bobble and Super Bubble Bobble) ya que la emulación es más rápida que con el juego original.
+- Nuevos y geniales skins para el menu obra de Pedator.
+
+MAME4ALL 1.0 (11/03/2008)
+-------------------------
+Las siguientes características se han cambiado en relación la primera versión mostrada en la feria RetroMadrid 2008:
+- No mas cuelgues.
+- Ficheros de configuración por juego.
+- El volumen de sonido se puede cambiar en los modos de video rotados(VolUp ó VolDown + START).
+- El volumen de sonido no se resetea al salir del modo pausa.
+- Añadida la documentación del emulador.
+
+MAME4ALL Private Beta (08/03/2008)
+----------------------------------
+El emulador se han mostrado por primera vez en la feria RetroMadrid 2008 (www.retromadrid.es):
+- Basado en MAME 0.37b5.
+- Soporte para 2240 romsets.
+- Compatible con GP2X F100 y F200.
+- Soporte para hasta 4 joypads USB.
+- Uso completo de las 64 MB de RAM.
+- Reloj GP2X: 66 a 300 MHz.
+- Resolución de video: auto, 8 bit y 16 bit.
+- Modos de video: standard, scaled, 4:3, rotated, border y TATE.
+- Opciones de sonido: 11 a 44 KHz (mono y stereo).
+- Underclock y overclock soportado.
+- Cores en ASM: Cyclone y DRZ80.
+- Compatible con TV-Out (PAL y NTSC).
+- RAM tweaks integradas.
+- Solo un ejecutable (basado en linea de comandos) junto con un frontend separado para seleccionar los juegos.
+- Acceso al GUI original del MAME.
+- Mejor rendimiento que en el port anterior en casi todos los juegos.

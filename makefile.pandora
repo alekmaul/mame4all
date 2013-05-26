@@ -1,0 +1,111 @@
+ifeq ($(TARGET),)
+TARGET = mame
+#TARGET = neomame
+endif
+
+# set this the operating system you're building for
+# (actually you'll probably need your own main makefile anyways)
+# MAMEOS = msdos
+MAMEOS = pandora
+
+# extension for executables
+# EXE = .exe
+EXE =
+
+# CPU core include paths
+VPATH=src $(wildcard src/cpu/*)
+
+# compiler, linker and utilities
+CC = @arm-none-linux-gnueabi-gcc
+CPP = @arm-none-linux-gnueabi-g++
+LD = @arm-none-linux-gnueabi-g++
+ECHO = @echo
+MD = @mkdir
+RM = @rm -f
+CP = @cp
+CAT = @cat
+CHMOD = @chmod
+MKSQUASHFS = @mksquashfs
+PREFIX = /usr
+DEVLIBS = -L$(PREFIX)/lib
+
+EMULATOR = $(TARGET)$(EXE)
+
+DEFS = -DPANDORA -DLSB_FIRST -DALIGN_INTS -DALIGN_SHORTS -DINLINE="static __inline" -Dasm="__asm__ __volatile__" -DMAME_UNDERCLOCK -DMAME_FASTSOUND -DENABLE_AUTOFIRE -DBIGCASE
+# -DMAME_MEMINLINE
+#DEFS += -DENABLE_CPS2
+
+CFLAGS = -g -march=armv7-a -mcpu=cortex-a8 -mfpu=neon -mfloat-abi=softfp -fsigned-char $(DEVLIBS) \
+	-Isrc -Isrc/$(MAMEOS) -Isrc/zlib -I$(PREFIX)/include -I$(PREFIX)/include/SDL \
+	-O3 -msoft-float -ffast-math -fomit-frame-pointer -fstrict-aliasing \
+	-mstructure-size-boundary=32 -fexpensive-optimizations \
+	-fweb -frename-registers -falign-functions=16 -falign-loops -falign-labels -falign-jumps \
+	-finline -finline-functions -fno-common -fno-builtin -fsingle-precision-constant \
+	-Wall -Wno-sign-compare -Wunused -Wpointer-arith -Wcast-align -Waggregate-return -Wshadow
+
+LDFLAGS = $(CFLAGS) -s -L$(PREFIX)/lib
+
+LIBS = -lm -lpthread -lSDL -lts
+
+OBJ = obj_$(TARGET)_$(MAMEOS)
+OBJDIRS = $(OBJ) $(OBJ)/cpu $(OBJ)/sound $(OBJ)/$(MAMEOS) \
+	$(OBJ)/drivers $(OBJ)/machine $(OBJ)/vidhrdw $(OBJ)/sndhrdw \
+	$(OBJ)/zlib
+
+all:	maketree $(EMULATOR) $(EMULATOR)-fe
+
+# include the various .mak files
+include src/core.mak
+include src/$(TARGET).mak
+include src/rules.mak
+include src/sound.mak
+include src/$(MAMEOS)/$(MAMEOS).mak
+
+# combine the various definitions to one
+CDEFS = $(DEFS) $(COREDEFS) $(CPUDEFS) $(SOUNDDEFS)
+
+$(EMULATOR): $(COREOBJS) $(OSOBJS) $(DRVOBJS)
+	$(ECHO) Linking $@ ...
+	$(LD) $(LDFLAGS) $(COREOBJS) $(OSOBJS) $(LIBS) $(DRVOBJS) -o $@
+
+$(EMULATOR)-fe: $(FEOBJS)
+	$(ECHO) Linking $@ ...
+	$(LD) $(LDFLAGS) $(FEOBJS) $(LIBS) -o $@
+
+$(OBJ)/%.o: src/%.c
+	@echo Compiling $<...
+	$(CC) $(CDEFS) $(CFLAGS) -c $< -o $@
+
+$(OBJ)/%.o: src/%.cpp
+	@echo Compiling $<...
+	$(CPP) $(CDEFS) $(CFLAGS) -fno-rtti -c $< -o $@
+
+$(OBJ)/%.o: src/%.s
+	@echo Compiling $<...
+	$(CPP) $(CDEFS) $(CFLAGS) -c $< -o $@
+
+$(OBJ)/%.o: src/%.S
+	@echo Compiling $<...
+	$(CPP) $(CDEFS) $(CFLAGS) -c $< -o $@
+
+$(sort $(OBJDIRS)):
+	$(MD) $@
+
+maketree: $(sort $(OBJDIRS))
+
+pnd: mame4all.pnd
+
+mame4all.pnd: all
+	$(ECHO) Packaging $@ ...
+	$(RM) -r pndtmp pndtmp.squash
+	$(MD) -p pndtmp
+	$(CP) -r pnd/* *.txt pndtmp/
+	$(CP) $(EMULATOR) neomame $(EMULATOR)-fe pndtmp/
+	touch pndtmp/dirs.rc
+	$(CHMOD) +x pndtmp/$(EMULATOR) pndtmp/neomame pndtmp/$(EMULATOR)-fe pndtmp/mame.sh
+	$(MKSQUASHFS) pndtmp pndtmp.squash
+	$(CAT) pndtmp.squash pndtmp/PXML.xml pndtmp/mame.png > $@
+
+clean:
+	$(RM) -r $(OBJ) pndtmp mame4all.pnd
+	$(RM) $(EMULATOR) $(EMULATOR)-fe pndtmp.squash
