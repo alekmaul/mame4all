@@ -1,13 +1,8 @@
-#ifdef FAME_CHANGE_PC
-// proto
-void m68000_change_pc(unsigned pc);
-#endif
-
 /* ORI */
 OPCODE(0x0000)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_BYTE(src);
     res = DREGu8((Opcode >> 0) & 7);
@@ -20,8 +15,8 @@ OPCODE(0x0000)
 /* ORI */
 OPCODE(0x0010)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -35,8 +30,8 @@ OPCODE(0x0010)
 /* ORI */
 OPCODE(0x0018)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -51,8 +46,8 @@ OPCODE(0x0018)
 /* ORI */
 OPCODE(0x0020)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7) - 1;
@@ -67,8 +62,8 @@ OPCODE(0x0020)
 /* ORI */
 OPCODE(0x0028)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     FETCH_SWORD(adr);
@@ -83,8 +78,8 @@ OPCODE(0x0028)
 /* ORI */
 OPCODE(0x0030)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -99,8 +94,8 @@ OPCODE(0x0030)
 /* ORI */
 OPCODE(0x0038)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     FETCH_SWORD(adr);
@@ -114,8 +109,8 @@ OPCODE(0x0038)
 /* ORI */
 OPCODE(0x0039)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     FETCH_LONG(adr);
@@ -129,8 +124,8 @@ OPCODE(0x0039)
 /* ORI */
 OPCODE(0x001F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG(7);
@@ -145,8 +140,8 @@ OPCODE(0x001F)
 /* ORI */
 OPCODE(0x0027)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG(7) - 2;
@@ -161,8 +156,8 @@ OPCODE(0x0027)
 /* ORI */
 OPCODE(0x0040)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_WORD(src);
     res = DREGu16((Opcode >> 0) & 7);
@@ -176,8 +171,8 @@ OPCODE(0x0040)
 /* ORI */
 OPCODE(0x0050)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -192,8 +187,8 @@ OPCODE(0x0050)
 /* ORI */
 OPCODE(0x0058)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -209,8 +204,8 @@ OPCODE(0x0058)
 /* ORI */
 OPCODE(0x0060)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7) - 2;
@@ -226,8 +221,8 @@ OPCODE(0x0060)
 /* ORI */
 OPCODE(0x0068)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     FETCH_SWORD(adr);
@@ -243,8 +238,8 @@ OPCODE(0x0068)
 /* ORI */
 OPCODE(0x0070)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -260,8 +255,8 @@ OPCODE(0x0070)
 /* ORI */
 OPCODE(0x0078)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     FETCH_SWORD(adr);
@@ -276,8 +271,8 @@ OPCODE(0x0078)
 /* ORI */
 OPCODE(0x0079)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     FETCH_LONG(adr);
@@ -292,8 +287,8 @@ OPCODE(0x0079)
 /* ORI */
 OPCODE(0x005F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG(7);
@@ -309,8 +304,8 @@ OPCODE(0x005F)
 /* ORI */
 OPCODE(0x0067)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG(7) - 2;
@@ -326,8 +321,8 @@ OPCODE(0x0067)
 /* ORI */
 OPCODE(0x0080)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_LONG(src);
     res = DREGu32((Opcode >> 0) & 7);
@@ -341,8 +336,8 @@ OPCODE(0x0080)
 /* ORI */
 OPCODE(0x0090)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -357,8 +352,8 @@ OPCODE(0x0090)
 /* ORI */
 OPCODE(0x0098)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -374,8 +369,8 @@ OPCODE(0x0098)
 /* ORI */
 OPCODE(0x00A0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7) - 4;
@@ -391,8 +386,8 @@ OPCODE(0x00A0)
 /* ORI */
 OPCODE(0x00A8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     FETCH_SWORD(adr);
@@ -408,8 +403,8 @@ OPCODE(0x00A8)
 /* ORI */
 OPCODE(0x00B0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -425,8 +420,8 @@ OPCODE(0x00B0)
 /* ORI */
 OPCODE(0x00B8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     FETCH_SWORD(adr);
@@ -441,8 +436,8 @@ OPCODE(0x00B8)
 /* ORI */
 OPCODE(0x00B9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     FETCH_LONG(adr);
@@ -457,8 +452,8 @@ OPCODE(0x00B9)
 /* ORI */
 OPCODE(0x009F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG(7);
@@ -474,8 +469,8 @@ OPCODE(0x009F)
 /* ORI */
 OPCODE(0x00A7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG(7) - 4;
@@ -491,7 +486,7 @@ OPCODE(0x00A7)
 /* ORICCR */
 OPCODE(0x003C)
 {
-    uint32_t res;
+    u32 res;
 
     FETCH_BYTE(res);
     res &= M68K_CCR_MASK;
@@ -506,7 +501,7 @@ OPCODE(0x007C)
 
     if (flag_S)
     {
-        uint32_t res;
+        u32 res;
         FETCH_WORD(res);
         res &= M68K_SR_MASK;
         res |= GET_SR;
@@ -515,7 +510,7 @@ OPCODE(0x007C)
     }
     else
     {
-        uint32_t newPC = UNBASED_PC;
+        u32 newPC = UNBASED_PC;
         SET_PC(newPC-2);
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -526,8 +521,8 @@ OPCODE(0x007C)
 /* ANDI */
 OPCODE(0x0200)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_BYTE(src);
     res = DREGu8((Opcode >> 0) & 7);
@@ -540,8 +535,8 @@ OPCODE(0x0200)
 /* ANDI */
 OPCODE(0x0210)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -555,8 +550,8 @@ OPCODE(0x0210)
 /* ANDI */
 OPCODE(0x0218)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -571,8 +566,8 @@ OPCODE(0x0218)
 /* ANDI */
 OPCODE(0x0220)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7) - 1;
@@ -587,8 +582,8 @@ OPCODE(0x0220)
 /* ANDI */
 OPCODE(0x0228)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     FETCH_SWORD(adr);
@@ -603,8 +598,8 @@ OPCODE(0x0228)
 /* ANDI */
 OPCODE(0x0230)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -619,8 +614,8 @@ OPCODE(0x0230)
 /* ANDI */
 OPCODE(0x0238)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     FETCH_SWORD(adr);
@@ -634,8 +629,8 @@ OPCODE(0x0238)
 /* ANDI */
 OPCODE(0x0239)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     FETCH_LONG(adr);
@@ -649,8 +644,8 @@ OPCODE(0x0239)
 /* ANDI */
 OPCODE(0x021F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG(7);
@@ -665,8 +660,8 @@ OPCODE(0x021F)
 /* ANDI */
 OPCODE(0x0227)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG(7) - 2;
@@ -681,8 +676,8 @@ OPCODE(0x0227)
 /* ANDI */
 OPCODE(0x0240)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_WORD(src);
     res = DREGu16((Opcode >> 0) & 7);
@@ -696,8 +691,8 @@ OPCODE(0x0240)
 /* ANDI */
 OPCODE(0x0250)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -712,8 +707,8 @@ OPCODE(0x0250)
 /* ANDI */
 OPCODE(0x0258)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -729,8 +724,8 @@ OPCODE(0x0258)
 /* ANDI */
 OPCODE(0x0260)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7) - 2;
@@ -746,8 +741,8 @@ OPCODE(0x0260)
 /* ANDI */
 OPCODE(0x0268)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     FETCH_SWORD(adr);
@@ -763,8 +758,8 @@ OPCODE(0x0268)
 /* ANDI */
 OPCODE(0x0270)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -780,8 +775,8 @@ OPCODE(0x0270)
 /* ANDI */
 OPCODE(0x0278)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     FETCH_SWORD(adr);
@@ -796,8 +791,8 @@ OPCODE(0x0278)
 /* ANDI */
 OPCODE(0x0279)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     FETCH_LONG(adr);
@@ -812,8 +807,8 @@ OPCODE(0x0279)
 /* ANDI */
 OPCODE(0x025F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG(7);
@@ -829,8 +824,8 @@ OPCODE(0x025F)
 /* ANDI */
 OPCODE(0x0267)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG(7) - 2;
@@ -846,8 +841,8 @@ OPCODE(0x0267)
 /* ANDI */
 OPCODE(0x0280)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_LONG(src);
     res = DREGu32((Opcode >> 0) & 7);
@@ -861,8 +856,8 @@ OPCODE(0x0280)
 /* ANDI */
 OPCODE(0x0290)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -877,8 +872,8 @@ OPCODE(0x0290)
 /* ANDI */
 OPCODE(0x0298)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -894,8 +889,8 @@ OPCODE(0x0298)
 /* ANDI */
 OPCODE(0x02A0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7) - 4;
@@ -911,8 +906,8 @@ OPCODE(0x02A0)
 /* ANDI */
 OPCODE(0x02A8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     FETCH_SWORD(adr);
@@ -928,8 +923,8 @@ OPCODE(0x02A8)
 /* ANDI */
 OPCODE(0x02B0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -945,8 +940,8 @@ OPCODE(0x02B0)
 /* ANDI */
 OPCODE(0x02B8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     FETCH_SWORD(adr);
@@ -961,8 +956,8 @@ OPCODE(0x02B8)
 /* ANDI */
 OPCODE(0x02B9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     FETCH_LONG(adr);
@@ -977,8 +972,8 @@ OPCODE(0x02B9)
 /* ANDI */
 OPCODE(0x029F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG(7);
@@ -994,8 +989,8 @@ OPCODE(0x029F)
 /* ANDI */
 OPCODE(0x02A7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG(7) - 4;
@@ -1011,7 +1006,7 @@ OPCODE(0x02A7)
 /* ANDICCR */
 OPCODE(0x023C)
 {
-    uint32_t res;
+    u32 res;
 
     FETCH_BYTE(res);
     res &= M68K_CCR_MASK;
@@ -1023,7 +1018,7 @@ OPCODE(0x023C)
 /* ANDISR */
 OPCODE(0x027C)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_S)
     {
@@ -1041,7 +1036,7 @@ OPCODE(0x027C)
     }
     else
     {
-        uint32_t newPC = UNBASED_PC;
+        u32 newPC = UNBASED_PC;
         SET_PC(newPC-2);
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -1052,8 +1047,8 @@ OPCODE(0x027C)
 /* EORI */
 OPCODE(0x0A00)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_BYTE(src);
     res = DREGu8((Opcode >> 0) & 7);
@@ -1066,8 +1061,8 @@ OPCODE(0x0A00)
 /* EORI */
 OPCODE(0x0A10)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1081,8 +1076,8 @@ OPCODE(0x0A10)
 /* EORI */
 OPCODE(0x0A18)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1097,8 +1092,8 @@ OPCODE(0x0A18)
 /* EORI */
 OPCODE(0x0A20)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7) - 1;
@@ -1113,8 +1108,8 @@ OPCODE(0x0A20)
 /* EORI */
 OPCODE(0x0A28)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     FETCH_SWORD(adr);
@@ -1129,8 +1124,8 @@ OPCODE(0x0A28)
 /* EORI */
 OPCODE(0x0A30)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1145,8 +1140,8 @@ OPCODE(0x0A30)
 /* EORI */
 OPCODE(0x0A38)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     FETCH_SWORD(adr);
@@ -1160,8 +1155,8 @@ OPCODE(0x0A38)
 /* EORI */
 OPCODE(0x0A39)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     FETCH_LONG(adr);
@@ -1175,8 +1170,8 @@ OPCODE(0x0A39)
 /* EORI */
 OPCODE(0x0A1F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG(7);
@@ -1191,8 +1186,8 @@ OPCODE(0x0A1F)
 /* EORI */
 OPCODE(0x0A27)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     adr = AREG(7) - 2;
@@ -1207,8 +1202,8 @@ OPCODE(0x0A27)
 /* EORI */
 OPCODE(0x0A40)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_WORD(src);
     res = DREGu16((Opcode >> 0) & 7);
@@ -1222,8 +1217,8 @@ OPCODE(0x0A40)
 /* EORI */
 OPCODE(0x0A50)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1238,8 +1233,8 @@ OPCODE(0x0A50)
 /* EORI */
 OPCODE(0x0A58)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1255,8 +1250,8 @@ OPCODE(0x0A58)
 /* EORI */
 OPCODE(0x0A60)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7) - 2;
@@ -1272,8 +1267,8 @@ OPCODE(0x0A60)
 /* EORI */
 OPCODE(0x0A68)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     FETCH_SWORD(adr);
@@ -1289,8 +1284,8 @@ OPCODE(0x0A68)
 /* EORI */
 OPCODE(0x0A70)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1306,8 +1301,8 @@ OPCODE(0x0A70)
 /* EORI */
 OPCODE(0x0A78)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     FETCH_SWORD(adr);
@@ -1322,8 +1317,8 @@ OPCODE(0x0A78)
 /* EORI */
 OPCODE(0x0A79)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     FETCH_LONG(adr);
@@ -1338,8 +1333,8 @@ OPCODE(0x0A79)
 /* EORI */
 OPCODE(0x0A5F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG(7);
@@ -1355,8 +1350,8 @@ OPCODE(0x0A5F)
 /* EORI */
 OPCODE(0x0A67)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_WORD(src);
     adr = AREG(7) - 2;
@@ -1372,8 +1367,8 @@ OPCODE(0x0A67)
 /* EORI */
 OPCODE(0x0A80)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_LONG(src);
     res = DREGu32((Opcode >> 0) & 7);
@@ -1387,8 +1382,8 @@ OPCODE(0x0A80)
 /* EORI */
 OPCODE(0x0A90)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1403,8 +1398,8 @@ OPCODE(0x0A90)
 /* EORI */
 OPCODE(0x0A98)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1420,8 +1415,8 @@ OPCODE(0x0A98)
 /* EORI */
 OPCODE(0x0AA0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7) - 4;
@@ -1437,8 +1432,8 @@ OPCODE(0x0AA0)
 /* EORI */
 OPCODE(0x0AA8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     FETCH_SWORD(adr);
@@ -1454,8 +1449,8 @@ OPCODE(0x0AA8)
 /* EORI */
 OPCODE(0x0AB0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1471,8 +1466,8 @@ OPCODE(0x0AB0)
 /* EORI */
 OPCODE(0x0AB8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     FETCH_SWORD(adr);
@@ -1487,8 +1482,8 @@ OPCODE(0x0AB8)
 /* EORI */
 OPCODE(0x0AB9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     FETCH_LONG(adr);
@@ -1503,8 +1498,8 @@ OPCODE(0x0AB9)
 /* EORI */
 OPCODE(0x0A9F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG(7);
@@ -1520,8 +1515,8 @@ OPCODE(0x0A9F)
 /* EORI */
 OPCODE(0x0AA7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(src);
     adr = AREG(7) - 4;
@@ -1537,7 +1532,7 @@ OPCODE(0x0AA7)
 /* EORICCR */
 OPCODE(0x0A3C)
 {
-    uint32_t res;
+    u32 res;
 
     FETCH_BYTE(res);
     res &= M68K_CCR_MASK;
@@ -1549,7 +1544,7 @@ OPCODE(0x0A3C)
 /* EORISR */
 OPCODE(0x0A7C)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_S)
     {
@@ -1567,7 +1562,7 @@ OPCODE(0x0A7C)
     }
     else
     {
-        uint32_t newPC = UNBASED_PC;
+        u32 newPC = UNBASED_PC;
         SET_PC(newPC-2);
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -1578,8 +1573,8 @@ OPCODE(0x0A7C)
 /* SUBI */
 OPCODE(0x0400)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     dst = DREGu8((Opcode >> 0) & 7);
@@ -1594,8 +1589,8 @@ OPCODE(0x0400)
 /* SUBI */
 OPCODE(0x0410)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1611,8 +1606,8 @@ OPCODE(0x0410)
 /* SUBI */
 OPCODE(0x0418)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1629,8 +1624,8 @@ OPCODE(0x0418)
 /* SUBI */
 OPCODE(0x0420)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7) - 1;
@@ -1647,8 +1642,8 @@ OPCODE(0x0420)
 /* SUBI */
 OPCODE(0x0428)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     FETCH_SWORD(adr);
@@ -1665,8 +1660,8 @@ OPCODE(0x0428)
 /* SUBI */
 OPCODE(0x0430)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1683,8 +1678,8 @@ OPCODE(0x0430)
 /* SUBI */
 OPCODE(0x0438)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     FETCH_SWORD(adr);
@@ -1700,8 +1695,8 @@ OPCODE(0x0438)
 /* SUBI */
 OPCODE(0x0439)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     FETCH_LONG(adr);
@@ -1717,8 +1712,8 @@ OPCODE(0x0439)
 /* SUBI */
 OPCODE(0x041F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG(7);
@@ -1735,8 +1730,8 @@ OPCODE(0x041F)
 /* SUBI */
 OPCODE(0x0427)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG(7) - 2;
@@ -1753,8 +1748,8 @@ OPCODE(0x0427)
 /* SUBI */
 OPCODE(0x0440)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     dst = DREGu16((Opcode >> 0) & 7);
@@ -1769,8 +1764,8 @@ OPCODE(0x0440)
 /* SUBI */
 OPCODE(0x0450)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1786,8 +1781,8 @@ OPCODE(0x0450)
 /* SUBI */
 OPCODE(0x0458)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1804,8 +1799,8 @@ OPCODE(0x0458)
 /* SUBI */
 OPCODE(0x0460)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7) - 2;
@@ -1822,8 +1817,8 @@ OPCODE(0x0460)
 /* SUBI */
 OPCODE(0x0468)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     FETCH_SWORD(adr);
@@ -1840,8 +1835,8 @@ OPCODE(0x0468)
 /* SUBI */
 OPCODE(0x0470)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1858,8 +1853,8 @@ OPCODE(0x0470)
 /* SUBI */
 OPCODE(0x0478)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     FETCH_SWORD(adr);
@@ -1875,8 +1870,8 @@ OPCODE(0x0478)
 /* SUBI */
 OPCODE(0x0479)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     FETCH_LONG(adr);
@@ -1892,8 +1887,8 @@ OPCODE(0x0479)
 /* SUBI */
 OPCODE(0x045F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG(7);
@@ -1910,8 +1905,8 @@ OPCODE(0x045F)
 /* SUBI */
 OPCODE(0x0467)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG(7) - 2;
@@ -1928,8 +1923,8 @@ OPCODE(0x0467)
 /* SUBI */
 OPCODE(0x0480)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     dst = DREGu32((Opcode >> 0) & 7);
@@ -1945,8 +1940,8 @@ OPCODE(0x0480)
 /* SUBI */
 OPCODE(0x0490)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1963,8 +1958,8 @@ OPCODE(0x0490)
 /* SUBI */
 OPCODE(0x0498)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -1982,8 +1977,8 @@ OPCODE(0x0498)
 /* SUBI */
 OPCODE(0x04A0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7) - 4;
@@ -2001,8 +1996,8 @@ OPCODE(0x04A0)
 /* SUBI */
 OPCODE(0x04A8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     FETCH_SWORD(adr);
@@ -2020,8 +2015,8 @@ OPCODE(0x04A8)
 /* SUBI */
 OPCODE(0x04B0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2039,8 +2034,8 @@ OPCODE(0x04B0)
 /* SUBI */
 OPCODE(0x04B8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     FETCH_SWORD(adr);
@@ -2057,8 +2052,8 @@ OPCODE(0x04B8)
 /* SUBI */
 OPCODE(0x04B9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     FETCH_LONG(adr);
@@ -2075,8 +2070,8 @@ OPCODE(0x04B9)
 /* SUBI */
 OPCODE(0x049F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG(7);
@@ -2094,8 +2089,8 @@ OPCODE(0x049F)
 /* SUBI */
 OPCODE(0x04A7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG(7) - 4;
@@ -2113,8 +2108,8 @@ OPCODE(0x04A7)
 /* ADDI */
 OPCODE(0x0600)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     dst = DREGu8((Opcode >> 0) & 7);
@@ -2129,8 +2124,8 @@ OPCODE(0x0600)
 /* ADDI */
 OPCODE(0x0610)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2146,8 +2141,8 @@ OPCODE(0x0610)
 /* ADDI */
 OPCODE(0x0618)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2164,8 +2159,8 @@ OPCODE(0x0618)
 /* ADDI */
 OPCODE(0x0620)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7) - 1;
@@ -2182,8 +2177,8 @@ OPCODE(0x0620)
 /* ADDI */
 OPCODE(0x0628)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     FETCH_SWORD(adr);
@@ -2200,8 +2195,8 @@ OPCODE(0x0628)
 /* ADDI */
 OPCODE(0x0630)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2218,8 +2213,8 @@ OPCODE(0x0630)
 /* ADDI */
 OPCODE(0x0638)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     FETCH_SWORD(adr);
@@ -2235,8 +2230,8 @@ OPCODE(0x0638)
 /* ADDI */
 OPCODE(0x0639)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     FETCH_LONG(adr);
@@ -2252,8 +2247,8 @@ OPCODE(0x0639)
 /* ADDI */
 OPCODE(0x061F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG(7);
@@ -2270,8 +2265,8 @@ OPCODE(0x061F)
 /* ADDI */
 OPCODE(0x0627)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG(7) - 2;
@@ -2288,8 +2283,8 @@ OPCODE(0x0627)
 /* ADDI */
 OPCODE(0x0640)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     dst = DREGu16((Opcode >> 0) & 7);
@@ -2304,8 +2299,8 @@ OPCODE(0x0640)
 /* ADDI */
 OPCODE(0x0650)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2321,8 +2316,8 @@ OPCODE(0x0650)
 /* ADDI */
 OPCODE(0x0658)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2339,8 +2334,8 @@ OPCODE(0x0658)
 /* ADDI */
 OPCODE(0x0660)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7) - 2;
@@ -2357,8 +2352,8 @@ OPCODE(0x0660)
 /* ADDI */
 OPCODE(0x0668)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     FETCH_SWORD(adr);
@@ -2375,8 +2370,8 @@ OPCODE(0x0668)
 /* ADDI */
 OPCODE(0x0670)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2393,8 +2388,8 @@ OPCODE(0x0670)
 /* ADDI */
 OPCODE(0x0678)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     FETCH_SWORD(adr);
@@ -2410,8 +2405,8 @@ OPCODE(0x0678)
 /* ADDI */
 OPCODE(0x0679)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     FETCH_LONG(adr);
@@ -2427,8 +2422,8 @@ OPCODE(0x0679)
 /* ADDI */
 OPCODE(0x065F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG(7);
@@ -2445,8 +2440,8 @@ OPCODE(0x065F)
 /* ADDI */
 OPCODE(0x0667)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG(7) - 2;
@@ -2463,8 +2458,8 @@ OPCODE(0x0667)
 /* ADDI */
 OPCODE(0x0680)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     dst = DREGu32((Opcode >> 0) & 7);
@@ -2480,8 +2475,8 @@ OPCODE(0x0680)
 /* ADDI */
 OPCODE(0x0690)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2498,8 +2493,8 @@ OPCODE(0x0690)
 /* ADDI */
 OPCODE(0x0698)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2517,8 +2512,8 @@ OPCODE(0x0698)
 /* ADDI */
 OPCODE(0x06A0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7) - 4;
@@ -2536,8 +2531,8 @@ OPCODE(0x06A0)
 /* ADDI */
 OPCODE(0x06A8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     FETCH_SWORD(adr);
@@ -2555,8 +2550,8 @@ OPCODE(0x06A8)
 /* ADDI */
 OPCODE(0x06B0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2574,8 +2569,8 @@ OPCODE(0x06B0)
 /* ADDI */
 OPCODE(0x06B8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     FETCH_SWORD(adr);
@@ -2592,8 +2587,8 @@ OPCODE(0x06B8)
 /* ADDI */
 OPCODE(0x06B9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     FETCH_LONG(adr);
@@ -2610,8 +2605,8 @@ OPCODE(0x06B9)
 /* ADDI */
 OPCODE(0x069F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG(7);
@@ -2629,8 +2624,8 @@ OPCODE(0x069F)
 /* ADDI */
 OPCODE(0x06A7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG(7) - 4;
@@ -2648,8 +2643,8 @@ OPCODE(0x06A7)
 /* CMPI */
 OPCODE(0x0C00)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     dst = DREGu8((Opcode >> 0) & 7);
@@ -2663,8 +2658,8 @@ OPCODE(0x0C00)
 /* CMPI */
 OPCODE(0x0C10)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2679,8 +2674,8 @@ OPCODE(0x0C10)
 /* CMPI */
 OPCODE(0x0C18)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2696,8 +2691,8 @@ OPCODE(0x0C18)
 /* CMPI */
 OPCODE(0x0C20)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7) - 1;
@@ -2713,8 +2708,8 @@ OPCODE(0x0C20)
 /* CMPI */
 OPCODE(0x0C28)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     FETCH_SWORD(adr);
@@ -2730,8 +2725,8 @@ OPCODE(0x0C28)
 /* CMPI */
 OPCODE(0x0C30)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2747,8 +2742,8 @@ OPCODE(0x0C30)
 /* CMPI */
 OPCODE(0x0C38)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     FETCH_SWORD(adr);
@@ -2763,8 +2758,8 @@ OPCODE(0x0C38)
 /* CMPI */
 OPCODE(0x0C39)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     FETCH_LONG(adr);
@@ -2779,8 +2774,8 @@ OPCODE(0x0C39)
 /* CMPI */
 OPCODE(0x0C1F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG(7);
@@ -2796,8 +2791,8 @@ OPCODE(0x0C1F)
 /* CMPI */
 OPCODE(0x0C27)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     adr = AREG(7) - 2;
@@ -2813,8 +2808,8 @@ OPCODE(0x0C27)
 /* CMPI */
 OPCODE(0x0C40)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     dst = DREGu16((Opcode >> 0) & 7);
@@ -2828,8 +2823,8 @@ OPCODE(0x0C40)
 /* CMPI */
 OPCODE(0x0C50)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2844,8 +2839,8 @@ OPCODE(0x0C50)
 /* CMPI */
 OPCODE(0x0C58)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2861,8 +2856,8 @@ OPCODE(0x0C58)
 /* CMPI */
 OPCODE(0x0C60)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7) - 2;
@@ -2878,8 +2873,8 @@ OPCODE(0x0C60)
 /* CMPI */
 OPCODE(0x0C68)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     FETCH_SWORD(adr);
@@ -2895,8 +2890,8 @@ OPCODE(0x0C68)
 /* CMPI */
 OPCODE(0x0C70)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -2912,8 +2907,8 @@ OPCODE(0x0C70)
 /* CMPI */
 OPCODE(0x0C78)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     FETCH_SWORD(adr);
@@ -2928,8 +2923,8 @@ OPCODE(0x0C78)
 /* CMPI */
 OPCODE(0x0C79)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     FETCH_LONG(adr);
@@ -2944,8 +2939,8 @@ OPCODE(0x0C79)
 /* CMPI */
 OPCODE(0x0C5F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG(7);
@@ -2961,8 +2956,8 @@ OPCODE(0x0C5F)
 /* CMPI */
 OPCODE(0x0C67)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     adr = AREG(7) - 2;
@@ -2978,8 +2973,8 @@ OPCODE(0x0C67)
 /* CMPI */
 OPCODE(0x0C80)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     dst = DREGu32((Opcode >> 0) & 7);
@@ -2994,8 +2989,8 @@ OPCODE(0x0C80)
 /* CMPI */
 OPCODE(0x0C90)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -3011,8 +3006,8 @@ OPCODE(0x0C90)
 /* CMPI */
 OPCODE(0x0C98)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -3029,8 +3024,8 @@ OPCODE(0x0C98)
 /* CMPI */
 OPCODE(0x0CA0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7) - 4;
@@ -3047,8 +3042,8 @@ OPCODE(0x0CA0)
 /* CMPI */
 OPCODE(0x0CA8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     FETCH_SWORD(adr);
@@ -3065,8 +3060,8 @@ OPCODE(0x0CA8)
 /* CMPI */
 OPCODE(0x0CB0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG((Opcode >> 0) & 7);
@@ -3083,8 +3078,8 @@ OPCODE(0x0CB0)
 /* CMPI */
 OPCODE(0x0CB8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     FETCH_SWORD(adr);
@@ -3100,8 +3095,8 @@ OPCODE(0x0CB8)
 /* CMPI */
 OPCODE(0x0CB9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     FETCH_LONG(adr);
@@ -3117,8 +3112,8 @@ OPCODE(0x0CB9)
 /* CMPI */
 OPCODE(0x0C9F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG(7);
@@ -3135,8 +3130,8 @@ OPCODE(0x0C9F)
 /* CMPI */
 OPCODE(0x0CA7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     adr = AREG(7) - 4;
@@ -3153,8 +3148,8 @@ OPCODE(0x0CA7)
 /* BTSTn */
 OPCODE(0x0800)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 31);
@@ -3166,8 +3161,8 @@ OPCODE(0x0800)
 /* BTSTn */
 OPCODE(0x0810)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3180,8 +3175,8 @@ OPCODE(0x0810)
 /* BTSTn */
 OPCODE(0x0818)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3195,8 +3190,8 @@ OPCODE(0x0818)
 /* BTSTn */
 OPCODE(0x0820)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3210,8 +3205,8 @@ OPCODE(0x0820)
 /* BTSTn */
 OPCODE(0x0828)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3225,8 +3220,8 @@ OPCODE(0x0828)
 /* BTSTn */
 OPCODE(0x0830)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3240,8 +3235,8 @@ OPCODE(0x0830)
 /* BTSTn */
 OPCODE(0x0838)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3254,8 +3249,8 @@ OPCODE(0x0838)
 /* BTSTn */
 OPCODE(0x0839)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3268,8 +3263,8 @@ OPCODE(0x0839)
 /* BTSTn */
 OPCODE(0x083A)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3283,8 +3278,8 @@ OPCODE(0x083A)
 /* BTSTn */
 OPCODE(0x083B)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3298,8 +3293,8 @@ OPCODE(0x083B)
 /* BTSTn */
 OPCODE(0x081F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3313,8 +3308,8 @@ OPCODE(0x081F)
 /* BTSTn */
 OPCODE(0x0827)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3328,8 +3323,8 @@ OPCODE(0x0827)
 /* BCHGn */
 OPCODE(0x0840)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 31);
@@ -3343,8 +3338,8 @@ OPCODE(0x0840)
 /* BCHGn */
 OPCODE(0x0850)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3359,8 +3354,8 @@ OPCODE(0x0850)
 /* BCHGn */
 OPCODE(0x0858)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3376,8 +3371,8 @@ OPCODE(0x0858)
 /* BCHGn */
 OPCODE(0x0860)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3393,8 +3388,8 @@ OPCODE(0x0860)
 /* BCHGn */
 OPCODE(0x0868)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3410,8 +3405,8 @@ OPCODE(0x0868)
 /* BCHGn */
 OPCODE(0x0870)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3427,8 +3422,8 @@ OPCODE(0x0870)
 /* BCHGn */
 OPCODE(0x0878)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3443,8 +3438,8 @@ OPCODE(0x0878)
 /* BCHGn */
 OPCODE(0x0879)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3459,8 +3454,8 @@ OPCODE(0x0879)
 /* BCHGn */
 OPCODE(0x085F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3476,8 +3471,8 @@ OPCODE(0x085F)
 /* BCHGn */
 OPCODE(0x0867)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3493,8 +3488,8 @@ OPCODE(0x0867)
 /* BCLRn */
 OPCODE(0x0880)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 31);
@@ -3508,8 +3503,8 @@ OPCODE(0x0880)
 /* BCLRn */
 OPCODE(0x0890)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3524,8 +3519,8 @@ OPCODE(0x0890)
 /* BCLRn */
 OPCODE(0x0898)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3541,8 +3536,8 @@ OPCODE(0x0898)
 /* BCLRn */
 OPCODE(0x08A0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3558,8 +3553,8 @@ OPCODE(0x08A0)
 /* BCLRn */
 OPCODE(0x08A8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3575,8 +3570,8 @@ OPCODE(0x08A8)
 /* BCLRn */
 OPCODE(0x08B0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3592,8 +3587,8 @@ OPCODE(0x08B0)
 /* BCLRn */
 OPCODE(0x08B8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3608,8 +3603,8 @@ OPCODE(0x08B8)
 /* BCLRn */
 OPCODE(0x08B9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3624,8 +3619,8 @@ OPCODE(0x08B9)
 /* BCLRn */
 OPCODE(0x089F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3641,8 +3636,8 @@ OPCODE(0x089F)
 /* BCLRn */
 OPCODE(0x08A7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3658,8 +3653,8 @@ OPCODE(0x08A7)
 /* BSETn */
 OPCODE(0x08C0)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 31);
@@ -3673,8 +3668,8 @@ OPCODE(0x08C0)
 /* BSETn */
 OPCODE(0x08D0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3689,8 +3684,8 @@ OPCODE(0x08D0)
 /* BSETn */
 OPCODE(0x08D8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3706,8 +3701,8 @@ OPCODE(0x08D8)
 /* BSETn */
 OPCODE(0x08E0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3723,8 +3718,8 @@ OPCODE(0x08E0)
 /* BSETn */
 OPCODE(0x08E8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3740,8 +3735,8 @@ OPCODE(0x08E8)
 /* BSETn */
 OPCODE(0x08F0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3757,8 +3752,8 @@ OPCODE(0x08F0)
 /* BSETn */
 OPCODE(0x08F8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3773,8 +3768,8 @@ OPCODE(0x08F8)
 /* BSETn */
 OPCODE(0x08F9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3789,8 +3784,8 @@ OPCODE(0x08F9)
 /* BSETn */
 OPCODE(0x08DF)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3806,8 +3801,8 @@ OPCODE(0x08DF)
 /* BSETn */
 OPCODE(0x08E7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_BYTE(src);
     src = 1 << (src & 7);
@@ -3823,8 +3818,8 @@ OPCODE(0x08E7)
 /* BTST */
 OPCODE(0x0100)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     src = 1 << (src & 31);
@@ -3836,8 +3831,8 @@ OPCODE(0x0100)
 /* BTST */
 OPCODE(0x0110)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -3850,8 +3845,8 @@ OPCODE(0x0110)
 /* BTST */
 OPCODE(0x0118)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -3865,8 +3860,8 @@ OPCODE(0x0118)
 /* BTST */
 OPCODE(0x0120)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -3880,8 +3875,8 @@ OPCODE(0x0120)
 /* BTST */
 OPCODE(0x0128)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -3895,8 +3890,8 @@ OPCODE(0x0128)
 /* BTST */
 OPCODE(0x0130)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -3910,8 +3905,8 @@ OPCODE(0x0130)
 /* BTST */
 OPCODE(0x0138)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -3924,8 +3919,8 @@ OPCODE(0x0138)
 /* BTST */
 OPCODE(0x0139)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -3938,8 +3933,8 @@ OPCODE(0x0139)
 /* BTST */
 OPCODE(0x013A)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -3953,8 +3948,8 @@ OPCODE(0x013A)
 /* BTST */
 OPCODE(0x013B)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -3968,8 +3963,8 @@ OPCODE(0x013B)
 /* BTST */
 OPCODE(0x013C)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -3981,8 +3976,8 @@ OPCODE(0x013C)
 /* BTST */
 OPCODE(0x011F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -3996,8 +3991,8 @@ OPCODE(0x011F)
 /* BTST */
 OPCODE(0x0127)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4011,8 +4006,8 @@ OPCODE(0x0127)
 /* BCHG */
 OPCODE(0x0140)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     src = 1 << (src & 31);
@@ -4026,8 +4021,8 @@ OPCODE(0x0140)
 /* BCHG */
 OPCODE(0x0150)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4042,8 +4037,8 @@ OPCODE(0x0150)
 /* BCHG */
 OPCODE(0x0158)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4059,8 +4054,8 @@ OPCODE(0x0158)
 /* BCHG */
 OPCODE(0x0160)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4076,8 +4071,8 @@ OPCODE(0x0160)
 /* BCHG */
 OPCODE(0x0168)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4093,8 +4088,8 @@ OPCODE(0x0168)
 /* BCHG */
 OPCODE(0x0170)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4110,8 +4105,8 @@ OPCODE(0x0170)
 /* BCHG */
 OPCODE(0x0178)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4126,8 +4121,8 @@ OPCODE(0x0178)
 /* BCHG */
 OPCODE(0x0179)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4142,8 +4137,8 @@ OPCODE(0x0179)
 /* BCHG */
 OPCODE(0x015F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4159,8 +4154,8 @@ OPCODE(0x015F)
 /* BCHG */
 OPCODE(0x0167)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4176,8 +4171,8 @@ OPCODE(0x0167)
 /* BCLR */
 OPCODE(0x0180)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     src = 1 << (src & 31);
@@ -4191,8 +4186,8 @@ OPCODE(0x0180)
 /* BCLR */
 OPCODE(0x0190)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4207,8 +4202,8 @@ OPCODE(0x0190)
 /* BCLR */
 OPCODE(0x0198)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4224,8 +4219,8 @@ OPCODE(0x0198)
 /* BCLR */
 OPCODE(0x01A0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4241,8 +4236,8 @@ OPCODE(0x01A0)
 /* BCLR */
 OPCODE(0x01A8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4258,8 +4253,8 @@ OPCODE(0x01A8)
 /* BCLR */
 OPCODE(0x01B0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4275,8 +4270,8 @@ OPCODE(0x01B0)
 /* BCLR */
 OPCODE(0x01B8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4291,8 +4286,8 @@ OPCODE(0x01B8)
 /* BCLR */
 OPCODE(0x01B9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4307,8 +4302,8 @@ OPCODE(0x01B9)
 /* BCLR */
 OPCODE(0x019F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4324,8 +4319,8 @@ OPCODE(0x019F)
 /* BCLR */
 OPCODE(0x01A7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4341,8 +4336,8 @@ OPCODE(0x01A7)
 /* BSET */
 OPCODE(0x01C0)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     src = 1 << (src & 31);
@@ -4356,8 +4351,8 @@ OPCODE(0x01C0)
 /* BSET */
 OPCODE(0x01D0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4372,8 +4367,8 @@ OPCODE(0x01D0)
 /* BSET */
 OPCODE(0x01D8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4389,8 +4384,8 @@ OPCODE(0x01D8)
 /* BSET */
 OPCODE(0x01E0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4406,8 +4401,8 @@ OPCODE(0x01E0)
 /* BSET */
 OPCODE(0x01E8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4423,8 +4418,8 @@ OPCODE(0x01E8)
 /* BSET */
 OPCODE(0x01F0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4440,8 +4435,8 @@ OPCODE(0x01F0)
 /* BSET */
 OPCODE(0x01F8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4456,8 +4451,8 @@ OPCODE(0x01F8)
 /* BSET */
 OPCODE(0x01F9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4472,8 +4467,8 @@ OPCODE(0x01F9)
 /* BSET */
 OPCODE(0x01DF)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4489,8 +4484,8 @@ OPCODE(0x01DF)
 /* BSET */
 OPCODE(0x01E7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     src = 1 << (src & 7);
@@ -4506,8 +4501,8 @@ OPCODE(0x01E7)
 /* MOVEPWaD */
 OPCODE(0x0108)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -4520,8 +4515,8 @@ OPCODE(0x0108)
 /* MOVEPLaD */
 OPCODE(0x0148)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -4542,7 +4537,7 @@ OPCODE(0x0148)
 /* MOVEPWDa */
 OPCODE(0x0188)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu32((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -4555,7 +4550,7 @@ OPCODE(0x0188)
 /* MOVEPLDa */
 OPCODE(0x01C8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu32((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -4573,7 +4568,7 @@ OPCODE(0x01C8)
 /* MOVEB */
 OPCODE(0x1000)
 {
-    uint32_t res;
+    u32 res;
 
     res = DREGu8((Opcode >> 0) & 7);
     SET_FLAGS_NZ_VC0
@@ -4584,7 +4579,7 @@ OPCODE(0x1000)
 /* MOVEB */
 OPCODE(0x1080)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu8((Opcode >> 0) & 7);
     SET_FLAGS_NZ_VC0
@@ -4596,7 +4591,7 @@ OPCODE(0x1080)
 /* MOVEB */
 OPCODE(0x10C0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu8((Opcode >> 0) & 7);
     SET_FLAGS_NZ_VC0
@@ -4609,7 +4604,7 @@ OPCODE(0x10C0)
 /* MOVEB */
 OPCODE(0x1100)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu8((Opcode >> 0) & 7);
     SET_FLAGS_NZ_VC0
@@ -4622,7 +4617,7 @@ OPCODE(0x1100)
 /* MOVEB */
 OPCODE(0x1140)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu8((Opcode >> 0) & 7);
     SET_FLAGS_NZ_VC0
@@ -4635,7 +4630,7 @@ OPCODE(0x1140)
 /* MOVEB */
 OPCODE(0x1180)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu8((Opcode >> 0) & 7);
     SET_FLAGS_NZ_VC0
@@ -4648,7 +4643,7 @@ OPCODE(0x1180)
 /* MOVEB */
 OPCODE(0x11C0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu8((Opcode >> 0) & 7);
     SET_FLAGS_NZ_VC0
@@ -4660,7 +4655,7 @@ OPCODE(0x11C0)
 /* MOVEB */
 OPCODE(0x13C0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu8((Opcode >> 0) & 7);
     SET_FLAGS_NZ_VC0
@@ -4672,7 +4667,7 @@ OPCODE(0x13C0)
 /* MOVEB */
 OPCODE(0x1EC0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu8((Opcode >> 0) & 7);
     SET_FLAGS_NZ_VC0
@@ -4685,7 +4680,7 @@ OPCODE(0x1EC0)
 /* MOVEB */
 OPCODE(0x1F00)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu8((Opcode >> 0) & 7);
     SET_FLAGS_NZ_VC0
@@ -4873,7 +4868,7 @@ OPCODE(0x1F08)
 /* MOVEB */
 OPCODE(0x1010)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, res)
@@ -4885,7 +4880,7 @@ OPCODE(0x1010)
 /* MOVEB */
 OPCODE(0x1090)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, res)
@@ -4898,7 +4893,7 @@ OPCODE(0x1090)
 /* MOVEB */
 OPCODE(0x10D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, res)
@@ -4912,7 +4907,7 @@ OPCODE(0x10D0)
 /* MOVEB */
 OPCODE(0x1110)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, res)
@@ -4926,7 +4921,7 @@ OPCODE(0x1110)
 /* MOVEB */
 OPCODE(0x1150)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, res)
@@ -4940,7 +4935,7 @@ OPCODE(0x1150)
 /* MOVEB */
 OPCODE(0x1190)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, res)
@@ -4954,7 +4949,7 @@ OPCODE(0x1190)
 /* MOVEB */
 OPCODE(0x11D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, res)
@@ -4967,7 +4962,7 @@ OPCODE(0x11D0)
 /* MOVEB */
 OPCODE(0x13D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, res)
@@ -4980,7 +4975,7 @@ OPCODE(0x13D0)
 /* MOVEB */
 OPCODE(0x1ED0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, res)
@@ -4994,7 +4989,7 @@ OPCODE(0x1ED0)
 /* MOVEB */
 OPCODE(0x1F10)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, res)
@@ -5008,7 +5003,7 @@ OPCODE(0x1F10)
 /* MOVEB */
 OPCODE(0x1018)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -5021,7 +5016,7 @@ OPCODE(0x1018)
 /* MOVEB */
 OPCODE(0x1098)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -5035,7 +5030,7 @@ OPCODE(0x1098)
 /* MOVEB */
 OPCODE(0x10D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -5050,7 +5045,7 @@ OPCODE(0x10D8)
 /* MOVEB */
 OPCODE(0x1118)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -5065,7 +5060,7 @@ OPCODE(0x1118)
 /* MOVEB */
 OPCODE(0x1158)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -5080,7 +5075,7 @@ OPCODE(0x1158)
 /* MOVEB */
 OPCODE(0x1198)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -5095,7 +5090,7 @@ OPCODE(0x1198)
 /* MOVEB */
 OPCODE(0x11D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -5109,7 +5104,7 @@ OPCODE(0x11D8)
 /* MOVEB */
 OPCODE(0x13D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -5123,7 +5118,7 @@ OPCODE(0x13D8)
 /* MOVEB */
 OPCODE(0x1ED8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -5138,7 +5133,7 @@ OPCODE(0x1ED8)
 /* MOVEB */
 OPCODE(0x1F18)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -5153,7 +5148,7 @@ OPCODE(0x1F18)
 /* MOVEB */
 OPCODE(0x1020)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -5166,7 +5161,7 @@ OPCODE(0x1020)
 /* MOVEB */
 OPCODE(0x10A0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -5180,7 +5175,7 @@ OPCODE(0x10A0)
 /* MOVEB */
 OPCODE(0x10E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -5195,7 +5190,7 @@ OPCODE(0x10E0)
 /* MOVEB */
 OPCODE(0x1120)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -5210,7 +5205,7 @@ OPCODE(0x1120)
 /* MOVEB */
 OPCODE(0x1160)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -5225,7 +5220,7 @@ OPCODE(0x1160)
 /* MOVEB */
 OPCODE(0x11A0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -5240,7 +5235,7 @@ OPCODE(0x11A0)
 /* MOVEB */
 OPCODE(0x11E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -5254,7 +5249,7 @@ OPCODE(0x11E0)
 /* MOVEB */
 OPCODE(0x13E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -5268,7 +5263,7 @@ OPCODE(0x13E0)
 /* MOVEB */
 OPCODE(0x1EE0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -5283,7 +5278,7 @@ OPCODE(0x1EE0)
 /* MOVEB */
 OPCODE(0x1F20)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -5298,7 +5293,7 @@ OPCODE(0x1F20)
 /* MOVEB */
 OPCODE(0x1028)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -5311,7 +5306,7 @@ OPCODE(0x1028)
 /* MOVEB */
 OPCODE(0x10A8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -5325,7 +5320,7 @@ OPCODE(0x10A8)
 /* MOVEB */
 OPCODE(0x10E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -5340,7 +5335,7 @@ OPCODE(0x10E8)
 /* MOVEB */
 OPCODE(0x1128)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -5355,7 +5350,7 @@ OPCODE(0x1128)
 /* MOVEB */
 OPCODE(0x1168)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -5370,7 +5365,7 @@ OPCODE(0x1168)
 /* MOVEB */
 OPCODE(0x11A8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -5385,7 +5380,7 @@ OPCODE(0x11A8)
 /* MOVEB */
 OPCODE(0x11E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -5399,7 +5394,7 @@ OPCODE(0x11E8)
 /* MOVEB */
 OPCODE(0x13E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -5413,7 +5408,7 @@ OPCODE(0x13E8)
 /* MOVEB */
 OPCODE(0x1EE8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -5428,7 +5423,7 @@ OPCODE(0x1EE8)
 /* MOVEB */
 OPCODE(0x1F28)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -5443,7 +5438,7 @@ OPCODE(0x1F28)
 /* MOVEB */
 OPCODE(0x1030)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -5456,7 +5451,7 @@ OPCODE(0x1030)
 /* MOVEB */
 OPCODE(0x10B0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -5470,7 +5465,7 @@ OPCODE(0x10B0)
 /* MOVEB */
 OPCODE(0x10F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -5485,7 +5480,7 @@ OPCODE(0x10F0)
 /* MOVEB */
 OPCODE(0x1130)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -5500,7 +5495,7 @@ OPCODE(0x1130)
 /* MOVEB */
 OPCODE(0x1170)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -5515,7 +5510,7 @@ OPCODE(0x1170)
 /* MOVEB */
 OPCODE(0x11B0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -5530,7 +5525,7 @@ OPCODE(0x11B0)
 /* MOVEB */
 OPCODE(0x11F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -5544,7 +5539,7 @@ OPCODE(0x11F0)
 /* MOVEB */
 OPCODE(0x13F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -5558,7 +5553,7 @@ OPCODE(0x13F0)
 /* MOVEB */
 OPCODE(0x1EF0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -5573,7 +5568,7 @@ OPCODE(0x1EF0)
 /* MOVEB */
 OPCODE(0x1F30)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -5588,7 +5583,7 @@ OPCODE(0x1F30)
 /* MOVEB */
 OPCODE(0x1038)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, res)
@@ -5600,7 +5595,7 @@ OPCODE(0x1038)
 /* MOVEB */
 OPCODE(0x10B8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, res)
@@ -5613,7 +5608,7 @@ OPCODE(0x10B8)
 /* MOVEB */
 OPCODE(0x10F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, res)
@@ -5627,7 +5622,7 @@ OPCODE(0x10F8)
 /* MOVEB */
 OPCODE(0x1138)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, res)
@@ -5641,7 +5636,7 @@ OPCODE(0x1138)
 /* MOVEB */
 OPCODE(0x1178)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, res)
@@ -5655,7 +5650,7 @@ OPCODE(0x1178)
 /* MOVEB */
 OPCODE(0x11B8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, res)
@@ -5669,7 +5664,7 @@ OPCODE(0x11B8)
 /* MOVEB */
 OPCODE(0x11F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, res)
@@ -5682,7 +5677,7 @@ OPCODE(0x11F8)
 /* MOVEB */
 OPCODE(0x13F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, res)
@@ -5695,7 +5690,7 @@ OPCODE(0x13F8)
 /* MOVEB */
 OPCODE(0x1EF8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, res)
@@ -5709,7 +5704,7 @@ OPCODE(0x1EF8)
 /* MOVEB */
 OPCODE(0x1F38)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, res)
@@ -5723,7 +5718,7 @@ OPCODE(0x1F38)
 /* MOVEB */
 OPCODE(0x1039)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, res)
@@ -5735,7 +5730,7 @@ OPCODE(0x1039)
 /* MOVEB */
 OPCODE(0x10B9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, res)
@@ -5748,7 +5743,7 @@ OPCODE(0x10B9)
 /* MOVEB */
 OPCODE(0x10F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, res)
@@ -5762,7 +5757,7 @@ OPCODE(0x10F9)
 /* MOVEB */
 OPCODE(0x1139)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, res)
@@ -5776,7 +5771,7 @@ OPCODE(0x1139)
 /* MOVEB */
 OPCODE(0x1179)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, res)
@@ -5790,7 +5785,7 @@ OPCODE(0x1179)
 /* MOVEB */
 OPCODE(0x11B9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, res)
@@ -5804,7 +5799,7 @@ OPCODE(0x11B9)
 /* MOVEB */
 OPCODE(0x11F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, res)
@@ -5817,7 +5812,7 @@ OPCODE(0x11F9)
 /* MOVEB */
 OPCODE(0x13F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, res)
@@ -5830,7 +5825,7 @@ OPCODE(0x13F9)
 /* MOVEB */
 OPCODE(0x1EF9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, res)
@@ -5844,7 +5839,7 @@ OPCODE(0x1EF9)
 /* MOVEB */
 OPCODE(0x1F39)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, res)
@@ -5858,7 +5853,7 @@ OPCODE(0x1F39)
 /* MOVEB */
 OPCODE(0x103A)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -5871,7 +5866,7 @@ OPCODE(0x103A)
 /* MOVEB */
 OPCODE(0x10BA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -5885,7 +5880,7 @@ OPCODE(0x10BA)
 /* MOVEB */
 OPCODE(0x10FA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -5900,7 +5895,7 @@ OPCODE(0x10FA)
 /* MOVEB */
 OPCODE(0x113A)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -5915,7 +5910,7 @@ OPCODE(0x113A)
 /* MOVEB */
 OPCODE(0x117A)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -5930,7 +5925,7 @@ OPCODE(0x117A)
 /* MOVEB */
 OPCODE(0x11BA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -5945,7 +5940,7 @@ OPCODE(0x11BA)
 /* MOVEB */
 OPCODE(0x11FA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -5959,7 +5954,7 @@ OPCODE(0x11FA)
 /* MOVEB */
 OPCODE(0x13FA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -5973,7 +5968,7 @@ OPCODE(0x13FA)
 /* MOVEB */
 OPCODE(0x1EFA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -5988,7 +5983,7 @@ OPCODE(0x1EFA)
 /* MOVEB */
 OPCODE(0x1F3A)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -6003,7 +5998,7 @@ OPCODE(0x1F3A)
 /* MOVEB */
 OPCODE(0x103B)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -6016,7 +6011,7 @@ OPCODE(0x103B)
 /* MOVEB */
 OPCODE(0x10BB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -6030,7 +6025,7 @@ OPCODE(0x10BB)
 /* MOVEB */
 OPCODE(0x10FB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -6045,7 +6040,7 @@ OPCODE(0x10FB)
 /* MOVEB */
 OPCODE(0x113B)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -6060,7 +6055,7 @@ OPCODE(0x113B)
 /* MOVEB */
 OPCODE(0x117B)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -6075,7 +6070,7 @@ OPCODE(0x117B)
 /* MOVEB */
 OPCODE(0x11BB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -6090,7 +6085,7 @@ OPCODE(0x11BB)
 /* MOVEB */
 OPCODE(0x11FB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -6104,7 +6099,7 @@ OPCODE(0x11FB)
 /* MOVEB */
 OPCODE(0x13FB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -6118,7 +6113,7 @@ OPCODE(0x13FB)
 /* MOVEB */
 OPCODE(0x1EFB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -6133,7 +6128,7 @@ OPCODE(0x1EFB)
 /* MOVEB */
 OPCODE(0x1F3B)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -6148,7 +6143,7 @@ OPCODE(0x1F3B)
 /* MOVEB */
 OPCODE(0x103C)
 {
-    uint32_t res;
+    u32 res;
 
     FETCH_BYTE(res);
     SET_FLAGS_NZ_VC0
@@ -6159,7 +6154,7 @@ OPCODE(0x103C)
 /* MOVEB */
 OPCODE(0x10BC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_BYTE(res);
     SET_FLAGS_NZ_VC0
@@ -6171,7 +6166,7 @@ OPCODE(0x10BC)
 /* MOVEB */
 OPCODE(0x10FC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_BYTE(res);
     SET_FLAGS_NZ_VC0
@@ -6184,7 +6179,7 @@ OPCODE(0x10FC)
 /* MOVEB */
 OPCODE(0x113C)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_BYTE(res);
     SET_FLAGS_NZ_VC0
@@ -6197,7 +6192,7 @@ OPCODE(0x113C)
 /* MOVEB */
 OPCODE(0x117C)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_BYTE(res);
     SET_FLAGS_NZ_VC0
@@ -6210,7 +6205,7 @@ OPCODE(0x117C)
 /* MOVEB */
 OPCODE(0x11BC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_BYTE(res);
     SET_FLAGS_NZ_VC0
@@ -6223,7 +6218,7 @@ OPCODE(0x11BC)
 /* MOVEB */
 OPCODE(0x11FC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_BYTE(res);
     SET_FLAGS_NZ_VC0
@@ -6235,7 +6230,7 @@ OPCODE(0x11FC)
 /* MOVEB */
 OPCODE(0x13FC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_BYTE(res);
     SET_FLAGS_NZ_VC0
@@ -6247,7 +6242,7 @@ OPCODE(0x13FC)
 /* MOVEB */
 OPCODE(0x1EFC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_BYTE(res);
     SET_FLAGS_NZ_VC0
@@ -6260,7 +6255,7 @@ OPCODE(0x1EFC)
 /* MOVEB */
 OPCODE(0x1F3C)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_BYTE(res);
     SET_FLAGS_NZ_VC0
@@ -6273,7 +6268,7 @@ OPCODE(0x1F3C)
 /* MOVEB */
 OPCODE(0x101F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -6286,7 +6281,7 @@ OPCODE(0x101F)
 /* MOVEB */
 OPCODE(0x109F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -6300,7 +6295,7 @@ OPCODE(0x109F)
 /* MOVEB */
 OPCODE(0x10DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -6315,7 +6310,7 @@ OPCODE(0x10DF)
 /* MOVEB */
 OPCODE(0x111F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -6330,7 +6325,7 @@ OPCODE(0x111F)
 /* MOVEB */
 OPCODE(0x115F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -6345,7 +6340,7 @@ OPCODE(0x115F)
 /* MOVEB */
 OPCODE(0x119F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -6360,7 +6355,7 @@ OPCODE(0x119F)
 /* MOVEB */
 OPCODE(0x11DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -6374,7 +6369,7 @@ OPCODE(0x11DF)
 /* MOVEB */
 OPCODE(0x13DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -6388,7 +6383,7 @@ OPCODE(0x13DF)
 /* MOVEB */
 OPCODE(0x1EDF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -6403,7 +6398,7 @@ OPCODE(0x1EDF)
 /* MOVEB */
 OPCODE(0x1F1F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -6418,7 +6413,7 @@ OPCODE(0x1F1F)
 /* MOVEB */
 OPCODE(0x1027)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -6431,7 +6426,7 @@ OPCODE(0x1027)
 /* MOVEB */
 OPCODE(0x10A7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -6445,7 +6440,7 @@ OPCODE(0x10A7)
 /* MOVEB */
 OPCODE(0x10E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -6460,7 +6455,7 @@ OPCODE(0x10E7)
 /* MOVEB */
 OPCODE(0x1127)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -6475,7 +6470,7 @@ OPCODE(0x1127)
 /* MOVEB */
 OPCODE(0x1167)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -6490,7 +6485,7 @@ OPCODE(0x1167)
 /* MOVEB */
 OPCODE(0x11A7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -6505,7 +6500,7 @@ OPCODE(0x11A7)
 /* MOVEB */
 OPCODE(0x11E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -6519,7 +6514,7 @@ OPCODE(0x11E7)
 /* MOVEB */
 OPCODE(0x13E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -6533,7 +6528,7 @@ OPCODE(0x13E7)
 /* MOVEB */
 OPCODE(0x1EE7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -6548,7 +6543,7 @@ OPCODE(0x1EE7)
 /* MOVEB */
 OPCODE(0x1F27)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -6563,7 +6558,7 @@ OPCODE(0x1F27)
 /* MOVEL */
 OPCODE(0x2000)
 {
-    uint32_t res;
+    u32 res;
 
     res = DREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6575,7 +6570,7 @@ OPCODE(0x2000)
 /* MOVEL */
 OPCODE(0x2080)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6588,7 +6583,7 @@ OPCODE(0x2080)
 /* MOVEL */
 OPCODE(0x20C0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6602,7 +6597,7 @@ OPCODE(0x20C0)
 /* MOVEL */
 OPCODE(0x2100)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6616,7 +6611,7 @@ OPCODE(0x2100)
 /* MOVEL */
 OPCODE(0x2140)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6630,7 +6625,7 @@ OPCODE(0x2140)
 /* MOVEL */
 OPCODE(0x2180)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6644,7 +6639,7 @@ OPCODE(0x2180)
 /* MOVEL */
 OPCODE(0x21C0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6657,7 +6652,7 @@ OPCODE(0x21C0)
 /* MOVEL */
 OPCODE(0x23C0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6670,7 +6665,7 @@ OPCODE(0x23C0)
 /* MOVEL */
 OPCODE(0x2EC0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6684,7 +6679,7 @@ OPCODE(0x2EC0)
 /* MOVEL */
 OPCODE(0x2F00)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6698,7 +6693,7 @@ OPCODE(0x2F00)
 /* MOVEL */
 OPCODE(0x2008)
 {
-    uint32_t res;
+    u32 res;
 
     res = AREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6710,7 +6705,7 @@ OPCODE(0x2008)
 /* MOVEL */
 OPCODE(0x2088)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6723,7 +6718,7 @@ OPCODE(0x2088)
 /* MOVEL */
 OPCODE(0x20C8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6737,7 +6732,7 @@ OPCODE(0x20C8)
 /* MOVEL */
 OPCODE(0x2108)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6751,7 +6746,7 @@ OPCODE(0x2108)
 /* MOVEL */
 OPCODE(0x2148)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6765,7 +6760,7 @@ OPCODE(0x2148)
 /* MOVEL */
 OPCODE(0x2188)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6779,7 +6774,7 @@ OPCODE(0x2188)
 /* MOVEL */
 OPCODE(0x21C8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6792,7 +6787,7 @@ OPCODE(0x21C8)
 /* MOVEL */
 OPCODE(0x23C8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6805,7 +6800,7 @@ OPCODE(0x23C8)
 /* MOVEL */
 OPCODE(0x2EC8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6819,7 +6814,7 @@ OPCODE(0x2EC8)
 /* MOVEL */
 OPCODE(0x2F08)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -6833,7 +6828,7 @@ OPCODE(0x2F08)
 /* MOVEL */
 OPCODE(0x2010)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, res)
@@ -6846,7 +6841,7 @@ OPCODE(0x2010)
 /* MOVEL */
 OPCODE(0x2090)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, res)
@@ -6860,7 +6855,7 @@ OPCODE(0x2090)
 /* MOVEL */
 OPCODE(0x20D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, res)
@@ -6875,7 +6870,7 @@ OPCODE(0x20D0)
 /* MOVEL */
 OPCODE(0x2110)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, res)
@@ -6890,7 +6885,7 @@ OPCODE(0x2110)
 /* MOVEL */
 OPCODE(0x2150)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, res)
@@ -6905,7 +6900,7 @@ OPCODE(0x2150)
 /* MOVEL */
 OPCODE(0x2190)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, res)
@@ -6920,7 +6915,7 @@ OPCODE(0x2190)
 /* MOVEL */
 OPCODE(0x21D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, res)
@@ -6934,7 +6929,7 @@ OPCODE(0x21D0)
 /* MOVEL */
 OPCODE(0x23D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, res)
@@ -6948,7 +6943,7 @@ OPCODE(0x23D0)
 /* MOVEL */
 OPCODE(0x2ED0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, res)
@@ -6963,7 +6958,7 @@ OPCODE(0x2ED0)
 /* MOVEL */
 OPCODE(0x2F10)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, res)
@@ -6978,7 +6973,7 @@ OPCODE(0x2F10)
 /* MOVEL */
 OPCODE(0x2018)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -6992,7 +6987,7 @@ OPCODE(0x2018)
 /* MOVEL */
 OPCODE(0x2098)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -7007,7 +7002,7 @@ OPCODE(0x2098)
 /* MOVEL */
 OPCODE(0x20D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -7023,7 +7018,7 @@ OPCODE(0x20D8)
 /* MOVEL */
 OPCODE(0x2118)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -7039,7 +7034,7 @@ OPCODE(0x2118)
 /* MOVEL */
 OPCODE(0x2158)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -7055,7 +7050,7 @@ OPCODE(0x2158)
 /* MOVEL */
 OPCODE(0x2198)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -7071,7 +7066,7 @@ OPCODE(0x2198)
 /* MOVEL */
 OPCODE(0x21D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -7086,7 +7081,7 @@ OPCODE(0x21D8)
 /* MOVEL */
 OPCODE(0x23D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -7101,7 +7096,7 @@ OPCODE(0x23D8)
 /* MOVEL */
 OPCODE(0x2ED8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -7117,7 +7112,7 @@ OPCODE(0x2ED8)
 /* MOVEL */
 OPCODE(0x2F18)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -7133,7 +7128,7 @@ OPCODE(0x2F18)
 /* MOVEL */
 OPCODE(0x2020)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -7147,7 +7142,7 @@ OPCODE(0x2020)
 /* MOVEL */
 OPCODE(0x20A0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -7162,7 +7157,7 @@ OPCODE(0x20A0)
 /* MOVEL */
 OPCODE(0x20E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -7178,7 +7173,7 @@ OPCODE(0x20E0)
 /* MOVEL */
 OPCODE(0x2120)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -7194,7 +7189,7 @@ OPCODE(0x2120)
 /* MOVEL */
 OPCODE(0x2160)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -7210,7 +7205,7 @@ OPCODE(0x2160)
 /* MOVEL */
 OPCODE(0x21A0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -7226,7 +7221,7 @@ OPCODE(0x21A0)
 /* MOVEL */
 OPCODE(0x21E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -7241,7 +7236,7 @@ OPCODE(0x21E0)
 /* MOVEL */
 OPCODE(0x23E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -7256,7 +7251,7 @@ OPCODE(0x23E0)
 /* MOVEL */
 OPCODE(0x2EE0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -7272,7 +7267,7 @@ OPCODE(0x2EE0)
 /* MOVEL */
 OPCODE(0x2F20)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -7288,7 +7283,7 @@ OPCODE(0x2F20)
 /* MOVEL */
 OPCODE(0x2028)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -7302,7 +7297,7 @@ OPCODE(0x2028)
 /* MOVEL */
 OPCODE(0x20A8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -7317,7 +7312,7 @@ OPCODE(0x20A8)
 /* MOVEL */
 OPCODE(0x20E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -7333,7 +7328,7 @@ OPCODE(0x20E8)
 /* MOVEL */
 OPCODE(0x2128)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -7349,7 +7344,7 @@ OPCODE(0x2128)
 /* MOVEL */
 OPCODE(0x2168)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -7365,7 +7360,7 @@ OPCODE(0x2168)
 /* MOVEL */
 OPCODE(0x21A8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -7381,7 +7376,7 @@ OPCODE(0x21A8)
 /* MOVEL */
 OPCODE(0x21E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -7396,7 +7391,7 @@ OPCODE(0x21E8)
 /* MOVEL */
 OPCODE(0x23E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -7411,7 +7406,7 @@ OPCODE(0x23E8)
 /* MOVEL */
 OPCODE(0x2EE8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -7427,7 +7422,7 @@ OPCODE(0x2EE8)
 /* MOVEL */
 OPCODE(0x2F28)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -7443,7 +7438,7 @@ OPCODE(0x2F28)
 /* MOVEL */
 OPCODE(0x2030)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -7457,7 +7452,7 @@ OPCODE(0x2030)
 /* MOVEL */
 OPCODE(0x20B0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -7472,7 +7467,7 @@ OPCODE(0x20B0)
 /* MOVEL */
 OPCODE(0x20F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -7488,7 +7483,7 @@ OPCODE(0x20F0)
 /* MOVEL */
 OPCODE(0x2130)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -7504,7 +7499,7 @@ OPCODE(0x2130)
 /* MOVEL */
 OPCODE(0x2170)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -7520,7 +7515,7 @@ OPCODE(0x2170)
 /* MOVEL */
 OPCODE(0x21B0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -7536,7 +7531,7 @@ OPCODE(0x21B0)
 /* MOVEL */
 OPCODE(0x21F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -7551,7 +7546,7 @@ OPCODE(0x21F0)
 /* MOVEL */
 OPCODE(0x23F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -7566,7 +7561,7 @@ OPCODE(0x23F0)
 /* MOVEL */
 OPCODE(0x2EF0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -7582,7 +7577,7 @@ OPCODE(0x2EF0)
 /* MOVEL */
 OPCODE(0x2F30)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -7598,7 +7593,7 @@ OPCODE(0x2F30)
 /* MOVEL */
 OPCODE(0x2038)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, res)
@@ -7611,7 +7606,7 @@ OPCODE(0x2038)
 /* MOVEL */
 OPCODE(0x20B8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, res)
@@ -7625,7 +7620,7 @@ OPCODE(0x20B8)
 /* MOVEL */
 OPCODE(0x20F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, res)
@@ -7640,7 +7635,7 @@ OPCODE(0x20F8)
 /* MOVEL */
 OPCODE(0x2138)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, res)
@@ -7655,7 +7650,7 @@ OPCODE(0x2138)
 /* MOVEL */
 OPCODE(0x2178)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, res)
@@ -7670,7 +7665,7 @@ OPCODE(0x2178)
 /* MOVEL */
 OPCODE(0x21B8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, res)
@@ -7685,7 +7680,7 @@ OPCODE(0x21B8)
 /* MOVEL */
 OPCODE(0x21F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, res)
@@ -7699,7 +7694,7 @@ OPCODE(0x21F8)
 /* MOVEL */
 OPCODE(0x23F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, res)
@@ -7713,7 +7708,7 @@ OPCODE(0x23F8)
 /* MOVEL */
 OPCODE(0x2EF8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, res)
@@ -7728,7 +7723,7 @@ OPCODE(0x2EF8)
 /* MOVEL */
 OPCODE(0x2F38)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, res)
@@ -7743,7 +7738,7 @@ OPCODE(0x2F38)
 /* MOVEL */
 OPCODE(0x2039)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, res)
@@ -7756,7 +7751,7 @@ OPCODE(0x2039)
 /* MOVEL */
 OPCODE(0x20B9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, res)
@@ -7770,7 +7765,7 @@ OPCODE(0x20B9)
 /* MOVEL */
 OPCODE(0x20F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, res)
@@ -7785,7 +7780,7 @@ OPCODE(0x20F9)
 /* MOVEL */
 OPCODE(0x2139)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, res)
@@ -7800,7 +7795,7 @@ OPCODE(0x2139)
 /* MOVEL */
 OPCODE(0x2179)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, res)
@@ -7815,7 +7810,7 @@ OPCODE(0x2179)
 /* MOVEL */
 OPCODE(0x21B9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, res)
@@ -7830,7 +7825,7 @@ OPCODE(0x21B9)
 /* MOVEL */
 OPCODE(0x21F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, res)
@@ -7844,7 +7839,7 @@ OPCODE(0x21F9)
 /* MOVEL */
 OPCODE(0x23F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, res)
@@ -7858,7 +7853,7 @@ OPCODE(0x23F9)
 /* MOVEL */
 OPCODE(0x2EF9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, res)
@@ -7873,7 +7868,7 @@ OPCODE(0x2EF9)
 /* MOVEL */
 OPCODE(0x2F39)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, res)
@@ -7888,7 +7883,7 @@ OPCODE(0x2F39)
 /* MOVEL */
 OPCODE(0x203A)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -7902,7 +7897,7 @@ OPCODE(0x203A)
 /* MOVEL */
 OPCODE(0x20BA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -7917,7 +7912,7 @@ OPCODE(0x20BA)
 /* MOVEL */
 OPCODE(0x20FA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -7933,7 +7928,7 @@ OPCODE(0x20FA)
 /* MOVEL */
 OPCODE(0x213A)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -7949,7 +7944,7 @@ OPCODE(0x213A)
 /* MOVEL */
 OPCODE(0x217A)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -7965,7 +7960,7 @@ OPCODE(0x217A)
 /* MOVEL */
 OPCODE(0x21BA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -7981,7 +7976,7 @@ OPCODE(0x21BA)
 /* MOVEL */
 OPCODE(0x21FA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -7996,7 +7991,7 @@ OPCODE(0x21FA)
 /* MOVEL */
 OPCODE(0x23FA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -8011,7 +8006,7 @@ OPCODE(0x23FA)
 /* MOVEL */
 OPCODE(0x2EFA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -8027,7 +8022,7 @@ OPCODE(0x2EFA)
 /* MOVEL */
 OPCODE(0x2F3A)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -8043,7 +8038,7 @@ OPCODE(0x2F3A)
 /* MOVEL */
 OPCODE(0x203B)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -8057,7 +8052,7 @@ OPCODE(0x203B)
 /* MOVEL */
 OPCODE(0x20BB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -8072,7 +8067,7 @@ OPCODE(0x20BB)
 /* MOVEL */
 OPCODE(0x20FB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -8088,7 +8083,7 @@ OPCODE(0x20FB)
 /* MOVEL */
 OPCODE(0x213B)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -8104,7 +8099,7 @@ OPCODE(0x213B)
 /* MOVEL */
 OPCODE(0x217B)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -8120,7 +8115,7 @@ OPCODE(0x217B)
 /* MOVEL */
 OPCODE(0x21BB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -8136,7 +8131,7 @@ OPCODE(0x21BB)
 /* MOVEL */
 OPCODE(0x21FB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -8151,7 +8146,7 @@ OPCODE(0x21FB)
 /* MOVEL */
 OPCODE(0x23FB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -8166,7 +8161,7 @@ OPCODE(0x23FB)
 /* MOVEL */
 OPCODE(0x2EFB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -8182,7 +8177,7 @@ OPCODE(0x2EFB)
 /* MOVEL */
 OPCODE(0x2F3B)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -8198,7 +8193,7 @@ OPCODE(0x2F3B)
 /* MOVEL */
 OPCODE(0x203C)
 {
-    uint32_t res;
+    u32 res;
 
     FETCH_LONG(res);
     SET_FLAGS_Z_VC0
@@ -8210,7 +8205,7 @@ OPCODE(0x203C)
 /* MOVEL */
 OPCODE(0x20BC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(res);
     SET_FLAGS_Z_VC0
@@ -8223,7 +8218,7 @@ OPCODE(0x20BC)
 /* MOVEL */
 OPCODE(0x20FC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(res);
     SET_FLAGS_Z_VC0
@@ -8237,7 +8232,7 @@ OPCODE(0x20FC)
 /* MOVEL */
 OPCODE(0x213C)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(res);
     SET_FLAGS_Z_VC0
@@ -8251,7 +8246,7 @@ OPCODE(0x213C)
 /* MOVEL */
 OPCODE(0x217C)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(res);
     SET_FLAGS_Z_VC0
@@ -8265,7 +8260,7 @@ OPCODE(0x217C)
 /* MOVEL */
 OPCODE(0x21BC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(res);
     SET_FLAGS_Z_VC0
@@ -8279,7 +8274,7 @@ OPCODE(0x21BC)
 /* MOVEL */
 OPCODE(0x21FC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(res);
     SET_FLAGS_Z_VC0
@@ -8292,7 +8287,7 @@ OPCODE(0x21FC)
 /* MOVEL */
 OPCODE(0x23FC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(res);
     SET_FLAGS_Z_VC0
@@ -8305,7 +8300,7 @@ OPCODE(0x23FC)
 /* MOVEL */
 OPCODE(0x2EFC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(res);
     SET_FLAGS_Z_VC0
@@ -8319,7 +8314,7 @@ OPCODE(0x2EFC)
 /* MOVEL */
 OPCODE(0x2F3C)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(res);
     SET_FLAGS_Z_VC0
@@ -8333,7 +8328,7 @@ OPCODE(0x2F3C)
 /* MOVEL */
 OPCODE(0x201F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -8347,7 +8342,7 @@ OPCODE(0x201F)
 /* MOVEL */
 OPCODE(0x209F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -8362,7 +8357,7 @@ OPCODE(0x209F)
 /* MOVEL */
 OPCODE(0x20DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -8378,7 +8373,7 @@ OPCODE(0x20DF)
 /* MOVEL */
 OPCODE(0x211F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -8394,7 +8389,7 @@ OPCODE(0x211F)
 /* MOVEL */
 OPCODE(0x215F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -8410,7 +8405,7 @@ OPCODE(0x215F)
 /* MOVEL */
 OPCODE(0x219F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -8426,7 +8421,7 @@ OPCODE(0x219F)
 /* MOVEL */
 OPCODE(0x21DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -8441,7 +8436,7 @@ OPCODE(0x21DF)
 /* MOVEL */
 OPCODE(0x23DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -8456,7 +8451,7 @@ OPCODE(0x23DF)
 /* MOVEL */
 OPCODE(0x2EDF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -8472,7 +8467,7 @@ OPCODE(0x2EDF)
 /* MOVEL */
 OPCODE(0x2F1F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -8488,7 +8483,7 @@ OPCODE(0x2F1F)
 /* MOVEL */
 OPCODE(0x2027)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -8502,7 +8497,7 @@ OPCODE(0x2027)
 /* MOVEL */
 OPCODE(0x20A7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -8517,7 +8512,7 @@ OPCODE(0x20A7)
 /* MOVEL */
 OPCODE(0x20E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -8533,7 +8528,7 @@ OPCODE(0x20E7)
 /* MOVEL */
 OPCODE(0x2127)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -8549,7 +8544,7 @@ OPCODE(0x2127)
 /* MOVEL */
 OPCODE(0x2167)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -8565,7 +8560,7 @@ OPCODE(0x2167)
 /* MOVEL */
 OPCODE(0x21A7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -8581,7 +8576,7 @@ OPCODE(0x21A7)
 /* MOVEL */
 OPCODE(0x21E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -8596,7 +8591,7 @@ OPCODE(0x21E7)
 /* MOVEL */
 OPCODE(0x23E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -8611,7 +8606,7 @@ OPCODE(0x23E7)
 /* MOVEL */
 OPCODE(0x2EE7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -8627,7 +8622,7 @@ OPCODE(0x2EE7)
 /* MOVEL */
 OPCODE(0x2F27)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -8643,9 +8638,9 @@ OPCODE(0x2F27)
 /* MOVEAL */
 OPCODE(0x2040)
 {
-    uint32_t res;
+    u32 res;
 
-    res = (int32_t)DREGs32((Opcode >> 0) & 7);
+    res = (s32)DREGs32((Opcode >> 0) & 7);
     AREG((Opcode >> 9) & 7) = res;
     RET(4)
 }
@@ -8653,9 +8648,9 @@ OPCODE(0x2040)
 /* MOVEAL */
 OPCODE(0x2048)
 {
-    uint32_t res;
+    u32 res;
 
-    res = (int32_t)AREGs32((Opcode >> 0) & 7);
+    res = (s32)AREGs32((Opcode >> 0) & 7);
     AREG((Opcode >> 9) & 7) = res;
     RET(4)
 }
@@ -8663,7 +8658,7 @@ OPCODE(0x2048)
 /* MOVEAL */
 OPCODE(0x2050)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READSX_LONG_F(adr, res)
@@ -8674,7 +8669,7 @@ OPCODE(0x2050)
 /* MOVEAL */
 OPCODE(0x2058)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -8686,7 +8681,7 @@ OPCODE(0x2058)
 /* MOVEAL */
 OPCODE(0x2060)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -8698,7 +8693,7 @@ OPCODE(0x2060)
 /* MOVEAL */
 OPCODE(0x2068)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -8710,7 +8705,7 @@ OPCODE(0x2068)
 /* MOVEAL */
 OPCODE(0x2070)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -8722,7 +8717,7 @@ OPCODE(0x2070)
 /* MOVEAL */
 OPCODE(0x2078)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READSX_LONG_F(adr, res)
@@ -8733,7 +8728,7 @@ OPCODE(0x2078)
 /* MOVEAL */
 OPCODE(0x2079)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READSX_LONG_F(adr, res)
@@ -8744,7 +8739,7 @@ OPCODE(0x2079)
 /* MOVEAL */
 OPCODE(0x207A)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -8756,7 +8751,7 @@ OPCODE(0x207A)
 /* MOVEAL */
 OPCODE(0x207B)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -8768,7 +8763,7 @@ OPCODE(0x207B)
 /* MOVEAL */
 OPCODE(0x207C)
 {
-    uint32_t res;
+    u32 res;
 
     FETCH_LONG(res);
     AREG((Opcode >> 9) & 7) = res;
@@ -8778,7 +8773,7 @@ OPCODE(0x207C)
 /* MOVEAL */
 OPCODE(0x205F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -8790,7 +8785,7 @@ OPCODE(0x205F)
 /* MOVEAL */
 OPCODE(0x2067)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -8802,7 +8797,7 @@ OPCODE(0x2067)
 /* MOVEW */
 OPCODE(0x3000)
 {
-    uint32_t res;
+    u32 res;
 
     res = DREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -8814,7 +8809,7 @@ OPCODE(0x3000)
 /* MOVEW */
 OPCODE(0x3080)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -8827,7 +8822,7 @@ OPCODE(0x3080)
 /* MOVEW */
 OPCODE(0x30C0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -8841,7 +8836,7 @@ OPCODE(0x30C0)
 /* MOVEW */
 OPCODE(0x3100)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -8855,7 +8850,7 @@ OPCODE(0x3100)
 /* MOVEW */
 OPCODE(0x3140)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -8869,7 +8864,7 @@ OPCODE(0x3140)
 /* MOVEW */
 OPCODE(0x3180)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -8883,7 +8878,7 @@ OPCODE(0x3180)
 /* MOVEW */
 OPCODE(0x31C0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -8896,7 +8891,7 @@ OPCODE(0x31C0)
 /* MOVEW */
 OPCODE(0x33C0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -8909,7 +8904,7 @@ OPCODE(0x33C0)
 /* MOVEW */
 OPCODE(0x3EC0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -8923,7 +8918,7 @@ OPCODE(0x3EC0)
 /* MOVEW */
 OPCODE(0x3F00)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = DREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -8937,7 +8932,7 @@ OPCODE(0x3F00)
 /* MOVEW */
 OPCODE(0x3008)
 {
-    uint32_t res;
+    u32 res;
 
     res = AREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -8949,7 +8944,7 @@ OPCODE(0x3008)
 /* MOVEW */
 OPCODE(0x3088)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -8962,7 +8957,7 @@ OPCODE(0x3088)
 /* MOVEW */
 OPCODE(0x30C8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -8976,7 +8971,7 @@ OPCODE(0x30C8)
 /* MOVEW */
 OPCODE(0x3108)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -8990,7 +8985,7 @@ OPCODE(0x3108)
 /* MOVEW */
 OPCODE(0x3148)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -9004,7 +8999,7 @@ OPCODE(0x3148)
 /* MOVEW */
 OPCODE(0x3188)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -9018,7 +9013,7 @@ OPCODE(0x3188)
 /* MOVEW */
 OPCODE(0x31C8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -9031,7 +9026,7 @@ OPCODE(0x31C8)
 /* MOVEW */
 OPCODE(0x33C8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -9044,7 +9039,7 @@ OPCODE(0x33C8)
 /* MOVEW */
 OPCODE(0x3EC8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -9058,7 +9053,7 @@ OPCODE(0x3EC8)
 /* MOVEW */
 OPCODE(0x3F08)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = AREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -9072,7 +9067,7 @@ OPCODE(0x3F08)
 /* MOVEW */
 OPCODE(0x3010)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, res)
@@ -9085,7 +9080,7 @@ OPCODE(0x3010)
 /* MOVEW */
 OPCODE(0x3090)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, res)
@@ -9099,7 +9094,7 @@ OPCODE(0x3090)
 /* MOVEW */
 OPCODE(0x30D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, res)
@@ -9114,7 +9109,7 @@ OPCODE(0x30D0)
 /* MOVEW */
 OPCODE(0x3110)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, res)
@@ -9129,7 +9124,7 @@ OPCODE(0x3110)
 /* MOVEW */
 OPCODE(0x3150)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, res)
@@ -9144,7 +9139,7 @@ OPCODE(0x3150)
 /* MOVEW */
 OPCODE(0x3190)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, res)
@@ -9159,7 +9154,7 @@ OPCODE(0x3190)
 /* MOVEW */
 OPCODE(0x31D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, res)
@@ -9173,7 +9168,7 @@ OPCODE(0x31D0)
 /* MOVEW */
 OPCODE(0x33D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, res)
@@ -9187,7 +9182,7 @@ OPCODE(0x33D0)
 /* MOVEW */
 OPCODE(0x3ED0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, res)
@@ -9202,7 +9197,7 @@ OPCODE(0x3ED0)
 /* MOVEW */
 OPCODE(0x3F10)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, res)
@@ -9217,7 +9212,7 @@ OPCODE(0x3F10)
 /* MOVEW */
 OPCODE(0x3018)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -9231,7 +9226,7 @@ OPCODE(0x3018)
 /* MOVEW */
 OPCODE(0x3098)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -9246,7 +9241,7 @@ OPCODE(0x3098)
 /* MOVEW */
 OPCODE(0x30D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -9262,7 +9257,7 @@ OPCODE(0x30D8)
 /* MOVEW */
 OPCODE(0x3118)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -9278,7 +9273,7 @@ OPCODE(0x3118)
 /* MOVEW */
 OPCODE(0x3158)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -9294,7 +9289,7 @@ OPCODE(0x3158)
 /* MOVEW */
 OPCODE(0x3198)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -9310,7 +9305,7 @@ OPCODE(0x3198)
 /* MOVEW */
 OPCODE(0x31D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -9325,7 +9320,7 @@ OPCODE(0x31D8)
 /* MOVEW */
 OPCODE(0x33D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -9340,7 +9335,7 @@ OPCODE(0x33D8)
 /* MOVEW */
 OPCODE(0x3ED8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -9356,7 +9351,7 @@ OPCODE(0x3ED8)
 /* MOVEW */
 OPCODE(0x3F18)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -9372,7 +9367,7 @@ OPCODE(0x3F18)
 /* MOVEW */
 OPCODE(0x3020)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -9386,7 +9381,7 @@ OPCODE(0x3020)
 /* MOVEW */
 OPCODE(0x30A0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -9401,7 +9396,7 @@ OPCODE(0x30A0)
 /* MOVEW */
 OPCODE(0x30E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -9417,7 +9412,7 @@ OPCODE(0x30E0)
 /* MOVEW */
 OPCODE(0x3120)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -9433,7 +9428,7 @@ OPCODE(0x3120)
 /* MOVEW */
 OPCODE(0x3160)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -9449,7 +9444,7 @@ OPCODE(0x3160)
 /* MOVEW */
 OPCODE(0x31A0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -9465,7 +9460,7 @@ OPCODE(0x31A0)
 /* MOVEW */
 OPCODE(0x31E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -9480,7 +9475,7 @@ OPCODE(0x31E0)
 /* MOVEW */
 OPCODE(0x33E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -9495,7 +9490,7 @@ OPCODE(0x33E0)
 /* MOVEW */
 OPCODE(0x3EE0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -9511,7 +9506,7 @@ OPCODE(0x3EE0)
 /* MOVEW */
 OPCODE(0x3F20)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -9527,7 +9522,7 @@ OPCODE(0x3F20)
 /* MOVEW */
 OPCODE(0x3028)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -9541,7 +9536,7 @@ OPCODE(0x3028)
 /* MOVEW */
 OPCODE(0x30A8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -9556,7 +9551,7 @@ OPCODE(0x30A8)
 /* MOVEW */
 OPCODE(0x30E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -9572,7 +9567,7 @@ OPCODE(0x30E8)
 /* MOVEW */
 OPCODE(0x3128)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -9588,7 +9583,7 @@ OPCODE(0x3128)
 /* MOVEW */
 OPCODE(0x3168)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -9604,7 +9599,7 @@ OPCODE(0x3168)
 /* MOVEW */
 OPCODE(0x31A8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -9620,7 +9615,7 @@ OPCODE(0x31A8)
 /* MOVEW */
 OPCODE(0x31E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -9635,7 +9630,7 @@ OPCODE(0x31E8)
 /* MOVEW */
 OPCODE(0x33E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -9650,7 +9645,7 @@ OPCODE(0x33E8)
 /* MOVEW */
 OPCODE(0x3EE8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -9666,7 +9661,7 @@ OPCODE(0x3EE8)
 /* MOVEW */
 OPCODE(0x3F28)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -9682,7 +9677,7 @@ OPCODE(0x3F28)
 /* MOVEW */
 OPCODE(0x3030)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -9696,7 +9691,7 @@ OPCODE(0x3030)
 /* MOVEW */
 OPCODE(0x30B0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -9711,7 +9706,7 @@ OPCODE(0x30B0)
 /* MOVEW */
 OPCODE(0x30F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -9727,7 +9722,7 @@ OPCODE(0x30F0)
 /* MOVEW */
 OPCODE(0x3130)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -9743,7 +9738,7 @@ OPCODE(0x3130)
 /* MOVEW */
 OPCODE(0x3170)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -9759,7 +9754,7 @@ OPCODE(0x3170)
 /* MOVEW */
 OPCODE(0x31B0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -9775,7 +9770,7 @@ OPCODE(0x31B0)
 /* MOVEW */
 OPCODE(0x31F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -9790,7 +9785,7 @@ OPCODE(0x31F0)
 /* MOVEW */
 OPCODE(0x33F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -9805,7 +9800,7 @@ OPCODE(0x33F0)
 /* MOVEW */
 OPCODE(0x3EF0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -9821,7 +9816,7 @@ OPCODE(0x3EF0)
 /* MOVEW */
 OPCODE(0x3F30)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -9837,7 +9832,7 @@ OPCODE(0x3F30)
 /* MOVEW */
 OPCODE(0x3038)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, res)
@@ -9850,7 +9845,7 @@ OPCODE(0x3038)
 /* MOVEW */
 OPCODE(0x30B8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, res)
@@ -9864,7 +9859,7 @@ OPCODE(0x30B8)
 /* MOVEW */
 OPCODE(0x30F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, res)
@@ -9879,7 +9874,7 @@ OPCODE(0x30F8)
 /* MOVEW */
 OPCODE(0x3138)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, res)
@@ -9894,7 +9889,7 @@ OPCODE(0x3138)
 /* MOVEW */
 OPCODE(0x3178)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, res)
@@ -9909,7 +9904,7 @@ OPCODE(0x3178)
 /* MOVEW */
 OPCODE(0x31B8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, res)
@@ -9924,7 +9919,7 @@ OPCODE(0x31B8)
 /* MOVEW */
 OPCODE(0x31F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, res)
@@ -9938,7 +9933,7 @@ OPCODE(0x31F8)
 /* MOVEW */
 OPCODE(0x33F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, res)
@@ -9952,7 +9947,7 @@ OPCODE(0x33F8)
 /* MOVEW */
 OPCODE(0x3EF8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, res)
@@ -9967,7 +9962,7 @@ OPCODE(0x3EF8)
 /* MOVEW */
 OPCODE(0x3F38)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, res)
@@ -9982,7 +9977,7 @@ OPCODE(0x3F38)
 /* MOVEW */
 OPCODE(0x3039)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, res)
@@ -9995,7 +9990,7 @@ OPCODE(0x3039)
 /* MOVEW */
 OPCODE(0x30B9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, res)
@@ -10009,7 +10004,7 @@ OPCODE(0x30B9)
 /* MOVEW */
 OPCODE(0x30F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, res)
@@ -10024,7 +10019,7 @@ OPCODE(0x30F9)
 /* MOVEW */
 OPCODE(0x3139)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, res)
@@ -10039,7 +10034,7 @@ OPCODE(0x3139)
 /* MOVEW */
 OPCODE(0x3179)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, res)
@@ -10054,7 +10049,7 @@ OPCODE(0x3179)
 /* MOVEW */
 OPCODE(0x31B9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, res)
@@ -10069,7 +10064,7 @@ OPCODE(0x31B9)
 /* MOVEW */
 OPCODE(0x31F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, res)
@@ -10083,7 +10078,7 @@ OPCODE(0x31F9)
 /* MOVEW */
 OPCODE(0x33F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, res)
@@ -10097,7 +10092,7 @@ OPCODE(0x33F9)
 /* MOVEW */
 OPCODE(0x3EF9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, res)
@@ -10112,7 +10107,7 @@ OPCODE(0x3EF9)
 /* MOVEW */
 OPCODE(0x3F39)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, res)
@@ -10127,7 +10122,7 @@ OPCODE(0x3F39)
 /* MOVEW */
 OPCODE(0x303A)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -10141,7 +10136,7 @@ OPCODE(0x303A)
 /* MOVEW */
 OPCODE(0x30BA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -10156,7 +10151,7 @@ OPCODE(0x30BA)
 /* MOVEW */
 OPCODE(0x30FA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -10172,7 +10167,7 @@ OPCODE(0x30FA)
 /* MOVEW */
 OPCODE(0x313A)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -10188,7 +10183,7 @@ OPCODE(0x313A)
 /* MOVEW */
 OPCODE(0x317A)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -10204,7 +10199,7 @@ OPCODE(0x317A)
 /* MOVEW */
 OPCODE(0x31BA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -10220,7 +10215,7 @@ OPCODE(0x31BA)
 /* MOVEW */
 OPCODE(0x31FA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -10235,7 +10230,7 @@ OPCODE(0x31FA)
 /* MOVEW */
 OPCODE(0x33FA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -10250,7 +10245,7 @@ OPCODE(0x33FA)
 /* MOVEW */
 OPCODE(0x3EFA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -10266,7 +10261,7 @@ OPCODE(0x3EFA)
 /* MOVEW */
 OPCODE(0x3F3A)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -10282,7 +10277,7 @@ OPCODE(0x3F3A)
 /* MOVEW */
 OPCODE(0x303B)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -10296,7 +10291,7 @@ OPCODE(0x303B)
 /* MOVEW */
 OPCODE(0x30BB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -10311,7 +10306,7 @@ OPCODE(0x30BB)
 /* MOVEW */
 OPCODE(0x30FB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -10327,7 +10322,7 @@ OPCODE(0x30FB)
 /* MOVEW */
 OPCODE(0x313B)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -10343,7 +10338,7 @@ OPCODE(0x313B)
 /* MOVEW */
 OPCODE(0x317B)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -10359,7 +10354,7 @@ OPCODE(0x317B)
 /* MOVEW */
 OPCODE(0x31BB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -10375,7 +10370,7 @@ OPCODE(0x31BB)
 /* MOVEW */
 OPCODE(0x31FB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -10390,7 +10385,7 @@ OPCODE(0x31FB)
 /* MOVEW */
 OPCODE(0x33FB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -10405,7 +10400,7 @@ OPCODE(0x33FB)
 /* MOVEW */
 OPCODE(0x3EFB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -10421,7 +10416,7 @@ OPCODE(0x3EFB)
 /* MOVEW */
 OPCODE(0x3F3B)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -10437,7 +10432,7 @@ OPCODE(0x3F3B)
 /* MOVEW */
 OPCODE(0x303C)
 {
-    uint32_t res;
+    u32 res;
 
     FETCH_WORD(res);
     SET_FLAGS_Z_VC0
@@ -10449,7 +10444,7 @@ OPCODE(0x303C)
 /* MOVEW */
 OPCODE(0x30BC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_WORD(res);
     SET_FLAGS_Z_VC0
@@ -10462,7 +10457,7 @@ OPCODE(0x30BC)
 /* MOVEW */
 OPCODE(0x30FC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_WORD(res);
     SET_FLAGS_Z_VC0
@@ -10476,7 +10471,7 @@ OPCODE(0x30FC)
 /* MOVEW */
 OPCODE(0x313C)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_WORD(res);
     SET_FLAGS_Z_VC0
@@ -10490,7 +10485,7 @@ OPCODE(0x313C)
 /* MOVEW */
 OPCODE(0x317C)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_WORD(res);
     SET_FLAGS_Z_VC0
@@ -10504,7 +10499,7 @@ OPCODE(0x317C)
 /* MOVEW */
 OPCODE(0x31BC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_WORD(res);
     SET_FLAGS_Z_VC0
@@ -10518,7 +10513,7 @@ OPCODE(0x31BC)
 /* MOVEW */
 OPCODE(0x31FC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_WORD(res);
     SET_FLAGS_Z_VC0
@@ -10531,7 +10526,7 @@ OPCODE(0x31FC)
 /* MOVEW */
 OPCODE(0x33FC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_WORD(res);
     SET_FLAGS_Z_VC0
@@ -10544,7 +10539,7 @@ OPCODE(0x33FC)
 /* MOVEW */
 OPCODE(0x3EFC)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_WORD(res);
     SET_FLAGS_Z_VC0
@@ -10558,7 +10553,7 @@ OPCODE(0x3EFC)
 /* MOVEW */
 OPCODE(0x3F3C)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_WORD(res);
     SET_FLAGS_Z_VC0
@@ -10572,7 +10567,7 @@ OPCODE(0x3F3C)
 /* MOVEW */
 OPCODE(0x301F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -10586,7 +10581,7 @@ OPCODE(0x301F)
 /* MOVEW */
 OPCODE(0x309F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -10601,7 +10596,7 @@ OPCODE(0x309F)
 /* MOVEW */
 OPCODE(0x30DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -10617,7 +10612,7 @@ OPCODE(0x30DF)
 /* MOVEW */
 OPCODE(0x311F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -10633,7 +10628,7 @@ OPCODE(0x311F)
 /* MOVEW */
 OPCODE(0x315F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -10649,7 +10644,7 @@ OPCODE(0x315F)
 /* MOVEW */
 OPCODE(0x319F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -10665,7 +10660,7 @@ OPCODE(0x319F)
 /* MOVEW */
 OPCODE(0x31DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -10680,7 +10675,7 @@ OPCODE(0x31DF)
 /* MOVEW */
 OPCODE(0x33DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -10695,7 +10690,7 @@ OPCODE(0x33DF)
 /* MOVEW */
 OPCODE(0x3EDF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -10711,7 +10706,7 @@ OPCODE(0x3EDF)
 /* MOVEW */
 OPCODE(0x3F1F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -10727,7 +10722,7 @@ OPCODE(0x3F1F)
 /* MOVEW */
 OPCODE(0x3027)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -10741,7 +10736,7 @@ OPCODE(0x3027)
 /* MOVEW */
 OPCODE(0x30A7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -10756,7 +10751,7 @@ OPCODE(0x30A7)
 /* MOVEW */
 OPCODE(0x30E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -10772,7 +10767,7 @@ OPCODE(0x30E7)
 /* MOVEW */
 OPCODE(0x3127)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -10788,7 +10783,7 @@ OPCODE(0x3127)
 /* MOVEW */
 OPCODE(0x3167)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -10804,7 +10799,7 @@ OPCODE(0x3167)
 /* MOVEW */
 OPCODE(0x31A7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -10820,7 +10815,7 @@ OPCODE(0x31A7)
 /* MOVEW */
 OPCODE(0x31E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -10835,7 +10830,7 @@ OPCODE(0x31E7)
 /* MOVEW */
 OPCODE(0x33E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -10850,7 +10845,7 @@ OPCODE(0x33E7)
 /* MOVEW */
 OPCODE(0x3EE7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -10866,7 +10861,7 @@ OPCODE(0x3EE7)
 /* MOVEW */
 OPCODE(0x3F27)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -10882,9 +10877,9 @@ OPCODE(0x3F27)
 /* MOVEAW */
 OPCODE(0x3040)
 {
-    uint32_t res;
+    u32 res;
 
-    res = (int32_t)DREGs16((Opcode >> 0) & 7);
+    res = (s32)DREGs16((Opcode >> 0) & 7);
     AREG((Opcode >> 9) & 7) = res;
     RET(4)
 }
@@ -10892,9 +10887,9 @@ OPCODE(0x3040)
 /* MOVEAW */
 OPCODE(0x3048)
 {
-    uint32_t res;
+    u32 res;
 
-    res = (int32_t)AREGs16((Opcode >> 0) & 7);
+    res = (s32)AREGs16((Opcode >> 0) & 7);
     AREG((Opcode >> 9) & 7) = res;
     RET(4)
 }
@@ -10902,7 +10897,7 @@ OPCODE(0x3048)
 /* MOVEAW */
 OPCODE(0x3050)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READSX_WORD_F(adr, res)
@@ -10913,7 +10908,7 @@ OPCODE(0x3050)
 /* MOVEAW */
 OPCODE(0x3058)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -10925,7 +10920,7 @@ OPCODE(0x3058)
 /* MOVEAW */
 OPCODE(0x3060)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -10937,7 +10932,7 @@ OPCODE(0x3060)
 /* MOVEAW */
 OPCODE(0x3068)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -10949,7 +10944,7 @@ OPCODE(0x3068)
 /* MOVEAW */
 OPCODE(0x3070)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -10961,7 +10956,7 @@ OPCODE(0x3070)
 /* MOVEAW */
 OPCODE(0x3078)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READSX_WORD_F(adr, res)
@@ -10972,7 +10967,7 @@ OPCODE(0x3078)
 /* MOVEAW */
 OPCODE(0x3079)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READSX_WORD_F(adr, res)
@@ -10983,7 +10978,7 @@ OPCODE(0x3079)
 /* MOVEAW */
 OPCODE(0x307A)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -10995,7 +10990,7 @@ OPCODE(0x307A)
 /* MOVEAW */
 OPCODE(0x307B)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -11007,7 +11002,7 @@ OPCODE(0x307B)
 /* MOVEAW */
 OPCODE(0x307C)
 {
-    uint32_t res;
+    u32 res;
 
     FETCH_SWORD(res);
     AREG((Opcode >> 9) & 7) = res;
@@ -11017,7 +11012,7 @@ OPCODE(0x307C)
 /* MOVEAW */
 OPCODE(0x305F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -11029,7 +11024,7 @@ OPCODE(0x305F)
 /* MOVEAW */
 OPCODE(0x3067)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -11041,8 +11036,8 @@ OPCODE(0x3067)
 /* NEGX */
 OPCODE(0x4000)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu8((Opcode >> 0) & 7);
     res = -src - ((flag_X >> 8) & 1);
@@ -11056,8 +11051,8 @@ OPCODE(0x4000)
 /* NEGX */
 OPCODE(0x4010)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, src)
@@ -11072,8 +11067,8 @@ OPCODE(0x4010)
 /* NEGX */
 OPCODE(0x4018)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -11089,8 +11084,8 @@ OPCODE(0x4018)
 /* NEGX */
 OPCODE(0x4020)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -11106,8 +11101,8 @@ OPCODE(0x4020)
 /* NEGX */
 OPCODE(0x4028)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -11123,8 +11118,8 @@ OPCODE(0x4028)
 /* NEGX */
 OPCODE(0x4030)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -11140,8 +11135,8 @@ OPCODE(0x4030)
 /* NEGX */
 OPCODE(0x4038)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, src)
@@ -11156,8 +11151,8 @@ OPCODE(0x4038)
 /* NEGX */
 OPCODE(0x4039)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, src)
@@ -11172,8 +11167,8 @@ OPCODE(0x4039)
 /* NEGX */
 OPCODE(0x401F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -11189,8 +11184,8 @@ OPCODE(0x401F)
 /* NEGX */
 OPCODE(0x4027)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -11206,8 +11201,8 @@ OPCODE(0x4027)
 /* NEGX */
 OPCODE(0x4040)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu16((Opcode >> 0) & 7);
     res = -src - ((flag_X >> 8) & 1);
@@ -11221,8 +11216,8 @@ OPCODE(0x4040)
 /* NEGX */
 OPCODE(0x4050)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -11237,8 +11232,8 @@ OPCODE(0x4050)
 /* NEGX */
 OPCODE(0x4058)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -11254,8 +11249,8 @@ OPCODE(0x4058)
 /* NEGX */
 OPCODE(0x4060)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -11271,8 +11266,8 @@ OPCODE(0x4060)
 /* NEGX */
 OPCODE(0x4068)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -11288,8 +11283,8 @@ OPCODE(0x4068)
 /* NEGX */
 OPCODE(0x4070)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -11305,8 +11300,8 @@ OPCODE(0x4070)
 /* NEGX */
 OPCODE(0x4078)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -11321,8 +11316,8 @@ OPCODE(0x4078)
 /* NEGX */
 OPCODE(0x4079)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -11337,8 +11332,8 @@ OPCODE(0x4079)
 /* NEGX */
 OPCODE(0x405F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -11354,8 +11349,8 @@ OPCODE(0x405F)
 /* NEGX */
 OPCODE(0x4067)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -11371,8 +11366,8 @@ OPCODE(0x4067)
 /* NEGX */
 OPCODE(0x4080)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu32((Opcode >> 0) & 7);
     res = -src - ((flag_X >> 8) & 1);
@@ -11388,8 +11383,8 @@ OPCODE(0x4080)
 /* NEGX */
 OPCODE(0x4090)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, src)
@@ -11406,8 +11401,8 @@ OPCODE(0x4090)
 /* NEGX */
 OPCODE(0x4098)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -11425,8 +11420,8 @@ OPCODE(0x4098)
 /* NEGX */
 OPCODE(0x40A0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -11444,8 +11439,8 @@ OPCODE(0x40A0)
 /* NEGX */
 OPCODE(0x40A8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -11463,8 +11458,8 @@ OPCODE(0x40A8)
 /* NEGX */
 OPCODE(0x40B0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -11482,8 +11477,8 @@ OPCODE(0x40B0)
 /* NEGX */
 OPCODE(0x40B8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, src)
@@ -11500,8 +11495,8 @@ OPCODE(0x40B8)
 /* NEGX */
 OPCODE(0x40B9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, src)
@@ -11518,8 +11513,8 @@ OPCODE(0x40B9)
 /* NEGX */
 OPCODE(0x409F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -11537,8 +11532,8 @@ OPCODE(0x409F)
 /* NEGX */
 OPCODE(0x40A7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -11556,7 +11551,7 @@ OPCODE(0x40A7)
 /* CLR */
 OPCODE(0x4200)
 {
-    uint32_t res;
+    u32 res;
 
     res = 0;
     flag_N = flag_NotZ = flag_V = flag_C = 0;
@@ -11567,7 +11562,7 @@ OPCODE(0x4200)
 /* CLR */
 OPCODE(0x4210)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     res = 0;
@@ -11579,7 +11574,7 @@ OPCODE(0x4210)
 /* CLR */
 OPCODE(0x4218)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -11592,7 +11587,7 @@ OPCODE(0x4218)
 /* CLR */
 OPCODE(0x4220)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -11605,7 +11600,7 @@ OPCODE(0x4220)
 /* CLR */
 OPCODE(0x4228)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -11618,7 +11613,7 @@ OPCODE(0x4228)
 /* CLR */
 OPCODE(0x4230)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -11631,7 +11626,7 @@ OPCODE(0x4230)
 /* CLR */
 OPCODE(0x4238)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     res = 0;
@@ -11643,7 +11638,7 @@ OPCODE(0x4238)
 /* CLR */
 OPCODE(0x4239)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     res = 0;
@@ -11655,7 +11650,7 @@ OPCODE(0x4239)
 /* CLR */
 OPCODE(0x421F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -11668,7 +11663,7 @@ OPCODE(0x421F)
 /* CLR */
 OPCODE(0x4227)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -11681,7 +11676,7 @@ OPCODE(0x4227)
 /* CLR */
 OPCODE(0x4240)
 {
-    uint32_t res;
+    u32 res;
 
     res = 0;
     flag_N = flag_NotZ = flag_V = flag_C = 0;
@@ -11692,7 +11687,7 @@ OPCODE(0x4240)
 /* CLR */
 OPCODE(0x4250)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     res = 0;
@@ -11704,7 +11699,7 @@ OPCODE(0x4250)
 /* CLR */
 OPCODE(0x4258)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -11717,7 +11712,7 @@ OPCODE(0x4258)
 /* CLR */
 OPCODE(0x4260)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -11730,7 +11725,7 @@ OPCODE(0x4260)
 /* CLR */
 OPCODE(0x4268)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -11743,7 +11738,7 @@ OPCODE(0x4268)
 /* CLR */
 OPCODE(0x4270)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -11756,7 +11751,7 @@ OPCODE(0x4270)
 /* CLR */
 OPCODE(0x4278)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     res = 0;
@@ -11768,7 +11763,7 @@ OPCODE(0x4278)
 /* CLR */
 OPCODE(0x4279)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     res = 0;
@@ -11780,7 +11775,7 @@ OPCODE(0x4279)
 /* CLR */
 OPCODE(0x425F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -11793,7 +11788,7 @@ OPCODE(0x425F)
 /* CLR */
 OPCODE(0x4267)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -11806,7 +11801,7 @@ OPCODE(0x4267)
 /* CLR */
 OPCODE(0x4280)
 {
-    uint32_t res;
+    u32 res;
 
     res = 0;
     flag_N = flag_NotZ = flag_V = flag_C = 0;
@@ -11817,7 +11812,7 @@ OPCODE(0x4280)
 /* CLR */
 OPCODE(0x4290)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     res = 0;
@@ -11829,7 +11824,7 @@ OPCODE(0x4290)
 /* CLR */
 OPCODE(0x4298)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -11842,7 +11837,7 @@ OPCODE(0x4298)
 /* CLR */
 OPCODE(0x42A0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -11855,7 +11850,7 @@ OPCODE(0x42A0)
 /* CLR */
 OPCODE(0x42A8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -11868,7 +11863,7 @@ OPCODE(0x42A8)
 /* CLR */
 OPCODE(0x42B0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -11881,7 +11876,7 @@ OPCODE(0x42B0)
 /* CLR */
 OPCODE(0x42B8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     res = 0;
@@ -11893,7 +11888,7 @@ OPCODE(0x42B8)
 /* CLR */
 OPCODE(0x42B9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     res = 0;
@@ -11905,7 +11900,7 @@ OPCODE(0x42B9)
 /* CLR */
 OPCODE(0x429F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -11918,7 +11913,7 @@ OPCODE(0x429F)
 /* CLR */
 OPCODE(0x42A7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -11931,8 +11926,8 @@ OPCODE(0x42A7)
 /* NEG */
 OPCODE(0x4400)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu8((Opcode >> 0) & 7);
     res = -src;
@@ -11946,8 +11941,8 @@ OPCODE(0x4400)
 /* NEG */
 OPCODE(0x4410)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, src)
@@ -11962,8 +11957,8 @@ OPCODE(0x4410)
 /* NEG */
 OPCODE(0x4418)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -11979,8 +11974,8 @@ OPCODE(0x4418)
 /* NEG */
 OPCODE(0x4420)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -11996,8 +11991,8 @@ OPCODE(0x4420)
 /* NEG */
 OPCODE(0x4428)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -12013,8 +12008,8 @@ OPCODE(0x4428)
 /* NEG */
 OPCODE(0x4430)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -12030,8 +12025,8 @@ OPCODE(0x4430)
 /* NEG */
 OPCODE(0x4438)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, src)
@@ -12046,8 +12041,8 @@ OPCODE(0x4438)
 /* NEG */
 OPCODE(0x4439)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, src)
@@ -12062,8 +12057,8 @@ OPCODE(0x4439)
 /* NEG */
 OPCODE(0x441F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -12079,8 +12074,8 @@ OPCODE(0x441F)
 /* NEG */
 OPCODE(0x4427)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -12096,8 +12091,8 @@ OPCODE(0x4427)
 /* NEG */
 OPCODE(0x4440)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu16((Opcode >> 0) & 7);
     res = -src;
@@ -12111,8 +12106,8 @@ OPCODE(0x4440)
 /* NEG */
 OPCODE(0x4450)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -12127,8 +12122,8 @@ OPCODE(0x4450)
 /* NEG */
 OPCODE(0x4458)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -12144,8 +12139,8 @@ OPCODE(0x4458)
 /* NEG */
 OPCODE(0x4460)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -12161,8 +12156,8 @@ OPCODE(0x4460)
 /* NEG */
 OPCODE(0x4468)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -12178,8 +12173,8 @@ OPCODE(0x4468)
 /* NEG */
 OPCODE(0x4470)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -12195,8 +12190,8 @@ OPCODE(0x4470)
 /* NEG */
 OPCODE(0x4478)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -12211,8 +12206,8 @@ OPCODE(0x4478)
 /* NEG */
 OPCODE(0x4479)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -12227,8 +12222,8 @@ OPCODE(0x4479)
 /* NEG */
 OPCODE(0x445F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -12244,8 +12239,8 @@ OPCODE(0x445F)
 /* NEG */
 OPCODE(0x4467)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -12261,8 +12256,8 @@ OPCODE(0x4467)
 /* NEG */
 OPCODE(0x4480)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu32((Opcode >> 0) & 7);
     res = -src;
@@ -12277,8 +12272,8 @@ OPCODE(0x4480)
 /* NEG */
 OPCODE(0x4490)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, src)
@@ -12294,8 +12289,8 @@ OPCODE(0x4490)
 /* NEG */
 OPCODE(0x4498)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -12312,8 +12307,8 @@ OPCODE(0x4498)
 /* NEG */
 OPCODE(0x44A0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -12330,8 +12325,8 @@ OPCODE(0x44A0)
 /* NEG */
 OPCODE(0x44A8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -12348,8 +12343,8 @@ OPCODE(0x44A8)
 /* NEG */
 OPCODE(0x44B0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -12366,8 +12361,8 @@ OPCODE(0x44B0)
 /* NEG */
 OPCODE(0x44B8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, src)
@@ -12383,8 +12378,8 @@ OPCODE(0x44B8)
 /* NEG */
 OPCODE(0x44B9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, src)
@@ -12400,8 +12395,8 @@ OPCODE(0x44B9)
 /* NEG */
 OPCODE(0x449F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -12418,8 +12413,8 @@ OPCODE(0x449F)
 /* NEG */
 OPCODE(0x44A7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -12436,8 +12431,8 @@ OPCODE(0x44A7)
 /* NOT */
 OPCODE(0x4600)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu8((Opcode >> 0) & 7);
     res = ~src;
@@ -12452,8 +12447,8 @@ OPCODE(0x4600)
 /* NOT */
 OPCODE(0x4610)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, src)
@@ -12469,8 +12464,8 @@ OPCODE(0x4610)
 /* NOT */
 OPCODE(0x4618)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -12487,8 +12482,8 @@ OPCODE(0x4618)
 /* NOT */
 OPCODE(0x4620)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -12505,8 +12500,8 @@ OPCODE(0x4620)
 /* NOT */
 OPCODE(0x4628)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -12523,8 +12518,8 @@ OPCODE(0x4628)
 /* NOT */
 OPCODE(0x4630)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -12541,8 +12536,8 @@ OPCODE(0x4630)
 /* NOT */
 OPCODE(0x4638)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, src)
@@ -12558,8 +12553,8 @@ OPCODE(0x4638)
 /* NOT */
 OPCODE(0x4639)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, src)
@@ -12575,8 +12570,8 @@ OPCODE(0x4639)
 /* NOT */
 OPCODE(0x461F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -12593,8 +12588,8 @@ OPCODE(0x461F)
 /* NOT */
 OPCODE(0x4627)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -12611,8 +12606,8 @@ OPCODE(0x4627)
 /* NOT */
 OPCODE(0x4640)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu16((Opcode >> 0) & 7);
     res = ~src;
@@ -12627,8 +12622,8 @@ OPCODE(0x4640)
 /* NOT */
 OPCODE(0x4650)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -12644,8 +12639,8 @@ OPCODE(0x4650)
 /* NOT */
 OPCODE(0x4658)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -12662,8 +12657,8 @@ OPCODE(0x4658)
 /* NOT */
 OPCODE(0x4660)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -12680,8 +12675,8 @@ OPCODE(0x4660)
 /* NOT */
 OPCODE(0x4668)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -12698,8 +12693,8 @@ OPCODE(0x4668)
 /* NOT */
 OPCODE(0x4670)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -12716,8 +12711,8 @@ OPCODE(0x4670)
 /* NOT */
 OPCODE(0x4678)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -12733,8 +12728,8 @@ OPCODE(0x4678)
 /* NOT */
 OPCODE(0x4679)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -12750,8 +12745,8 @@ OPCODE(0x4679)
 /* NOT */
 OPCODE(0x465F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -12768,8 +12763,8 @@ OPCODE(0x465F)
 /* NOT */
 OPCODE(0x4667)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -12786,8 +12781,8 @@ OPCODE(0x4667)
 /* NOT */
 OPCODE(0x4680)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu32((Opcode >> 0) & 7);
     res = ~src;
@@ -12800,8 +12795,8 @@ OPCODE(0x4680)
 /* NOT */
 OPCODE(0x4690)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, src)
@@ -12815,8 +12810,8 @@ OPCODE(0x4690)
 /* NOT */
 OPCODE(0x4698)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -12831,8 +12826,8 @@ OPCODE(0x4698)
 /* NOT */
 OPCODE(0x46A0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -12847,8 +12842,8 @@ OPCODE(0x46A0)
 /* NOT */
 OPCODE(0x46A8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -12863,8 +12858,8 @@ OPCODE(0x46A8)
 /* NOT */
 OPCODE(0x46B0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -12879,8 +12874,8 @@ OPCODE(0x46B0)
 /* NOT */
 OPCODE(0x46B8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, src)
@@ -12894,8 +12889,8 @@ OPCODE(0x46B8)
 /* NOT */
 OPCODE(0x46B9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, src)
@@ -12909,8 +12904,8 @@ OPCODE(0x46B9)
 /* NOT */
 OPCODE(0x469F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -12925,8 +12920,8 @@ OPCODE(0x469F)
 /* NOT */
 OPCODE(0x46A7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -12941,7 +12936,7 @@ OPCODE(0x46A7)
 /* MOVESRa */
 OPCODE(0x40C0)
 {
-    uint32_t res;
+    u32 res;
 
     res = GET_SR;
     DREGu16((Opcode >> 0) & 7) = res;
@@ -12951,7 +12946,7 @@ OPCODE(0x40C0)
 /* MOVESRa */
 OPCODE(0x40D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = GET_SR;
     adr = AREG((Opcode >> 0) & 7);
@@ -12962,7 +12957,7 @@ OPCODE(0x40D0)
 /* MOVESRa */
 OPCODE(0x40D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = GET_SR;
     adr = AREG((Opcode >> 0) & 7);
@@ -12974,7 +12969,7 @@ OPCODE(0x40D8)
 /* MOVESRa */
 OPCODE(0x40E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = GET_SR;
     adr = AREG((Opcode >> 0) & 7) - 2;
@@ -12986,7 +12981,7 @@ OPCODE(0x40E0)
 /* MOVESRa */
 OPCODE(0x40E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = GET_SR;
     FETCH_SWORD(adr);
@@ -12998,7 +12993,7 @@ OPCODE(0x40E8)
 /* MOVESRa */
 OPCODE(0x40F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = GET_SR;
     adr = AREG((Opcode >> 0) & 7);
@@ -13010,7 +13005,7 @@ OPCODE(0x40F0)
 /* MOVESRa */
 OPCODE(0x40F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = GET_SR;
     FETCH_SWORD(adr);
@@ -13021,7 +13016,7 @@ OPCODE(0x40F8)
 /* MOVESRa */
 OPCODE(0x40F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = GET_SR;
     FETCH_LONG(adr);
@@ -13032,7 +13027,7 @@ OPCODE(0x40F9)
 /* MOVESRa */
 OPCODE(0x40DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = GET_SR;
     adr = AREG(7);
@@ -13044,7 +13039,7 @@ OPCODE(0x40DF)
 /* MOVESRa */
 OPCODE(0x40E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     res = GET_SR;
     adr = AREG(7) - 2;
@@ -13056,7 +13051,7 @@ OPCODE(0x40E7)
 /* MOVEaCCR */
 OPCODE(0x44C0)
 {
-    uint32_t res;
+    u32 res;
 
     res = DREGu16((Opcode >> 0) & 7);
     SET_CCR(res)
@@ -13066,7 +13061,7 @@ OPCODE(0x44C0)
 /* MOVEaCCR */
 OPCODE(0x44D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, res)
@@ -13077,7 +13072,7 @@ OPCODE(0x44D0)
 /* MOVEaCCR */
 OPCODE(0x44D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -13089,7 +13084,7 @@ OPCODE(0x44D8)
 /* MOVEaCCR */
 OPCODE(0x44E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -13101,7 +13096,7 @@ OPCODE(0x44E0)
 /* MOVEaCCR */
 OPCODE(0x44E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -13113,7 +13108,7 @@ OPCODE(0x44E8)
 /* MOVEaCCR */
 OPCODE(0x44F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -13125,7 +13120,7 @@ OPCODE(0x44F0)
 /* MOVEaCCR */
 OPCODE(0x44F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, res)
@@ -13136,7 +13131,7 @@ OPCODE(0x44F8)
 /* MOVEaCCR */
 OPCODE(0x44F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, res)
@@ -13147,7 +13142,7 @@ OPCODE(0x44F9)
 /* MOVEaCCR */
 OPCODE(0x44FA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -13159,7 +13154,7 @@ OPCODE(0x44FA)
 /* MOVEaCCR */
 OPCODE(0x44FB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -13171,7 +13166,7 @@ OPCODE(0x44FB)
 /* MOVEaCCR */
 OPCODE(0x44FC)
 {
-    uint32_t res;
+    u32 res;
 
     FETCH_WORD(res);
     SET_CCR(res)
@@ -13181,7 +13176,7 @@ OPCODE(0x44FC)
 /* MOVEaCCR */
 OPCODE(0x44DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -13193,7 +13188,7 @@ OPCODE(0x44DF)
 /* MOVEaCCR */
 OPCODE(0x44E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -13205,7 +13200,7 @@ OPCODE(0x44E7)
 /* MOVEaSR */
 OPCODE(0x46C0)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_S)
     {
@@ -13221,7 +13216,7 @@ OPCODE(0x46C0)
     }
     else
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -13232,7 +13227,7 @@ OPCODE(0x46C0)
 /* MOVEaSR */
 OPCODE(0x46D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     if (flag_S)
     {
@@ -13249,7 +13244,7 @@ OPCODE(0x46D0)
     }
     else
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -13260,7 +13255,7 @@ OPCODE(0x46D0)
 /* MOVEaSR */
 OPCODE(0x46D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     if (flag_S)
     {
@@ -13278,7 +13273,7 @@ OPCODE(0x46D8)
     }
     else
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -13289,7 +13284,7 @@ OPCODE(0x46D8)
 /* MOVEaSR */
 OPCODE(0x46E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     if (flag_S)
     {
@@ -13307,7 +13302,7 @@ OPCODE(0x46E0)
     }
     else
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -13318,7 +13313,7 @@ OPCODE(0x46E0)
 /* MOVEaSR */
 OPCODE(0x46E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     if (flag_S)
     {
@@ -13336,7 +13331,7 @@ OPCODE(0x46E8)
     }
     else
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -13347,7 +13342,7 @@ OPCODE(0x46E8)
 /* MOVEaSR */
 OPCODE(0x46F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     if (flag_S)
     {
@@ -13365,7 +13360,7 @@ OPCODE(0x46F0)
     }
     else
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -13377,7 +13372,7 @@ OPCODE(0x46F0)
 /* MOVEaSR */
 OPCODE(0x46F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     if (flag_S)
     {
@@ -13394,7 +13389,7 @@ OPCODE(0x46F8)
     }
     else
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -13405,7 +13400,7 @@ OPCODE(0x46F8)
 /* MOVEaSR */
 OPCODE(0x46F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     if (flag_S)
     {
@@ -13422,7 +13417,7 @@ OPCODE(0x46F9)
     }
     else
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -13433,7 +13428,7 @@ OPCODE(0x46F9)
 /* MOVEaSR */
 OPCODE(0x46FA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     if (flag_S)
     {
@@ -13451,7 +13446,7 @@ OPCODE(0x46FA)
     }
     else
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -13462,7 +13457,7 @@ OPCODE(0x46FA)
 /* MOVEaSR */
 OPCODE(0x46FB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     if (flag_S)
     {
@@ -13480,7 +13475,7 @@ OPCODE(0x46FB)
     }
     else
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -13491,7 +13486,7 @@ OPCODE(0x46FB)
 /* MOVEaSR */
 OPCODE(0x46FC)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_S)
     {
@@ -13507,7 +13502,7 @@ OPCODE(0x46FC)
     }
     else
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -13518,7 +13513,7 @@ OPCODE(0x46FC)
 /* MOVEaSR */
 OPCODE(0x46DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     if (flag_S)
     {
@@ -13536,7 +13531,7 @@ OPCODE(0x46DF)
     }
     else
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -13547,7 +13542,7 @@ OPCODE(0x46DF)
 /* MOVEaSR */
 OPCODE(0x46E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     if (flag_S)
     {
@@ -13565,7 +13560,7 @@ OPCODE(0x46E7)
     }
     else
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -13576,7 +13571,7 @@ OPCODE(0x46E7)
 /* NBCD */
 OPCODE(0x4800)
 {
-    uint32_t res;
+    u32 res;
 
     res = DREGu8((Opcode >> 0) & 7);
     res = 0x9a - res - ((flag_X >> M68K_SR_X_SFT) & 1);
@@ -13597,7 +13592,7 @@ OPCODE(0x4800)
 /* NBCD */
 OPCODE(0x4810)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, res)
@@ -13619,7 +13614,7 @@ OPCODE(0x4810)
 /* NBCD */
 OPCODE(0x4818)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -13642,7 +13637,7 @@ OPCODE(0x4818)
 /* NBCD */
 OPCODE(0x4820)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -13665,7 +13660,7 @@ OPCODE(0x4820)
 /* NBCD */
 OPCODE(0x4828)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -13688,7 +13683,7 @@ OPCODE(0x4828)
 /* NBCD */
 OPCODE(0x4830)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -13711,7 +13706,7 @@ OPCODE(0x4830)
 /* NBCD */
 OPCODE(0x4838)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, res)
@@ -13733,7 +13728,7 @@ OPCODE(0x4838)
 /* NBCD */
 OPCODE(0x4839)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, res)
@@ -13755,7 +13750,7 @@ OPCODE(0x4839)
 /* NBCD */
 OPCODE(0x481F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -13778,7 +13773,7 @@ OPCODE(0x481F)
 /* NBCD */
 OPCODE(0x4827)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -13801,7 +13796,7 @@ OPCODE(0x4827)
 /* PEA */
 OPCODE(0x4850)
 {
-    uint32_t adr;
+    u32 adr;
 
     adr = AREG((Opcode >> 0) & 7);
     PUSH_32_F(adr)
@@ -13811,7 +13806,7 @@ OPCODE(0x4850)
 /* PEA */
 OPCODE(0x4868)
 {
-    uint32_t adr;
+    u32 adr;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -13822,7 +13817,7 @@ OPCODE(0x4868)
 /* PEA */
 OPCODE(0x4870)
 {
-    uint32_t adr;
+    u32 adr;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -13833,7 +13828,7 @@ OPCODE(0x4870)
 /* PEA */
 OPCODE(0x4878)
 {
-    uint32_t adr;
+    u32 adr;
 
     FETCH_SWORD(adr);
     PUSH_32_F(adr)
@@ -13843,7 +13838,7 @@ OPCODE(0x4878)
 /* PEA */
 OPCODE(0x4879)
 {
-    uint32_t adr;
+    u32 adr;
 
     FETCH_LONG(adr);
     PUSH_32_F(adr)
@@ -13853,7 +13848,7 @@ OPCODE(0x4879)
 /* PEA */
 OPCODE(0x487A)
 {
-    uint32_t adr;
+    u32 adr;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -13864,7 +13859,7 @@ OPCODE(0x487A)
 /* PEA */
 OPCODE(0x487B)
 {
-    uint32_t adr;
+    u32 adr;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -13875,7 +13870,7 @@ OPCODE(0x487B)
 /* SWAP */
 OPCODE(0x4840)
 {
-    uint32_t res;
+    u32 res;
 
     res = DREGu32((Opcode >> 0) & 7);
     res = (res >> 16) | (res << 16);
@@ -13888,10 +13883,10 @@ OPCODE(0x4840)
 /* MOVEMRa */
 OPCODE(0x4890)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG((Opcode >> 0) & 7);
@@ -13914,10 +13909,10 @@ OPCODE(0x4890)
 /* MOVEMRa */
 OPCODE(0x48A0)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG((Opcode >> 0) & 7);
@@ -13941,10 +13936,10 @@ OPCODE(0x48A0)
 /* MOVEMRa */
 OPCODE(0x48A8)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     FETCH_SWORD(adr);
@@ -13968,10 +13963,10 @@ OPCODE(0x48A8)
 /* MOVEMRa */
 OPCODE(0x48B0)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG((Opcode >> 0) & 7);
@@ -13995,10 +13990,10 @@ OPCODE(0x48B0)
 /* MOVEMRa */
 OPCODE(0x48B8)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     FETCH_SWORD(adr);
@@ -14021,10 +14016,10 @@ OPCODE(0x48B8)
 /* MOVEMRa */
 OPCODE(0x48B9)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     FETCH_LONG(adr);
@@ -14047,10 +14042,10 @@ OPCODE(0x48B9)
 /* MOVEMRa */
 OPCODE(0x48A7)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG(7);
@@ -14074,10 +14069,10 @@ OPCODE(0x48A7)
 /* MOVEMRa */
 OPCODE(0x48D0)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG((Opcode >> 0) & 7);
@@ -14100,10 +14095,10 @@ OPCODE(0x48D0)
 /* MOVEMRa */
 OPCODE(0x48E0)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG((Opcode >> 0) & 7);
@@ -14127,10 +14122,10 @@ OPCODE(0x48E0)
 /* MOVEMRa */
 OPCODE(0x48E8)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     FETCH_SWORD(adr);
@@ -14154,10 +14149,10 @@ OPCODE(0x48E8)
 /* MOVEMRa */
 OPCODE(0x48F0)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG((Opcode >> 0) & 7);
@@ -14181,10 +14176,10 @@ OPCODE(0x48F0)
 /* MOVEMRa */
 OPCODE(0x48F8)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     FETCH_SWORD(adr);
@@ -14207,10 +14202,10 @@ OPCODE(0x48F8)
 /* MOVEMRa */
 OPCODE(0x48F9)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     FETCH_LONG(adr);
@@ -14233,10 +14228,10 @@ OPCODE(0x48F9)
 /* MOVEMRa */
 OPCODE(0x48E7)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG(7);
@@ -14260,9 +14255,9 @@ OPCODE(0x48E7)
 /* EXT */
 OPCODE(0x4880)
 {
-    uint32_t res;
+    u32 res;
 
-    res = (int32_t)DREGs8((Opcode >> 0) & 7);
+    res = (s32)DREGs8((Opcode >> 0) & 7);
     SET_FLAGS_NZ_VC0
     DREGu16((Opcode >> 0) & 7) = res;
     RET(4)
@@ -14271,9 +14266,9 @@ OPCODE(0x4880)
 /* EXT */
 OPCODE(0x48C0)
 {
-    uint32_t res;
+    u32 res;
 
-    res = (int32_t)DREGs16((Opcode >> 0) & 7);
+    res = (s32)DREGs16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
     flag_N = res >> 8;
     DREGu32((Opcode >> 0) & 7) = res;
@@ -14283,7 +14278,7 @@ OPCODE(0x48C0)
 /* TST */
 OPCODE(0x4A00)
 {
-    uint32_t res;
+    u32 res;
 
     res = DREGu8((Opcode >> 0) & 7);
     SET_FLAGS_NZ_VC0
@@ -14293,7 +14288,7 @@ OPCODE(0x4A00)
 /* TST */
 OPCODE(0x4A10)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, res)
@@ -14304,7 +14299,7 @@ OPCODE(0x4A10)
 /* TST */
 OPCODE(0x4A18)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -14316,7 +14311,7 @@ OPCODE(0x4A18)
 /* TST */
 OPCODE(0x4A20)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -14328,7 +14323,7 @@ OPCODE(0x4A20)
 /* TST */
 OPCODE(0x4A28)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -14340,7 +14335,7 @@ OPCODE(0x4A28)
 /* TST */
 OPCODE(0x4A30)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -14352,7 +14347,7 @@ OPCODE(0x4A30)
 /* TST */
 OPCODE(0x4A38)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, res)
@@ -14363,7 +14358,7 @@ OPCODE(0x4A38)
 /* TST */
 OPCODE(0x4A39)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, res)
@@ -14374,7 +14369,7 @@ OPCODE(0x4A39)
 /* TST */
 OPCODE(0x4A1F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -14386,7 +14381,7 @@ OPCODE(0x4A1F)
 /* TST */
 OPCODE(0x4A27)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -14398,7 +14393,7 @@ OPCODE(0x4A27)
 /* TST */
 OPCODE(0x4A40)
 {
-    uint32_t res;
+    u32 res;
 
     res = DREGu16((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -14409,7 +14404,7 @@ OPCODE(0x4A40)
 /* TST */
 OPCODE(0x4A50)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, res)
@@ -14421,7 +14416,7 @@ OPCODE(0x4A50)
 /* TST */
 OPCODE(0x4A58)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -14434,7 +14429,7 @@ OPCODE(0x4A58)
 /* TST */
 OPCODE(0x4A60)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -14447,7 +14442,7 @@ OPCODE(0x4A60)
 /* TST */
 OPCODE(0x4A68)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -14460,7 +14455,7 @@ OPCODE(0x4A68)
 /* TST */
 OPCODE(0x4A70)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -14473,7 +14468,7 @@ OPCODE(0x4A70)
 /* TST */
 OPCODE(0x4A78)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, res)
@@ -14485,7 +14480,7 @@ OPCODE(0x4A78)
 /* TST */
 OPCODE(0x4A79)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, res)
@@ -14497,7 +14492,7 @@ OPCODE(0x4A79)
 /* TST */
 OPCODE(0x4A5F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -14510,7 +14505,7 @@ OPCODE(0x4A5F)
 /* TST */
 OPCODE(0x4A67)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -14523,7 +14518,7 @@ OPCODE(0x4A67)
 /* TST */
 OPCODE(0x4A80)
 {
-    uint32_t res;
+    u32 res;
 
     res = DREGu32((Opcode >> 0) & 7);
     SET_FLAGS_Z_VC0
@@ -14534,7 +14529,7 @@ OPCODE(0x4A80)
 /* TST */
 OPCODE(0x4A90)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, res)
@@ -14546,7 +14541,7 @@ OPCODE(0x4A90)
 /* TST */
 OPCODE(0x4A98)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -14559,7 +14554,7 @@ OPCODE(0x4A98)
 /* TST */
 OPCODE(0x4AA0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -14572,7 +14567,7 @@ OPCODE(0x4AA0)
 /* TST */
 OPCODE(0x4AA8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -14585,7 +14580,7 @@ OPCODE(0x4AA8)
 /* TST */
 OPCODE(0x4AB0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -14598,7 +14593,7 @@ OPCODE(0x4AB0)
 /* TST */
 OPCODE(0x4AB8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, res)
@@ -14610,7 +14605,7 @@ OPCODE(0x4AB8)
 /* TST */
 OPCODE(0x4AB9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, res)
@@ -14622,7 +14617,7 @@ OPCODE(0x4AB9)
 /* TST */
 OPCODE(0x4A9F)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -14635,7 +14630,7 @@ OPCODE(0x4A9F)
 /* TST */
 OPCODE(0x4AA7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -14648,7 +14643,7 @@ OPCODE(0x4AA7)
 /* TAS */
 OPCODE(0x4AC0)
 {
-    uint32_t res;
+    u32 res;
 
     res = DREGu8((Opcode >> 0) & 7);
     SET_FLAGS_NZ_VC0
@@ -14660,7 +14655,7 @@ OPCODE(0x4AC0)
 /* TAS */
 OPCODE(0x4AD0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, res)
@@ -14674,7 +14669,7 @@ OPCODE(0x4AD0)
 /* TAS */
 OPCODE(0x4AD8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -14689,7 +14684,7 @@ OPCODE(0x4AD8)
 /* TAS */
 OPCODE(0x4AE0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -14704,7 +14699,7 @@ OPCODE(0x4AE0)
 /* TAS */
 OPCODE(0x4AE8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -14719,7 +14714,7 @@ OPCODE(0x4AE8)
 /* TAS */
 OPCODE(0x4AF0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -14734,7 +14729,7 @@ OPCODE(0x4AF0)
 /* TAS */
 OPCODE(0x4AF8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, res)
@@ -14748,7 +14743,7 @@ OPCODE(0x4AF8)
 /* TAS */
 OPCODE(0x4AF9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, res)
@@ -14762,7 +14757,7 @@ OPCODE(0x4AF9)
 /* TAS */
 OPCODE(0x4ADF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -14777,7 +14772,7 @@ OPCODE(0x4ADF)
 /* TAS */
 OPCODE(0x4AE7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -14792,7 +14787,7 @@ OPCODE(0x4AE7)
 /* ILLEGAL */
 OPCODE(0x4AFC)
 {
-    uint32_t oldPC=UNBASED_PC;
+    u32 oldPC=UNBASED_PC;
     SET_PC(oldPC-2)
     execute_exception(M68K_ILLEGAL_INSTRUCTION_EX);
     RET(0)
@@ -14801,7 +14796,7 @@ OPCODE(0x4AFC)
 /* ILLEGAL A000-AFFF */
 OPCODE(0xA000)
 {
-    uint32_t oldPC=UNBASED_PC;
+    u32 oldPC=UNBASED_PC;
     SET_PC(oldPC-2)
     execute_exception(M68K_1010_EX);
     RET(0)
@@ -14810,7 +14805,7 @@ OPCODE(0xA000)
 /* ILLEGAL F000-FFFF */
 OPCODE(0xF000)
 {
-    uint32_t oldPC=UNBASED_PC;
+    u32 oldPC=UNBASED_PC;
     SET_PC(oldPC-2)
     execute_exception(M68K_1111_EX);
     RET(0)
@@ -14819,10 +14814,10 @@ OPCODE(0xF000)
 /* MOVEMaR */
 OPCODE(0x4C90)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    int32_t *psrc;
+    s32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG((Opcode >> 0) & 7);
@@ -14845,10 +14840,10 @@ OPCODE(0x4C90)
 /* MOVEMaR */
 OPCODE(0x4C98)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    int32_t *psrc;
+    s32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG((Opcode >> 0) & 7);
@@ -14872,10 +14867,10 @@ OPCODE(0x4C98)
 /* MOVEMaR */
 OPCODE(0x4CA8)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    int32_t *psrc;
+    s32 *psrc;
 
     FETCH_WORD(res);
     FETCH_SWORD(adr);
@@ -14899,10 +14894,10 @@ OPCODE(0x4CA8)
 /* MOVEMaR */
 OPCODE(0x4CB0)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    int32_t *psrc;
+    s32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG((Opcode >> 0) & 7);
@@ -14926,10 +14921,10 @@ OPCODE(0x4CB0)
 /* MOVEMaR */
 OPCODE(0x4CB8)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    int32_t *psrc;
+    s32 *psrc;
 
     FETCH_WORD(res);
     FETCH_SWORD(adr);
@@ -14952,10 +14947,10 @@ OPCODE(0x4CB8)
 /* MOVEMaR */
 OPCODE(0x4CB9)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    int32_t *psrc;
+    s32 *psrc;
 
     FETCH_WORD(res);
     FETCH_LONG(adr);
@@ -14978,10 +14973,10 @@ OPCODE(0x4CB9)
 /* MOVEMaR */
 OPCODE(0x4CBA)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    int32_t *psrc;
+    s32 *psrc;
 
     FETCH_WORD(res);
     adr = GET_SWORD + UNBASED_PC;
@@ -15005,10 +15000,10 @@ OPCODE(0x4CBA)
 /* MOVEMaR */
 OPCODE(0x4CBB)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    int32_t *psrc;
+    s32 *psrc;
 
     FETCH_WORD(res);
     adr = UNBASED_PC;
@@ -15032,10 +15027,10 @@ OPCODE(0x4CBB)
 /* MOVEMaR */
 OPCODE(0x4C9F)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    int32_t *psrc;
+    s32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG(7);
@@ -15059,10 +15054,10 @@ OPCODE(0x4C9F)
 /* MOVEMaR */
 OPCODE(0x4CD0)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG((Opcode >> 0) & 7);
@@ -15085,10 +15080,10 @@ OPCODE(0x4CD0)
 /* MOVEMaR */
 OPCODE(0x4CD8)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG((Opcode >> 0) & 7);
@@ -15112,10 +15107,10 @@ OPCODE(0x4CD8)
 /* MOVEMaR */
 OPCODE(0x4CE8)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     FETCH_SWORD(adr);
@@ -15139,10 +15134,10 @@ OPCODE(0x4CE8)
 /* MOVEMaR */
 OPCODE(0x4CF0)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG((Opcode >> 0) & 7);
@@ -15166,10 +15161,10 @@ OPCODE(0x4CF0)
 /* MOVEMaR */
 OPCODE(0x4CF8)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     FETCH_SWORD(adr);
@@ -15192,10 +15187,10 @@ OPCODE(0x4CF8)
 /* MOVEMaR */
 OPCODE(0x4CF9)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     FETCH_LONG(adr);
@@ -15218,10 +15213,10 @@ OPCODE(0x4CF9)
 /* MOVEMaR */
 OPCODE(0x4CFA)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     adr = GET_SWORD + UNBASED_PC;
@@ -15245,10 +15240,10 @@ OPCODE(0x4CFA)
 /* MOVEMaR */
 OPCODE(0x4CFB)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     adr = UNBASED_PC;
@@ -15272,10 +15267,10 @@ OPCODE(0x4CFB)
 /* MOVEMaR */
 OPCODE(0x4CDF)
 {
-    uint32_t adr, res;
-    uint32_t dst;
+    u32 adr, res;
+    u32 dst;
 
-    uint32_t *psrc;
+    u32 *psrc;
 
     FETCH_WORD(res);
     adr = AREG(7);
@@ -15306,7 +15301,7 @@ OPCODE(0x4E40)
 /* LINK */
 OPCODE(0x4E50)
 {
-    uint32_t res;
+    u32 res;
 
     res = AREGu32((Opcode >> 0) & 7);
     PUSH_32_F(res)
@@ -15320,7 +15315,7 @@ OPCODE(0x4E50)
 /* LINKA7 */
 OPCODE(0x4E57)
 {
-    uint32_t res;
+    u32 res;
 
     AREG(7) -= 4;
     WRITE_LONG_DEC_F(AREG(7), AREG(7))
@@ -15332,8 +15327,8 @@ OPCODE(0x4E57)
 /* ULNK */
 OPCODE(0x4E58)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = AREGu32((Opcode >> 0) & 7);
     AREG(7) = src + 4;
@@ -15353,11 +15348,11 @@ OPCODE(0x4E5F)
 /* MOVEAUSP */
 OPCODE(0x4E60)
 {
-    uint32_t res;
+    u32 res;
 
     if (!flag_S)
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -15370,11 +15365,11 @@ OPCODE(0x4E60)
 /* MOVEUSPA */
 OPCODE(0x4E68)
 {
-    uint32_t res;
+    u32 res;
 
     if (!flag_S)
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -15390,7 +15385,7 @@ OPCODE(0x4E70)
 
     if (!flag_S)
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -15411,11 +15406,11 @@ OPCODE(0x4E71)
 /* STOP */
 OPCODE(0x4E72)
 {
-    uint32_t res;
+    u32 res;
 
     if (!flag_S)
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -15437,11 +15432,11 @@ OPCODE(0x4E72)
 /* RTE */
 OPCODE(0x4E73)
 {
-    uint32_t res;
+    u32 res;
 
     if (!flag_S)
     {
-        uint32_t oldPC=UNBASED_PC;
+        u32 oldPC=UNBASED_PC;
         SET_PC(oldPC-2)
         execute_exception(M68K_PRIVILEGE_VIOLATION_EX);
         RET(4)
@@ -15464,13 +15459,10 @@ OPCODE(0x4E73)
 /* RTS */
 OPCODE(0x4E75)
 {
-    uint32_t res;
+    u32 res;
 
     POP_32_F(res)
     SET_PC(res)
-#ifdef FAME_CHANGE_PC
-    m68000_change_pc(UNBASED_PC);
-#endif
     CHECK_BRANCH_EXCEPTION(res)
     RET(16)
 }
@@ -15486,7 +15478,7 @@ OPCODE(0x4E76)
 /* RTR */
 OPCODE(0x4E77)
 {
-    uint32_t res;
+    u32 res;
 
     POP_16_F(res)
     SET_CCR(res)
@@ -15499,11 +15491,11 @@ OPCODE(0x4E77)
 /* JSR */
 OPCODE(0x4E90)
 {
-    uint32_t adr;
+    u32 adr;
 
     adr = AREG((Opcode >> 0) & 7);
     {
-        uint32_t oldPC;
+        u32 oldPC;
 
         oldPC = UNBASED_PC;
         PUSH_32_F(oldPC)
@@ -15516,12 +15508,12 @@ OPCODE(0x4E90)
 /* JSR */
 OPCODE(0x4EA8)
 {
-    uint32_t adr;
+    u32 adr;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
     {
-        uint32_t oldPC;
+        u32 oldPC;
 
         oldPC = UNBASED_PC;
         PUSH_32_F(oldPC)
@@ -15534,12 +15526,12 @@ OPCODE(0x4EA8)
 /* JSR */
 OPCODE(0x4EB0)
 {
-    uint32_t adr;
+    u32 adr;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
     {
-        uint32_t oldPC;
+        u32 oldPC;
 
         oldPC = UNBASED_PC;
         PUSH_32_F(oldPC)
@@ -15552,11 +15544,11 @@ OPCODE(0x4EB0)
 /* JSR */
 OPCODE(0x4EB8)
 {
-    uint32_t adr;
+    u32 adr;
 
     FETCH_SWORD(adr);
     {
-        uint32_t oldPC;
+        u32 oldPC;
 
         oldPC = UNBASED_PC;
         PUSH_32_F(oldPC)
@@ -15569,19 +15561,16 @@ OPCODE(0x4EB8)
 /* JSR */
 OPCODE(0x4EB9)
 {
-    uint32_t adr;
+    u32 adr;
 
     FETCH_LONG(adr);
     {
-        uint32_t oldPC;
+        u32 oldPC;
 
         oldPC = UNBASED_PC;
         PUSH_32_F(oldPC)
     }
     SET_PC(adr)
-#ifdef FAME_CHANGE_PC
-    m68000_change_pc(UNBASED_PC);
-#endif
     CHECK_BRANCH_EXCEPTION(adr)
     RET(20)
 }
@@ -15589,12 +15578,12 @@ OPCODE(0x4EB9)
 /* JSR */
 OPCODE(0x4EBA)
 {
-    uint32_t adr;
+    u32 adr;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
     {
-        uint32_t oldPC;
+        u32 oldPC;
 
         oldPC = UNBASED_PC;
         PUSH_32_F(oldPC)
@@ -15607,12 +15596,12 @@ OPCODE(0x4EBA)
 /* JSR */
 OPCODE(0x4EBB)
 {
-    uint32_t adr;
+    u32 adr;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
     {
-        uint32_t oldPC;
+        u32 oldPC;
 
         oldPC = UNBASED_PC;
         PUSH_32_F(oldPC)
@@ -15625,7 +15614,7 @@ OPCODE(0x4EBB)
 /* JMP */
 OPCODE(0x4ED0)
 {
-    uint32_t adr;
+    u32 adr;
 
     adr = AREG((Opcode >> 0) & 7);
     SET_PC(adr)
@@ -15636,7 +15625,7 @@ OPCODE(0x4ED0)
 /* JMP */
 OPCODE(0x4EE8)
 {
-    uint32_t adr;
+    u32 adr;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -15648,7 +15637,7 @@ OPCODE(0x4EE8)
 /* JMP */
 OPCODE(0x4EF0)
 {
-    uint32_t adr;
+    u32 adr;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -15660,7 +15649,7 @@ OPCODE(0x4EF0)
 /* JMP */
 OPCODE(0x4EF8)
 {
-    uint32_t adr;
+    u32 adr;
 
     FETCH_SWORD(adr);
     SET_PC(adr)
@@ -15671,7 +15660,7 @@ OPCODE(0x4EF8)
 /* JMP */
 OPCODE(0x4EF9)
 {
-    uint32_t adr;
+    u32 adr;
 
     FETCH_LONG(adr);
     SET_PC(adr)
@@ -15682,7 +15671,7 @@ OPCODE(0x4EF9)
 /* JMP */
 OPCODE(0x4EFA)
 {
-    uint32_t adr;
+    u32 adr;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -15694,7 +15683,7 @@ OPCODE(0x4EFA)
 /* JMP */
 OPCODE(0x4EFB)
 {
-    uint32_t adr;
+    u32 adr;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -15706,12 +15695,12 @@ OPCODE(0x4EFB)
 /* CHK */
 OPCODE(0x4180)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu16((Opcode >> 0) & 7);
     res = DREGu16((Opcode >> 9) & 7);
-    if (((int32_t)res < 0) || (res > src))
+    if (((s32)res < 0) || (res > src))
     {
         flag_N = res >> 8;
         execute_exception(M68K_CHK_EX);
@@ -15722,13 +15711,13 @@ OPCODE(0x4180)
 /* CHK */
 OPCODE(0x4190)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
     res = DREGu16((Opcode >> 9) & 7);
-    if (((int32_t)res < 0) || (res > src))
+    if (((s32)res < 0) || (res > src))
     {
         flag_N = res >> 8;
         execute_exception(M68K_CHK_EX);
@@ -15739,14 +15728,14 @@ OPCODE(0x4190)
 /* CHK */
 OPCODE(0x4198)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
     READ_WORD_F(adr, src)
     res = DREGu16((Opcode >> 9) & 7);
-    if (((int32_t)res < 0) || (res > src))
+    if (((s32)res < 0) || (res > src))
     {
         flag_N = res >> 8;
         execute_exception(M68K_CHK_EX);
@@ -15757,14 +15746,14 @@ OPCODE(0x4198)
 /* CHK */
 OPCODE(0x41A0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
     READ_WORD_F(adr, src)
     res = DREGu16((Opcode >> 9) & 7);
-    if (((int32_t)res < 0) || (res > src))
+    if (((s32)res < 0) || (res > src))
     {
         flag_N = res >> 8;
         execute_exception(M68K_CHK_EX);
@@ -15775,14 +15764,14 @@ OPCODE(0x41A0)
 /* CHK */
 OPCODE(0x41A8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
     res = DREGu16((Opcode >> 9) & 7);
-    if (((int32_t)res < 0) || (res > src))
+    if (((s32)res < 0) || (res > src))
     {
         flag_N = res >> 8;
         execute_exception(M68K_CHK_EX);
@@ -15793,14 +15782,14 @@ OPCODE(0x41A8)
 /* CHK */
 OPCODE(0x41B0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
     READ_WORD_F(adr, src)
     res = DREGu16((Opcode >> 9) & 7);
-    if (((int32_t)res < 0) || (res > src))
+    if (((s32)res < 0) || (res > src))
     {
         flag_N = res >> 8;
         execute_exception(M68K_CHK_EX);
@@ -15811,13 +15800,13 @@ OPCODE(0x41B0)
 /* CHK */
 OPCODE(0x41B8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
     res = DREGu16((Opcode >> 9) & 7);
-    if (((int32_t)res < 0) || (res > src))
+    if (((s32)res < 0) || (res > src))
     {
         flag_N = res >> 8;
         execute_exception(M68K_CHK_EX);
@@ -15828,13 +15817,13 @@ OPCODE(0x41B8)
 /* CHK */
 OPCODE(0x41B9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
     res = DREGu16((Opcode >> 9) & 7);
-    if (((int32_t)res < 0) || (res > src))
+    if (((s32)res < 0) || (res > src))
     {
         flag_N = res >> 8;
         execute_exception(M68K_CHK_EX);
@@ -15845,14 +15834,14 @@ OPCODE(0x41B9)
 /* CHK */
 OPCODE(0x41BA)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
     READ_WORD_F(adr, src)
     res = DREGu16((Opcode >> 9) & 7);
-    if (((int32_t)res < 0) || (res > src))
+    if (((s32)res < 0) || (res > src))
     {
         flag_N = res >> 8;
         execute_exception(M68K_CHK_EX);
@@ -15863,14 +15852,14 @@ OPCODE(0x41BA)
 /* CHK */
 OPCODE(0x41BB)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
     READ_WORD_F(adr, src)
     res = DREGu16((Opcode >> 9) & 7);
-    if (((int32_t)res < 0) || (res > src))
+    if (((s32)res < 0) || (res > src))
     {
         flag_N = res >> 8;
         execute_exception(M68K_CHK_EX);
@@ -15881,12 +15870,12 @@ OPCODE(0x41BB)
 /* CHK */
 OPCODE(0x41BC)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_WORD(src);
     res = DREGu16((Opcode >> 9) & 7);
-    if (((int32_t)res < 0) || (res > src))
+    if (((s32)res < 0) || (res > src))
     {
         flag_N = res >> 8;
         execute_exception(M68K_CHK_EX);
@@ -15897,14 +15886,14 @@ OPCODE(0x41BC)
 /* CHK */
 OPCODE(0x419F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
     READ_WORD_F(adr, src)
     res = DREGu16((Opcode >> 9) & 7);
-    if (((int32_t)res < 0) || (res > src))
+    if (((s32)res < 0) || (res > src))
     {
         flag_N = res >> 8;
         execute_exception(M68K_CHK_EX);
@@ -15915,14 +15904,14 @@ OPCODE(0x419F)
 /* CHK */
 OPCODE(0x41A7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
     READ_WORD_F(adr, src)
     res = DREGu16((Opcode >> 9) & 7);
-    if (((int32_t)res < 0) || (res > src))
+    if (((s32)res < 0) || (res > src))
     {
         flag_N = res >> 8;
         execute_exception(M68K_CHK_EX);
@@ -15933,7 +15922,7 @@ OPCODE(0x41A7)
 /* LEA */
 OPCODE(0x41D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     res = adr;
@@ -15944,7 +15933,7 @@ OPCODE(0x41D0)
 /* LEA */
 OPCODE(0x41E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -15956,7 +15945,7 @@ OPCODE(0x41E8)
 /* LEA */
 OPCODE(0x41F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -15968,7 +15957,7 @@ OPCODE(0x41F0)
 /* LEA */
 OPCODE(0x41F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     res = adr;
@@ -15979,7 +15968,7 @@ OPCODE(0x41F8)
 /* LEA */
 OPCODE(0x41F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     res = adr;
@@ -15990,7 +15979,7 @@ OPCODE(0x41F9)
 /* LEA */
 OPCODE(0x41FA)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -16002,7 +15991,7 @@ OPCODE(0x41FA)
 /* LEA */
 OPCODE(0x41FB)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -16014,7 +16003,7 @@ OPCODE(0x41FB)
 /* STCC */
 OPCODE(0x50C0)
 {
-    uint32_t res;
+    u32 res;
 
     res = 0xFF;
     DREGu8((Opcode >> 0) & 7) = res;
@@ -16024,7 +16013,7 @@ OPCODE(0x50C0)
 /* STCC */
 OPCODE(0x51C0)
 {
-    uint32_t res;
+    u32 res;
 
     res = 0;
     DREGu8((Opcode >> 0) & 7) = res;
@@ -16034,7 +16023,7 @@ OPCODE(0x51C0)
 /* STCC */
 OPCODE(0x52C0)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_NotZ && (!(flag_C & 0x100)))
     {
@@ -16050,7 +16039,7 @@ OPCODE(0x52C0)
 /* STCC */
 OPCODE(0x53C0)
 {
-    uint32_t res;
+    u32 res;
 
     if ((!flag_NotZ) || (flag_C & 0x100))
     {
@@ -16066,7 +16055,7 @@ OPCODE(0x53C0)
 /* STCC */
 OPCODE(0x54C0)
 {
-    uint32_t res;
+    u32 res;
 
     if (!(flag_C & 0x100))
     {
@@ -16082,7 +16071,7 @@ OPCODE(0x54C0)
 /* STCC */
 OPCODE(0x55C0)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_C & 0x100)
     {
@@ -16098,7 +16087,7 @@ OPCODE(0x55C0)
 /* STCC */
 OPCODE(0x56C0)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_NotZ)
     {
@@ -16114,7 +16103,7 @@ OPCODE(0x56C0)
 /* STCC */
 OPCODE(0x57C0)
 {
-    uint32_t res;
+    u32 res;
 
     if (!flag_NotZ)
     {
@@ -16130,7 +16119,7 @@ OPCODE(0x57C0)
 /* STCC */
 OPCODE(0x58C0)
 {
-    uint32_t res;
+    u32 res;
 
     if (!(flag_V & 0x80))
     {
@@ -16146,7 +16135,7 @@ OPCODE(0x58C0)
 /* STCC */
 OPCODE(0x59C0)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_V & 0x80)
     {
@@ -16162,7 +16151,7 @@ OPCODE(0x59C0)
 /* STCC */
 OPCODE(0x5AC0)
 {
-    uint32_t res;
+    u32 res;
 
     if (!(flag_N & 0x80))
     {
@@ -16178,7 +16167,7 @@ OPCODE(0x5AC0)
 /* STCC */
 OPCODE(0x5BC0)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_N & 0x80)
     {
@@ -16194,7 +16183,7 @@ OPCODE(0x5BC0)
 /* STCC */
 OPCODE(0x5CC0)
 {
-    uint32_t res;
+    u32 res;
 
     if (!((flag_N ^ flag_V) & 0x80))
     {
@@ -16210,7 +16199,7 @@ OPCODE(0x5CC0)
 /* STCC */
 OPCODE(0x5DC0)
 {
-    uint32_t res;
+    u32 res;
 
     if ((flag_N ^ flag_V) & 0x80)
     {
@@ -16226,7 +16215,7 @@ OPCODE(0x5DC0)
 /* STCC */
 OPCODE(0x5EC0)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_NotZ && (!((flag_N ^ flag_V) & 0x80)))
     {
@@ -16242,7 +16231,7 @@ OPCODE(0x5EC0)
 /* STCC */
 OPCODE(0x5FC0)
 {
-    uint32_t res;
+    u32 res;
 
     if ((!flag_NotZ) || ((flag_N ^ flag_V) & 0x80))
     {
@@ -16258,7 +16247,7 @@ OPCODE(0x5FC0)
 /* STCC */
 OPCODE(0x50D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     res = 0xFF;
@@ -16269,7 +16258,7 @@ OPCODE(0x50D0)
 /* STCC */
 OPCODE(0x51D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     res = 0;
@@ -16280,7 +16269,7 @@ OPCODE(0x51D0)
 /* STCC */
 OPCODE(0x52D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     if (flag_NotZ && (!(flag_C & 0x100)))
@@ -16297,7 +16286,7 @@ OPCODE(0x52D0)
 /* STCC */
 OPCODE(0x53D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     if ((!flag_NotZ) || (flag_C & 0x100))
@@ -16314,7 +16303,7 @@ OPCODE(0x53D0)
 /* STCC */
 OPCODE(0x54D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     if (!(flag_C & 0x100))
@@ -16331,7 +16320,7 @@ OPCODE(0x54D0)
 /* STCC */
 OPCODE(0x55D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     if (flag_C & 0x100)
@@ -16348,7 +16337,7 @@ OPCODE(0x55D0)
 /* STCC */
 OPCODE(0x56D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     if (flag_NotZ)
@@ -16365,7 +16354,7 @@ OPCODE(0x56D0)
 /* STCC */
 OPCODE(0x57D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     if (!flag_NotZ)
@@ -16382,7 +16371,7 @@ OPCODE(0x57D0)
 /* STCC */
 OPCODE(0x58D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     if (!(flag_V & 0x80))
@@ -16399,7 +16388,7 @@ OPCODE(0x58D0)
 /* STCC */
 OPCODE(0x59D0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     if (flag_V & 0x80)
@@ -16416,7 +16405,7 @@ OPCODE(0x59D0)
 /* STCC */
 OPCODE(0x5AD0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     if (!(flag_N & 0x80))
@@ -16433,7 +16422,7 @@ OPCODE(0x5AD0)
 /* STCC */
 OPCODE(0x5BD0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     if (flag_N & 0x80)
@@ -16450,7 +16439,7 @@ OPCODE(0x5BD0)
 /* STCC */
 OPCODE(0x5CD0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     if (!((flag_N ^ flag_V) & 0x80))
@@ -16467,7 +16456,7 @@ OPCODE(0x5CD0)
 /* STCC */
 OPCODE(0x5DD0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     if ((flag_N ^ flag_V) & 0x80)
@@ -16484,7 +16473,7 @@ OPCODE(0x5DD0)
 /* STCC */
 OPCODE(0x5ED0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     if (flag_NotZ && (!((flag_N ^ flag_V) & 0x80)))
@@ -16501,7 +16490,7 @@ OPCODE(0x5ED0)
 /* STCC */
 OPCODE(0x5FD0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     if ((!flag_NotZ) || ((flag_N ^ flag_V) & 0x80))
@@ -16518,7 +16507,7 @@ OPCODE(0x5FD0)
 /* STCC */
 OPCODE(0x50D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16530,7 +16519,7 @@ OPCODE(0x50D8)
 /* STCC */
 OPCODE(0x51D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16542,7 +16531,7 @@ OPCODE(0x51D8)
 /* STCC */
 OPCODE(0x52D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16560,7 +16549,7 @@ OPCODE(0x52D8)
 /* STCC */
 OPCODE(0x53D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16578,7 +16567,7 @@ OPCODE(0x53D8)
 /* STCC */
 OPCODE(0x54D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16596,7 +16585,7 @@ OPCODE(0x54D8)
 /* STCC */
 OPCODE(0x55D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16614,7 +16603,7 @@ OPCODE(0x55D8)
 /* STCC */
 OPCODE(0x56D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16632,7 +16621,7 @@ OPCODE(0x56D8)
 /* STCC */
 OPCODE(0x57D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16650,7 +16639,7 @@ OPCODE(0x57D8)
 /* STCC */
 OPCODE(0x58D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16668,7 +16657,7 @@ OPCODE(0x58D8)
 /* STCC */
 OPCODE(0x59D8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16686,7 +16675,7 @@ OPCODE(0x59D8)
 /* STCC */
 OPCODE(0x5AD8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16704,7 +16693,7 @@ OPCODE(0x5AD8)
 /* STCC */
 OPCODE(0x5BD8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16722,7 +16711,7 @@ OPCODE(0x5BD8)
 /* STCC */
 OPCODE(0x5CD8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16740,7 +16729,7 @@ OPCODE(0x5CD8)
 /* STCC */
 OPCODE(0x5DD8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16758,7 +16747,7 @@ OPCODE(0x5DD8)
 /* STCC */
 OPCODE(0x5ED8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16776,7 +16765,7 @@ OPCODE(0x5ED8)
 /* STCC */
 OPCODE(0x5FD8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -16794,7 +16783,7 @@ OPCODE(0x5FD8)
 /* STCC */
 OPCODE(0x50E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -16806,7 +16795,7 @@ OPCODE(0x50E0)
 /* STCC */
 OPCODE(0x51E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -16818,7 +16807,7 @@ OPCODE(0x51E0)
 /* STCC */
 OPCODE(0x52E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -16836,7 +16825,7 @@ OPCODE(0x52E0)
 /* STCC */
 OPCODE(0x53E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -16854,7 +16843,7 @@ OPCODE(0x53E0)
 /* STCC */
 OPCODE(0x54E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -16872,7 +16861,7 @@ OPCODE(0x54E0)
 /* STCC */
 OPCODE(0x55E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -16890,7 +16879,7 @@ OPCODE(0x55E0)
 /* STCC */
 OPCODE(0x56E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -16908,7 +16897,7 @@ OPCODE(0x56E0)
 /* STCC */
 OPCODE(0x57E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -16926,7 +16915,7 @@ OPCODE(0x57E0)
 /* STCC */
 OPCODE(0x58E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -16944,7 +16933,7 @@ OPCODE(0x58E0)
 /* STCC */
 OPCODE(0x59E0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -16962,7 +16951,7 @@ OPCODE(0x59E0)
 /* STCC */
 OPCODE(0x5AE0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -16980,7 +16969,7 @@ OPCODE(0x5AE0)
 /* STCC */
 OPCODE(0x5BE0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -16998,7 +16987,7 @@ OPCODE(0x5BE0)
 /* STCC */
 OPCODE(0x5CE0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -17016,7 +17005,7 @@ OPCODE(0x5CE0)
 /* STCC */
 OPCODE(0x5DE0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -17034,7 +17023,7 @@ OPCODE(0x5DE0)
 /* STCC */
 OPCODE(0x5EE0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -17052,7 +17041,7 @@ OPCODE(0x5EE0)
 /* STCC */
 OPCODE(0x5FE0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -17070,7 +17059,7 @@ OPCODE(0x5FE0)
 /* STCC */
 OPCODE(0x50E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17082,7 +17071,7 @@ OPCODE(0x50E8)
 /* STCC */
 OPCODE(0x51E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17094,7 +17083,7 @@ OPCODE(0x51E8)
 /* STCC */
 OPCODE(0x52E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17112,7 +17101,7 @@ OPCODE(0x52E8)
 /* STCC */
 OPCODE(0x53E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17130,7 +17119,7 @@ OPCODE(0x53E8)
 /* STCC */
 OPCODE(0x54E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17148,7 +17137,7 @@ OPCODE(0x54E8)
 /* STCC */
 OPCODE(0x55E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17166,7 +17155,7 @@ OPCODE(0x55E8)
 /* STCC */
 OPCODE(0x56E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17184,7 +17173,7 @@ OPCODE(0x56E8)
 /* STCC */
 OPCODE(0x57E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17202,7 +17191,7 @@ OPCODE(0x57E8)
 /* STCC */
 OPCODE(0x58E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17220,7 +17209,7 @@ OPCODE(0x58E8)
 /* STCC */
 OPCODE(0x59E8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17238,7 +17227,7 @@ OPCODE(0x59E8)
 /* STCC */
 OPCODE(0x5AE8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17256,7 +17245,7 @@ OPCODE(0x5AE8)
 /* STCC */
 OPCODE(0x5BE8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17274,7 +17263,7 @@ OPCODE(0x5BE8)
 /* STCC */
 OPCODE(0x5CE8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17292,7 +17281,7 @@ OPCODE(0x5CE8)
 /* STCC */
 OPCODE(0x5DE8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17310,7 +17299,7 @@ OPCODE(0x5DE8)
 /* STCC */
 OPCODE(0x5EE8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17328,7 +17317,7 @@ OPCODE(0x5EE8)
 /* STCC */
 OPCODE(0x5FE8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -17346,7 +17335,7 @@ OPCODE(0x5FE8)
 /* STCC */
 OPCODE(0x50F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17358,7 +17347,7 @@ OPCODE(0x50F0)
 /* STCC */
 OPCODE(0x51F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17370,7 +17359,7 @@ OPCODE(0x51F0)
 /* STCC */
 OPCODE(0x52F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17388,7 +17377,7 @@ OPCODE(0x52F0)
 /* STCC */
 OPCODE(0x53F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17406,7 +17395,7 @@ OPCODE(0x53F0)
 /* STCC */
 OPCODE(0x54F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17424,7 +17413,7 @@ OPCODE(0x54F0)
 /* STCC */
 OPCODE(0x55F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17442,7 +17431,7 @@ OPCODE(0x55F0)
 /* STCC */
 OPCODE(0x56F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17460,7 +17449,7 @@ OPCODE(0x56F0)
 /* STCC */
 OPCODE(0x57F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17478,7 +17467,7 @@ OPCODE(0x57F0)
 /* STCC */
 OPCODE(0x58F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17496,7 +17485,7 @@ OPCODE(0x58F0)
 /* STCC */
 OPCODE(0x59F0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17514,7 +17503,7 @@ OPCODE(0x59F0)
 /* STCC */
 OPCODE(0x5AF0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17532,7 +17521,7 @@ OPCODE(0x5AF0)
 /* STCC */
 OPCODE(0x5BF0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17550,7 +17539,7 @@ OPCODE(0x5BF0)
 /* STCC */
 OPCODE(0x5CF0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17568,7 +17557,7 @@ OPCODE(0x5CF0)
 /* STCC */
 OPCODE(0x5DF0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17586,7 +17575,7 @@ OPCODE(0x5DF0)
 /* STCC */
 OPCODE(0x5EF0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17604,7 +17593,7 @@ OPCODE(0x5EF0)
 /* STCC */
 OPCODE(0x5FF0)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -17622,7 +17611,7 @@ OPCODE(0x5FF0)
 /* STCC */
 OPCODE(0x50F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     res = 0xFF;
@@ -17633,7 +17622,7 @@ OPCODE(0x50F8)
 /* STCC */
 OPCODE(0x51F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     res = 0;
@@ -17644,7 +17633,7 @@ OPCODE(0x51F8)
 /* STCC */
 OPCODE(0x52F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     if (flag_NotZ && (!(flag_C & 0x100)))
@@ -17661,7 +17650,7 @@ OPCODE(0x52F8)
 /* STCC */
 OPCODE(0x53F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     if ((!flag_NotZ) || (flag_C & 0x100))
@@ -17678,7 +17667,7 @@ OPCODE(0x53F8)
 /* STCC */
 OPCODE(0x54F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     if (!(flag_C & 0x100))
@@ -17695,7 +17684,7 @@ OPCODE(0x54F8)
 /* STCC */
 OPCODE(0x55F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     if (flag_C & 0x100)
@@ -17712,7 +17701,7 @@ OPCODE(0x55F8)
 /* STCC */
 OPCODE(0x56F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     if (flag_NotZ)
@@ -17729,7 +17718,7 @@ OPCODE(0x56F8)
 /* STCC */
 OPCODE(0x57F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     if (!flag_NotZ)
@@ -17746,7 +17735,7 @@ OPCODE(0x57F8)
 /* STCC */
 OPCODE(0x58F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     if (!(flag_V & 0x80))
@@ -17763,7 +17752,7 @@ OPCODE(0x58F8)
 /* STCC */
 OPCODE(0x59F8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     if (flag_V & 0x80)
@@ -17780,7 +17769,7 @@ OPCODE(0x59F8)
 /* STCC */
 OPCODE(0x5AF8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     if (!(flag_N & 0x80))
@@ -17797,7 +17786,7 @@ OPCODE(0x5AF8)
 /* STCC */
 OPCODE(0x5BF8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     if (flag_N & 0x80)
@@ -17814,7 +17803,7 @@ OPCODE(0x5BF8)
 /* STCC */
 OPCODE(0x5CF8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     if (!((flag_N ^ flag_V) & 0x80))
@@ -17831,7 +17820,7 @@ OPCODE(0x5CF8)
 /* STCC */
 OPCODE(0x5DF8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     if ((flag_N ^ flag_V) & 0x80)
@@ -17848,7 +17837,7 @@ OPCODE(0x5DF8)
 /* STCC */
 OPCODE(0x5EF8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     if (flag_NotZ && (!((flag_N ^ flag_V) & 0x80)))
@@ -17865,7 +17854,7 @@ OPCODE(0x5EF8)
 /* STCC */
 OPCODE(0x5FF8)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_SWORD(adr);
     if ((!flag_NotZ) || ((flag_N ^ flag_V) & 0x80))
@@ -17882,7 +17871,7 @@ OPCODE(0x5FF8)
 /* STCC */
 OPCODE(0x50F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     res = 0xFF;
@@ -17893,7 +17882,7 @@ OPCODE(0x50F9)
 /* STCC */
 OPCODE(0x51F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     res = 0;
@@ -17904,7 +17893,7 @@ OPCODE(0x51F9)
 /* STCC */
 OPCODE(0x52F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     if (flag_NotZ && (!(flag_C & 0x100)))
@@ -17921,7 +17910,7 @@ OPCODE(0x52F9)
 /* STCC */
 OPCODE(0x53F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     if ((!flag_NotZ) || (flag_C & 0x100))
@@ -17938,7 +17927,7 @@ OPCODE(0x53F9)
 /* STCC */
 OPCODE(0x54F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     if (!(flag_C & 0x100))
@@ -17955,7 +17944,7 @@ OPCODE(0x54F9)
 /* STCC */
 OPCODE(0x55F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     if (flag_C & 0x100)
@@ -17972,7 +17961,7 @@ OPCODE(0x55F9)
 /* STCC */
 OPCODE(0x56F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     if (flag_NotZ)
@@ -17989,7 +17978,7 @@ OPCODE(0x56F9)
 /* STCC */
 OPCODE(0x57F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     if (!flag_NotZ)
@@ -18006,7 +17995,7 @@ OPCODE(0x57F9)
 /* STCC */
 OPCODE(0x58F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     if (!(flag_V & 0x80))
@@ -18023,7 +18012,7 @@ OPCODE(0x58F9)
 /* STCC */
 OPCODE(0x59F9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     if (flag_V & 0x80)
@@ -18040,7 +18029,7 @@ OPCODE(0x59F9)
 /* STCC */
 OPCODE(0x5AF9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     if (!(flag_N & 0x80))
@@ -18057,7 +18046,7 @@ OPCODE(0x5AF9)
 /* STCC */
 OPCODE(0x5BF9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     if (flag_N & 0x80)
@@ -18074,7 +18063,7 @@ OPCODE(0x5BF9)
 /* STCC */
 OPCODE(0x5CF9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     if (!((flag_N ^ flag_V) & 0x80))
@@ -18091,7 +18080,7 @@ OPCODE(0x5CF9)
 /* STCC */
 OPCODE(0x5DF9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     if ((flag_N ^ flag_V) & 0x80)
@@ -18108,7 +18097,7 @@ OPCODE(0x5DF9)
 /* STCC */
 OPCODE(0x5EF9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     if (flag_NotZ && (!((flag_N ^ flag_V) & 0x80)))
@@ -18125,7 +18114,7 @@ OPCODE(0x5EF9)
 /* STCC */
 OPCODE(0x5FF9)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     FETCH_LONG(adr);
     if ((!flag_NotZ) || ((flag_N ^ flag_V) & 0x80))
@@ -18142,7 +18131,7 @@ OPCODE(0x5FF9)
 /* STCC */
 OPCODE(0x50DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18154,7 +18143,7 @@ OPCODE(0x50DF)
 /* STCC */
 OPCODE(0x51DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18166,7 +18155,7 @@ OPCODE(0x51DF)
 /* STCC */
 OPCODE(0x52DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18184,7 +18173,7 @@ OPCODE(0x52DF)
 /* STCC */
 OPCODE(0x53DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18202,7 +18191,7 @@ OPCODE(0x53DF)
 /* STCC */
 OPCODE(0x54DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18220,7 +18209,7 @@ OPCODE(0x54DF)
 /* STCC */
 OPCODE(0x55DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18238,7 +18227,7 @@ OPCODE(0x55DF)
 /* STCC */
 OPCODE(0x56DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18256,7 +18245,7 @@ OPCODE(0x56DF)
 /* STCC */
 OPCODE(0x57DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18274,7 +18263,7 @@ OPCODE(0x57DF)
 /* STCC */
 OPCODE(0x58DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18292,7 +18281,7 @@ OPCODE(0x58DF)
 /* STCC */
 OPCODE(0x59DF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18310,7 +18299,7 @@ OPCODE(0x59DF)
 /* STCC */
 OPCODE(0x5ADF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18328,7 +18317,7 @@ OPCODE(0x5ADF)
 /* STCC */
 OPCODE(0x5BDF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18346,7 +18335,7 @@ OPCODE(0x5BDF)
 /* STCC */
 OPCODE(0x5CDF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18364,7 +18353,7 @@ OPCODE(0x5CDF)
 /* STCC */
 OPCODE(0x5DDF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18382,7 +18371,7 @@ OPCODE(0x5DDF)
 /* STCC */
 OPCODE(0x5EDF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18400,7 +18389,7 @@ OPCODE(0x5EDF)
 /* STCC */
 OPCODE(0x5FDF)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -18418,7 +18407,7 @@ OPCODE(0x5FDF)
 /* STCC */
 OPCODE(0x50E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18430,7 +18419,7 @@ OPCODE(0x50E7)
 /* STCC */
 OPCODE(0x51E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18442,7 +18431,7 @@ OPCODE(0x51E7)
 /* STCC */
 OPCODE(0x52E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18460,7 +18449,7 @@ OPCODE(0x52E7)
 /* STCC */
 OPCODE(0x53E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18478,7 +18467,7 @@ OPCODE(0x53E7)
 /* STCC */
 OPCODE(0x54E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18496,7 +18485,7 @@ OPCODE(0x54E7)
 /* STCC */
 OPCODE(0x55E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18514,7 +18503,7 @@ OPCODE(0x55E7)
 /* STCC */
 OPCODE(0x56E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18532,7 +18521,7 @@ OPCODE(0x56E7)
 /* STCC */
 OPCODE(0x57E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18550,7 +18539,7 @@ OPCODE(0x57E7)
 /* STCC */
 OPCODE(0x58E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18568,7 +18557,7 @@ OPCODE(0x58E7)
 /* STCC */
 OPCODE(0x59E7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18586,7 +18575,7 @@ OPCODE(0x59E7)
 /* STCC */
 OPCODE(0x5AE7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18604,7 +18593,7 @@ OPCODE(0x5AE7)
 /* STCC */
 OPCODE(0x5BE7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18622,7 +18611,7 @@ OPCODE(0x5BE7)
 /* STCC */
 OPCODE(0x5CE7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18640,7 +18629,7 @@ OPCODE(0x5CE7)
 /* STCC */
 OPCODE(0x5DE7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18658,7 +18647,7 @@ OPCODE(0x5DE7)
 /* STCC */
 OPCODE(0x5EE7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18676,7 +18665,7 @@ OPCODE(0x5EE7)
 /* STCC */
 OPCODE(0x5FE7)
 {
-    uint32_t adr, res;
+    u32 adr, res;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -18702,14 +18691,14 @@ OPCODE(0x50C8)
 /* DBCC */
 OPCODE(0x51C8)
 {
-    uint32_t res;
+    u32 res;
 
     res = DREGu16((Opcode >> 0) & 7);
     res--;
     DREGu16((Opcode >> 0) & 7) = res;
-    if ((int32_t)res != -1)
+    if ((s32)res != -1)
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -18724,16 +18713,16 @@ OPCODE(0x51C8)
 /* DBCC */
 OPCODE(0x52C8)
 {
-    uint32_t res;
+    u32 res;
 
     if ((!flag_NotZ) || (flag_C & 0x100))
     {
         res = DREGu16((Opcode >> 0) & 7);
         res--;
         DREGu16((Opcode >> 0) & 7) = res;
-        if ((int32_t)res != -1)
+        if ((s32)res != -1)
         {
-            uint32_t newPC;
+            u32 newPC;
 
             newPC = UNBASED_PC;
             newPC += GET_SWORD;
@@ -18754,16 +18743,16 @@ OPCODE(0x52C8)
 /* DBCC */
 OPCODE(0x53C8)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_NotZ && (!(flag_C & 0x100)))
     {
         res = DREGu16((Opcode >> 0) & 7);
         res--;
         DREGu16((Opcode >> 0) & 7) = res;
-        if ((int32_t)res != -1)
+        if ((s32)res != -1)
         {
-            uint32_t newPC;
+            u32 newPC;
 
             newPC = UNBASED_PC;
             newPC += GET_SWORD;
@@ -18784,16 +18773,16 @@ OPCODE(0x53C8)
 /* DBCC */
 OPCODE(0x54C8)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_C & 0x100)
     {
         res = DREGu16((Opcode >> 0) & 7);
         res--;
         DREGu16((Opcode >> 0) & 7) = res;
-        if ((int32_t)res != -1)
+        if ((s32)res != -1)
         {
-            uint32_t newPC;
+            u32 newPC;
 
             newPC = UNBASED_PC;
             newPC += GET_SWORD;
@@ -18814,16 +18803,16 @@ OPCODE(0x54C8)
 /* DBCC */
 OPCODE(0x55C8)
 {
-    uint32_t res;
+    u32 res;
 
     if (!(flag_C & 0x100))
     {
         res = DREGu16((Opcode >> 0) & 7);
         res--;
         DREGu16((Opcode >> 0) & 7) = res;
-        if ((int32_t)res != -1)
+        if ((s32)res != -1)
         {
-            uint32_t newPC;
+            u32 newPC;
 
             newPC = UNBASED_PC;
             newPC += GET_SWORD;
@@ -18844,16 +18833,16 @@ OPCODE(0x55C8)
 /* DBCC */
 OPCODE(0x56C8)
 {
-    uint32_t res;
+    u32 res;
 
     if (!flag_NotZ)
     {
         res = DREGu16((Opcode >> 0) & 7);
         res--;
         DREGu16((Opcode >> 0) & 7) = res;
-        if ((int32_t)res != -1)
+        if ((s32)res != -1)
         {
-            uint32_t newPC;
+            u32 newPC;
 
             newPC = UNBASED_PC;
             newPC += GET_SWORD;
@@ -18874,16 +18863,16 @@ OPCODE(0x56C8)
 /* DBCC */
 OPCODE(0x57C8)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_NotZ)
     {
         res = DREGu16((Opcode >> 0) & 7);
         res--;
         DREGu16((Opcode >> 0) & 7) = res;
-        if ((int32_t)res != -1)
+        if ((s32)res != -1)
         {
-            uint32_t newPC;
+            u32 newPC;
 
             newPC = UNBASED_PC;
             newPC += GET_SWORD;
@@ -18904,16 +18893,16 @@ OPCODE(0x57C8)
 /* DBCC */
 OPCODE(0x58C8)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_V & 0x80)
     {
         res = DREGu16((Opcode >> 0) & 7);
         res--;
         DREGu16((Opcode >> 0) & 7) = res;
-        if ((int32_t)res != -1)
+        if ((s32)res != -1)
         {
-            uint32_t newPC;
+            u32 newPC;
 
             newPC = UNBASED_PC;
             newPC += GET_SWORD;
@@ -18934,16 +18923,16 @@ OPCODE(0x58C8)
 /* DBCC */
 OPCODE(0x59C8)
 {
-    uint32_t res;
+    u32 res;
 
     if (!(flag_V & 0x80))
     {
         res = DREGu16((Opcode >> 0) & 7);
         res--;
         DREGu16((Opcode >> 0) & 7) = res;
-        if ((int32_t)res != -1)
+        if ((s32)res != -1)
         {
-            uint32_t newPC;
+            u32 newPC;
 
             newPC = UNBASED_PC;
             newPC += GET_SWORD;
@@ -18964,16 +18953,16 @@ OPCODE(0x59C8)
 /* DBCC */
 OPCODE(0x5AC8)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_N & 0x80)
     {
         res = DREGu16((Opcode >> 0) & 7);
         res--;
         DREGu16((Opcode >> 0) & 7) = res;
-        if ((int32_t)res != -1)
+        if ((s32)res != -1)
         {
-            uint32_t newPC;
+            u32 newPC;
 
             newPC = UNBASED_PC;
             newPC += GET_SWORD;
@@ -18994,16 +18983,16 @@ OPCODE(0x5AC8)
 /* DBCC */
 OPCODE(0x5BC8)
 {
-    uint32_t res;
+    u32 res;
 
     if (!(flag_N & 0x80))
     {
         res = DREGu16((Opcode >> 0) & 7);
         res--;
         DREGu16((Opcode >> 0) & 7) = res;
-        if ((int32_t)res != -1)
+        if ((s32)res != -1)
         {
-            uint32_t newPC;
+            u32 newPC;
 
             newPC = UNBASED_PC;
             newPC += GET_SWORD;
@@ -19024,16 +19013,16 @@ OPCODE(0x5BC8)
 /* DBCC */
 OPCODE(0x5CC8)
 {
-    uint32_t res;
+    u32 res;
 
     if ((flag_N ^ flag_V) & 0x80)
     {
         res = DREGu16((Opcode >> 0) & 7);
         res--;
         DREGu16((Opcode >> 0) & 7) = res;
-        if ((int32_t)res != -1)
+        if ((s32)res != -1)
         {
-            uint32_t newPC;
+            u32 newPC;
 
             newPC = UNBASED_PC;
             newPC += GET_SWORD;
@@ -19054,16 +19043,16 @@ OPCODE(0x5CC8)
 /* DBCC */
 OPCODE(0x5DC8)
 {
-    uint32_t res;
+    u32 res;
 
     if (!((flag_N ^ flag_V) & 0x80))
     {
         res = DREGu16((Opcode >> 0) & 7);
         res--;
         DREGu16((Opcode >> 0) & 7) = res;
-        if ((int32_t)res != -1)
+        if ((s32)res != -1)
         {
-            uint32_t newPC;
+            u32 newPC;
 
             newPC = UNBASED_PC;
             newPC += GET_SWORD;
@@ -19084,16 +19073,16 @@ OPCODE(0x5DC8)
 /* DBCC */
 OPCODE(0x5EC8)
 {
-    uint32_t res;
+    u32 res;
 
     if ((!flag_NotZ) || ((flag_N ^ flag_V) & 0x80))
     {
         res = DREGu16((Opcode >> 0) & 7);
         res--;
         DREGu16((Opcode >> 0) & 7) = res;
-        if ((int32_t)res != -1)
+        if ((s32)res != -1)
         {
-            uint32_t newPC;
+            u32 newPC;
 
             newPC = UNBASED_PC;
             newPC += GET_SWORD;
@@ -19114,16 +19103,16 @@ OPCODE(0x5EC8)
 /* DBCC */
 OPCODE(0x5FC8)
 {
-    uint32_t res;
+    u32 res;
 
     if (flag_NotZ && (!((flag_N ^ flag_V) & 0x80)))
     {
         res = DREGu16((Opcode >> 0) & 7);
         res--;
         DREGu16((Opcode >> 0) & 7) = res;
-        if ((int32_t)res != -1)
+        if ((s32)res != -1)
         {
-            uint32_t newPC;
+            u32 newPC;
 
             newPC = UNBASED_PC;
             newPC += GET_SWORD;
@@ -19144,8 +19133,8 @@ OPCODE(0x5FC8)
 /* ADDQ */
 OPCODE(0x5000)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     dst = DREGu8((Opcode >> 0) & 7);
@@ -19160,8 +19149,8 @@ OPCODE(0x5000)
 /* ADDQ */
 OPCODE(0x5010)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -19177,8 +19166,8 @@ OPCODE(0x5010)
 /* ADDQ */
 OPCODE(0x5018)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -19195,8 +19184,8 @@ OPCODE(0x5018)
 /* ADDQ */
 OPCODE(0x5020)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7) - 1;
@@ -19213,8 +19202,8 @@ OPCODE(0x5020)
 /* ADDQ */
 OPCODE(0x5028)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_SWORD(adr);
@@ -19231,8 +19220,8 @@ OPCODE(0x5028)
 /* ADDQ */
 OPCODE(0x5030)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -19249,8 +19238,8 @@ OPCODE(0x5030)
 /* ADDQ */
 OPCODE(0x5038)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_SWORD(adr);
@@ -19266,8 +19255,8 @@ OPCODE(0x5038)
 /* ADDQ */
 OPCODE(0x5039)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_LONG(adr);
@@ -19283,8 +19272,8 @@ OPCODE(0x5039)
 /* ADDQ */
 OPCODE(0x501F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG(7);
@@ -19301,8 +19290,8 @@ OPCODE(0x501F)
 /* ADDQ */
 OPCODE(0x5027)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG(7) - 2;
@@ -19319,8 +19308,8 @@ OPCODE(0x5027)
 /* ADDQ */
 OPCODE(0x5040)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     dst = DREGu16((Opcode >> 0) & 7);
@@ -19335,8 +19324,8 @@ OPCODE(0x5040)
 /* ADDQ */
 OPCODE(0x5048)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     dst = AREGu32((Opcode >> 0) & 7);
@@ -19348,8 +19337,8 @@ OPCODE(0x5048)
 /* ADDQ */
 OPCODE(0x5050)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -19365,8 +19354,8 @@ OPCODE(0x5050)
 /* ADDQ */
 OPCODE(0x5058)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -19383,8 +19372,8 @@ OPCODE(0x5058)
 /* ADDQ */
 OPCODE(0x5060)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7) - 2;
@@ -19401,8 +19390,8 @@ OPCODE(0x5060)
 /* ADDQ */
 OPCODE(0x5068)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_SWORD(adr);
@@ -19419,8 +19408,8 @@ OPCODE(0x5068)
 /* ADDQ */
 OPCODE(0x5070)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -19437,8 +19426,8 @@ OPCODE(0x5070)
 /* ADDQ */
 OPCODE(0x5078)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_SWORD(adr);
@@ -19454,8 +19443,8 @@ OPCODE(0x5078)
 /* ADDQ */
 OPCODE(0x5079)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_LONG(adr);
@@ -19471,8 +19460,8 @@ OPCODE(0x5079)
 /* ADDQ */
 OPCODE(0x505F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG(7);
@@ -19489,8 +19478,8 @@ OPCODE(0x505F)
 /* ADDQ */
 OPCODE(0x5067)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG(7) - 2;
@@ -19507,8 +19496,8 @@ OPCODE(0x5067)
 /* ADDQ */
 OPCODE(0x5080)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     dst = DREGu32((Opcode >> 0) & 7);
@@ -19524,8 +19513,8 @@ OPCODE(0x5080)
 /* ADDQ */
 OPCODE(0x5088)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     dst = AREGu32((Opcode >> 0) & 7);
@@ -19537,8 +19526,8 @@ OPCODE(0x5088)
 /* ADDQ */
 OPCODE(0x5090)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -19555,8 +19544,8 @@ OPCODE(0x5090)
 /* ADDQ */
 OPCODE(0x5098)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -19574,8 +19563,8 @@ OPCODE(0x5098)
 /* ADDQ */
 OPCODE(0x50A0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7) - 4;
@@ -19593,8 +19582,8 @@ OPCODE(0x50A0)
 /* ADDQ */
 OPCODE(0x50A8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_SWORD(adr);
@@ -19612,8 +19601,8 @@ OPCODE(0x50A8)
 /* ADDQ */
 OPCODE(0x50B0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -19631,8 +19620,8 @@ OPCODE(0x50B0)
 /* ADDQ */
 OPCODE(0x50B8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_SWORD(adr);
@@ -19649,8 +19638,8 @@ OPCODE(0x50B8)
 /* ADDQ */
 OPCODE(0x50B9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_LONG(adr);
@@ -19667,8 +19656,8 @@ OPCODE(0x50B9)
 /* ADDQ */
 OPCODE(0x509F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG(7);
@@ -19686,8 +19675,8 @@ OPCODE(0x509F)
 /* ADDQ */
 OPCODE(0x50A7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG(7) - 4;
@@ -19705,8 +19694,8 @@ OPCODE(0x50A7)
 /* SUBQ */
 OPCODE(0x5100)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     dst = DREGu8((Opcode >> 0) & 7);
@@ -19721,8 +19710,8 @@ OPCODE(0x5100)
 /* SUBQ */
 OPCODE(0x5110)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -19738,8 +19727,8 @@ OPCODE(0x5110)
 /* SUBQ */
 OPCODE(0x5118)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -19756,8 +19745,8 @@ OPCODE(0x5118)
 /* SUBQ */
 OPCODE(0x5120)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7) - 1;
@@ -19774,8 +19763,8 @@ OPCODE(0x5120)
 /* SUBQ */
 OPCODE(0x5128)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_SWORD(adr);
@@ -19792,8 +19781,8 @@ OPCODE(0x5128)
 /* SUBQ */
 OPCODE(0x5130)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -19810,8 +19799,8 @@ OPCODE(0x5130)
 /* SUBQ */
 OPCODE(0x5138)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_SWORD(adr);
@@ -19827,8 +19816,8 @@ OPCODE(0x5138)
 /* SUBQ */
 OPCODE(0x5139)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_LONG(adr);
@@ -19844,8 +19833,8 @@ OPCODE(0x5139)
 /* SUBQ */
 OPCODE(0x511F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG(7);
@@ -19862,8 +19851,8 @@ OPCODE(0x511F)
 /* SUBQ */
 OPCODE(0x5127)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG(7) - 2;
@@ -19880,8 +19869,8 @@ OPCODE(0x5127)
 /* SUBQ */
 OPCODE(0x5140)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     dst = DREGu16((Opcode >> 0) & 7);
@@ -19896,8 +19885,8 @@ OPCODE(0x5140)
 /* SUBQ */
 OPCODE(0x5148)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     dst = AREGu32((Opcode >> 0) & 7);
@@ -19909,8 +19898,8 @@ OPCODE(0x5148)
 /* SUBQ */
 OPCODE(0x5150)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -19926,8 +19915,8 @@ OPCODE(0x5150)
 /* SUBQ */
 OPCODE(0x5158)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -19944,8 +19933,8 @@ OPCODE(0x5158)
 /* SUBQ */
 OPCODE(0x5160)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7) - 2;
@@ -19962,8 +19951,8 @@ OPCODE(0x5160)
 /* SUBQ */
 OPCODE(0x5168)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_SWORD(adr);
@@ -19980,8 +19969,8 @@ OPCODE(0x5168)
 /* SUBQ */
 OPCODE(0x5170)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -19998,8 +19987,8 @@ OPCODE(0x5170)
 /* SUBQ */
 OPCODE(0x5178)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_SWORD(adr);
@@ -20015,8 +20004,8 @@ OPCODE(0x5178)
 /* SUBQ */
 OPCODE(0x5179)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_LONG(adr);
@@ -20032,8 +20021,8 @@ OPCODE(0x5179)
 /* SUBQ */
 OPCODE(0x515F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG(7);
@@ -20050,8 +20039,8 @@ OPCODE(0x515F)
 /* SUBQ */
 OPCODE(0x5167)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG(7) - 2;
@@ -20068,8 +20057,8 @@ OPCODE(0x5167)
 /* SUBQ */
 OPCODE(0x5180)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     dst = DREGu32((Opcode >> 0) & 7);
@@ -20085,8 +20074,8 @@ OPCODE(0x5180)
 /* SUBQ */
 OPCODE(0x5188)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     dst = AREGu32((Opcode >> 0) & 7);
@@ -20098,8 +20087,8 @@ OPCODE(0x5188)
 /* SUBQ */
 OPCODE(0x5190)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -20116,8 +20105,8 @@ OPCODE(0x5190)
 /* SUBQ */
 OPCODE(0x5198)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -20135,8 +20124,8 @@ OPCODE(0x5198)
 /* SUBQ */
 OPCODE(0x51A0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7) - 4;
@@ -20154,8 +20143,8 @@ OPCODE(0x51A0)
 /* SUBQ */
 OPCODE(0x51A8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_SWORD(adr);
@@ -20173,8 +20162,8 @@ OPCODE(0x51A8)
 /* SUBQ */
 OPCODE(0x51B0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG((Opcode >> 0) & 7);
@@ -20192,8 +20181,8 @@ OPCODE(0x51B0)
 /* SUBQ */
 OPCODE(0x51B8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_SWORD(adr);
@@ -20210,8 +20199,8 @@ OPCODE(0x51B8)
 /* SUBQ */
 OPCODE(0x51B9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     FETCH_LONG(adr);
@@ -20228,8 +20217,8 @@ OPCODE(0x51B9)
 /* SUBQ */
 OPCODE(0x519F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG(7);
@@ -20247,8 +20236,8 @@ OPCODE(0x519F)
 /* SUBQ */
 OPCODE(0x51A7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = (((Opcode >> 9) - 1) & 7) + 1;
     adr = AREG(7) - 4;
@@ -20269,7 +20258,7 @@ OPCODE(0x6201)
 
     if (flag_NotZ && (!(flag_C & 0x100)))
     {
-        INC_PC((int8_t)(Opcode & 0xFE));
+        INC_PC((s8)(Opcode & 0xFE));
         io_cycle_counter -= 2;
     }
     RET(8)
@@ -20281,7 +20270,7 @@ OPCODE(0x6301)
 
     if ((!flag_NotZ) || (flag_C & 0x100))
     {
-        INC_PC((int8_t)(Opcode & 0xFE));
+        INC_PC((s8)(Opcode & 0xFE));
         io_cycle_counter -= 2;
     }
     RET(8)
@@ -20293,7 +20282,7 @@ OPCODE(0x6401)
 
     if (!(flag_C & 0x100))
     {
-        INC_PC((int8_t)(Opcode & 0xFE));
+        INC_PC((s8)(Opcode & 0xFE));
         io_cycle_counter -= 2;
     }
     RET(8)
@@ -20305,7 +20294,7 @@ OPCODE(0x6501)
 
     if (flag_C & 0x100)
     {
-        INC_PC((int8_t)(Opcode & 0xFE));
+        INC_PC((s8)(Opcode & 0xFE));
         io_cycle_counter -= 2;
     }
     RET(8)
@@ -20317,7 +20306,7 @@ OPCODE(0x6601)
 
     if (flag_NotZ)
     {
-        INC_PC((int8_t)(Opcode & 0xFE));
+        INC_PC((s8)(Opcode & 0xFE));
         io_cycle_counter -= 2;
     }
     RET(8)
@@ -20329,7 +20318,7 @@ OPCODE(0x6701)
 
     if (!flag_NotZ)
     {
-        INC_PC((int8_t)(Opcode & 0xFE));
+        INC_PC((s8)(Opcode & 0xFE));
         io_cycle_counter -= 2;
     }
     RET(8)
@@ -20341,7 +20330,7 @@ OPCODE(0x6801)
 
     if (!(flag_V & 0x80))
     {
-        INC_PC((int8_t)(Opcode & 0xFE));
+        INC_PC((s8)(Opcode & 0xFE));
         io_cycle_counter -= 2;
     }
     RET(8)
@@ -20353,7 +20342,7 @@ OPCODE(0x6901)
 
     if (flag_V & 0x80)
     {
-        INC_PC((int8_t)(Opcode & 0xFE));
+        INC_PC((s8)(Opcode & 0xFE));
         io_cycle_counter -= 2;
     }
     RET(8)
@@ -20365,7 +20354,7 @@ OPCODE(0x6A01)
 
     if (!(flag_N & 0x80))
     {
-        INC_PC((int8_t)(Opcode & 0xFE));
+        INC_PC((s8)(Opcode & 0xFE));
         io_cycle_counter -= 2;
     }
     RET(8)
@@ -20377,7 +20366,7 @@ OPCODE(0x6B01)
 
     if (flag_N & 0x80)
     {
-        INC_PC((int8_t)(Opcode & 0xFE));
+        INC_PC((s8)(Opcode & 0xFE));
         io_cycle_counter -= 2;
     }
     RET(8)
@@ -20389,7 +20378,7 @@ OPCODE(0x6C01)
 
     if (!((flag_N ^ flag_V) & 0x80))
     {
-        INC_PC((int8_t)(Opcode & 0xFE));
+        INC_PC((s8)(Opcode & 0xFE));
         io_cycle_counter -= 2;
     }
     RET(8)
@@ -20401,7 +20390,7 @@ OPCODE(0x6D01)
 
     if ((flag_N ^ flag_V) & 0x80)
     {
-        INC_PC((int8_t)(Opcode & 0xFE));
+        INC_PC((s8)(Opcode & 0xFE));
         io_cycle_counter -= 2;
     }
     RET(8)
@@ -20413,7 +20402,7 @@ OPCODE(0x6E01)
 
     if (flag_NotZ && (!((flag_N ^ flag_V) & 0x80)))
     {
-        INC_PC((int8_t)(Opcode & 0xFE));
+        INC_PC((s8)(Opcode & 0xFE));
         io_cycle_counter -= 2;
     }
     RET(8)
@@ -20425,7 +20414,7 @@ OPCODE(0x6F01)
 
     if ((!flag_NotZ) || ((flag_N ^ flag_V) & 0x80))
     {
-        INC_PC((int8_t)(Opcode & 0xFE));
+        INC_PC((s8)(Opcode & 0xFE));
         io_cycle_counter -= 2;
     }
     RET(8)
@@ -20437,7 +20426,7 @@ OPCODE(0x6200)
 
     if (flag_NotZ && (!(flag_C & 0x100)))
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -20455,7 +20444,7 @@ OPCODE(0x6300)
 
     if ((!flag_NotZ) || (flag_C & 0x100))
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -20473,7 +20462,7 @@ OPCODE(0x6400)
 
     if (!(flag_C & 0x100))
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -20491,7 +20480,7 @@ OPCODE(0x6500)
 
     if (flag_C & 0x100)
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -20509,7 +20498,7 @@ OPCODE(0x6600)
 
     if (flag_NotZ)
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -20527,7 +20516,7 @@ OPCODE(0x6700)
 
     if (!flag_NotZ)
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -20545,7 +20534,7 @@ OPCODE(0x6800)
 
     if (!(flag_V & 0x80))
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -20563,7 +20552,7 @@ OPCODE(0x6900)
 
     if (flag_V & 0x80)
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -20581,7 +20570,7 @@ OPCODE(0x6A00)
 
     if (!(flag_N & 0x80))
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -20599,7 +20588,7 @@ OPCODE(0x6B00)
 
     if (flag_N & 0x80)
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -20617,7 +20606,7 @@ OPCODE(0x6C00)
 
     if (!((flag_N ^ flag_V) & 0x80))
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -20635,7 +20624,7 @@ OPCODE(0x6D00)
 
     if ((flag_N ^ flag_V) & 0x80)
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -20653,7 +20642,7 @@ OPCODE(0x6E00)
 
     if (flag_NotZ && (!((flag_N ^ flag_V) & 0x80)))
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -20671,7 +20660,7 @@ OPCODE(0x6F00)
 
     if ((!flag_NotZ) || ((flag_N ^ flag_V) & 0x80))
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -20687,13 +20676,13 @@ OPCODE(0x6F00)
 OPCODE(0x6001)
 {
 #ifdef FAME_CHECK_BRANCHES
-    uint32_t newPC = UNBASED_PC;
-    int8_t offs=Opcode;
+    u32 newPC = UNBASED_PC;
+    s8 offs=Opcode;
     newPC += offs;
     SET_PC(newPC);
     CHECK_BRANCH_EXCEPTION(offs)
 #else
-    INC_PC((int8_t)(Opcode & 0xFE));
+    INC_PC((s8)(Opcode & 0xFE));
 #endif
     RET(10)
 }
@@ -20703,7 +20692,7 @@ OPCODE(0x6000)
 {
 
     {
-        uint32_t newPC;
+        u32 newPC;
 
         newPC = UNBASED_PC;
         newPC += GET_SWORD;
@@ -20716,21 +20705,21 @@ OPCODE(0x6000)
 /* BSR */
 OPCODE(0x6101)
 {
-    uint32_t oldPC;
+    u32 oldPC;
 
 
     oldPC = UNBASED_PC;
     PUSH_32_F(oldPC)
 #ifdef FAME_CHECK_BRANCHES
 	{
-		int8_t offs;
+		s8 offs;
 		offs = Opcode;
 		oldPC += offs;
 		SET_PC(oldPC);
 		CHECK_BRANCH_EXCEPTION(offs)
 	}
 #else
-    INC_PC((int8_t)(Opcode & 0xFE));
+    INC_PC((s8)(Opcode & 0xFE));
 #endif
     RET(18)
 }
@@ -20740,7 +20729,7 @@ OPCODE(0x6100)
 {
 
     {
-        uint32_t oldPC, newPC;
+        u32 oldPC, newPC;
 
         newPC = UNBASED_PC;
         oldPC = newPC + 2;
@@ -20755,9 +20744,9 @@ OPCODE(0x6100)
 /* MOVEQ */
 OPCODE(0x7000)
 {
-    uint32_t res;
+    u32 res;
 
-    res = (int32_t)(int8_t)Opcode;
+    res = (s32)(s8)Opcode;
     flag_C = flag_V = 0;
     flag_N = flag_NotZ = res;
     DREGu32((Opcode >> 9) & 7) = res;
@@ -20767,8 +20756,8 @@ OPCODE(0x7000)
 /* ORaD */
 OPCODE(0x8000)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu8((Opcode >> 0) & 7);
     res = DREGu8((Opcode >> 9) & 7);
@@ -20781,8 +20770,8 @@ OPCODE(0x8000)
 /* ORaD */
 OPCODE(0x8010)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, src)
@@ -20796,8 +20785,8 @@ OPCODE(0x8010)
 /* ORaD */
 OPCODE(0x8018)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -20812,8 +20801,8 @@ OPCODE(0x8018)
 /* ORaD */
 OPCODE(0x8020)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -20828,8 +20817,8 @@ OPCODE(0x8020)
 /* ORaD */
 OPCODE(0x8028)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -20844,8 +20833,8 @@ OPCODE(0x8028)
 /* ORaD */
 OPCODE(0x8030)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -20860,8 +20849,8 @@ OPCODE(0x8030)
 /* ORaD */
 OPCODE(0x8038)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, src)
@@ -20875,8 +20864,8 @@ OPCODE(0x8038)
 /* ORaD */
 OPCODE(0x8039)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, src)
@@ -20890,8 +20879,8 @@ OPCODE(0x8039)
 /* ORaD */
 OPCODE(0x803A)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -20906,8 +20895,8 @@ OPCODE(0x803A)
 /* ORaD */
 OPCODE(0x803B)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -20922,8 +20911,8 @@ OPCODE(0x803B)
 /* ORaD */
 OPCODE(0x803C)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_BYTE(src);
     res = DREGu8((Opcode >> 9) & 7);
@@ -20936,8 +20925,8 @@ OPCODE(0x803C)
 /* ORaD */
 OPCODE(0x801F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -20952,8 +20941,8 @@ OPCODE(0x801F)
 /* ORaD */
 OPCODE(0x8027)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -20968,8 +20957,8 @@ OPCODE(0x8027)
 /* ORaD */
 OPCODE(0x8040)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu16((Opcode >> 0) & 7);
     res = DREGu16((Opcode >> 9) & 7);
@@ -20983,8 +20972,8 @@ OPCODE(0x8040)
 /* ORaD */
 OPCODE(0x8050)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -20999,8 +20988,8 @@ OPCODE(0x8050)
 /* ORaD */
 OPCODE(0x8058)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -21016,8 +21005,8 @@ OPCODE(0x8058)
 /* ORaD */
 OPCODE(0x8060)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -21033,8 +21022,8 @@ OPCODE(0x8060)
 /* ORaD */
 OPCODE(0x8068)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -21050,8 +21039,8 @@ OPCODE(0x8068)
 /* ORaD */
 OPCODE(0x8070)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -21067,8 +21056,8 @@ OPCODE(0x8070)
 /* ORaD */
 OPCODE(0x8078)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -21083,8 +21072,8 @@ OPCODE(0x8078)
 /* ORaD */
 OPCODE(0x8079)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -21099,8 +21088,8 @@ OPCODE(0x8079)
 /* ORaD */
 OPCODE(0x807A)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -21116,8 +21105,8 @@ OPCODE(0x807A)
 /* ORaD */
 OPCODE(0x807B)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -21133,8 +21122,8 @@ OPCODE(0x807B)
 /* ORaD */
 OPCODE(0x807C)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_WORD(src);
     res = DREGu16((Opcode >> 9) & 7);
@@ -21148,8 +21137,8 @@ OPCODE(0x807C)
 /* ORaD */
 OPCODE(0x805F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -21165,8 +21154,8 @@ OPCODE(0x805F)
 /* ORaD */
 OPCODE(0x8067)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -21182,8 +21171,8 @@ OPCODE(0x8067)
 /* ORaD */
 OPCODE(0x8080)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu32((Opcode >> 0) & 7);
     res = DREGu32((Opcode >> 9) & 7);
@@ -21197,8 +21186,8 @@ OPCODE(0x8080)
 /* ORaD */
 OPCODE(0x8090)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, src)
@@ -21213,8 +21202,8 @@ OPCODE(0x8090)
 /* ORaD */
 OPCODE(0x8098)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -21230,8 +21219,8 @@ OPCODE(0x8098)
 /* ORaD */
 OPCODE(0x80A0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -21247,8 +21236,8 @@ OPCODE(0x80A0)
 /* ORaD */
 OPCODE(0x80A8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -21264,8 +21253,8 @@ OPCODE(0x80A8)
 /* ORaD */
 OPCODE(0x80B0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -21281,8 +21270,8 @@ OPCODE(0x80B0)
 /* ORaD */
 OPCODE(0x80B8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, src)
@@ -21297,8 +21286,8 @@ OPCODE(0x80B8)
 /* ORaD */
 OPCODE(0x80B9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, src)
@@ -21313,8 +21302,8 @@ OPCODE(0x80B9)
 /* ORaD */
 OPCODE(0x80BA)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -21330,8 +21319,8 @@ OPCODE(0x80BA)
 /* ORaD */
 OPCODE(0x80BB)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -21347,8 +21336,8 @@ OPCODE(0x80BB)
 /* ORaD */
 OPCODE(0x80BC)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_LONG(src);
     res = DREGu32((Opcode >> 9) & 7);
@@ -21362,8 +21351,8 @@ OPCODE(0x80BC)
 /* ORaD */
 OPCODE(0x809F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -21379,8 +21368,8 @@ OPCODE(0x809F)
 /* ORaD */
 OPCODE(0x80A7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -21396,8 +21385,8 @@ OPCODE(0x80A7)
 /* ORDa */
 OPCODE(0x8110)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -21411,8 +21400,8 @@ OPCODE(0x8110)
 /* ORDa */
 OPCODE(0x8118)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -21427,8 +21416,8 @@ OPCODE(0x8118)
 /* ORDa */
 OPCODE(0x8120)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7) - 1;
@@ -21443,8 +21432,8 @@ OPCODE(0x8120)
 /* ORDa */
 OPCODE(0x8128)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -21459,8 +21448,8 @@ OPCODE(0x8128)
 /* ORDa */
 OPCODE(0x8130)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -21475,8 +21464,8 @@ OPCODE(0x8130)
 /* ORDa */
 OPCODE(0x8138)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -21490,8 +21479,8 @@ OPCODE(0x8138)
 /* ORDa */
 OPCODE(0x8139)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     FETCH_LONG(adr);
@@ -21505,8 +21494,8 @@ OPCODE(0x8139)
 /* ORDa */
 OPCODE(0x811F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG(7);
@@ -21521,8 +21510,8 @@ OPCODE(0x811F)
 /* ORDa */
 OPCODE(0x8127)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG(7) - 2;
@@ -21537,8 +21526,8 @@ OPCODE(0x8127)
 /* ORDa */
 OPCODE(0x8150)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -21553,8 +21542,8 @@ OPCODE(0x8150)
 /* ORDa */
 OPCODE(0x8158)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -21570,8 +21559,8 @@ OPCODE(0x8158)
 /* ORDa */
 OPCODE(0x8160)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7) - 2;
@@ -21587,8 +21576,8 @@ OPCODE(0x8160)
 /* ORDa */
 OPCODE(0x8168)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -21604,8 +21593,8 @@ OPCODE(0x8168)
 /* ORDa */
 OPCODE(0x8170)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -21621,8 +21610,8 @@ OPCODE(0x8170)
 /* ORDa */
 OPCODE(0x8178)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -21637,8 +21626,8 @@ OPCODE(0x8178)
 /* ORDa */
 OPCODE(0x8179)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     FETCH_LONG(adr);
@@ -21653,8 +21642,8 @@ OPCODE(0x8179)
 /* ORDa */
 OPCODE(0x815F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG(7);
@@ -21670,8 +21659,8 @@ OPCODE(0x815F)
 /* ORDa */
 OPCODE(0x8167)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG(7) - 2;
@@ -21687,8 +21676,8 @@ OPCODE(0x8167)
 /* ORDa */
 OPCODE(0x8190)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -21703,8 +21692,8 @@ OPCODE(0x8190)
 /* ORDa */
 OPCODE(0x8198)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -21720,8 +21709,8 @@ OPCODE(0x8198)
 /* ORDa */
 OPCODE(0x81A0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7) - 4;
@@ -21737,8 +21726,8 @@ OPCODE(0x81A0)
 /* ORDa */
 OPCODE(0x81A8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -21754,8 +21743,8 @@ OPCODE(0x81A8)
 /* ORDa */
 OPCODE(0x81B0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -21771,8 +21760,8 @@ OPCODE(0x81B0)
 /* ORDa */
 OPCODE(0x81B8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -21787,8 +21776,8 @@ OPCODE(0x81B8)
 /* ORDa */
 OPCODE(0x81B9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     FETCH_LONG(adr);
@@ -21803,8 +21792,8 @@ OPCODE(0x81B9)
 /* ORDa */
 OPCODE(0x819F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG(7);
@@ -21820,8 +21809,8 @@ OPCODE(0x819F)
 /* ORDa */
 OPCODE(0x81A7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG(7) - 4;
@@ -21837,8 +21826,8 @@ OPCODE(0x81A7)
 /* SBCD */
 OPCODE(0x8100)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 0) & 7);
     dst = DREGu8((Opcode >> 9) & 7);
@@ -21860,8 +21849,8 @@ OPCODE(0x8100)
 /* SBCDM */
 OPCODE(0x8108)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -21887,8 +21876,8 @@ OPCODE(0x8108)
 /* SBCD7M */
 OPCODE(0x810F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -21914,8 +21903,8 @@ OPCODE(0x810F)
 /* SBCDM7 */
 OPCODE(0x8F08)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -21941,8 +21930,8 @@ OPCODE(0x8F08)
 /* SBCD7M7 */
 OPCODE(0x8F0F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -21968,9 +21957,9 @@ OPCODE(0x8F0F)
 /* DIVU */
 OPCODE(0x80C0)
 {
-    uint32_t res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 0;
+    u32 res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 0;
 
     src = DREGu16((Opcode >> 0) & 7);
     if (src == 0)
@@ -21981,7 +21970,7 @@ OPCODE(0x80C0)
     }
     dst = DREGu32((Opcode >> 9) & 7);
     {
-        uint32_t q, r;
+        u32 q, r;
 
         q = dst / src;
         r = dst % src;
@@ -22008,9 +21997,9 @@ OPCODE(0x80C0)
 /* DIVU */
 OPCODE(0x80D0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 4;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 4;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -22022,7 +22011,7 @@ OPCODE(0x80D0)
     }
     dst = DREGu32((Opcode >> 9) & 7);
     {
-        uint32_t q, r;
+        u32 q, r;
 
         q = dst / src;
         r = dst % src;
@@ -22049,9 +22038,9 @@ OPCODE(0x80D0)
 /* DIVU */
 OPCODE(0x80D8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 4;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 4;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -22064,7 +22053,7 @@ OPCODE(0x80D8)
     }
     dst = DREGu32((Opcode >> 9) & 7);
     {
-        uint32_t q, r;
+        u32 q, r;
 
         q = dst / src;
         r = dst % src;
@@ -22091,9 +22080,9 @@ OPCODE(0x80D8)
 /* DIVU */
 OPCODE(0x80E0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 6;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 6;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -22106,7 +22095,7 @@ OPCODE(0x80E0)
     }
     dst = DREGu32((Opcode >> 9) & 7);
     {
-        uint32_t q, r;
+        u32 q, r;
 
         q = dst / src;
         r = dst % src;
@@ -22133,9 +22122,9 @@ OPCODE(0x80E0)
 /* DIVU */
 OPCODE(0x80E8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 8;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 8;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -22148,7 +22137,7 @@ OPCODE(0x80E8)
     }
     dst = DREGu32((Opcode >> 9) & 7);
     {
-        uint32_t q, r;
+        u32 q, r;
 
         q = dst / src;
         r = dst % src;
@@ -22175,9 +22164,9 @@ OPCODE(0x80E8)
 /* DIVU */
 OPCODE(0x80F0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	uint32_t main_ea_cycles = 10;
+    u32 adr, res;
+    u32 src, dst;
+	u32 main_ea_cycles = 10;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -22190,7 +22179,7 @@ OPCODE(0x80F0)
     }
     dst = DREGu32((Opcode >> 9) & 7);
     {
-        uint32_t q, r;
+        u32 q, r;
 
         q = dst / src;
         r = dst % src;
@@ -22217,9 +22206,9 @@ OPCODE(0x80F0)
 /* DIVU */
 OPCODE(0x80F8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 8;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 8;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -22231,7 +22220,7 @@ OPCODE(0x80F8)
     }
     dst = DREGu32((Opcode >> 9) & 7);
     {
-        uint32_t q, r;
+        u32 q, r;
 
         q = dst / src;
         r = dst % src;
@@ -22258,9 +22247,9 @@ OPCODE(0x80F8)
 /* DIVU */
 OPCODE(0x80F9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 12;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 12;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -22272,7 +22261,7 @@ OPCODE(0x80F9)
     }
     dst = DREGu32((Opcode >> 9) & 7);
     {
-        uint32_t q, r;
+        u32 q, r;
 
         q = dst / src;
         r = dst % src;
@@ -22299,9 +22288,9 @@ OPCODE(0x80F9)
 /* DIVU */
 OPCODE(0x80FA)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 8;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 8;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -22314,7 +22303,7 @@ OPCODE(0x80FA)
     }
     dst = DREGu32((Opcode >> 9) & 7);
     {
-        uint32_t q, r;
+        u32 q, r;
 
         q = dst / src;
         r = dst % src;
@@ -22341,9 +22330,9 @@ OPCODE(0x80FA)
 /* DIVU */
 OPCODE(0x80FB)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 10;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 10;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -22356,7 +22345,7 @@ OPCODE(0x80FB)
     }
     dst = DREGu32((Opcode >> 9) & 7);
     {
-        uint32_t q, r;
+        u32 q, r;
 
         q = dst / src;
         r = dst % src;
@@ -22383,9 +22372,9 @@ OPCODE(0x80FB)
 /* DIVU */
 OPCODE(0x80FC)
 {
-    uint32_t res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 4;
+    u32 res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 4;
 
     FETCH_WORD(src);
     if (src == 0)
@@ -22396,7 +22385,7 @@ OPCODE(0x80FC)
     }
     dst = DREGu32((Opcode >> 9) & 7);
     {
-        uint32_t q, r;
+        u32 q, r;
 
         q = dst / src;
         r = dst % src;
@@ -22423,9 +22412,9 @@ OPCODE(0x80FC)
 /* DIVU */
 OPCODE(0x80DF)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 4;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 4;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -22438,7 +22427,7 @@ OPCODE(0x80DF)
     }
     dst = DREGu32((Opcode >> 9) & 7);
     {
-        uint32_t q, r;
+        u32 q, r;
 
         q = dst / src;
         r = dst % src;
@@ -22465,9 +22454,9 @@ OPCODE(0x80DF)
 /* DIVU */
 OPCODE(0x80E7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 6;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 6;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -22480,7 +22469,7 @@ OPCODE(0x80E7)
     }
     dst = DREGu32((Opcode >> 9) & 7);
     {
-        uint32_t q, r;
+        u32 q, r;
 
         q = dst / src;
         r = dst % src;
@@ -22507,11 +22496,11 @@ OPCODE(0x80E7)
 /* DIVS */
 OPCODE(0x81C0)
 {
-    uint32_t res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 0;
+    u32 res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 0;
 
-    src = (int32_t)DREGs16((Opcode >> 0) & 7);
+    src = (s32)DREGs16((Opcode >> 0) & 7);
     if (src == 0)
     {
         SET_FLAGS_DIV_ZERO
@@ -22519,7 +22508,7 @@ OPCODE(0x81C0)
         RET(main_ea_cycles)
     }
     dst = DREGu32((Opcode >> 9) & 7);
-    if ((dst == 0x80000000) && (src == (uint32_t)-1))
+    if ((dst == 0x80000000) && (src == (u32)-1))
     {
         flag_NotZ = flag_N = 0;
         flag_V = flag_C = 0;
@@ -22532,10 +22521,10 @@ OPCODE(0x81C0)
 #endif
     }
     {
-        int32_t q, r;
+        s32 q, r;
 
-        q = (int32_t)dst / (int32_t)src;
-        r = (int32_t)dst % (int32_t)src;
+        q = (s32)dst / (s32)src;
+        r = (s32)dst % (s32)src;
 
         if ((q > 0x7FFF) || (q < -0x8000))
         {
@@ -22563,9 +22552,9 @@ OPCODE(0x81C0)
 /* DIVS */
 OPCODE(0x81D0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 4;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 4;
 
     adr = AREG((Opcode >> 0) & 7);
     READSX_WORD_F(adr, src)
@@ -22576,7 +22565,7 @@ OPCODE(0x81D0)
         RET(main_ea_cycles)
     }
     dst = DREGu32((Opcode >> 9) & 7);
-    if ((dst == 0x80000000) && (src == (uint32_t)-1))
+    if ((dst == 0x80000000) && (src == (u32)-1))
     {
         flag_NotZ = flag_N = 0;
         flag_V = flag_C = 0;
@@ -22589,10 +22578,10 @@ OPCODE(0x81D0)
 #endif
     }
     {
-        int32_t q, r;
+        s32 q, r;
 
-        q = (int32_t)dst / (int32_t)src;
-        r = (int32_t)dst % (int32_t)src;
+        q = (s32)dst / (s32)src;
+        r = (s32)dst % (s32)src;
 
         if ((q > 0x7FFF) || (q < -0x8000))
         {
@@ -22620,9 +22609,9 @@ OPCODE(0x81D0)
 /* DIVS */
 OPCODE(0x81D8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 4;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 4;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -22634,7 +22623,7 @@ OPCODE(0x81D8)
         RET(main_ea_cycles)
     }
     dst = DREGu32((Opcode >> 9) & 7);
-    if ((dst == 0x80000000) && (src == (uint32_t)-1))
+    if ((dst == 0x80000000) && (src == (u32)-1))
     {
         flag_NotZ = flag_N = 0;
         flag_V = flag_C = 0;
@@ -22647,10 +22636,10 @@ OPCODE(0x81D8)
 #endif
     }
     {
-        int32_t q, r;
+        s32 q, r;
 
-        q = (int32_t)dst / (int32_t)src;
-        r = (int32_t)dst % (int32_t)src;
+        q = (s32)dst / (s32)src;
+        r = (s32)dst % (s32)src;
 
         if ((q > 0x7FFF) || (q < -0x8000))
         {
@@ -22678,9 +22667,9 @@ OPCODE(0x81D8)
 /* DIVS */
 OPCODE(0x81E0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 6;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 6;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -22692,7 +22681,7 @@ OPCODE(0x81E0)
         RET(main_ea_cycles)
     }
     dst = DREGu32((Opcode >> 9) & 7);
-    if ((dst == 0x80000000) && (src == (uint32_t)-1))
+    if ((dst == 0x80000000) && (src == (u32)-1))
     {
         flag_NotZ = flag_N = 0;
         flag_V = flag_C = 0;
@@ -22705,10 +22694,10 @@ OPCODE(0x81E0)
 #endif
     }
     {
-        int32_t q, r;
+        s32 q, r;
 
-        q = (int32_t)dst / (int32_t)src;
-        r = (int32_t)dst % (int32_t)src;
+        q = (s32)dst / (s32)src;
+        r = (s32)dst % (s32)src;
 
         if ((q > 0x7FFF) || (q < -0x8000))
         {
@@ -22736,9 +22725,9 @@ OPCODE(0x81E0)
 /* DIVS */
 OPCODE(0x81E8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 8;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 8;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -22750,7 +22739,7 @@ OPCODE(0x81E8)
         RET(main_ea_cycles)
     }
     dst = DREGu32((Opcode >> 9) & 7);
-    if ((dst == 0x80000000) && (src == (uint32_t)-1))
+    if ((dst == 0x80000000) && (src == (u32)-1))
     {
         flag_NotZ = flag_N = 0;
         flag_V = flag_C = 0;
@@ -22763,10 +22752,10 @@ OPCODE(0x81E8)
 #endif
     }
     {
-        int32_t q, r;
+        s32 q, r;
 
-        q = (int32_t)dst / (int32_t)src;
-        r = (int32_t)dst % (int32_t)src;
+        q = (s32)dst / (s32)src;
+        r = (s32)dst % (s32)src;
 
         if ((q > 0x7FFF) || (q < -0x8000))
         {
@@ -22794,9 +22783,9 @@ OPCODE(0x81E8)
 /* DIVS */
 OPCODE(0x81F0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 10;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 10;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -22808,7 +22797,7 @@ OPCODE(0x81F0)
         RET(main_ea_cycles)
     }
     dst = DREGu32((Opcode >> 9) & 7);
-    if ((dst == 0x80000000) && (src == (uint32_t)-1))
+    if ((dst == 0x80000000) && (src == (u32)-1))
     {
         flag_NotZ = flag_N = 0;
         flag_V = flag_C = 0;
@@ -22821,10 +22810,10 @@ OPCODE(0x81F0)
 #endif
     }
     {
-        int32_t q, r;
+        s32 q, r;
 
-        q = (int32_t)dst / (int32_t)src;
-        r = (int32_t)dst % (int32_t)src;
+        q = (s32)dst / (s32)src;
+        r = (s32)dst % (s32)src;
 
         if ((q > 0x7FFF) || (q < -0x8000))
         {
@@ -22852,9 +22841,9 @@ OPCODE(0x81F0)
 /* DIVS */
 OPCODE(0x81F8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 8;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 8;
 
     FETCH_SWORD(adr);
     READSX_WORD_F(adr, src)
@@ -22865,7 +22854,7 @@ OPCODE(0x81F8)
         RET(main_ea_cycles)
     }
     dst = DREGu32((Opcode >> 9) & 7);
-    if ((dst == 0x80000000) && (src == (uint32_t)-1))
+    if ((dst == 0x80000000) && (src == (u32)-1))
     {
         flag_NotZ = flag_N = 0;
         flag_V = flag_C = 0;
@@ -22878,10 +22867,10 @@ OPCODE(0x81F8)
 #endif
     }
     {
-        int32_t q, r;
+        s32 q, r;
 
-        q = (int32_t)dst / (int32_t)src;
-        r = (int32_t)dst % (int32_t)src;
+        q = (s32)dst / (s32)src;
+        r = (s32)dst % (s32)src;
 
         if ((q > 0x7FFF) || (q < -0x8000))
         {
@@ -22909,9 +22898,9 @@ OPCODE(0x81F8)
 /* DIVS */
 OPCODE(0x81F9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 12;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 12;
 
     FETCH_LONG(adr);
     READSX_WORD_F(adr, src)
@@ -22922,7 +22911,7 @@ OPCODE(0x81F9)
         RET(main_ea_cycles)
     }
     dst = DREGu32((Opcode >> 9) & 7);
-    if ((dst == 0x80000000) && (src == (uint32_t)-1))
+    if ((dst == 0x80000000) && (src == (u32)-1))
     {
         flag_NotZ = flag_N = 0;
         flag_V = flag_C = 0;
@@ -22935,10 +22924,10 @@ OPCODE(0x81F9)
 #endif
     }
     {
-        int32_t q, r;
+        s32 q, r;
 
-        q = (int32_t)dst / (int32_t)src;
-        r = (int32_t)dst % (int32_t)src;
+        q = (s32)dst / (s32)src;
+        r = (s32)dst % (s32)src;
 
         if ((q > 0x7FFF) || (q < -0x8000))
         {
@@ -22966,9 +22955,9 @@ OPCODE(0x81F9)
 /* DIVS */
 OPCODE(0x81FA)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 8;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 8;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -22980,7 +22969,7 @@ OPCODE(0x81FA)
         RET(main_ea_cycles)
     }
     dst = DREGu32((Opcode >> 9) & 7);
-    if ((dst == 0x80000000) && (src == (uint32_t)-1))
+    if ((dst == 0x80000000) && (src == (u32)-1))
     {
         flag_NotZ = flag_N = 0;
         flag_V = flag_C = 0;
@@ -22993,10 +22982,10 @@ OPCODE(0x81FA)
 #endif
     }
     {
-        int32_t q, r;
+        s32 q, r;
 
-        q = (int32_t)dst / (int32_t)src;
-        r = (int32_t)dst % (int32_t)src;
+        q = (s32)dst / (s32)src;
+        r = (s32)dst % (s32)src;
 
         if ((q > 0x7FFF) || (q < -0x8000))
         {
@@ -23024,9 +23013,9 @@ OPCODE(0x81FA)
 /* DIVS */
 OPCODE(0x81FB)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 10;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 10;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -23038,7 +23027,7 @@ OPCODE(0x81FB)
         RET(main_ea_cycles)
     }
     dst = DREGu32((Opcode >> 9) & 7);
-    if ((dst == 0x80000000) && (src == (uint32_t)-1))
+    if ((dst == 0x80000000) && (src == (u32)-1))
     {
         flag_NotZ = flag_N = 0;
         flag_V = flag_C = 0;
@@ -23051,10 +23040,10 @@ OPCODE(0x81FB)
 #endif
     }
     {
-        int32_t q, r;
+        s32 q, r;
 
-        q = (int32_t)dst / (int32_t)src;
-        r = (int32_t)dst % (int32_t)src;
+        q = (s32)dst / (s32)src;
+        r = (s32)dst % (s32)src;
 
         if ((q > 0x7FFF) || (q < -0x8000))
         {
@@ -23082,9 +23071,9 @@ OPCODE(0x81FB)
 /* DIVS */
 OPCODE(0x81FC)
 {
-    uint32_t res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 4;
+    u32 res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 4;
 
     FETCH_SWORD(src);
     if (src == 0)
@@ -23094,7 +23083,7 @@ OPCODE(0x81FC)
         RET(main_ea_cycles)
     }
     dst = DREGu32((Opcode >> 9) & 7);
-    if ((dst == 0x80000000) && (src == (uint32_t)-1))
+    if ((dst == 0x80000000) && (src == (u32)-1))
     {
         flag_NotZ = flag_N = 0;
         flag_V = flag_C = 0;
@@ -23107,10 +23096,10 @@ OPCODE(0x81FC)
 #endif
     }
     {
-        int32_t q, r;
+        s32 q, r;
 
-        q = (int32_t)dst / (int32_t)src;
-        r = (int32_t)dst % (int32_t)src;
+        q = (s32)dst / (s32)src;
+        r = (s32)dst % (s32)src;
 
         if ((q > 0x7FFF) || (q < -0x8000))
         {
@@ -23138,9 +23127,9 @@ OPCODE(0x81FC)
 /* DIVS */
 OPCODE(0x81DF)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 4;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 4;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -23152,7 +23141,7 @@ OPCODE(0x81DF)
         RET(main_ea_cycles)
     }
     dst = DREGu32((Opcode >> 9) & 7);
-    if ((dst == 0x80000000) && (src == (uint32_t)-1))
+    if ((dst == 0x80000000) && (src == (u32)-1))
     {
         flag_NotZ = flag_N = 0;
         flag_V = flag_C = 0;
@@ -23165,10 +23154,10 @@ OPCODE(0x81DF)
 #endif
     }
     {
-        int32_t q, r;
+        s32 q, r;
 
-        q = (int32_t)dst / (int32_t)src;
-        r = (int32_t)dst % (int32_t)src;
+        q = (s32)dst / (s32)src;
+        r = (s32)dst % (s32)src;
 
         if ((q > 0x7FFF) || (q < -0x8000))
         {
@@ -23196,9 +23185,9 @@ OPCODE(0x81DF)
 /* DIVS */
 OPCODE(0x81E7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
-	const uint32_t main_ea_cycles = 6;
+    u32 adr, res;
+    u32 src, dst;
+	const u32 main_ea_cycles = 6;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -23210,7 +23199,7 @@ OPCODE(0x81E7)
         RET(main_ea_cycles)
     }
     dst = DREGu32((Opcode >> 9) & 7);
-    if ((dst == 0x80000000) && (src == (uint32_t)-1))
+    if ((dst == 0x80000000) && (src == (u32)-1))
     {
         flag_NotZ = flag_N = 0;
         flag_V = flag_C = 0;
@@ -23223,10 +23212,10 @@ OPCODE(0x81E7)
 #endif
     }
     {
-        int32_t q, r;
+        s32 q, r;
 
-        q = (int32_t)dst / (int32_t)src;
-        r = (int32_t)dst % (int32_t)src;
+        q = (s32)dst / (s32)src;
+        r = (s32)dst % (s32)src;
 
         if ((q > 0x7FFF) || (q < -0x8000))
         {
@@ -23254,8 +23243,8 @@ OPCODE(0x81E7)
 /* SUBaD */
 OPCODE(0x9000)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 0) & 7);
     dst = DREGu8((Opcode >> 9) & 7);
@@ -23290,8 +23279,8 @@ OPCODE(0x9008)
 /* SUBaD */
 OPCODE(0x9010)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, src)
@@ -23307,8 +23296,8 @@ OPCODE(0x9010)
 /* SUBaD */
 OPCODE(0x9018)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -23325,8 +23314,8 @@ OPCODE(0x9018)
 /* SUBaD */
 OPCODE(0x9020)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -23343,8 +23332,8 @@ OPCODE(0x9020)
 /* SUBaD */
 OPCODE(0x9028)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -23361,8 +23350,8 @@ OPCODE(0x9028)
 /* SUBaD */
 OPCODE(0x9030)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -23379,8 +23368,8 @@ OPCODE(0x9030)
 /* SUBaD */
 OPCODE(0x9038)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, src)
@@ -23396,8 +23385,8 @@ OPCODE(0x9038)
 /* SUBaD */
 OPCODE(0x9039)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, src)
@@ -23413,8 +23402,8 @@ OPCODE(0x9039)
 /* SUBaD */
 OPCODE(0x903A)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -23431,8 +23420,8 @@ OPCODE(0x903A)
 /* SUBaD */
 OPCODE(0x903B)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -23449,8 +23438,8 @@ OPCODE(0x903B)
 /* SUBaD */
 OPCODE(0x903C)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     dst = DREGu8((Opcode >> 9) & 7);
@@ -23465,8 +23454,8 @@ OPCODE(0x903C)
 /* SUBaD */
 OPCODE(0x901F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -23483,8 +23472,8 @@ OPCODE(0x901F)
 /* SUBaD */
 OPCODE(0x9027)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -23501,8 +23490,8 @@ OPCODE(0x9027)
 /* SUBaD */
 OPCODE(0x9040)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 0) & 7);
     dst = DREGu16((Opcode >> 9) & 7);
@@ -23517,8 +23506,8 @@ OPCODE(0x9040)
 /* SUBaD */
 OPCODE(0x9048)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = AREGu16((Opcode >> 0) & 7);
     dst = DREGu16((Opcode >> 9) & 7);
@@ -23533,8 +23522,8 @@ OPCODE(0x9048)
 /* SUBaD */
 OPCODE(0x9050)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -23550,8 +23539,8 @@ OPCODE(0x9050)
 /* SUBaD */
 OPCODE(0x9058)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -23568,8 +23557,8 @@ OPCODE(0x9058)
 /* SUBaD */
 OPCODE(0x9060)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -23586,8 +23575,8 @@ OPCODE(0x9060)
 /* SUBaD */
 OPCODE(0x9068)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -23604,8 +23593,8 @@ OPCODE(0x9068)
 /* SUBaD */
 OPCODE(0x9070)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -23622,8 +23611,8 @@ OPCODE(0x9070)
 /* SUBaD */
 OPCODE(0x9078)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -23639,8 +23628,8 @@ OPCODE(0x9078)
 /* SUBaD */
 OPCODE(0x9079)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -23656,8 +23645,8 @@ OPCODE(0x9079)
 /* SUBaD */
 OPCODE(0x907A)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -23674,8 +23663,8 @@ OPCODE(0x907A)
 /* SUBaD */
 OPCODE(0x907B)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -23692,8 +23681,8 @@ OPCODE(0x907B)
 /* SUBaD */
 OPCODE(0x907C)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     dst = DREGu16((Opcode >> 9) & 7);
@@ -23708,8 +23697,8 @@ OPCODE(0x907C)
 /* SUBaD */
 OPCODE(0x905F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -23726,8 +23715,8 @@ OPCODE(0x905F)
 /* SUBaD */
 OPCODE(0x9067)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -23744,8 +23733,8 @@ OPCODE(0x9067)
 /* SUBaD */
 OPCODE(0x9080)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 0) & 7);
     dst = DREGu32((Opcode >> 9) & 7);
@@ -23761,8 +23750,8 @@ OPCODE(0x9080)
 /* SUBaD */
 OPCODE(0x9088)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = AREGu32((Opcode >> 0) & 7);
     dst = DREGu32((Opcode >> 9) & 7);
@@ -23778,8 +23767,8 @@ OPCODE(0x9088)
 /* SUBaD */
 OPCODE(0x9090)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, src)
@@ -23796,8 +23785,8 @@ OPCODE(0x9090)
 /* SUBaD */
 OPCODE(0x9098)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -23815,8 +23804,8 @@ OPCODE(0x9098)
 /* SUBaD */
 OPCODE(0x90A0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -23834,8 +23823,8 @@ OPCODE(0x90A0)
 /* SUBaD */
 OPCODE(0x90A8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -23853,8 +23842,8 @@ OPCODE(0x90A8)
 /* SUBaD */
 OPCODE(0x90B0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -23872,8 +23861,8 @@ OPCODE(0x90B0)
 /* SUBaD */
 OPCODE(0x90B8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, src)
@@ -23890,8 +23879,8 @@ OPCODE(0x90B8)
 /* SUBaD */
 OPCODE(0x90B9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, src)
@@ -23908,8 +23897,8 @@ OPCODE(0x90B9)
 /* SUBaD */
 OPCODE(0x90BA)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -23927,8 +23916,8 @@ OPCODE(0x90BA)
 /* SUBaD */
 OPCODE(0x90BB)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -23946,8 +23935,8 @@ OPCODE(0x90BB)
 /* SUBaD */
 OPCODE(0x90BC)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     dst = DREGu32((Opcode >> 9) & 7);
@@ -23963,8 +23952,8 @@ OPCODE(0x90BC)
 /* SUBaD */
 OPCODE(0x909F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -23982,8 +23971,8 @@ OPCODE(0x909F)
 /* SUBaD */
 OPCODE(0x90A7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -24001,8 +23990,8 @@ OPCODE(0x90A7)
 /* SUBDa */
 OPCODE(0x9110)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -24018,8 +24007,8 @@ OPCODE(0x9110)
 /* SUBDa */
 OPCODE(0x9118)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -24036,8 +24025,8 @@ OPCODE(0x9118)
 /* SUBDa */
 OPCODE(0x9120)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7) - 1;
@@ -24054,8 +24043,8 @@ OPCODE(0x9120)
 /* SUBDa */
 OPCODE(0x9128)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -24072,8 +24061,8 @@ OPCODE(0x9128)
 /* SUBDa */
 OPCODE(0x9130)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -24090,8 +24079,8 @@ OPCODE(0x9130)
 /* SUBDa */
 OPCODE(0x9138)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -24107,8 +24096,8 @@ OPCODE(0x9138)
 /* SUBDa */
 OPCODE(0x9139)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     FETCH_LONG(adr);
@@ -24124,8 +24113,8 @@ OPCODE(0x9139)
 /* SUBDa */
 OPCODE(0x911F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG(7);
@@ -24142,8 +24131,8 @@ OPCODE(0x911F)
 /* SUBDa */
 OPCODE(0x9127)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG(7) - 2;
@@ -24160,8 +24149,8 @@ OPCODE(0x9127)
 /* SUBDa */
 OPCODE(0x9150)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -24177,8 +24166,8 @@ OPCODE(0x9150)
 /* SUBDa */
 OPCODE(0x9158)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -24195,8 +24184,8 @@ OPCODE(0x9158)
 /* SUBDa */
 OPCODE(0x9160)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7) - 2;
@@ -24213,8 +24202,8 @@ OPCODE(0x9160)
 /* SUBDa */
 OPCODE(0x9168)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -24231,8 +24220,8 @@ OPCODE(0x9168)
 /* SUBDa */
 OPCODE(0x9170)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -24249,8 +24238,8 @@ OPCODE(0x9170)
 /* SUBDa */
 OPCODE(0x9178)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -24266,8 +24255,8 @@ OPCODE(0x9178)
 /* SUBDa */
 OPCODE(0x9179)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     FETCH_LONG(adr);
@@ -24283,8 +24272,8 @@ OPCODE(0x9179)
 /* SUBDa */
 OPCODE(0x915F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG(7);
@@ -24301,8 +24290,8 @@ OPCODE(0x915F)
 /* SUBDa */
 OPCODE(0x9167)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG(7) - 2;
@@ -24319,8 +24308,8 @@ OPCODE(0x9167)
 /* SUBDa */
 OPCODE(0x9190)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -24337,8 +24326,8 @@ OPCODE(0x9190)
 /* SUBDa */
 OPCODE(0x9198)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -24356,8 +24345,8 @@ OPCODE(0x9198)
 /* SUBDa */
 OPCODE(0x91A0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7) - 4;
@@ -24375,8 +24364,8 @@ OPCODE(0x91A0)
 /* SUBDa */
 OPCODE(0x91A8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -24394,8 +24383,8 @@ OPCODE(0x91A8)
 /* SUBDa */
 OPCODE(0x91B0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -24413,8 +24402,8 @@ OPCODE(0x91B0)
 /* SUBDa */
 OPCODE(0x91B8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -24431,8 +24420,8 @@ OPCODE(0x91B8)
 /* SUBDa */
 OPCODE(0x91B9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     FETCH_LONG(adr);
@@ -24449,8 +24438,8 @@ OPCODE(0x91B9)
 /* SUBDa */
 OPCODE(0x919F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG(7);
@@ -24468,8 +24457,8 @@ OPCODE(0x919F)
 /* SUBDa */
 OPCODE(0x91A7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG(7) - 4;
@@ -24487,8 +24476,8 @@ OPCODE(0x91A7)
 /* SUBX */
 OPCODE(0x9100)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 0) & 7);
     dst = DREGu8((Opcode >> 9) & 7);
@@ -24503,8 +24492,8 @@ OPCODE(0x9100)
 /* SUBX */
 OPCODE(0x9140)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 0) & 7);
     dst = DREGu16((Opcode >> 9) & 7);
@@ -24519,8 +24508,8 @@ OPCODE(0x9140)
 /* SUBX */
 OPCODE(0x9180)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 0) & 7);
     dst = DREGu32((Opcode >> 9) & 7);
@@ -24536,8 +24525,8 @@ OPCODE(0x9180)
 /* SUBXM */
 OPCODE(0x9108)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -24556,8 +24545,8 @@ OPCODE(0x9108)
 /* SUBXM */
 OPCODE(0x9148)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -24576,8 +24565,8 @@ OPCODE(0x9148)
 /* SUBXM */
 OPCODE(0x9188)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -24597,8 +24586,8 @@ OPCODE(0x9188)
 /* SUBX7M */
 OPCODE(0x910F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -24617,8 +24606,8 @@ OPCODE(0x910F)
 /* SUBX7M */
 OPCODE(0x914F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -24637,8 +24626,8 @@ OPCODE(0x914F)
 /* SUBX7M */
 OPCODE(0x918F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -24658,8 +24647,8 @@ OPCODE(0x918F)
 /* SUBXM7 */
 OPCODE(0x9F08)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -24678,8 +24667,8 @@ OPCODE(0x9F08)
 /* SUBXM7 */
 OPCODE(0x9F48)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -24698,8 +24687,8 @@ OPCODE(0x9F48)
 /* SUBXM7 */
 OPCODE(0x9F88)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -24719,8 +24708,8 @@ OPCODE(0x9F88)
 /* SUBX7M7 */
 OPCODE(0x9F0F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -24739,8 +24728,8 @@ OPCODE(0x9F0F)
 /* SUBX7M7 */
 OPCODE(0x9F4F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -24759,8 +24748,8 @@ OPCODE(0x9F4F)
 /* SUBX7M7 */
 OPCODE(0x9F8F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -24780,10 +24769,10 @@ OPCODE(0x9F8F)
 /* SUBA */
 OPCODE(0x90C0)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
-    src = (int32_t)DREGs16((Opcode >> 0) & 7);
+    src = (s32)DREGs16((Opcode >> 0) & 7);
     dst = AREGu32((Opcode >> 9) & 7);
     res = dst - src;
     AREG((Opcode >> 9) & 7) = res;
@@ -24793,10 +24782,10 @@ OPCODE(0x90C0)
 /* SUBA */
 OPCODE(0x90C8)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
-    src = (int32_t)AREGs16((Opcode >> 0) & 7);
+    src = (s32)AREGs16((Opcode >> 0) & 7);
     dst = AREGu32((Opcode >> 9) & 7);
     res = dst - src;
     AREG((Opcode >> 9) & 7) = res;
@@ -24806,8 +24795,8 @@ OPCODE(0x90C8)
 /* SUBA */
 OPCODE(0x90D0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     READSX_WORD_F(adr, src)
@@ -24820,8 +24809,8 @@ OPCODE(0x90D0)
 /* SUBA */
 OPCODE(0x90D8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -24835,8 +24824,8 @@ OPCODE(0x90D8)
 /* SUBA */
 OPCODE(0x90E0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -24850,8 +24839,8 @@ OPCODE(0x90E0)
 /* SUBA */
 OPCODE(0x90E8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -24865,8 +24854,8 @@ OPCODE(0x90E8)
 /* SUBA */
 OPCODE(0x90F0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -24880,8 +24869,8 @@ OPCODE(0x90F0)
 /* SUBA */
 OPCODE(0x90F8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     READSX_WORD_F(adr, src)
@@ -24894,8 +24883,8 @@ OPCODE(0x90F8)
 /* SUBA */
 OPCODE(0x90F9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(adr);
     READSX_WORD_F(adr, src)
@@ -24908,8 +24897,8 @@ OPCODE(0x90F9)
 /* SUBA */
 OPCODE(0x90FA)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -24923,8 +24912,8 @@ OPCODE(0x90FA)
 /* SUBA */
 OPCODE(0x90FB)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -24938,8 +24927,8 @@ OPCODE(0x90FB)
 /* SUBA */
 OPCODE(0x90FC)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_SWORD(src);
     dst = AREGu32((Opcode >> 9) & 7);
@@ -24951,8 +24940,8 @@ OPCODE(0x90FC)
 /* SUBA */
 OPCODE(0x90DF)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -24966,8 +24955,8 @@ OPCODE(0x90DF)
 /* SUBA */
 OPCODE(0x90E7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -24981,10 +24970,10 @@ OPCODE(0x90E7)
 /* SUBA */
 OPCODE(0x91C0)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
-    src = (int32_t)DREGs32((Opcode >> 0) & 7);
+    src = (s32)DREGs32((Opcode >> 0) & 7);
     dst = AREGu32((Opcode >> 9) & 7);
     res = dst - src;
     AREG((Opcode >> 9) & 7) = res;
@@ -24994,10 +24983,10 @@ OPCODE(0x91C0)
 /* SUBA */
 OPCODE(0x91C8)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
-    src = (int32_t)AREGs32((Opcode >> 0) & 7);
+    src = (s32)AREGs32((Opcode >> 0) & 7);
     dst = AREGu32((Opcode >> 9) & 7);
     res = dst - src;
     AREG((Opcode >> 9) & 7) = res;
@@ -25007,8 +24996,8 @@ OPCODE(0x91C8)
 /* SUBA */
 OPCODE(0x91D0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     READSX_LONG_F(adr, src)
@@ -25021,8 +25010,8 @@ OPCODE(0x91D0)
 /* SUBA */
 OPCODE(0x91D8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -25036,8 +25025,8 @@ OPCODE(0x91D8)
 /* SUBA */
 OPCODE(0x91E0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -25051,8 +25040,8 @@ OPCODE(0x91E0)
 /* SUBA */
 OPCODE(0x91E8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -25066,8 +25055,8 @@ OPCODE(0x91E8)
 /* SUBA */
 OPCODE(0x91F0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -25081,8 +25070,8 @@ OPCODE(0x91F0)
 /* SUBA */
 OPCODE(0x91F8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     READSX_LONG_F(adr, src)
@@ -25095,8 +25084,8 @@ OPCODE(0x91F8)
 /* SUBA */
 OPCODE(0x91F9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(adr);
     READSX_LONG_F(adr, src)
@@ -25109,8 +25098,8 @@ OPCODE(0x91F9)
 /* SUBA */
 OPCODE(0x91FA)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -25124,8 +25113,8 @@ OPCODE(0x91FA)
 /* SUBA */
 OPCODE(0x91FB)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -25139,8 +25128,8 @@ OPCODE(0x91FB)
 /* SUBA */
 OPCODE(0x91FC)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     dst = AREGu32((Opcode >> 9) & 7);
@@ -25152,8 +25141,8 @@ OPCODE(0x91FC)
 /* SUBA */
 OPCODE(0x91DF)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -25167,8 +25156,8 @@ OPCODE(0x91DF)
 /* SUBA */
 OPCODE(0x91E7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -25182,8 +25171,8 @@ OPCODE(0x91E7)
 /* CMP */
 OPCODE(0xB000)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 0) & 7);
     dst = DREGu8((Opcode >> 9) & 7);
@@ -25216,8 +25205,8 @@ OPCODE(0xB008)
 /* CMP */
 OPCODE(0xB010)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, src)
@@ -25232,8 +25221,8 @@ OPCODE(0xB010)
 /* CMP */
 OPCODE(0xB018)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -25249,8 +25238,8 @@ OPCODE(0xB018)
 /* CMP */
 OPCODE(0xB020)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -25266,8 +25255,8 @@ OPCODE(0xB020)
 /* CMP */
 OPCODE(0xB028)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -25283,8 +25272,8 @@ OPCODE(0xB028)
 /* CMP */
 OPCODE(0xB030)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -25300,8 +25289,8 @@ OPCODE(0xB030)
 /* CMP */
 OPCODE(0xB038)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, src)
@@ -25316,8 +25305,8 @@ OPCODE(0xB038)
 /* CMP */
 OPCODE(0xB039)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, src)
@@ -25332,8 +25321,8 @@ OPCODE(0xB039)
 /* CMP */
 OPCODE(0xB03A)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -25349,8 +25338,8 @@ OPCODE(0xB03A)
 /* CMP */
 OPCODE(0xB03B)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -25366,8 +25355,8 @@ OPCODE(0xB03B)
 /* CMP */
 OPCODE(0xB03C)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     dst = DREGu8((Opcode >> 9) & 7);
@@ -25381,8 +25370,8 @@ OPCODE(0xB03C)
 /* CMP */
 OPCODE(0xB01F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -25398,8 +25387,8 @@ OPCODE(0xB01F)
 /* CMP */
 OPCODE(0xB027)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -25415,8 +25404,8 @@ OPCODE(0xB027)
 /* CMP */
 OPCODE(0xB040)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 0) & 7);
     dst = DREGu16((Opcode >> 9) & 7);
@@ -25430,8 +25419,8 @@ OPCODE(0xB040)
 /* CMP */
 OPCODE(0xB048)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = AREGu16((Opcode >> 0) & 7);
     dst = DREGu16((Opcode >> 9) & 7);
@@ -25445,8 +25434,8 @@ OPCODE(0xB048)
 /* CMP */
 OPCODE(0xB050)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -25461,8 +25450,8 @@ OPCODE(0xB050)
 /* CMP */
 OPCODE(0xB058)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -25478,8 +25467,8 @@ OPCODE(0xB058)
 /* CMP */
 OPCODE(0xB060)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -25495,8 +25484,8 @@ OPCODE(0xB060)
 /* CMP */
 OPCODE(0xB068)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -25512,8 +25501,8 @@ OPCODE(0xB068)
 /* CMP */
 OPCODE(0xB070)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -25529,8 +25518,8 @@ OPCODE(0xB070)
 /* CMP */
 OPCODE(0xB078)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -25545,8 +25534,8 @@ OPCODE(0xB078)
 /* CMP */
 OPCODE(0xB079)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -25561,8 +25550,8 @@ OPCODE(0xB079)
 /* CMP */
 OPCODE(0xB07A)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -25578,8 +25567,8 @@ OPCODE(0xB07A)
 /* CMP */
 OPCODE(0xB07B)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -25595,8 +25584,8 @@ OPCODE(0xB07B)
 /* CMP */
 OPCODE(0xB07C)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     dst = DREGu16((Opcode >> 9) & 7);
@@ -25610,8 +25599,8 @@ OPCODE(0xB07C)
 /* CMP */
 OPCODE(0xB05F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -25627,8 +25616,8 @@ OPCODE(0xB05F)
 /* CMP */
 OPCODE(0xB067)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -25644,8 +25633,8 @@ OPCODE(0xB067)
 /* CMP */
 OPCODE(0xB080)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 0) & 7);
     dst = DREGu32((Opcode >> 9) & 7);
@@ -25660,8 +25649,8 @@ OPCODE(0xB080)
 /* CMP */
 OPCODE(0xB088)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = AREGu32((Opcode >> 0) & 7);
     dst = DREGu32((Opcode >> 9) & 7);
@@ -25676,8 +25665,8 @@ OPCODE(0xB088)
 /* CMP */
 OPCODE(0xB090)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, src)
@@ -25693,8 +25682,8 @@ OPCODE(0xB090)
 /* CMP */
 OPCODE(0xB098)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -25711,8 +25700,8 @@ OPCODE(0xB098)
 /* CMP */
 OPCODE(0xB0A0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -25729,8 +25718,8 @@ OPCODE(0xB0A0)
 /* CMP */
 OPCODE(0xB0A8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -25747,8 +25736,8 @@ OPCODE(0xB0A8)
 /* CMP */
 OPCODE(0xB0B0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -25765,8 +25754,8 @@ OPCODE(0xB0B0)
 /* CMP */
 OPCODE(0xB0B8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, src)
@@ -25782,8 +25771,8 @@ OPCODE(0xB0B8)
 /* CMP */
 OPCODE(0xB0B9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, src)
@@ -25799,8 +25788,8 @@ OPCODE(0xB0B9)
 /* CMP */
 OPCODE(0xB0BA)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -25817,8 +25806,8 @@ OPCODE(0xB0BA)
 /* CMP */
 OPCODE(0xB0BB)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -25835,8 +25824,8 @@ OPCODE(0xB0BB)
 /* CMP */
 OPCODE(0xB0BC)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     dst = DREGu32((Opcode >> 9) & 7);
@@ -25851,8 +25840,8 @@ OPCODE(0xB0BC)
 /* CMP */
 OPCODE(0xB09F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -25869,8 +25858,8 @@ OPCODE(0xB09F)
 /* CMP */
 OPCODE(0xB0A7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -25887,8 +25876,8 @@ OPCODE(0xB0A7)
 /* CMPM */
 OPCODE(0xB108)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -25906,8 +25895,8 @@ OPCODE(0xB108)
 /* CMPM */
 OPCODE(0xB148)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -25925,8 +25914,8 @@ OPCODE(0xB148)
 /* CMPM */
 OPCODE(0xB188)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -25945,8 +25934,8 @@ OPCODE(0xB188)
 /* CMP7M */
 OPCODE(0xB10F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -25964,8 +25953,8 @@ OPCODE(0xB10F)
 /* CMP7M */
 OPCODE(0xB14F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -25983,8 +25972,8 @@ OPCODE(0xB14F)
 /* CMP7M */
 OPCODE(0xB18F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -26003,8 +25992,8 @@ OPCODE(0xB18F)
 /* CMPM7 */
 OPCODE(0xBF08)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -26022,8 +26011,8 @@ OPCODE(0xBF08)
 /* CMPM7 */
 OPCODE(0xBF48)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -26041,8 +26030,8 @@ OPCODE(0xBF48)
 /* CMPM7 */
 OPCODE(0xBF88)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -26061,8 +26050,8 @@ OPCODE(0xBF88)
 /* CMP7M7 */
 OPCODE(0xBF0F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -26080,8 +26069,8 @@ OPCODE(0xBF0F)
 /* CMP7M7 */
 OPCODE(0xBF4F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -26099,8 +26088,8 @@ OPCODE(0xBF4F)
 /* CMP7M7 */
 OPCODE(0xBF8F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -26119,8 +26108,8 @@ OPCODE(0xBF8F)
 /* EORDa */
 OPCODE(0xB100)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     res = DREGu8((Opcode >> 0) & 7);
@@ -26133,8 +26122,8 @@ OPCODE(0xB100)
 /* EORDa */
 OPCODE(0xB110)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -26148,8 +26137,8 @@ OPCODE(0xB110)
 /* EORDa */
 OPCODE(0xB118)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -26164,8 +26153,8 @@ OPCODE(0xB118)
 /* EORDa */
 OPCODE(0xB120)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7) - 1;
@@ -26180,8 +26169,8 @@ OPCODE(0xB120)
 /* EORDa */
 OPCODE(0xB128)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -26196,8 +26185,8 @@ OPCODE(0xB128)
 /* EORDa */
 OPCODE(0xB130)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -26212,8 +26201,8 @@ OPCODE(0xB130)
 /* EORDa */
 OPCODE(0xB138)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -26227,8 +26216,8 @@ OPCODE(0xB138)
 /* EORDa */
 OPCODE(0xB139)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     FETCH_LONG(adr);
@@ -26242,8 +26231,8 @@ OPCODE(0xB139)
 /* EORDa */
 OPCODE(0xB11F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG(7);
@@ -26258,8 +26247,8 @@ OPCODE(0xB11F)
 /* EORDa */
 OPCODE(0xB127)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG(7) - 2;
@@ -26274,8 +26263,8 @@ OPCODE(0xB127)
 /* EORDa */
 OPCODE(0xB140)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     res = DREGu16((Opcode >> 0) & 7);
@@ -26289,8 +26278,8 @@ OPCODE(0xB140)
 /* EORDa */
 OPCODE(0xB150)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -26305,8 +26294,8 @@ OPCODE(0xB150)
 /* EORDa */
 OPCODE(0xB158)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -26322,8 +26311,8 @@ OPCODE(0xB158)
 /* EORDa */
 OPCODE(0xB160)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7) - 2;
@@ -26339,8 +26328,8 @@ OPCODE(0xB160)
 /* EORDa */
 OPCODE(0xB168)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -26356,8 +26345,8 @@ OPCODE(0xB168)
 /* EORDa */
 OPCODE(0xB170)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -26373,8 +26362,8 @@ OPCODE(0xB170)
 /* EORDa */
 OPCODE(0xB178)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -26389,8 +26378,8 @@ OPCODE(0xB178)
 /* EORDa */
 OPCODE(0xB179)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     FETCH_LONG(adr);
@@ -26405,8 +26394,8 @@ OPCODE(0xB179)
 /* EORDa */
 OPCODE(0xB15F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG(7);
@@ -26422,8 +26411,8 @@ OPCODE(0xB15F)
 /* EORDa */
 OPCODE(0xB167)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG(7) - 2;
@@ -26439,8 +26428,8 @@ OPCODE(0xB167)
 /* EORDa */
 OPCODE(0xB180)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     res = DREGu32((Opcode >> 0) & 7);
@@ -26454,8 +26443,8 @@ OPCODE(0xB180)
 /* EORDa */
 OPCODE(0xB190)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -26470,8 +26459,8 @@ OPCODE(0xB190)
 /* EORDa */
 OPCODE(0xB198)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -26487,8 +26476,8 @@ OPCODE(0xB198)
 /* EORDa */
 OPCODE(0xB1A0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7) - 4;
@@ -26504,8 +26493,8 @@ OPCODE(0xB1A0)
 /* EORDa */
 OPCODE(0xB1A8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -26521,8 +26510,8 @@ OPCODE(0xB1A8)
 /* EORDa */
 OPCODE(0xB1B0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -26538,8 +26527,8 @@ OPCODE(0xB1B0)
 /* EORDa */
 OPCODE(0xB1B8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -26554,8 +26543,8 @@ OPCODE(0xB1B8)
 /* EORDa */
 OPCODE(0xB1B9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     FETCH_LONG(adr);
@@ -26570,8 +26559,8 @@ OPCODE(0xB1B9)
 /* EORDa */
 OPCODE(0xB19F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG(7);
@@ -26587,8 +26576,8 @@ OPCODE(0xB19F)
 /* EORDa */
 OPCODE(0xB1A7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG(7) - 4;
@@ -26604,10 +26593,10 @@ OPCODE(0xB1A7)
 /* CMPA */
 OPCODE(0xB0C0)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
-    src = (int32_t)DREGs16((Opcode >> 0) & 7);
+    src = (s32)DREGs16((Opcode >> 0) & 7);
     dst = AREGu32((Opcode >> 9) & 7);
     res = dst - src;
     flag_NotZ = res;
@@ -26620,10 +26609,10 @@ OPCODE(0xB0C0)
 /* CMPA */
 OPCODE(0xB0C8)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
-    src = (int32_t)AREGs16((Opcode >> 0) & 7);
+    src = (s32)AREGs16((Opcode >> 0) & 7);
     dst = AREGu32((Opcode >> 9) & 7);
     res = dst - src;
     flag_NotZ = res;
@@ -26636,8 +26625,8 @@ OPCODE(0xB0C8)
 /* CMPA */
 OPCODE(0xB0D0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     READSX_WORD_F(adr, src)
@@ -26653,8 +26642,8 @@ OPCODE(0xB0D0)
 /* CMPA */
 OPCODE(0xB0D8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -26671,8 +26660,8 @@ OPCODE(0xB0D8)
 /* CMPA */
 OPCODE(0xB0E0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -26689,8 +26678,8 @@ OPCODE(0xB0E0)
 /* CMPA */
 OPCODE(0xB0E8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -26707,8 +26696,8 @@ OPCODE(0xB0E8)
 /* CMPA */
 OPCODE(0xB0F0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -26725,8 +26714,8 @@ OPCODE(0xB0F0)
 /* CMPA */
 OPCODE(0xB0F8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     READSX_WORD_F(adr, src)
@@ -26742,8 +26731,8 @@ OPCODE(0xB0F8)
 /* CMPA */
 OPCODE(0xB0F9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(adr);
     READSX_WORD_F(adr, src)
@@ -26759,8 +26748,8 @@ OPCODE(0xB0F9)
 /* CMPA */
 OPCODE(0xB0FA)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -26777,8 +26766,8 @@ OPCODE(0xB0FA)
 /* CMPA */
 OPCODE(0xB0FB)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -26795,8 +26784,8 @@ OPCODE(0xB0FB)
 /* CMPA */
 OPCODE(0xB0FC)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_SWORD(src);
     dst = AREGu32((Opcode >> 9) & 7);
@@ -26811,8 +26800,8 @@ OPCODE(0xB0FC)
 /* CMPA */
 OPCODE(0xB0DF)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -26829,8 +26818,8 @@ OPCODE(0xB0DF)
 /* CMPA */
 OPCODE(0xB0E7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -26847,10 +26836,10 @@ OPCODE(0xB0E7)
 /* CMPA */
 OPCODE(0xB1C0)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
-    src = (int32_t)DREGs32((Opcode >> 0) & 7);
+    src = (s32)DREGs32((Opcode >> 0) & 7);
     dst = AREGu32((Opcode >> 9) & 7);
     res = dst - src;
     flag_NotZ = res;
@@ -26863,10 +26852,10 @@ OPCODE(0xB1C0)
 /* CMPA */
 OPCODE(0xB1C8)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
-    src = (int32_t)AREGs32((Opcode >> 0) & 7);
+    src = (s32)AREGs32((Opcode >> 0) & 7);
     dst = AREGu32((Opcode >> 9) & 7);
     res = dst - src;
     flag_NotZ = res;
@@ -26879,8 +26868,8 @@ OPCODE(0xB1C8)
 /* CMPA */
 OPCODE(0xB1D0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     READSX_LONG_F(adr, src)
@@ -26896,8 +26885,8 @@ OPCODE(0xB1D0)
 /* CMPA */
 OPCODE(0xB1D8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -26914,8 +26903,8 @@ OPCODE(0xB1D8)
 /* CMPA */
 OPCODE(0xB1E0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -26932,8 +26921,8 @@ OPCODE(0xB1E0)
 /* CMPA */
 OPCODE(0xB1E8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -26950,8 +26939,8 @@ OPCODE(0xB1E8)
 /* CMPA */
 OPCODE(0xB1F0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -26968,8 +26957,8 @@ OPCODE(0xB1F0)
 /* CMPA */
 OPCODE(0xB1F8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     READSX_LONG_F(adr, src)
@@ -26985,8 +26974,8 @@ OPCODE(0xB1F8)
 /* CMPA */
 OPCODE(0xB1F9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(adr);
     READSX_LONG_F(adr, src)
@@ -27002,8 +26991,8 @@ OPCODE(0xB1F9)
 /* CMPA */
 OPCODE(0xB1FA)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -27020,8 +27009,8 @@ OPCODE(0xB1FA)
 /* CMPA */
 OPCODE(0xB1FB)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -27038,8 +27027,8 @@ OPCODE(0xB1FB)
 /* CMPA */
 OPCODE(0xB1FC)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     dst = AREGu32((Opcode >> 9) & 7);
@@ -27054,8 +27043,8 @@ OPCODE(0xB1FC)
 /* CMPA */
 OPCODE(0xB1DF)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -27072,8 +27061,8 @@ OPCODE(0xB1DF)
 /* CMPA */
 OPCODE(0xB1E7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -27090,8 +27079,8 @@ OPCODE(0xB1E7)
 /* ANDaD */
 OPCODE(0xC000)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu8((Opcode >> 0) & 7);
     res = DREGu8((Opcode >> 9) & 7);
@@ -27104,8 +27093,8 @@ OPCODE(0xC000)
 /* ANDaD */
 OPCODE(0xC010)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, src)
@@ -27119,8 +27108,8 @@ OPCODE(0xC010)
 /* ANDaD */
 OPCODE(0xC018)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -27135,8 +27124,8 @@ OPCODE(0xC018)
 /* ANDaD */
 OPCODE(0xC020)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -27151,8 +27140,8 @@ OPCODE(0xC020)
 /* ANDaD */
 OPCODE(0xC028)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -27167,8 +27156,8 @@ OPCODE(0xC028)
 /* ANDaD */
 OPCODE(0xC030)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -27183,8 +27172,8 @@ OPCODE(0xC030)
 /* ANDaD */
 OPCODE(0xC038)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, src)
@@ -27198,8 +27187,8 @@ OPCODE(0xC038)
 /* ANDaD */
 OPCODE(0xC039)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, src)
@@ -27213,8 +27202,8 @@ OPCODE(0xC039)
 /* ANDaD */
 OPCODE(0xC03A)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -27229,8 +27218,8 @@ OPCODE(0xC03A)
 /* ANDaD */
 OPCODE(0xC03B)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -27245,8 +27234,8 @@ OPCODE(0xC03B)
 /* ANDaD */
 OPCODE(0xC03C)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_BYTE(src);
     res = DREGu8((Opcode >> 9) & 7);
@@ -27259,8 +27248,8 @@ OPCODE(0xC03C)
 /* ANDaD */
 OPCODE(0xC01F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -27275,8 +27264,8 @@ OPCODE(0xC01F)
 /* ANDaD */
 OPCODE(0xC027)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -27291,8 +27280,8 @@ OPCODE(0xC027)
 /* ANDaD */
 OPCODE(0xC040)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu16((Opcode >> 0) & 7);
     res = DREGu16((Opcode >> 9) & 7);
@@ -27306,8 +27295,8 @@ OPCODE(0xC040)
 /* ANDaD */
 OPCODE(0xC050)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -27322,8 +27311,8 @@ OPCODE(0xC050)
 /* ANDaD */
 OPCODE(0xC058)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -27339,8 +27328,8 @@ OPCODE(0xC058)
 /* ANDaD */
 OPCODE(0xC060)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -27356,8 +27345,8 @@ OPCODE(0xC060)
 /* ANDaD */
 OPCODE(0xC068)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -27373,8 +27362,8 @@ OPCODE(0xC068)
 /* ANDaD */
 OPCODE(0xC070)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -27390,8 +27379,8 @@ OPCODE(0xC070)
 /* ANDaD */
 OPCODE(0xC078)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -27406,8 +27395,8 @@ OPCODE(0xC078)
 /* ANDaD */
 OPCODE(0xC079)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -27422,8 +27411,8 @@ OPCODE(0xC079)
 /* ANDaD */
 OPCODE(0xC07A)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -27439,8 +27428,8 @@ OPCODE(0xC07A)
 /* ANDaD */
 OPCODE(0xC07B)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -27456,8 +27445,8 @@ OPCODE(0xC07B)
 /* ANDaD */
 OPCODE(0xC07C)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_WORD(src);
     res = DREGu16((Opcode >> 9) & 7);
@@ -27471,8 +27460,8 @@ OPCODE(0xC07C)
 /* ANDaD */
 OPCODE(0xC05F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -27488,8 +27477,8 @@ OPCODE(0xC05F)
 /* ANDaD */
 OPCODE(0xC067)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -27505,8 +27494,8 @@ OPCODE(0xC067)
 /* ANDaD */
 OPCODE(0xC080)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu32((Opcode >> 0) & 7);
     res = DREGu32((Opcode >> 9) & 7);
@@ -27520,8 +27509,8 @@ OPCODE(0xC080)
 /* ANDaD */
 OPCODE(0xC090)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, src)
@@ -27536,8 +27525,8 @@ OPCODE(0xC090)
 /* ANDaD */
 OPCODE(0xC098)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -27553,8 +27542,8 @@ OPCODE(0xC098)
 /* ANDaD */
 OPCODE(0xC0A0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -27570,8 +27559,8 @@ OPCODE(0xC0A0)
 /* ANDaD */
 OPCODE(0xC0A8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -27587,8 +27576,8 @@ OPCODE(0xC0A8)
 /* ANDaD */
 OPCODE(0xC0B0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -27604,8 +27593,8 @@ OPCODE(0xC0B0)
 /* ANDaD */
 OPCODE(0xC0B8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, src)
@@ -27620,8 +27609,8 @@ OPCODE(0xC0B8)
 /* ANDaD */
 OPCODE(0xC0B9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, src)
@@ -27636,8 +27625,8 @@ OPCODE(0xC0B9)
 /* ANDaD */
 OPCODE(0xC0BA)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -27653,8 +27642,8 @@ OPCODE(0xC0BA)
 /* ANDaD */
 OPCODE(0xC0BB)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -27670,8 +27659,8 @@ OPCODE(0xC0BB)
 /* ANDaD */
 OPCODE(0xC0BC)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_LONG(src);
     res = DREGu32((Opcode >> 9) & 7);
@@ -27685,8 +27674,8 @@ OPCODE(0xC0BC)
 /* ANDaD */
 OPCODE(0xC09F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -27702,8 +27691,8 @@ OPCODE(0xC09F)
 /* ANDaD */
 OPCODE(0xC0A7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -27719,8 +27708,8 @@ OPCODE(0xC0A7)
 /* ANDDa */
 OPCODE(0xC110)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -27734,8 +27723,8 @@ OPCODE(0xC110)
 /* ANDDa */
 OPCODE(0xC118)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -27750,8 +27739,8 @@ OPCODE(0xC118)
 /* ANDDa */
 OPCODE(0xC120)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7) - 1;
@@ -27766,8 +27755,8 @@ OPCODE(0xC120)
 /* ANDDa */
 OPCODE(0xC128)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -27782,8 +27771,8 @@ OPCODE(0xC128)
 /* ANDDa */
 OPCODE(0xC130)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -27798,8 +27787,8 @@ OPCODE(0xC130)
 /* ANDDa */
 OPCODE(0xC138)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -27813,8 +27802,8 @@ OPCODE(0xC138)
 /* ANDDa */
 OPCODE(0xC139)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     FETCH_LONG(adr);
@@ -27828,8 +27817,8 @@ OPCODE(0xC139)
 /* ANDDa */
 OPCODE(0xC11F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG(7);
@@ -27844,8 +27833,8 @@ OPCODE(0xC11F)
 /* ANDDa */
 OPCODE(0xC127)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG(7) - 2;
@@ -27860,8 +27849,8 @@ OPCODE(0xC127)
 /* ANDDa */
 OPCODE(0xC150)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -27876,8 +27865,8 @@ OPCODE(0xC150)
 /* ANDDa */
 OPCODE(0xC158)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -27893,8 +27882,8 @@ OPCODE(0xC158)
 /* ANDDa */
 OPCODE(0xC160)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7) - 2;
@@ -27910,8 +27899,8 @@ OPCODE(0xC160)
 /* ANDDa */
 OPCODE(0xC168)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -27927,8 +27916,8 @@ OPCODE(0xC168)
 /* ANDDa */
 OPCODE(0xC170)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -27944,8 +27933,8 @@ OPCODE(0xC170)
 /* ANDDa */
 OPCODE(0xC178)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -27960,8 +27949,8 @@ OPCODE(0xC178)
 /* ANDDa */
 OPCODE(0xC179)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     FETCH_LONG(adr);
@@ -27976,8 +27965,8 @@ OPCODE(0xC179)
 /* ANDDa */
 OPCODE(0xC15F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG(7);
@@ -27993,8 +27982,8 @@ OPCODE(0xC15F)
 /* ANDDa */
 OPCODE(0xC167)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG(7) - 2;
@@ -28010,8 +27999,8 @@ OPCODE(0xC167)
 /* ANDDa */
 OPCODE(0xC190)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -28026,8 +28015,8 @@ OPCODE(0xC190)
 /* ANDDa */
 OPCODE(0xC198)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -28043,8 +28032,8 @@ OPCODE(0xC198)
 /* ANDDa */
 OPCODE(0xC1A0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7) - 4;
@@ -28060,8 +28049,8 @@ OPCODE(0xC1A0)
 /* ANDDa */
 OPCODE(0xC1A8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -28077,8 +28066,8 @@ OPCODE(0xC1A8)
 /* ANDDa */
 OPCODE(0xC1B0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -28094,8 +28083,8 @@ OPCODE(0xC1B0)
 /* ANDDa */
 OPCODE(0xC1B8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -28110,8 +28099,8 @@ OPCODE(0xC1B8)
 /* ANDDa */
 OPCODE(0xC1B9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     FETCH_LONG(adr);
@@ -28126,8 +28115,8 @@ OPCODE(0xC1B9)
 /* ANDDa */
 OPCODE(0xC19F)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG(7);
@@ -28143,8 +28132,8 @@ OPCODE(0xC19F)
 /* ANDDa */
 OPCODE(0xC1A7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG(7) - 4;
@@ -28160,8 +28149,8 @@ OPCODE(0xC1A7)
 /* ABCD */
 OPCODE(0xC100)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 0) & 7);
     dst = DREGu8((Opcode >> 9) & 7);
@@ -28183,8 +28172,8 @@ OPCODE(0xC100)
 /* ABCDM */
 OPCODE(0xC108)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -28210,8 +28199,8 @@ OPCODE(0xC108)
 /* ABCD7M */
 OPCODE(0xC10F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -28237,8 +28226,8 @@ OPCODE(0xC10F)
 /* ABCDM7 */
 OPCODE(0xCF08)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -28264,8 +28253,8 @@ OPCODE(0xCF08)
 /* ABCD7M7 */
 OPCODE(0xCF0F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -28291,8 +28280,8 @@ OPCODE(0xCF0F)
 /* MULU */
 OPCODE(0xC0C0)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     src = DREGu16((Opcode >> 0) & 7);
     res = DREGu16((Opcode >> 9) & 7);
@@ -28313,8 +28302,8 @@ OPCODE(0xC0C0)
 /* MULU */
 OPCODE(0xC0D0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -28336,8 +28325,8 @@ OPCODE(0xC0D0)
 /* MULU */
 OPCODE(0xC0D8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -28360,8 +28349,8 @@ OPCODE(0xC0D8)
 /* MULU */
 OPCODE(0xC0E0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -28384,8 +28373,8 @@ OPCODE(0xC0E0)
 /* MULU */
 OPCODE(0xC0E8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -28408,8 +28397,8 @@ OPCODE(0xC0E8)
 /* MULU */
 OPCODE(0xC0F0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -28432,8 +28421,8 @@ OPCODE(0xC0F0)
 /* MULU */
 OPCODE(0xC0F8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -28455,8 +28444,8 @@ OPCODE(0xC0F8)
 /* MULU */
 OPCODE(0xC0F9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -28478,8 +28467,8 @@ OPCODE(0xC0F9)
 /* MULU */
 OPCODE(0xC0FA)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -28502,8 +28491,8 @@ OPCODE(0xC0FA)
 /* MULU */
 OPCODE(0xC0FB)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -28526,8 +28515,8 @@ OPCODE(0xC0FB)
 /* MULU */
 OPCODE(0xC0FC)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_WORD(src);
     res = DREGu16((Opcode >> 9) & 7);
@@ -28548,8 +28537,8 @@ OPCODE(0xC0FC)
 /* MULU */
 OPCODE(0xC0DF)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -28572,8 +28561,8 @@ OPCODE(0xC0DF)
 /* MULU */
 OPCODE(0xC0E7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -28596,12 +28585,12 @@ OPCODE(0xC0E7)
 /* MULS */
 OPCODE(0xC1C0)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    src = (int32_t)DREGs16((Opcode >> 0) & 7);
-    res = (int32_t)DREGs16((Opcode >> 9) & 7);
-    res = ((int32_t)res) * ((int32_t)src);
+    src = (s32)DREGs16((Opcode >> 0) & 7);
+    res = (s32)DREGs16((Opcode >> 9) & 7);
+    res = ((s32)res) * ((s32)src);
     flag_N = res >> 24;
     flag_NotZ = res;
     flag_V = flag_C = 0;
@@ -28618,13 +28607,13 @@ OPCODE(0xC1C0)
 /* MULS */
 OPCODE(0xC1D0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READSX_WORD_F(adr, src)
-    res = (int32_t)DREGs16((Opcode >> 9) & 7);
-    res = ((int32_t)res) * ((int32_t)src);
+    res = (s32)DREGs16((Opcode >> 9) & 7);
+    res = ((s32)res) * ((s32)src);
     flag_N = res >> 24;
     flag_NotZ = res;
     flag_V = flag_C = 0;
@@ -28641,14 +28630,14 @@ OPCODE(0xC1D0)
 /* MULS */
 OPCODE(0xC1D8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
     READSX_WORD_F(adr, src)
-    res = (int32_t)DREGs16((Opcode >> 9) & 7);
-    res = ((int32_t)res) * ((int32_t)src);
+    res = (s32)DREGs16((Opcode >> 9) & 7);
+    res = ((s32)res) * ((s32)src);
     flag_N = res >> 24;
     flag_NotZ = res;
     flag_V = flag_C = 0;
@@ -28665,14 +28654,14 @@ OPCODE(0xC1D8)
 /* MULS */
 OPCODE(0xC1E0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
     READSX_WORD_F(adr, src)
-    res = (int32_t)DREGs16((Opcode >> 9) & 7);
-    res = ((int32_t)res) * ((int32_t)src);
+    res = (s32)DREGs16((Opcode >> 9) & 7);
+    res = ((s32)res) * ((s32)src);
     flag_N = res >> 24;
     flag_NotZ = res;
     flag_V = flag_C = 0;
@@ -28689,14 +28678,14 @@ OPCODE(0xC1E0)
 /* MULS */
 OPCODE(0xC1E8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
     READSX_WORD_F(adr, src)
-    res = (int32_t)DREGs16((Opcode >> 9) & 7);
-    res = ((int32_t)res) * ((int32_t)src);
+    res = (s32)DREGs16((Opcode >> 9) & 7);
+    res = ((s32)res) * ((s32)src);
     flag_N = res >> 24;
     flag_NotZ = res;
     flag_V = flag_C = 0;
@@ -28713,14 +28702,14 @@ OPCODE(0xC1E8)
 /* MULS */
 OPCODE(0xC1F0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
     READSX_WORD_F(adr, src)
-    res = (int32_t)DREGs16((Opcode >> 9) & 7);
-    res = ((int32_t)res) * ((int32_t)src);
+    res = (s32)DREGs16((Opcode >> 9) & 7);
+    res = ((s32)res) * ((s32)src);
     flag_N = res >> 24;
     flag_NotZ = res;
     flag_V = flag_C = 0;
@@ -28737,13 +28726,13 @@ OPCODE(0xC1F0)
 /* MULS */
 OPCODE(0xC1F8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READSX_WORD_F(adr, src)
-    res = (int32_t)DREGs16((Opcode >> 9) & 7);
-    res = ((int32_t)res) * ((int32_t)src);
+    res = (s32)DREGs16((Opcode >> 9) & 7);
+    res = ((s32)res) * ((s32)src);
     flag_N = res >> 24;
     flag_NotZ = res;
     flag_V = flag_C = 0;
@@ -28760,13 +28749,13 @@ OPCODE(0xC1F8)
 /* MULS */
 OPCODE(0xC1F9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READSX_WORD_F(adr, src)
-    res = (int32_t)DREGs16((Opcode >> 9) & 7);
-    res = ((int32_t)res) * ((int32_t)src);
+    res = (s32)DREGs16((Opcode >> 9) & 7);
+    res = ((s32)res) * ((s32)src);
     flag_N = res >> 24;
     flag_NotZ = res;
     flag_V = flag_C = 0;
@@ -28783,14 +28772,14 @@ OPCODE(0xC1F9)
 /* MULS */
 OPCODE(0xC1FA)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
     READSX_WORD_F(adr, src)
-    res = (int32_t)DREGs16((Opcode >> 9) & 7);
-    res = ((int32_t)res) * ((int32_t)src);
+    res = (s32)DREGs16((Opcode >> 9) & 7);
+    res = ((s32)res) * ((s32)src);
     flag_N = res >> 24;
     flag_NotZ = res;
     flag_V = flag_C = 0;
@@ -28807,14 +28796,14 @@ OPCODE(0xC1FA)
 /* MULS */
 OPCODE(0xC1FB)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
     READSX_WORD_F(adr, src)
-    res = (int32_t)DREGs16((Opcode >> 9) & 7);
-    res = ((int32_t)res) * ((int32_t)src);
+    res = (s32)DREGs16((Opcode >> 9) & 7);
+    res = ((s32)res) * ((s32)src);
     flag_N = res >> 24;
     flag_NotZ = res;
     flag_V = flag_C = 0;
@@ -28831,12 +28820,12 @@ OPCODE(0xC1FB)
 /* MULS */
 OPCODE(0xC1FC)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     FETCH_SWORD(src);
-    res = (int32_t)DREGs16((Opcode >> 9) & 7);
-    res = ((int32_t)res) * ((int32_t)src);
+    res = (s32)DREGs16((Opcode >> 9) & 7);
+    res = ((s32)res) * ((s32)src);
     flag_N = res >> 24;
     flag_NotZ = res;
     flag_V = flag_C = 0;
@@ -28853,14 +28842,14 @@ OPCODE(0xC1FC)
 /* MULS */
 OPCODE(0xC1DF)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
     READSX_WORD_F(adr, src)
-    res = (int32_t)DREGs16((Opcode >> 9) & 7);
-    res = ((int32_t)res) * ((int32_t)src);
+    res = (s32)DREGs16((Opcode >> 9) & 7);
+    res = ((s32)res) * ((s32)src);
     flag_N = res >> 24;
     flag_NotZ = res;
     flag_V = flag_C = 0;
@@ -28877,14 +28866,14 @@ OPCODE(0xC1DF)
 /* MULS */
 OPCODE(0xC1E7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
     READSX_WORD_F(adr, src)
-    res = (int32_t)DREGs16((Opcode >> 9) & 7);
-    res = ((int32_t)res) * ((int32_t)src);
+    res = (s32)DREGs16((Opcode >> 9) & 7);
+    res = ((s32)res) * ((s32)src);
     flag_N = res >> 24;
     flag_NotZ = res;
     flag_V = flag_C = 0;
@@ -28901,8 +28890,8 @@ OPCODE(0xC1E7)
 /* EXGDD */
 OPCODE(0xC140)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     res = DREGu32((Opcode >> 0) & 7);
     src = DREGu32((Opcode >> 9) & 7);
@@ -28915,8 +28904,8 @@ OPCODE(0xC140)
 /* EXGAA */
 OPCODE(0xC148)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     res = AREGu32((Opcode >> 0) & 7);
     src = AREGu32((Opcode >> 9) & 7);
@@ -28929,8 +28918,8 @@ OPCODE(0xC148)
 /* EXGAD */
 OPCODE(0xC188)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
     res = AREGu32((Opcode >> 0) & 7);
     src = DREGu32((Opcode >> 9) & 7);
@@ -28943,8 +28932,8 @@ OPCODE(0xC188)
 /* ADDaD */
 OPCODE(0xD000)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 0) & 7);
     dst = DREGu8((Opcode >> 9) & 7);
@@ -28979,8 +28968,8 @@ OPCODE(0xD008)
 /* ADDaD */
 OPCODE(0xD010)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_BYTE_F(adr, src)
@@ -28996,8 +28985,8 @@ OPCODE(0xD010)
 /* ADDaD */
 OPCODE(0xD018)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 1;
@@ -29014,8 +29003,8 @@ OPCODE(0xD018)
 /* ADDaD */
 OPCODE(0xD020)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -29032,8 +29021,8 @@ OPCODE(0xD020)
 /* ADDaD */
 OPCODE(0xD028)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -29050,8 +29039,8 @@ OPCODE(0xD028)
 /* ADDaD */
 OPCODE(0xD030)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -29068,8 +29057,8 @@ OPCODE(0xD030)
 /* ADDaD */
 OPCODE(0xD038)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     READ_BYTE_F(adr, src)
@@ -29085,8 +29074,8 @@ OPCODE(0xD038)
 /* ADDaD */
 OPCODE(0xD039)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(adr);
     READ_BYTE_F(adr, src)
@@ -29102,8 +29091,8 @@ OPCODE(0xD039)
 /* ADDaD */
 OPCODE(0xD03A)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -29120,8 +29109,8 @@ OPCODE(0xD03A)
 /* ADDaD */
 OPCODE(0xD03B)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -29138,8 +29127,8 @@ OPCODE(0xD03B)
 /* ADDaD */
 OPCODE(0xD03C)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_BYTE(src);
     dst = DREGu8((Opcode >> 9) & 7);
@@ -29154,8 +29143,8 @@ OPCODE(0xD03C)
 /* ADDaD */
 OPCODE(0xD01F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -29172,8 +29161,8 @@ OPCODE(0xD01F)
 /* ADDaD */
 OPCODE(0xD027)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -29190,8 +29179,8 @@ OPCODE(0xD027)
 /* ADDaD */
 OPCODE(0xD040)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 0) & 7);
     dst = DREGu16((Opcode >> 9) & 7);
@@ -29206,8 +29195,8 @@ OPCODE(0xD040)
 /* ADDaD */
 OPCODE(0xD048)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = AREGu16((Opcode >> 0) & 7);
     dst = DREGu16((Opcode >> 9) & 7);
@@ -29222,8 +29211,8 @@ OPCODE(0xD048)
 /* ADDaD */
 OPCODE(0xD050)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -29239,8 +29228,8 @@ OPCODE(0xD050)
 /* ADDaD */
 OPCODE(0xD058)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -29257,8 +29246,8 @@ OPCODE(0xD058)
 /* ADDaD */
 OPCODE(0xD060)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -29275,8 +29264,8 @@ OPCODE(0xD060)
 /* ADDaD */
 OPCODE(0xD068)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -29293,8 +29282,8 @@ OPCODE(0xD068)
 /* ADDaD */
 OPCODE(0xD070)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -29311,8 +29300,8 @@ OPCODE(0xD070)
 /* ADDaD */
 OPCODE(0xD078)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -29328,8 +29317,8 @@ OPCODE(0xD078)
 /* ADDaD */
 OPCODE(0xD079)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -29345,8 +29334,8 @@ OPCODE(0xD079)
 /* ADDaD */
 OPCODE(0xD07A)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -29363,8 +29352,8 @@ OPCODE(0xD07A)
 /* ADDaD */
 OPCODE(0xD07B)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -29381,8 +29370,8 @@ OPCODE(0xD07B)
 /* ADDaD */
 OPCODE(0xD07C)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_WORD(src);
     dst = DREGu16((Opcode >> 9) & 7);
@@ -29397,8 +29386,8 @@ OPCODE(0xD07C)
 /* ADDaD */
 OPCODE(0xD05F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -29415,8 +29404,8 @@ OPCODE(0xD05F)
 /* ADDaD */
 OPCODE(0xD067)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -29433,8 +29422,8 @@ OPCODE(0xD067)
 /* ADDaD */
 OPCODE(0xD080)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 0) & 7);
     dst = DREGu32((Opcode >> 9) & 7);
@@ -29450,8 +29439,8 @@ OPCODE(0xD080)
 /* ADDaD */
 OPCODE(0xD088)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = AREGu32((Opcode >> 0) & 7);
     dst = DREGu32((Opcode >> 9) & 7);
@@ -29467,8 +29456,8 @@ OPCODE(0xD088)
 /* ADDaD */
 OPCODE(0xD090)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_LONG_F(adr, src)
@@ -29485,8 +29474,8 @@ OPCODE(0xD090)
 /* ADDaD */
 OPCODE(0xD098)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -29504,8 +29493,8 @@ OPCODE(0xD098)
 /* ADDaD */
 OPCODE(0xD0A0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -29523,8 +29512,8 @@ OPCODE(0xD0A0)
 /* ADDaD */
 OPCODE(0xD0A8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -29542,8 +29531,8 @@ OPCODE(0xD0A8)
 /* ADDaD */
 OPCODE(0xD0B0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -29561,8 +29550,8 @@ OPCODE(0xD0B0)
 /* ADDaD */
 OPCODE(0xD0B8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     READ_LONG_F(adr, src)
@@ -29579,8 +29568,8 @@ OPCODE(0xD0B8)
 /* ADDaD */
 OPCODE(0xD0B9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(adr);
     READ_LONG_F(adr, src)
@@ -29597,8 +29586,8 @@ OPCODE(0xD0B9)
 /* ADDaD */
 OPCODE(0xD0BA)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -29616,8 +29605,8 @@ OPCODE(0xD0BA)
 /* ADDaD */
 OPCODE(0xD0BB)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -29635,8 +29624,8 @@ OPCODE(0xD0BB)
 /* ADDaD */
 OPCODE(0xD0BC)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     dst = DREGu32((Opcode >> 9) & 7);
@@ -29652,8 +29641,8 @@ OPCODE(0xD0BC)
 /* ADDaD */
 OPCODE(0xD09F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -29671,8 +29660,8 @@ OPCODE(0xD09F)
 /* ADDaD */
 OPCODE(0xD0A7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -29690,8 +29679,8 @@ OPCODE(0xD0A7)
 /* ADDDa */
 OPCODE(0xD110)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -29707,8 +29696,8 @@ OPCODE(0xD110)
 /* ADDDa */
 OPCODE(0xD118)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -29725,8 +29714,8 @@ OPCODE(0xD118)
 /* ADDDa */
 OPCODE(0xD120)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7) - 1;
@@ -29743,8 +29732,8 @@ OPCODE(0xD120)
 /* ADDDa */
 OPCODE(0xD128)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -29761,8 +29750,8 @@ OPCODE(0xD128)
 /* ADDDa */
 OPCODE(0xD130)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -29779,8 +29768,8 @@ OPCODE(0xD130)
 /* ADDDa */
 OPCODE(0xD138)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -29796,8 +29785,8 @@ OPCODE(0xD138)
 /* ADDDa */
 OPCODE(0xD139)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     FETCH_LONG(adr);
@@ -29813,8 +29802,8 @@ OPCODE(0xD139)
 /* ADDDa */
 OPCODE(0xD11F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG(7);
@@ -29831,8 +29820,8 @@ OPCODE(0xD11F)
 /* ADDDa */
 OPCODE(0xD127)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 9) & 7);
     adr = AREG(7) - 2;
@@ -29849,8 +29838,8 @@ OPCODE(0xD127)
 /* ADDDa */
 OPCODE(0xD150)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -29866,8 +29855,8 @@ OPCODE(0xD150)
 /* ADDDa */
 OPCODE(0xD158)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -29884,8 +29873,8 @@ OPCODE(0xD158)
 /* ADDDa */
 OPCODE(0xD160)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7) - 2;
@@ -29902,8 +29891,8 @@ OPCODE(0xD160)
 /* ADDDa */
 OPCODE(0xD168)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -29920,8 +29909,8 @@ OPCODE(0xD168)
 /* ADDDa */
 OPCODE(0xD170)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -29938,8 +29927,8 @@ OPCODE(0xD170)
 /* ADDDa */
 OPCODE(0xD178)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -29955,8 +29944,8 @@ OPCODE(0xD178)
 /* ADDDa */
 OPCODE(0xD179)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     FETCH_LONG(adr);
@@ -29972,8 +29961,8 @@ OPCODE(0xD179)
 /* ADDDa */
 OPCODE(0xD15F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG(7);
@@ -29990,8 +29979,8 @@ OPCODE(0xD15F)
 /* ADDDa */
 OPCODE(0xD167)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 9) & 7);
     adr = AREG(7) - 2;
@@ -30008,8 +29997,8 @@ OPCODE(0xD167)
 /* ADDDa */
 OPCODE(0xD190)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -30026,8 +30015,8 @@ OPCODE(0xD190)
 /* ADDDa */
 OPCODE(0xD198)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -30045,8 +30034,8 @@ OPCODE(0xD198)
 /* ADDDa */
 OPCODE(0xD1A0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7) - 4;
@@ -30064,8 +30053,8 @@ OPCODE(0xD1A0)
 /* ADDDa */
 OPCODE(0xD1A8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -30083,8 +30072,8 @@ OPCODE(0xD1A8)
 /* ADDDa */
 OPCODE(0xD1B0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG((Opcode >> 0) & 7);
@@ -30102,8 +30091,8 @@ OPCODE(0xD1B0)
 /* ADDDa */
 OPCODE(0xD1B8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     FETCH_SWORD(adr);
@@ -30120,8 +30109,8 @@ OPCODE(0xD1B8)
 /* ADDDa */
 OPCODE(0xD1B9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     FETCH_LONG(adr);
@@ -30138,8 +30127,8 @@ OPCODE(0xD1B9)
 /* ADDDa */
 OPCODE(0xD19F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG(7);
@@ -30157,8 +30146,8 @@ OPCODE(0xD19F)
 /* ADDDa */
 OPCODE(0xD1A7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 9) & 7);
     adr = AREG(7) - 4;
@@ -30176,8 +30165,8 @@ OPCODE(0xD1A7)
 /* ADDX */
 OPCODE(0xD100)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu8((Opcode >> 0) & 7);
     dst = DREGu8((Opcode >> 9) & 7);
@@ -30192,8 +30181,8 @@ OPCODE(0xD100)
 /* ADDX */
 OPCODE(0xD140)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu16((Opcode >> 0) & 7);
     dst = DREGu16((Opcode >> 9) & 7);
@@ -30208,8 +30197,8 @@ OPCODE(0xD140)
 /* ADDX */
 OPCODE(0xD180)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     src = DREGu32((Opcode >> 0) & 7);
     dst = DREGu32((Opcode >> 9) & 7);
@@ -30225,8 +30214,8 @@ OPCODE(0xD180)
 /* ADDXM */
 OPCODE(0xD108)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -30245,8 +30234,8 @@ OPCODE(0xD108)
 /* ADDXM */
 OPCODE(0xD148)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -30265,8 +30254,8 @@ OPCODE(0xD148)
 /* ADDXM */
 OPCODE(0xD188)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -30286,8 +30275,8 @@ OPCODE(0xD188)
 /* ADDX7M */
 OPCODE(0xD10F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -30306,8 +30295,8 @@ OPCODE(0xD10F)
 /* ADDX7M */
 OPCODE(0xD14F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -30326,8 +30315,8 @@ OPCODE(0xD14F)
 /* ADDX7M */
 OPCODE(0xD18F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -30347,8 +30336,8 @@ OPCODE(0xD18F)
 /* ADDXM7 */
 OPCODE(0xDF08)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 1;
     AREG((Opcode >> 0) & 7) = adr;
@@ -30367,8 +30356,8 @@ OPCODE(0xDF08)
 /* ADDXM7 */
 OPCODE(0xDF48)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -30387,8 +30376,8 @@ OPCODE(0xDF48)
 /* ADDXM7 */
 OPCODE(0xDF88)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -30408,8 +30397,8 @@ OPCODE(0xDF88)
 /* ADDX7M7 */
 OPCODE(0xDF0F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -30428,8 +30417,8 @@ OPCODE(0xDF0F)
 /* ADDX7M7 */
 OPCODE(0xDF4F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -30448,8 +30437,8 @@ OPCODE(0xDF4F)
 /* ADDX7M7 */
 OPCODE(0xDF8F)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -30469,10 +30458,10 @@ OPCODE(0xDF8F)
 /* ADDA */
 OPCODE(0xD0C0)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
-    src = (int32_t)DREGs16((Opcode >> 0) & 7);
+    src = (s32)DREGs16((Opcode >> 0) & 7);
     dst = AREGu32((Opcode >> 9) & 7);
     res = dst + src;
     AREG((Opcode >> 9) & 7) = res;
@@ -30482,10 +30471,10 @@ OPCODE(0xD0C0)
 /* ADDA */
 OPCODE(0xD0C8)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
-    src = (int32_t)AREGs16((Opcode >> 0) & 7);
+    src = (s32)AREGs16((Opcode >> 0) & 7);
     dst = AREGu32((Opcode >> 9) & 7);
     res = dst + src;
     AREG((Opcode >> 9) & 7) = res;
@@ -30495,8 +30484,8 @@ OPCODE(0xD0C8)
 /* ADDA */
 OPCODE(0xD0D0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     READSX_WORD_F(adr, src)
@@ -30509,8 +30498,8 @@ OPCODE(0xD0D0)
 /* ADDA */
 OPCODE(0xD0D8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -30524,8 +30513,8 @@ OPCODE(0xD0D8)
 /* ADDA */
 OPCODE(0xD0E0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -30539,8 +30528,8 @@ OPCODE(0xD0E0)
 /* ADDA */
 OPCODE(0xD0E8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -30554,8 +30543,8 @@ OPCODE(0xD0E8)
 /* ADDA */
 OPCODE(0xD0F0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -30569,8 +30558,8 @@ OPCODE(0xD0F0)
 /* ADDA */
 OPCODE(0xD0F8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     READSX_WORD_F(adr, src)
@@ -30583,8 +30572,8 @@ OPCODE(0xD0F8)
 /* ADDA */
 OPCODE(0xD0F9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(adr);
     READSX_WORD_F(adr, src)
@@ -30597,8 +30586,8 @@ OPCODE(0xD0F9)
 /* ADDA */
 OPCODE(0xD0FA)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -30612,8 +30601,8 @@ OPCODE(0xD0FA)
 /* ADDA */
 OPCODE(0xD0FB)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -30627,8 +30616,8 @@ OPCODE(0xD0FB)
 /* ADDA */
 OPCODE(0xD0FC)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_SWORD(src);
     dst = AREGu32((Opcode >> 9) & 7);
@@ -30640,8 +30629,8 @@ OPCODE(0xD0FC)
 /* ADDA */
 OPCODE(0xD0DF)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -30655,8 +30644,8 @@ OPCODE(0xD0DF)
 /* ADDA */
 OPCODE(0xD0E7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -30670,10 +30659,10 @@ OPCODE(0xD0E7)
 /* ADDA */
 OPCODE(0xD1C0)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
-    src = (int32_t)DREGs32((Opcode >> 0) & 7);
+    src = (s32)DREGs32((Opcode >> 0) & 7);
     dst = AREGu32((Opcode >> 9) & 7);
     res = dst + src;
     AREG((Opcode >> 9) & 7) = res;
@@ -30683,10 +30672,10 @@ OPCODE(0xD1C0)
 /* ADDA */
 OPCODE(0xD1C8)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
-    src = (int32_t)AREGs32((Opcode >> 0) & 7);
+    src = (s32)AREGs32((Opcode >> 0) & 7);
     dst = AREGu32((Opcode >> 9) & 7);
     res = dst + src;
     AREG((Opcode >> 9) & 7) = res;
@@ -30696,8 +30685,8 @@ OPCODE(0xD1C8)
 /* ADDA */
 OPCODE(0xD1D0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     READSX_LONG_F(adr, src)
@@ -30710,8 +30699,8 @@ OPCODE(0xD1D0)
 /* ADDA */
 OPCODE(0xD1D8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 4;
@@ -30725,8 +30714,8 @@ OPCODE(0xD1D8)
 /* ADDA */
 OPCODE(0xD1E0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7) - 4;
     AREG((Opcode >> 0) & 7) = adr;
@@ -30740,8 +30729,8 @@ OPCODE(0xD1E0)
 /* ADDA */
 OPCODE(0xD1E8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -30755,8 +30744,8 @@ OPCODE(0xD1E8)
 /* ADDA */
 OPCODE(0xD1F0)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -30770,8 +30759,8 @@ OPCODE(0xD1F0)
 /* ADDA */
 OPCODE(0xD1F8)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_SWORD(adr);
     READSX_LONG_F(adr, src)
@@ -30784,8 +30773,8 @@ OPCODE(0xD1F8)
 /* ADDA */
 OPCODE(0xD1F9)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     FETCH_LONG(adr);
     READSX_LONG_F(adr, src)
@@ -30798,8 +30787,8 @@ OPCODE(0xD1F9)
 /* ADDA */
 OPCODE(0xD1FA)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = GET_SWORD + UNBASED_PC;
     INC_PC(2);
@@ -30813,8 +30802,8 @@ OPCODE(0xD1FA)
 /* ADDA */
 OPCODE(0xD1FB)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = UNBASED_PC;
     DECODE_EXT_WORD
@@ -30828,8 +30817,8 @@ OPCODE(0xD1FB)
 /* ADDA */
 OPCODE(0xD1FC)
 {
-    uint32_t res;
-    uint32_t src, dst;
+    u32 res;
+    u32 src, dst;
 
     FETCH_LONG(src);
     dst = AREGu32((Opcode >> 9) & 7);
@@ -30841,8 +30830,8 @@ OPCODE(0xD1FC)
 /* ADDA */
 OPCODE(0xD1DF)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7);
     AREG(7) += 4;
@@ -30856,8 +30845,8 @@ OPCODE(0xD1DF)
 /* ADDA */
 OPCODE(0xD1E7)
 {
-    uint32_t adr, res;
-    uint32_t src, dst;
+    u32 adr, res;
+    u32 src, dst;
 
     adr = AREG(7) - 4;
     AREG(7) = adr;
@@ -30871,17 +30860,17 @@ OPCODE(0xD1E7)
 /* ASRk */
 OPCODE(0xE000)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
-    src = (int32_t)DREGs8((Opcode >> 0) & 7);
+    src = (s32)DREGs8((Opcode >> 0) & 7);
     flag_V = 0;
     flag_X = flag_C = src << ((M68K_SR_C_SFT + 1) - sft);
-    res = ((int32_t)src) >> sft;
+    res = ((s32)src) >> sft;
     flag_N = res >> 0;
     flag_NotZ = res;
     DREGu8((Opcode >> 0) & 7) = res;
@@ -30891,17 +30880,17 @@ OPCODE(0xE000)
 /* ASRk */
 OPCODE(0xE040)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
-    src = (int32_t)DREGs16((Opcode >> 0) & 7);
+    src = (s32)DREGs16((Opcode >> 0) & 7);
     flag_V = 0;
     flag_X = flag_C = src << ((M68K_SR_C_SFT + 1) - sft);
-    res = ((int32_t)src) >> sft;
+    res = ((s32)src) >> sft;
     flag_N = res >> 8;
     flag_NotZ = res;
     DREGu16((Opcode >> 0) & 7) = res;
@@ -30911,17 +30900,17 @@ OPCODE(0xE040)
 /* ASRk */
 OPCODE(0xE080)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
-    src = (int32_t)DREGs32((Opcode >> 0) & 7);
+    src = (s32)DREGs32((Opcode >> 0) & 7);
     flag_V = 0;
     flag_X = flag_C = src << ((M68K_SR_C_SFT + 1) - sft);
-    res = ((int32_t)src) >> sft;
+    res = ((s32)src) >> sft;
     flag_N = res >> 24;
     flag_NotZ = res;
     DREGu32((Opcode >> 0) & 7) = res;
@@ -30931,10 +30920,10 @@ OPCODE(0xE080)
 /* LSRk */
 OPCODE(0xE008)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -30950,10 +30939,10 @@ OPCODE(0xE008)
 /* LSRk */
 OPCODE(0xE048)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -30969,10 +30958,10 @@ OPCODE(0xE048)
 /* LSRk */
 OPCODE(0xE088)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -30988,10 +30977,10 @@ OPCODE(0xE088)
 /* ROXRk */
 OPCODE(0xE010)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31009,10 +30998,10 @@ OPCODE(0xE010)
 /* ROXRk */
 OPCODE(0xE050)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31030,10 +31019,10 @@ OPCODE(0xE050)
 /* ROXRk */
 OPCODE(0xE090)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31052,10 +31041,10 @@ OPCODE(0xE090)
 /* RORk */
 OPCODE(0xE018)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31072,10 +31061,10 @@ OPCODE(0xE018)
 /* RORk */
 OPCODE(0xE058)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31092,10 +31081,10 @@ OPCODE(0xE058)
 /* RORk */
 OPCODE(0xE098)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31112,10 +31101,10 @@ OPCODE(0xE098)
 /* ASLk */
 OPCODE(0xE100)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31131,7 +31120,7 @@ OPCODE(0xE100)
         if ((sft > 7) && (src)) flag_V = M68K_SR_V;
         else
         {
-            uint32_t msk = (((int32_t)0x80000000) >> (sft + 24)) & 0x000000FF;
+            u32 msk = (((s32)0x80000000) >> (sft + 24)) & 0x000000FF;
             src &= msk;
             if ((src) && (src != msk)) flag_V = M68K_SR_V;
         }
@@ -31151,10 +31140,10 @@ OPCODE(0xE100)
 /* ASLk */
 OPCODE(0xE140)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31166,7 +31155,7 @@ OPCODE(0xE140)
     DREGu16((Opcode >> 0) & 7) = res;
     flag_V = 0;
     {
-        uint32_t msk = (((int32_t)0x80000000) >> (sft + 16)) & 0x0000FFFF;
+        u32 msk = (((s32)0x80000000) >> (sft + 16)) & 0x0000FFFF;
         src &= msk;
         if ((src) && (src != msk)) flag_V = M68K_SR_V;
     }
@@ -31176,10 +31165,10 @@ OPCODE(0xE140)
 /* ASLk */
 OPCODE(0xE180)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31191,7 +31180,7 @@ OPCODE(0xE180)
     DREGu32((Opcode >> 0) & 7) = res;
     flag_V = 0;
     {
-        uint32_t msk = (((int32_t)0x80000000) >> (sft + 0)) & 0xFFFFFFFF;
+        u32 msk = (((s32)0x80000000) >> (sft + 0)) & 0xFFFFFFFF;
         src &= msk;
         if ((src) && (src != msk)) flag_V = M68K_SR_V;
     }
@@ -31201,10 +31190,10 @@ OPCODE(0xE180)
 /* LSLk */
 OPCODE(0xE108)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31221,10 +31210,10 @@ OPCODE(0xE108)
 /* LSLk */
 OPCODE(0xE148)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31241,10 +31230,10 @@ OPCODE(0xE148)
 /* LSLk */
 OPCODE(0xE188)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31261,10 +31250,10 @@ OPCODE(0xE188)
 /* ROXLk */
 OPCODE(0xE110)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31282,10 +31271,10 @@ OPCODE(0xE110)
 /* ROXLk */
 OPCODE(0xE150)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31303,10 +31292,10 @@ OPCODE(0xE150)
 /* ROXLk */
 OPCODE(0xE190)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31325,10 +31314,10 @@ OPCODE(0xE190)
 /* ROLk */
 OPCODE(0xE118)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31345,10 +31334,10 @@ OPCODE(0xE118)
 /* ROLk */
 OPCODE(0xE158)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31365,10 +31354,10 @@ OPCODE(0xE158)
 /* ROLk */
 OPCODE(0xE198)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = (((Opcode >> 9) - 1) & 7) + 1;
     io_cycle_counter -= sft * 2;
@@ -31385,13 +31374,13 @@ OPCODE(0xE198)
 /* ASRD */
 OPCODE(0xE020)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
-    src = (int32_t)DREGs8((Opcode >> 0) & 7);
+    src = (s32)DREGs8((Opcode >> 0) & 7);
     if (sft)
     {
         io_cycle_counter -= sft * 2;
@@ -31399,7 +31388,7 @@ OPCODE(0xE020)
         {
             flag_V = 0;
             flag_X = flag_C = src << ((M68K_SR_C_SFT + 1) - sft);
-            res = ((int32_t)src) >> sft;
+            res = ((s32)src) >> sft;
             flag_N = res >> 0;
             flag_NotZ = res;
             DREGu8((Opcode >> 0) & 7) = res;
@@ -31438,13 +31427,13 @@ OPCODE(0xE020)
 /* ASRD */
 OPCODE(0xE060)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
-    src = (int32_t)DREGs16((Opcode >> 0) & 7);
+    src = (s32)DREGs16((Opcode >> 0) & 7);
     if (sft)
     {
         io_cycle_counter -= sft * 2;
@@ -31452,7 +31441,7 @@ OPCODE(0xE060)
         {
             flag_V = 0;
             flag_X = flag_C = (src >> (sft - 1)) << M68K_SR_C_SFT;
-            res = ((int32_t)src) >> sft;
+            res = ((s32)src) >> sft;
             flag_N = res >> 8;
             flag_NotZ = res;
             DREGu16((Opcode >> 0) & 7) = res;
@@ -31491,13 +31480,13 @@ OPCODE(0xE060)
 /* ASRD */
 OPCODE(0xE0A0)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
-    src = (int32_t)DREGs32((Opcode >> 0) & 7);
+    src = (s32)DREGs32((Opcode >> 0) & 7);
     if (sft)
     {
         io_cycle_counter -= sft * 2;
@@ -31505,7 +31494,7 @@ OPCODE(0xE0A0)
         {
             flag_V = 0;
             flag_X = flag_C = (src >> (sft - 1)) << M68K_SR_C_SFT;
-            res = ((int32_t)src) >> sft;
+            res = ((s32)src) >> sft;
             flag_N = res >> 24;
             flag_NotZ = res;
             DREGu32((Opcode >> 0) & 7) = res;
@@ -31544,10 +31533,10 @@ OPCODE(0xE0A0)
 /* LSRD */
 OPCODE(0xE028)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu8((Opcode >> 0) & 7);
@@ -31583,10 +31572,10 @@ OPCODE(0xE028)
 /* LSRD */
 OPCODE(0xE068)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu16((Opcode >> 0) & 7);
@@ -31622,10 +31611,10 @@ OPCODE(0xE068)
 /* LSRD */
 OPCODE(0xE0A8)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu32((Opcode >> 0) & 7);
@@ -31663,10 +31652,10 @@ OPCODE(0xE0A8)
 /* ROXRD */
 OPCODE(0xE030)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu8((Opcode >> 0) & 7);
@@ -31695,10 +31684,10 @@ OPCODE(0xE030)
 /* ROXRD */
 OPCODE(0xE070)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu16((Opcode >> 0) & 7);
@@ -31727,10 +31716,10 @@ OPCODE(0xE070)
 /* ROXRD */
 OPCODE(0xE0B0)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu32((Opcode >> 0) & 7);
@@ -31767,10 +31756,10 @@ OPCODE(0xE0B0)
 /* RORD */
 OPCODE(0xE038)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu8((Opcode >> 0) & 7);
@@ -31798,10 +31787,10 @@ OPCODE(0xE038)
 /* RORD */
 OPCODE(0xE078)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu16((Opcode >> 0) & 7);
@@ -31829,10 +31818,10 @@ OPCODE(0xE078)
 /* RORD */
 OPCODE(0xE0B8)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu32((Opcode >> 0) & 7);
@@ -31860,10 +31849,10 @@ OPCODE(0xE0B8)
 /* ASLD */
 OPCODE(0xE120)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu8((Opcode >> 0) & 7);
@@ -31879,7 +31868,7 @@ OPCODE(0xE120)
             DREGu8((Opcode >> 0) & 7) = res;
             flag_V = 0;
             {
-                uint32_t msk = (((int32_t)0x80000000) >> (sft + 24)) & 0x000000FF;
+                u32 msk = (((s32)0x80000000) >> (sft + 24)) & 0x000000FF;
                 src &= msk;
                 if ((src) && (src != msk)) flag_V = M68K_SR_V;
             }
@@ -31908,10 +31897,10 @@ OPCODE(0xE120)
 /* ASLD */
 OPCODE(0xE160)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu16((Opcode >> 0) & 7);
@@ -31927,7 +31916,7 @@ OPCODE(0xE160)
             DREGu16((Opcode >> 0) & 7) = res;
             flag_V = 0;
             {
-                uint32_t msk = (((int32_t)0x80000000) >> (sft + 16)) & 0x0000FFFF;
+                u32 msk = (((s32)0x80000000) >> (sft + 16)) & 0x0000FFFF;
                 src &= msk;
                 if ((src) && (src != msk)) flag_V = M68K_SR_V;
             }
@@ -31956,10 +31945,10 @@ OPCODE(0xE160)
 /* ASLD */
 OPCODE(0xE1A0)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu32((Opcode >> 0) & 7);
@@ -31975,7 +31964,7 @@ OPCODE(0xE1A0)
             DREGu32((Opcode >> 0) & 7) = res;
             flag_V = 0;
             {
-                uint32_t msk = (((int32_t)0x80000000) >> (sft + 0)) & 0xFFFFFFFF;
+                u32 msk = (((s32)0x80000000) >> (sft + 0)) & 0xFFFFFFFF;
                 src &= msk;
                 if ((src) && (src != msk)) flag_V = M68K_SR_V;
             }
@@ -32004,10 +31993,10 @@ OPCODE(0xE1A0)
 /* LSLD */
 OPCODE(0xE128)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu8((Opcode >> 0) & 7);
@@ -32044,10 +32033,10 @@ OPCODE(0xE128)
 /* LSLD */
 OPCODE(0xE168)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu16((Opcode >> 0) & 7);
@@ -32084,10 +32073,10 @@ OPCODE(0xE168)
 /* LSLD */
 OPCODE(0xE1A8)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu32((Opcode >> 0) & 7);
@@ -32126,10 +32115,10 @@ OPCODE(0xE1A8)
 /* ROXLD */
 OPCODE(0xE130)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu8((Opcode >> 0) & 7);
@@ -32158,10 +32147,10 @@ OPCODE(0xE130)
 /* ROXLD */
 OPCODE(0xE170)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu16((Opcode >> 0) & 7);
@@ -32190,10 +32179,10 @@ OPCODE(0xE170)
 /* ROXLD */
 OPCODE(0xE1B0)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu32((Opcode >> 0) & 7);
@@ -32227,10 +32216,10 @@ OPCODE(0xE1B0)
 /* ROLD */
 OPCODE(0xE138)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu8((Opcode >> 0) & 7);
@@ -32265,10 +32254,10 @@ OPCODE(0xE138)
 /* ROLD */
 OPCODE(0xE178)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu16((Opcode >> 0) & 7);
@@ -32303,10 +32292,10 @@ OPCODE(0xE178)
 /* ROLD */
 OPCODE(0xE1B8)
 {
-    uint32_t res;
-    uint32_t src;
+    u32 res;
+    u32 src;
 
-    uint32_t sft;
+    u32 sft;
 
     sft = DREG((Opcode >> 9) & 7) & 0x3F;
     src = DREGu32((Opcode >> 0) & 7);
@@ -32341,8 +32330,8 @@ OPCODE(0xE1B8)
 /* ASR */
 OPCODE(0xE0D0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -32358,8 +32347,8 @@ OPCODE(0xE0D0)
 /* ASR */
 OPCODE(0xE0D8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -32376,8 +32365,8 @@ OPCODE(0xE0D8)
 /* ASR */
 OPCODE(0xE0E0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -32394,8 +32383,8 @@ OPCODE(0xE0E0)
 /* ASR */
 OPCODE(0xE0E8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -32412,8 +32401,8 @@ OPCODE(0xE0E8)
 /* ASR */
 OPCODE(0xE0F0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -32430,8 +32419,8 @@ OPCODE(0xE0F0)
 /* ASR */
 OPCODE(0xE0F8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -32447,8 +32436,8 @@ OPCODE(0xE0F8)
 /* ASR */
 OPCODE(0xE0F9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -32464,8 +32453,8 @@ OPCODE(0xE0F9)
 /* ASR */
 OPCODE(0xE0DF)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -32482,8 +32471,8 @@ OPCODE(0xE0DF)
 /* ASR */
 OPCODE(0xE0E7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -32500,8 +32489,8 @@ OPCODE(0xE0E7)
 /* LSR */
 OPCODE(0xE2D0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -32516,8 +32505,8 @@ OPCODE(0xE2D0)
 /* LSR */
 OPCODE(0xE2D8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -32533,8 +32522,8 @@ OPCODE(0xE2D8)
 /* LSR */
 OPCODE(0xE2E0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -32550,8 +32539,8 @@ OPCODE(0xE2E0)
 /* LSR */
 OPCODE(0xE2E8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -32567,8 +32556,8 @@ OPCODE(0xE2E8)
 /* LSR */
 OPCODE(0xE2F0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -32584,8 +32573,8 @@ OPCODE(0xE2F0)
 /* LSR */
 OPCODE(0xE2F8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -32600,8 +32589,8 @@ OPCODE(0xE2F8)
 /* LSR */
 OPCODE(0xE2F9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -32616,8 +32605,8 @@ OPCODE(0xE2F9)
 /* LSR */
 OPCODE(0xE2DF)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -32633,8 +32622,8 @@ OPCODE(0xE2DF)
 /* LSR */
 OPCODE(0xE2E7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -32650,8 +32639,8 @@ OPCODE(0xE2E7)
 /* ROXR */
 OPCODE(0xE4D0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -32667,8 +32656,8 @@ OPCODE(0xE4D0)
 /* ROXR */
 OPCODE(0xE4D8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -32685,8 +32674,8 @@ OPCODE(0xE4D8)
 /* ROXR */
 OPCODE(0xE4E0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -32703,8 +32692,8 @@ OPCODE(0xE4E0)
 /* ROXR */
 OPCODE(0xE4E8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -32721,8 +32710,8 @@ OPCODE(0xE4E8)
 /* ROXR */
 OPCODE(0xE4F0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -32739,8 +32728,8 @@ OPCODE(0xE4F0)
 /* ROXR */
 OPCODE(0xE4F8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -32756,8 +32745,8 @@ OPCODE(0xE4F8)
 /* ROXR */
 OPCODE(0xE4F9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -32773,8 +32762,8 @@ OPCODE(0xE4F9)
 /* ROXR */
 OPCODE(0xE4DF)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -32791,8 +32780,8 @@ OPCODE(0xE4DF)
 /* ROXR */
 OPCODE(0xE4E7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -32809,8 +32798,8 @@ OPCODE(0xE4E7)
 /* ROR */
 OPCODE(0xE6D0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -32826,8 +32815,8 @@ OPCODE(0xE6D0)
 /* ROR */
 OPCODE(0xE6D8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -32844,8 +32833,8 @@ OPCODE(0xE6D8)
 /* ROR */
 OPCODE(0xE6E0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -32862,8 +32851,8 @@ OPCODE(0xE6E0)
 /* ROR */
 OPCODE(0xE6E8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -32880,8 +32869,8 @@ OPCODE(0xE6E8)
 /* ROR */
 OPCODE(0xE6F0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -32898,8 +32887,8 @@ OPCODE(0xE6F0)
 /* ROR */
 OPCODE(0xE6F8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -32915,8 +32904,8 @@ OPCODE(0xE6F8)
 /* ROR */
 OPCODE(0xE6F9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -32932,8 +32921,8 @@ OPCODE(0xE6F9)
 /* ROR */
 OPCODE(0xE6DF)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -32950,8 +32939,8 @@ OPCODE(0xE6DF)
 /* ROR */
 OPCODE(0xE6E7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -32968,8 +32957,8 @@ OPCODE(0xE6E7)
 /* ASL */
 OPCODE(0xE1D0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -32985,8 +32974,8 @@ OPCODE(0xE1D0)
 /* ASL */
 OPCODE(0xE1D8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -33003,8 +32992,8 @@ OPCODE(0xE1D8)
 /* ASL */
 OPCODE(0xE1E0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -33021,8 +33010,8 @@ OPCODE(0xE1E0)
 /* ASL */
 OPCODE(0xE1E8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -33039,8 +33028,8 @@ OPCODE(0xE1E8)
 /* ASL */
 OPCODE(0xE1F0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -33057,8 +33046,8 @@ OPCODE(0xE1F0)
 /* ASL */
 OPCODE(0xE1F8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -33074,8 +33063,8 @@ OPCODE(0xE1F8)
 /* ASL */
 OPCODE(0xE1F9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -33091,8 +33080,8 @@ OPCODE(0xE1F9)
 /* ASL */
 OPCODE(0xE1DF)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -33109,8 +33098,8 @@ OPCODE(0xE1DF)
 /* ASL */
 OPCODE(0xE1E7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -33127,8 +33116,8 @@ OPCODE(0xE1E7)
 /* LSL */
 OPCODE(0xE3D0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -33144,8 +33133,8 @@ OPCODE(0xE3D0)
 /* LSL */
 OPCODE(0xE3D8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -33162,8 +33151,8 @@ OPCODE(0xE3D8)
 /* LSL */
 OPCODE(0xE3E0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -33180,8 +33169,8 @@ OPCODE(0xE3E0)
 /* LSL */
 OPCODE(0xE3E8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -33198,8 +33187,8 @@ OPCODE(0xE3E8)
 /* LSL */
 OPCODE(0xE3F0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -33216,8 +33205,8 @@ OPCODE(0xE3F0)
 /* LSL */
 OPCODE(0xE3F8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -33233,8 +33222,8 @@ OPCODE(0xE3F8)
 /* LSL */
 OPCODE(0xE3F9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -33250,8 +33239,8 @@ OPCODE(0xE3F9)
 /* LSL */
 OPCODE(0xE3DF)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -33268,8 +33257,8 @@ OPCODE(0xE3DF)
 /* LSL */
 OPCODE(0xE3E7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -33286,8 +33275,8 @@ OPCODE(0xE3E7)
 /* ROXL */
 OPCODE(0xE5D0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -33303,8 +33292,8 @@ OPCODE(0xE5D0)
 /* ROXL */
 OPCODE(0xE5D8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -33321,8 +33310,8 @@ OPCODE(0xE5D8)
 /* ROXL */
 OPCODE(0xE5E0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -33339,8 +33328,8 @@ OPCODE(0xE5E0)
 /* ROXL */
 OPCODE(0xE5E8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -33357,8 +33346,8 @@ OPCODE(0xE5E8)
 /* ROXL */
 OPCODE(0xE5F0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -33375,8 +33364,8 @@ OPCODE(0xE5F0)
 /* ROXL */
 OPCODE(0xE5F8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -33392,8 +33381,8 @@ OPCODE(0xE5F8)
 /* ROXL */
 OPCODE(0xE5F9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -33409,8 +33398,8 @@ OPCODE(0xE5F9)
 /* ROXL */
 OPCODE(0xE5DF)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -33427,8 +33416,8 @@ OPCODE(0xE5DF)
 /* ROXL */
 OPCODE(0xE5E7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;
@@ -33445,8 +33434,8 @@ OPCODE(0xE5E7)
 /* ROL */
 OPCODE(0xE7D0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     READ_WORD_F(adr, src)
@@ -33462,8 +33451,8 @@ OPCODE(0xE7D0)
 /* ROL */
 OPCODE(0xE7D8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     AREG((Opcode >> 0) & 7) += 2;
@@ -33480,8 +33469,8 @@ OPCODE(0xE7D8)
 /* ROL */
 OPCODE(0xE7E0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7) - 2;
     AREG((Opcode >> 0) & 7) = adr;
@@ -33498,8 +33487,8 @@ OPCODE(0xE7E0)
 /* ROL */
 OPCODE(0xE7E8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     adr += AREG((Opcode >> 0) & 7);
@@ -33516,8 +33505,8 @@ OPCODE(0xE7E8)
 /* ROL */
 OPCODE(0xE7F0)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG((Opcode >> 0) & 7);
     DECODE_EXT_WORD
@@ -33534,8 +33523,8 @@ OPCODE(0xE7F0)
 /* ROL */
 OPCODE(0xE7F8)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_SWORD(adr);
     READ_WORD_F(adr, src)
@@ -33551,8 +33540,8 @@ OPCODE(0xE7F8)
 /* ROL */
 OPCODE(0xE7F9)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     FETCH_LONG(adr);
     READ_WORD_F(adr, src)
@@ -33568,8 +33557,8 @@ OPCODE(0xE7F9)
 /* ROL */
 OPCODE(0xE7DF)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7);
     AREG(7) += 2;
@@ -33586,8 +33575,8 @@ OPCODE(0xE7DF)
 /* ROL */
 OPCODE(0xE7E7)
 {
-    uint32_t adr, res;
-    uint32_t src;
+    u32 adr, res;
+    u32 src;
 
     adr = AREG(7) - 2;
     AREG(7) = adr;

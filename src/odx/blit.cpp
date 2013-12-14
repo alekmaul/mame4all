@@ -27,18 +27,35 @@ UINT32 *palette_16bit_lookup;
 #define BLIT_8_TO_16_half(DEST,SRC,LEN)  \
 { \
 	register int n = LEN>>3; \
-	register unsigned int *u32dest = (unsigned int *)DEST; \
+	/*register unsigned int *u32dest = (unsigned int *)DEST;*/ \
+	register unsigned short *u32dest = (unsigned short *)DEST; \
 	register unsigned char *src = SRC; \
 	while (n) \
 	{ \
-		*u32dest++ = (odx_palette_rgb[*(src+3)] << 16) | odx_palette_rgb[*src]; \
-		src+=4; \
-		*u32dest++ = (odx_palette_rgb[*(src+3)] << 16) | odx_palette_rgb[*src]; \
-		src+=4; \
-		*u32dest++ = (odx_palette_rgb[*(src+3)] << 16) | odx_palette_rgb[*src]; \
-		src+=4; \
-		*u32dest++ = (odx_palette_rgb[*(src+3)] << 16) | odx_palette_rgb[*src]; \
-		src+=4; \
+		/* *u32dest++ = (odx_palette[*(src+3)] << 16) | odx_palette[*src];*/ \
+		*u32dest++ = odx_palette[*src]; \
+		src+=2; \
+		*u32dest++ = odx_palette[*src]; \
+		src+=2; \
+		/* src+=4; */ \
+		/* *u32dest++ = (odx_palette[*(src+3)] << 16) | odx_palette[*src];*/ \
+		*u32dest++ = odx_palette[*src]; \
+		src+=2; \
+		*u32dest++ = odx_palette[*src]; \
+		src+=2; \
+		/* src+=4; */ \
+		/* *u32dest++ = (odx_palette[*(src+3)] << 16) | odx_palette[*src];*/ \
+		*u32dest++ = odx_palette[*src]; \
+		src+=2; \
+		*u32dest++ = odx_palette[*src]; \
+		src+=2; \
+		/* src+=4; */ \
+		/* *u32dest++ = (odx_palette[*(src+3)] << 16) | odx_palette[*src];*/ \
+		*u32dest++ = odx_palette[*src]; \
+		src+=2; \
+		*u32dest++ = odx_palette[*src]; \
+		src+=2; \
+		/* src+=4; */ \
 		n--; \
 	} \
 	if ((n=(LEN&7))) \
@@ -122,23 +139,23 @@ void blitscreen_dirty1_color8(struct osd_bitmap *bitmap)
 INLINE void blitscreen_dirty0_color8_noscale(struct osd_bitmap *bitmap)
 //void blitscreen_dirty0_color8(struct osd_bitmap *bitmap)
 {
-	//int y=gfx_display_lines;
-	int y;
+	int y=gfx_display_lines;
+	//int y;
 	int width=(bitmap->line[1] - bitmap->line[0]);
 	int columns=gfx_display_columns;
 	unsigned char *lb = bitmap->line[skiplines] + skipcolumns;
 	register unsigned short *address = SCREEN8 + gfx_xoffset + (gfx_yoffset * gfx_width);
 	
-    //do
-	for (y = 0; y < gfx_display_lines; y++)
+    do
+	//for (y = 0; y < gfx_display_lines; y++)
 	{
 		BLIT_8_TO_16_32bit(address,lb,columns);
 		//memcpy(address,lb,columns);
 		lb+=width;
 		address+=gfx_width;
-		//y--;
+		y--;
 	}
-	//while (y);
+	while (y);
 	//FLIP_VIDEO
 }
 

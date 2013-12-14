@@ -295,7 +295,6 @@ int main (int argc, char **argv)
             #endif
 			{
 				*type=((*type)&(~0xff))|CPU_FAME;
-				break;
 			}
 		}
 	}

@@ -29,6 +29,8 @@ char *cfgdir, *nvdir, *hidir, *inpdir, *stadir;
 char *memcarddir, *artworkdir, *screenshotdir;
 char *cheatdir;	/* Steph */
 
+char *mdir; /* Alek */
+
 char *alternate_name;				   /* for "-romdir" */
 
 typedef enum

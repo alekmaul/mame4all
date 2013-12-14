@@ -235,6 +235,12 @@ SOUNDDEFS += -DHAS_QSOUND=1
 SOUNDOBJS += $(OBJ)/sound/qsound.o
 endif
 
+SOUND=$(strip $(findstring IREMGA20@,$(SOUNDS)))
+ifneq ($(SOUND),)
+SOUNDDEFS += -DHAS_IREMGA20=1
+SOUNDOBJS += $(OBJ)/sound/iremga20.o
+endif
+
 SOUND=$(strip $(findstring SN76477@,$(SOUNDS)))
 ifneq ($(SOUND),)
 SOUNDDEFS += -DHAS_SN76477=1
@@ -335,6 +341,12 @@ SOUND=$(strip $(findstring MSM5205@,$(SOUNDS)))
 ifneq ($(SOUND),)
 SOUNDDEFS += -DHAS_MSM5205=1
 SOUNDOBJS += $(OBJ)/sound/msm5205.o
+endif
+
+SOUND=$(strip $(findstring MSM5232@,$(SOUNDS)))
+ifneq ($(SOUND),)
+SOUNDDEFS += -DHAS_MSM5232=1
+SOUNDOBJS += $(OBJ)/sound/msm5232.o
 endif
 
 SOUND=$(strip $(findstring UPD7759@,$(SOUNDS)))

@@ -32,6 +32,9 @@ To Do:
 	5)	call tilemap_draw to draw the tilemaps to the screen, from back to front
 */
 
+#define USE_VISIBLE 0
+#define NOT_USE_CACHED_INDEX_TO_MEMORY_OFFSET 0
+
 #include "driver.h"
 #include "tilemap.h"
 
@@ -79,16 +82,23 @@ static int mappings_create( struct tilemap *tilemap ){
 	/* logical to cached (tilemap_mark_dirty) */
 	tilemap->memory_offset_to_cached_index = (int*)malloc( sizeof(int)*max_memory_offset );
 	if( tilemap->memory_offset_to_cached_index ){
+#if NOT_USE_CACHED_INDEX_TO_MEMORY_OFFSET
+		return 0;   /* no error */
+#else
 		/* cached to logical (get_tile_info) */
 		tilemap->cached_index_to_memory_offset = (UINT32*)malloc( sizeof(UINT32)*tilemap->num_tiles );
 		if( tilemap->cached_index_to_memory_offset ) return 0; /* no error */
 		free( tilemap->memory_offset_to_cached_index );
+#endif
 	}
 	return -1; /* error */
 }
 
 static void mappings_dispose( struct tilemap *tilemap ){
+#if NOT_USE_CACHED_INDEX_TO_MEMORY_OFFSET
+#else
 	free( tilemap->cached_index_to_memory_offset );
+#endif
 	free( tilemap->memory_offset_to_cached_index );
 }
 
@@ -118,7 +128,10 @@ static void mappings_update( struct tilemap *tilemap ){
 		if( tilemap->orientation & ORIENTATION_FLIP_Y ) cached_row = (num_cached_rows-1)-cached_row;
 		cached_index = cached_row*num_cached_cols+cached_col;
 		tilemap->memory_offset_to_cached_index[memory_offset] = cached_index;
+#if NOT_USE_CACHED_INDEX_TO_MEMORY_OFFSET
+#else
 		tilemap->cached_index_to_memory_offset[cached_index] = memory_offset;
+#endif
 	}
 	for( logical_flip = 0; logical_flip<4; logical_flip++ ){
 		int cached_flip = logical_flip;
@@ -417,6 +430,7 @@ struct tilemap *tilemap_create(
 ){
 	struct tilemap *tilemap = (struct tilemap *)calloc( 1,sizeof( struct tilemap ) );
 	if( tilemap ){
+	   memset(tilemap, 0, sizeof( struct tilemap ));
 		int num_tiles = num_cols*num_rows;
 		tilemap->num_logical_cols = num_cols;
 		tilemap->num_logical_rows = num_rows;
@@ -440,19 +454,40 @@ struct tilemap *tilemap_create(
 		tilemap->scroll_rows = 1;
 		tilemap->scroll_cols = 1;
 		tilemap->transparent_pen = -1;
+		memset(tilemap->transmask, 0, sizeof(int) * 4);
+		memset(tilemap->bg_transmask, 0x11, sizeof(int) * 4); // special init value hack
 		tilemap->cached_tile_info = (struct cached_tile_info*)calloc( num_tiles, sizeof(struct cached_tile_info) );
-		tilemap->priority = (UINT8*)calloc( num_tiles,1 );
-		tilemap->visible = (UINT8*)calloc( num_tiles,1 );
+		if (tilemap->cached_tile_info)
+			memset(tilemap->cached_tile_info, 0, num_tiles * sizeof(struct cached_tile_info));
+		tilemap->priority = (UINT8*)malloc( num_tiles * 1 );
+		if (tilemap->priority)
+			memset(tilemap->priority, 0, num_tiles);
+#if USE_VISIBLE
+		tilemap->visible = (UINT8*)malloc( num_tiles * 1 );
+		if (tilemap->visible)
+			memset(tilemap->visible, 0, num_tiles);
+#endif
+		//tilemap->cached_tile_info = (struct cached_tile_info*)calloc( num_tiles, sizeof(struct cached_tile_info) );
+		//tilemap->priority = (UINT8*)calloc( num_tiles,1 );
+		//tilemap->visible = (UINT8*)calloc( num_tiles,1 );
 		tilemap->dirty_vram = (UINT8*)malloc( num_tiles );
 		tilemap->dirty_pixels = (UINT8*)malloc( num_tiles );
-		tilemap->rowscroll = (int*)calloc(tilemap->cached_height,sizeof(int));
-		tilemap->colscroll = (int*)calloc(tilemap->cached_width,sizeof(int));
+		//tilemap->rowscroll = (int*)calloc(tilemap->cached_height,sizeof(int));
+		//tilemap->colscroll = (int*)calloc(tilemap->cached_width,sizeof(int));
+		tilemap->rowscroll = (int*)malloc(tilemap->cached_height * sizeof(int));
+		if (tilemap->rowscroll)
+			tilemap->colscroll = (int*)malloc(tilemap->cached_width * sizeof(int));
+		memset(tilemap->rowscroll, 0, tilemap->cached_height * sizeof(int));
+		if (tilemap->colscroll)
+		    memset(tilemap->colscroll, 0, tilemap->cached_width * sizeof(int));
 		tilemap->priority_row = (UINT8**)malloc( sizeof(UINT8 *)*num_rows );
 		tilemap->pixmap = create_tmpbitmap( tilemap->cached_width, tilemap->cached_height, Machine->scrbitmap->depth );
 		tilemap->foreground = mask_create( tilemap );
 		tilemap->background = (type & TILEMAP_SPLIT)?mask_create( tilemap ):NULL;
-		if( tilemap->cached_tile_info &&
-			tilemap->priority && tilemap->visible &&
+		if( tilemap->cached_tile_info && tilemap->priority &&
+#if USE_VISIBLE
+			tilemap->visible &&
+#endif
 			tilemap->dirty_vram && tilemap->dirty_pixels &&
 			tilemap->rowscroll && tilemap->colscroll &&
 			tilemap->priority_row &&
@@ -491,7 +526,9 @@ void tilemap_dispose( struct tilemap *tilemap ){
 
 	free( tilemap->cached_tile_info );
 	free( tilemap->priority );
+#if USE_VISIBLE
 	free( tilemap->visible );
+#endif
 	free( tilemap->dirty_vram );
 	free( tilemap->dirty_pixels );
 	free( tilemap->rowscroll );
@@ -507,40 +544,46 @@ void tilemap_dispose( struct tilemap *tilemap ){
 /***********************************************************************************/
 
 static void unregister_pens( struct cached_tile_info *cached_tile_info, int num_pens ){
-	const UINT16 *pal_data = cached_tile_info->pal_data;
-	if( pal_data ){
-		UINT32 pen_usage = cached_tile_info->pen_usage;
-		if( pen_usage ){
-			palette_decrease_usage_count(
-				pal_data-Machine->remapped_colortable,
-				pen_usage,
-				PALETTE_COLOR_VISIBLE|PALETTE_COLOR_CACHED );
+	if( palette_used_colors )
+	{
+		const UINT16 *pal_data = cached_tile_info->pal_data;
+		if( pal_data ){
+			unsigned int pen_usage = cached_tile_info->pen_usage;
+			if( pen_usage ){
+				palette_decrease_usage_count(
+					pal_data-Machine->remapped_colortable,
+					pen_usage,
+					PALETTE_COLOR_VISIBLE|PALETTE_COLOR_CACHED );
+			}
+			else {
+				palette_decrease_usage_countx(
+					pal_data-Machine->remapped_colortable,
+					num_pens,
+					cached_tile_info->pen_data,
+					PALETTE_COLOR_VISIBLE|PALETTE_COLOR_CACHED );
+			}
+			cached_tile_info->pal_data = NULL;
 		}
-		else {
-			palette_decrease_usage_countx(
-				pal_data-Machine->remapped_colortable,
-				num_pens,
-				cached_tile_info->pen_data,
-				PALETTE_COLOR_VISIBLE|PALETTE_COLOR_CACHED );
-		}
-		cached_tile_info->pal_data = NULL;
 	}
 }
 
 static void register_pens( struct cached_tile_info *cached_tile_info, int num_pens ){
-	UINT32 pen_usage = cached_tile_info->pen_usage;
-	if( pen_usage ){
-		palette_increase_usage_count(
-			cached_tile_info->pal_data-Machine->remapped_colortable,
-			pen_usage,
-			PALETTE_COLOR_VISIBLE|PALETTE_COLOR_CACHED );
-	}
-	else {
-		palette_increase_usage_countx(
-			cached_tile_info->pal_data-Machine->remapped_colortable,
-			num_pens,
-			cached_tile_info->pen_data,
-			PALETTE_COLOR_VISIBLE|PALETTE_COLOR_CACHED );
+	if( palette_used_colors )
+	{
+	    unsigned int pen_usage = cached_tile_info->pen_usage;
+		if( pen_usage ){
+			palette_increase_usage_count(
+				cached_tile_info->pal_data-Machine->remapped_colortable,
+				pen_usage,
+				PALETTE_COLOR_VISIBLE|PALETTE_COLOR_CACHED );
+		}
+		else {
+			palette_increase_usage_countx(
+				cached_tile_info->pal_data-Machine->remapped_colortable,
+				num_pens,
+				cached_tile_info->pen_data,
+				PALETTE_COLOR_VISIBLE|PALETTE_COLOR_CACHED );
+		}
 	}
 }
 
@@ -553,6 +596,16 @@ void tilemap_set_enable( struct tilemap *tilemap, int enable ){
 void tilemap_set_transparent_pen( struct tilemap *tilemap, int pen ){
 	tilemap->transparent_pen = pen;
 }
+
+void tilemap_set_transmask( struct tilemap *tilemap, int which, unsigned int penmask ){
+	tilemap->transmask[which] = penmask;
+}
+
+void tilemap_set_all_transmask( struct tilemap *tilemap, int which, unsigned int fgmask, unsigned int bgmask ){
+	tilemap->transmask[which] = fgmask;
+	tilemap->bg_transmask[which] = bgmask;
+}
+
 
 void tilemap_set_flip( struct tilemap *tilemap, int attributes ){
 	if( tilemap==ALL_TILEMAPS ){
@@ -682,6 +735,7 @@ void tilemap_mark_all_pixels_dirty( struct tilemap *tilemap ){
 	}
 	else {
 		/* invalidate all offscreen tiles */
+#if USE_VISIBLE
 		UINT32 cached_tile_index;
 		UINT32 num_pens = tilemap->cached_tile_width*tilemap->cached_tile_height;
 		for( cached_tile_index=0; cached_tile_index<tilemap->num_tiles; cached_tile_index++ ){
@@ -690,13 +744,16 @@ void tilemap_mark_all_pixels_dirty( struct tilemap *tilemap ){
 				tilemap->dirty_vram[cached_tile_index] = 1;
 			}
 		}
+#else
+		//memset( tilemap->dirty_vram, 1, tilemap->num_tiles );
+#endif
 		memset( tilemap->dirty_pixels, 1, tilemap->num_tiles );
 	}
 }
 
 /***********************************************************************************/
 
-static void draw_tile(
+static inline void draw_tile(
 		struct tilemap *tilemap,
 		UINT32 cached_index,
 		UINT32 col, UINT32 row
@@ -777,14 +834,20 @@ profiler_mark(PROFILER_TILEMAP_RENDER);
 	}
 	else if( tilemap->enable ){
 		UINT8 *dirty_pixels = tilemap->dirty_pixels;
+#if USE_VISIBLE
 		const UINT8 *visible = tilemap->visible;
+#endif
 		UINT32 cached_index = 0;
 		UINT32 row,col;
 
 		/* walk over cached rows/cols (better to walk screen coords) */
 		for( row=0; row<tilemap->num_cached_rows; row++ ){
 			for( col=0; col<tilemap->num_cached_cols; col++ ){
+#if USE_VISIBLE
 				if( visible[cached_index] && dirty_pixels[cached_index] ){
+#else
+				if( dirty_pixels[cached_index] ){
+#endif
 					draw_tile( tilemap, cached_index, col, row );
 					dirty_pixels[cached_index] = 0;
 				}
@@ -1036,11 +1099,12 @@ static void render_mask( struct tilemap *tilemap, UINT32 cached_index ){
 	UINT32 type = tilemap->type;
 
 	UINT32 transparent_pen = tilemap->transparent_pen;
-	UINT32 *transmask = tilemap->transmask;
+	unsigned int *transmask = tilemap->transmask;
+	unsigned int *btransmask = tilemap->bg_transmask;
 	UINT32 tile_width = tilemap->cached_tile_width;
 	UINT32 tile_height = tilemap->cached_tile_height;
 
-	UINT32 pen_usage = cached_tile_info->pen_usage;
+	unsigned int pen_usage = cached_tile_info->pen_usage;
 	const UINT8 *pen_data = cached_tile_info->pen_data;
 	UINT32 flags = cached_tile_info->flags;
 
@@ -1060,8 +1124,17 @@ static void render_mask( struct tilemap *tilemap, UINT32 cached_index ){
 			tilemap->background->data_row[row][col] = TILE_TRANSPARENT;
 		}
 		else {
-			UINT32 fg_transmask = transmask[(flags>>2)&3];
-			UINT32 bg_transmask = (~fg_transmask)|pen_mask;
+			unsigned int fg_transmask = transmask[(flags>>2)&3];
+			unsigned int bg_transmask = (~fg_transmask)|pen_mask;
+/*
+ * This is needed for m92.c
+ */
+			if (tilemap->bg_transmask[(flags>>2)&3] == 0x1111)  // from init value
+			    // Same as above init
+			    bg_transmask = (~fg_transmask)|pen_mask;
+			else
+			    bg_transmask = btransmask[(flags>>2)&3];
+
 			if( (pen_usage & fg_transmask)==0 ){ /* foreground totally opaque */
 				tilemap->foreground->data_row[row][col] = TILE_OPAQUE;
 				tilemap->background->data_row[row][col] = TILE_TRANSPARENT;
@@ -1098,19 +1171,19 @@ static void render_mask( struct tilemap *tilemap, UINT32 cached_index ){
 	}
 	else if( type==TILEMAP_TRANSPARENT ){
 		if( pen_usage ){
-			UINT32 fg_transmask = 1 << transparent_pen;
+			unsigned int fg_transmask = 1 << transparent_pen;
 		 	if( flags&TILE_IGNORE_TRANSPARENCY ) fg_transmask = 0;
 			if( pen_usage == fg_transmask ){
-				tilemap->foreground->data_row[row][col] = TILE_TRANSPARENT;
+				tilemap->foreground->data_row[row][col] = TILE_TRANSPARENT; // all transparent, no image
 			}
 			else if( pen_usage & fg_transmask ){
 				draw_mask( tilemap->foreground->bitmask,
 					col, row, tile_width, tile_height,
 					pen_data, fg_transmask, flags );
-				tilemap->foreground->data_row[row][col] = TILE_MASKED;
+				tilemap->foreground->data_row[row][col] = TILE_MASKED;	    // at least one pixel of image
 			}
 			else {
-				tilemap->foreground->data_row[row][col] = TILE_OPAQUE;
+				tilemap->foreground->data_row[row][col] = TILE_OPAQUE;	    // all image, no transparency
 			}
 		}
 		else {
@@ -1146,15 +1219,25 @@ static void update_tile_info( struct tilemap *tilemap ){
 	UINT32 num_pens = tilemap->cached_tile_width*tilemap->cached_tile_height;
 	UINT32 num_tiles = tilemap->num_tiles;
 	UINT32 cached_index;
+#if USE_VISIBLE
 	UINT8 *visible = tilemap->visible;
+#endif
 	UINT8 *dirty_vram = tilemap->dirty_vram;
 	UINT8 *dirty_pixels = tilemap->dirty_pixels;
 	tile_info.flags = 0;
 	tile_info.priority = 0;
 	for( cached_index=0; cached_index<num_tiles; cached_index++ ){
+#if USE_VISIBLE
 		if( visible[cached_index] && dirty_vram[cached_index] ){
+#else
+		if( dirty_vram[cached_index] ){
+#endif
 			struct cached_tile_info *cached_tile_info = &tilemap->cached_tile_info[cached_index];
+#if NOT_USE_CACHED_INDEX_TO_MEMORY_OFFSET
+			UINT32 memory_offset = tilemap->get_memory_offset( cached_index%tilemap->num_logical_cols, cached_index/tilemap->num_logical_cols, tilemap->num_logical_cols, tilemap->num_logical_rows );
+#else
 			UINT32 memory_offset = tilemap->cached_index_to_memory_offset[cached_index];
+#endif
 			unregister_pens( cached_tile_info, num_pens );
 			tilemap->tile_get_info( memory_offset );
 			{
@@ -1173,58 +1256,12 @@ static void update_tile_info( struct tilemap *tilemap ){
 	}
 }
 
+#if USE_VISIBLE
 static void update_visible( struct tilemap *tilemap ){
 	// temporary hack
 	memset( tilemap->visible, 1, tilemap->num_tiles );
-
-#if 0
-	int yscroll = scrolly[0];
-	int row0, y0;
-
-	int xscroll = scrollx[0];
-	int col0, x0;
-
-	if( yscroll>=0 ){
-		row0 = yscroll/tile_height;
-		y0 = -(yscroll%tile_height);
-	}
-	else {
-		yscroll = tile_height-1-yscroll;
-		row0 = num_rows - yscroll/tile_height;
-		y0 = (yscroll+1)%tile_height;
-		if( y0 ) y0 = y0-tile_height;
-	}
-
-	if( xscroll>=0 ){
-		col0 = xscroll/tile_width;
-		x0 = -(xscroll%tile_width);
-	}
-	else {
-		xscroll = tile_width-1-xscroll;
-		col0 = num_cols - xscroll/tile_width;
-		x0 = (xscroll+1)%tile_width;
-		if( x0 ) x0 = x0-tile_width;
-	}
-
-	{
-		int ypos = y0;
-		int row = row0;
-		while( ypos<screen_height ){
-			int xpos = x0;
-			int col = col0;
-			while( xpos<screen_width ){
-				process_visible_tile( col, row );
-				col++;
-				if( col>=num_cols ) col = 0;
-				xpos += tile_width;
-			}
-			row++;
-			if( row>=num_rows ) row = 0;
-			ypos += tile_height;
-		}
-	}
-#endif
 }
+#endif
 
 void tilemap_update( struct tilemap *tilemap ){
 profiler_mark(PROFILER_TILEMAP_UPDATE);
@@ -1236,7 +1273,9 @@ profiler_mark(PROFILER_TILEMAP_UPDATE);
 		}
 	}
 	else if( tilemap->enable ){
+#if USE_VISIBLE
 		update_visible( tilemap );
+#endif
 		update_tile_info( tilemap );
 	}
 profiler_mark(PROFILER_END);

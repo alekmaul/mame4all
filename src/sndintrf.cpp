@@ -174,6 +174,9 @@ int OKIM6295_clock(const struct MachineSound *msound) { return ((struct OKIM6295
 #if (HAS_MSM5205)
 int MSM5205_num(const struct MachineSound *msound) { return ((struct MSM5205interface*)msound->sound_interface)->num; }
 #endif
+#if (HAS_MSM5232)
+int MSM5232_num(const struct MachineSound *msound) { return ((struct MSM5232interface*)msound->sound_interface)->num; }
+#endif
 #if (HAS_HC55516)
 int HC55516_num(const struct MachineSound *msound) { return ((struct hc55516_interface*)msound->sound_interface)->num; }
 #endif
@@ -245,6 +248,9 @@ int SN76496_num(const struct MachineSound *msound) { return ((struct SN76496inte
 #if (HAS_MSM5205)
 int MSM5205_clock(const struct MachineSound *msound) { return ((struct MSM5205interface*)msound->sound_interface)->baseclock; }
 #endif
+#if (HAS_MSM5232)
+int MSM5232_clock(const struct MachineSound *msound) { return ((struct MSM5232interface*)msound->sound_interface)->baseclock; }
+#endif
 #if (HAS_UPD7759)
 int UPD7759_clock(const struct MachineSound *msound) { return ((struct UPD7759_interface*)msound->sound_interface)->clock_rate; }
 #endif
@@ -267,6 +273,9 @@ int cem3394_num(const struct MachineSound *msound) { return ((struct cem3394_int
 #endif
 #if (HAS_QSOUND)
 int qsound_clock(const struct MachineSound *msound) { return ((struct QSound_interface*)msound->sound_interface)->clock; }
+#endif
+#if (HAS_IREMGA20)
+int iremga20_clock(const struct MachineSound *msound) { return ((struct IremGA20_interface*)msound->sound_interface)->clock; }
 #endif
 #if (HAS_SPEAKER)
 int speaker_num(const struct MachineSound *msound) { return ((struct Speaker_interface*)msound->sound_interface)->num; }
@@ -647,6 +656,18 @@ struct snd_interface sndintf[] =
 		MSM5205_sh_reset,
 	},
 #endif
+#if (HAS_MSM5232)
+    {
+		SOUND_MSM5232,
+		"MSM5232",
+		MSM5232_num,
+		MSM5232_clock,
+		MSM5232_sh_start,
+		MSM5232_sh_stop,
+		0,
+		MSM5232_sh_reset,
+	},
+#endif
 #if (HAS_UPD7759)
     {
 		SOUND_UPD7759,
@@ -787,6 +808,18 @@ struct snd_interface sndintf[] =
 		qsound_clock,
 		qsound_sh_start,
 		qsound_sh_stop,
+		0,
+		0
+	},
+#endif
+#if (HAS_IREMGA20)
+	{
+		SOUND_IREMGA20,
+		"GA20",
+		0,
+		iremga20_clock,
+		IremGA20_sh_start,
+		IremGA20_sh_stop,
 		0,
 		0
 	},

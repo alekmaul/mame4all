@@ -193,6 +193,7 @@ void osd_free_bitmap(struct osd_bitmap *bitmap)
 		free(bitmap->line);
 		free(bitmap->_private);
 		free(bitmap);
+    bitmap = (struct osd_bitmap *) 0;
 	}
 }
 
@@ -251,16 +252,16 @@ static void select_display_mode(int width,int height,int depth,int attributes,in
 
 	if (!gfx_width && !gfx_height)
 	{
-		gfx_width = 320;
-		gfx_height = 240;
+		gfx_width = ODX_SCREEN_WIDTH;
+		gfx_height = ODX_SCREEN_HEIGHT;
 	}
 
 	/* Video scaling - Horizontal */
 	if (video_scale ==1)
 	{
-		if (width>320)
+		if (width>ODX_SCREEN_WIDTH)
 		{
-			if ((320/(width-320))*(width-320)==320)
+			if ((ODX_SCREEN_WIDTH/(width-ODX_SCREEN_WIDTH))*(width-ODX_SCREEN_WIDTH)==ODX_SCREEN_WIDTH)
 			{
 				gfx_width=width;
 			}
@@ -269,9 +270,9 @@ static void select_display_mode(int width,int height,int depth,int attributes,in
 				video_scale=0;
 			}
 		}
-		else if (width<320)
+		else if (width<ODX_SCREEN_WIDTH)
 		{
-			if ((320/(320-width))*(320-width)==320)
+			if ((ODX_SCREEN_WIDTH/(ODX_SCREEN_WIDTH-width))*(ODX_SCREEN_WIDTH-width)==ODX_SCREEN_WIDTH)
 			{
 				gfx_width=width;
 			}
@@ -291,29 +292,29 @@ static void select_display_mode(int width,int height,int depth,int attributes,in
 	{
 		iAddX = iModuloX = iAddY = iModuloY = 1;
 
-		if (320 < width)
+		if (ODX_SCREEN_WIDTH < width)
 		{
-			iAddX = 320;
+			iAddX = ODX_SCREEN_WIDTH;
 			iModuloX = width;
-			scaled_display_columns = 320;
+			scaled_display_columns = ODX_SCREEN_WIDTH;
 		}
-		if (240 < height)
+		if (ODX_SCREEN_HEIGHT < height)
 		{
-			iAddY = 240;
+			iAddY = ODX_SCREEN_HEIGHT;
 			iModuloY = height;
-			scaled_display_lines = 240;
+			scaled_display_lines = ODX_SCREEN_HEIGHT;
 		}
-		if (320 < width || 240 < height)
+		if (ODX_SCREEN_WIDTH < width || ODX_SCREEN_HEIGHT < height)
 		{
-			if (height * 320 < 240 * width)
+			if (height * ODX_SCREEN_WIDTH < ODX_SCREEN_HEIGHT * width)
 			{
 				// scale is determined by horizontal scale
 				iAddY = iAddX;
 				iModuloY = iModuloX;
-				scaled_display_lines = (height * 320 + width - 1) / width;
-				if (scaled_display_lines > 240)
+				scaled_display_lines = (height * ODX_SCREEN_WIDTH + width - 1) / width;
+				if (scaled_display_lines > ODX_SCREEN_HEIGHT)
 				{
-					scaled_display_lines = 240;
+					scaled_display_lines = ODX_SCREEN_HEIGHT;
 				}
 			}
 			else
@@ -321,10 +322,10 @@ static void select_display_mode(int width,int height,int depth,int attributes,in
 				// scale is determined by vertical scale
 				iAddX = iAddY;
 				iModuloX = iModuloY;
-				scaled_display_columns = (width * 240 + height - 1) / height;
-				if (scaled_display_columns > 320)
+				scaled_display_columns = (width * ODX_SCREEN_HEIGHT + height - 1) / height;
+				if (scaled_display_columns > ODX_SCREEN_WIDTH)
 				{
-					scaled_display_columns = 320;
+					scaled_display_columns = ODX_SCREEN_WIDTH;
 				}
 			}
 		}
@@ -345,8 +346,8 @@ static void select_display_mode(int width,int height,int depth,int attributes,in
 	/* vector games always use maximum resolution */
 	if (vector_game)
 	{
-		gfx_width = 320;
-		gfx_height = 240;
+		gfx_width = ODX_SCREEN_WIDTH;
+		gfx_height = ODX_SCREEN_HEIGHT;
 	}
 }
 
@@ -973,9 +974,8 @@ void osd_update_video_and_audio(struct osd_bitmap *bitmap)
 		{
 			int fps;
 			char buf[30];
-			int divdr;
-			divdr = 100 * FRAMESKIP_LEVELS;
-			fps = (video_fps * (FRAMESKIP_LEVELS - frameskip) * speed + (divdr / 2)) / divdr;
+			int divdr = 100 * FRAMESKIP_LEVELS;
+			fps = (video_fps * (FRAMESKIP_LEVELS - frameskip) * speed + (divdr>> 1)) / divdr;
 			sprintf(buf,"%s%2d%4d%%%4d/%d fps",autoframeskip?"auto":"fskp",frameskip,speed,fps,(int)(video_fps+0.5));
 			ui_text(bitmap,buf,Machine->uiwidth-strlen(buf)*Machine->uifontwidth,0);
 			if (vector_game)

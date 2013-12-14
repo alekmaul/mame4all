@@ -1009,23 +1009,38 @@ int frontend_help (int argc, char **argv)
 			break;
 
 		case LIST_LISTCRC: /* list all crc-32 */
+			printf("This is the complete list of games supported by MAME %s\n",build_version);
+			printf("\n"
+				"The list is generated automatically and give zip file content for each game."
+				"\n\n");
+			printf("+------------------------------------------+-----------------------+----------+\n");
+			printf("|                                          |                       |          |\n");
+			printf("| Game Name                                | File name             |   CRC    |\n");
+			printf("+------------------------------------------+-----------------------+----------+\n");
 			i = 0;
 			while (drivers[i])
 			{
+				printf("| %-40s | ",drivers[i]->description);
 				const struct RomModule *romp;
-
+				int j = 0;
+				
 				romp = drivers[i]->rom;
 
 				while (romp && (romp->name || romp->offset || romp->length))
 				{
-					if (romp->name && romp->name != (char *)-1)
-						printf("%08x %-12s %s\n",romp->crc,romp->name,drivers[i]->description);
+					if (romp->name && romp->name != (char *)-1) {
+						if (j != 0) {
+							printf("| %-40s | ","");
+						}
+						j = 1;
+						printf("%-21s | %08x |\n",romp->name,romp->crc);
+					}
 
 					romp++;
 				}
-
 				i++;
 			}
+			printf("+------------------------------------------+-----------------------+----------+\n");
 			return 0;
 			break;
 

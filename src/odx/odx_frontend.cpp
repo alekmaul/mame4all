@@ -24,6 +24,8 @@ static int last_game_selected=0;
 char playemu[16] = "mame\0";
 char playgame[16] = "builtinn\0";
 
+char mamedir[512];
+
 int odx_freq=336;       /* default dingoo Mhz */ 
 int odx_video_depth=16; /* MAME video depth */
 int odx_video_aspect=2; /* Scale best*/
@@ -33,12 +35,14 @@ int odx_sound = 2;
 int odx_volume = 3;
 int odx_clock_cpu=100;
 int odx_clock_sound=100;
-int odx_cpu_cores=0;
+int odx_cpu_cores=1;
 int odx_ramtweaks=0;
 int odx_cheat=0;
 int odx_gsensor=0;
 
 int master_volume = 100;
+
+char romdir[512];
 
 static void blit_bmp_8bpp(unsigned char *out, unsigned char *in) 
 {
@@ -77,9 +81,14 @@ static void odx_intro_screen(void) {
 
 static void game_list_init_nocache(void)
 {
+	char text[512];
 	int i;
 	FILE *f;
-	DIR *d=opendir("roms");
+	if (strlen(romdir))
+		strcpy(text,romdir);
+	else
+		sprintf(text,"%s/roms",mamedir);
+	DIR *d=opendir(text);
 	char game[32];
 	if (d)
 	{
@@ -106,9 +115,10 @@ static void game_list_init_nocache(void)
 	
 	if (game_num_avail)
 	{
-		remove("frontend/mame.lst");
+		sprintf(text,"%s/frontend/mame.lst",mamedir);
+		remove(text);
 		/* sync(); */
-		f=fopen("frontend/mame.lst","w");
+		f=fopen(text,"w");
 		if (f)
 		{
 			for (i=0;i<NUMGAMES;i++)
@@ -123,9 +133,11 @@ static void game_list_init_nocache(void)
 
 static void game_list_init_cache(void)
 {
+	char text[512];
 	FILE *f;
 	int i;
-	f=fopen("frontend/mame.lst","r");
+	sprintf(text,"%s/frontend/mame.lst",mamedir);
+	f=fopen(text,"r");
 	if (f)
 	{
 		for (i=0;i<NUMGAMES;i++)
@@ -235,12 +247,12 @@ static int show_options(char *game)
 	int y_PosTop = 58;
 	int y_Pos = y_PosTop;
 	int options_count = 9;
-	char text[256];
+	char text[512];
 	FILE *f;
 	int i=0;
 
 	/* Read game configuration */
-	sprintf(text,"frontend/%s.cfg",game);
+	sprintf(text,"%s/frontend/%s.cfg",mamedir,game);
 	f=fopen(text,"r");
 	if (f) {
 		fscanf(f,"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",&odx_freq,&odx_video_depth,&odx_video_aspect,&odx_video_sync,
@@ -369,7 +381,7 @@ static int show_options(char *game)
 			if(selected_option<0)
 				selected_option = options_count - 1;
 		}
-		else if(ExKey & OD_R || ExKey & OD_L)
+		else if(ExKey & OD_LEFT || ExKey & OD_RIGHT)
 		{
 			switch(selected_option) {
 			case 0:
@@ -381,7 +393,7 @@ static int show_options(char *game)
 				}
 				break;
 			case 1:
-				if(ExKey & OD_R)
+				if(ExKey & OD_RIGHT)
 				{
 					odx_video_aspect++;
 					if (odx_video_aspect>9)
@@ -400,7 +412,7 @@ static int show_options(char *game)
 					odx_video_sync=-1;
 				break;
 			case 3:
-				if(ExKey & OD_R)
+				if(ExKey & OD_RIGHT)
 				{
 					odx_frameskip ++;
 					if (odx_frameskip>11)
@@ -414,7 +426,7 @@ static int show_options(char *game)
 				}
 				break;
 			case 4:
-				if(ExKey & OD_R)
+				if(ExKey & OD_RIGHT)
 				{
 					odx_sound ++;
 					if (odx_sound>15)
@@ -429,7 +441,7 @@ static int show_options(char *game)
 				break;
 			case 5:
 				/* "CPU Clock" */
-				if(ExKey & OD_R)
+				if(ExKey & OD_RIGHT)
 				{
 					odx_clock_cpu += 10; /* Add 10% */
 					if (odx_clock_cpu > 200) /* 200% is the max */
@@ -444,7 +456,7 @@ static int show_options(char *game)
 				break;
 			case 6:
 				/* "Audio Clock" */
-				if(ExKey & OD_R)
+				if(ExKey & OD_RIGHT)
 				{
 					odx_clock_sound += 10; /* Add 10% */
 					if (odx_clock_sound > 200) /* 200% is the max */
@@ -468,7 +480,7 @@ static int show_options(char *game)
 		if ((ExKey & OD_A) || (ExKey & OD_START) || (ExKey & OD_SELECT)) 
 		{
 			/* Write game configuration */
-			sprintf(text,"frontend/%s.cfg",game);
+			sprintf(text,"%s/frontend/%s.cfg",mamedir,game);
 			f=fopen(text,"w");
 			if (f) {
 				fprintf(f,"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",odx_freq,odx_video_depth,odx_video_aspect,odx_video_sync,
@@ -490,7 +502,10 @@ static int show_options(char *game)
 
 static void odx_exit(char *param)
 {
-	remove("frontend/mame.lst");
+	char text[512];
+	
+	sprintf(text,"%s/frontend/mame.lst",mamedir);
+	remove(text);
 	/* sync(); */
 	odx_deinit();
 }
@@ -551,9 +566,9 @@ void execute_game (char *playemu, char *playgame)
 	args[n]=playgame; n++;
 
 	/* odx_freq */
-	args[n]="-clock"; n++;
+	/*args[n]="-clock"; n++;
 	sprintf(str[i],"%d",odx_freq);
-	args[n]=str[i]; i++; n++;
+	args[n]=str[i]; i++; n++;*/
 
 	/* odx_video_depth */
 	if (odx_video_depth==8)
@@ -713,56 +728,277 @@ void execute_game (char *playemu, char *playgame)
 		args[n]="-odx_rotated_video"; n++;
 		args[n]="-rotatecontrols"; n++;
     }
-    
-	args[n]=NULL;
 	
+	/* Add mame and rom directory */
+    args[n]="-mamepath"; n++;
+	args[n]=mamedir;n++;
+    args[n]="-rompath"; n++;;
+	args[n]=romdir;n++;
+	
+	args[n]=NULL;
+
+/*ALEK	
 	for (i=0; i<n; i++)
 	{
 		printf("%s ",args[i]);
 	}
 	printf("\n");
-	
+*/
+
 	odx_deinit();
 	execv(args[0], args); 
 }
 
 
+#define FILE_LIST_ROWS 19
+#define MAX_FILES 512
+typedef struct  {
+	char name[255];
+	unsigned int type;
+} filedirtype;
+filedirtype filedir_list[MAX_FILES];
+
+int sort_function(const void *src_str_ptr, const void *dest_str_ptr) {
+  filedirtype *p1 = (filedirtype *) src_str_ptr;
+  filedirtype *p2 = (filedirtype *) dest_str_ptr;
+  
+  return strcmp (p1->name, p2->name);
+}
+
+signed int get_romdir(char *result) {
+	unsigned long ExKey;
+	
+	char current_dir_name[512];
+	DIR *current_dir;
+	struct dirent *current_file;
+	struct stat file_info;
+	char current_dir_short[81];
+	unsigned int current_dir_length;
+	unsigned int num_filedir;
+
+	char *file_name;
+	signed int return_value = 1;
+	unsigned int repeat;
+	unsigned int i;
+
+	unsigned int current_filedir_scroll_value;
+	unsigned int current_filedir_selection;
+	unsigned int current_filedir_in_scroll;
+	unsigned int current_filedir_number;
+	
+	// Init dir with saved one
+	strcpy(current_dir_name,mamedir);
+
+	while (return_value == 1) {
+		current_filedir_in_scroll = 0;
+		current_filedir_scroll_value  = 0;
+		current_filedir_number = 0;
+		current_filedir_selection = 0;
+		num_filedir = 0;
+		
+		getcwd(current_dir_name, 512);
+		current_dir = opendir(current_dir_name);
+		
+		do {
+			if(current_dir) current_file = readdir(current_dir); else current_file = NULL;
+
+			if(current_file) {
+				file_name = current_file->d_name;
+
+				if((stat(file_name, &file_info) >= 0) && ((file_name[0] != '.') || (file_name[1] == '.'))) {
+					if(S_ISDIR(file_info.st_mode)) {
+						filedir_list[num_filedir].type = 1; // 1 -> directory
+						strcpy(filedir_list[num_filedir].name, file_name);
+						num_filedir++;
+						
+					}
+				}
+			}
+		} while ((current_file) && (num_filedir<MAX_FILES));
+
+		if (num_filedir)
+			qsort((void *)filedir_list, num_filedir, sizeof(filedirtype), sort_function);
+
+		closedir(current_dir);
+
+		current_dir_length = strlen(current_dir_name);
+		if(current_dir_length > 39) {
+			memcpy(current_dir_short, "...", 3);
+			memcpy(current_dir_short + 3, current_dir_name + current_dir_length - (39-3), (39-3));
+			current_dir_short[39] = 0;
+		} else {
+			memcpy(current_dir_short, current_dir_name, current_dir_length + 1);
+		}
+
+		repeat = 1;
+
+		char print_buffer[81];
+
+		while(repeat) {
+			blit_bmp_8bpp(od_screen8,menu_bmp);
+			
+			odx_gamelist_text_out( 4, 215,current_dir_short );
+			
+			for(i = 0, current_filedir_number = i + current_filedir_scroll_value; i < FILE_LIST_ROWS; i++, current_filedir_number++) {
+#define CHARLEN ((320/6)-2)
+				if(current_filedir_number < num_filedir) {
+					strncpy(print_buffer+1,filedir_list[current_filedir_number].name, CHARLEN-1);
+					print_buffer[0] = ' ';
+					if((current_filedir_number == current_filedir_selection))
+						print_buffer[0] = '>';
+					print_buffer[CHARLEN] = 0;
+					odx_gamelist_text_out(4, 31+((i + 2) * 8), print_buffer );
+				}
+			}
+			odx_video_flip();
+
+			// Catch input
+			while ( (odx_joystick_read())) odx_timer_delay(100);
+			while(!(ExKey=odx_joystick_read())) { 
+			}
+
+			/* L + R = Exit */
+			if ((ExKey & OD_L) && (ExKey & OD_R) ) { odx_exit(""); }
+		
+			// START - choose directory
+			if (ExKey & OD_START) { 
+				repeat = 0;
+				return_value = 0;
+				strcpy(result,current_dir_name);
+			}
+			
+			// A - choose file or enter directory
+			if (ExKey & OD_A) { 
+				if (filedir_list[current_filedir_selection].type == 1)  { // so it's a directory
+					repeat = 0;
+					chdir(filedir_list[current_filedir_selection].name);
+				}
+			}
+
+			// B - exit or back to previous menu
+			if (ExKey & OD_B) { 
+				return_value = -1;
+				repeat = 0;
+			}
+
+			// UP - arrow up
+			if (ExKey & OD_UP) { 
+				if(current_filedir_selection) {
+					current_filedir_selection--;
+					if(current_filedir_in_scroll == 0) {
+						current_filedir_scroll_value--;
+					} else {
+						current_filedir_in_scroll--;
+					}
+				}
+				else {
+					current_filedir_selection = (num_filedir - 1);
+					current_filedir_in_scroll = num_filedir> FILE_LIST_ROWS ? (FILE_LIST_ROWS - 1) : num_filedir-1;
+					current_filedir_scroll_value = num_filedir> FILE_LIST_ROWS ? (num_filedir - 1)-FILE_LIST_ROWS+1 : 0;
+				}
+			}
+
+			//DOWN - arrow down
+			if (ExKey & OD_DOWN) { 
+				if(current_filedir_selection < (num_filedir - 1)) {
+					current_filedir_selection++;
+					if(current_filedir_in_scroll == (FILE_LIST_ROWS - 1)) {
+						current_filedir_scroll_value++;
+					} else {
+						current_filedir_in_scroll++;
+					}
+				}
+				else {
+					current_filedir_selection = 0;
+					current_filedir_in_scroll =0;
+					current_filedir_scroll_value = 0;
+				}
+			}
+		}
+	}
+	
+	return return_value;
+}
+
+void gethomedir(char *dir, char* name) {
+	char text[512];
+#ifdef _GCW0_
+	strcpy(dir, getenv("HOME"));
+	if (strlen(dir) == 0) {
+		getcwd(dir, 256);
+	}
+#else
+	getcwd(dir, 256);
+#endif
+	if (strlen(name)) {
+		sprintf(dir,"%s/.%s/",dir, name);
+#ifdef _GCW0_
+		mkdir(dir,S_IRWXU | S_IRWXG | S_IRWXO); // create $HOME/.program if it doesn't exist
+		sprintf(text,"%s/frontend/",dir); mkdir(text,S_IRWXU | S_IRWXG | S_IRWXO); 
+		sprintf(text,"%s/nvram/",dir); mkdir(text,S_IRWXU | S_IRWXG | S_IRWXO); 
+		sprintf(text,"%s/hi/",dir); mkdir(text,S_IRWXU | S_IRWXG | S_IRWXO); 
+		sprintf(text,"%s/cfg/",dir); mkdir(text,S_IRWXU | S_IRWXG | S_IRWXO); 
+		sprintf(text,"%s/memcard/",dir); mkdir(text,S_IRWXU | S_IRWXG | S_IRWXO); 
+		sprintf(text,"%s/snap/",dir); mkdir(text,S_IRWXU | S_IRWXG | S_IRWXO); 
+#else
+		mkdir(dir); // create /.program if it doesn't exist
+		sprintf(text,"%s/frontend/",dir); mkdir(text); 
+		sprintf(text,"%s/nvram/",dir); mkdir(text); 
+		sprintf(text,"%s/hi/",dir);	mkdir(text); 
+		sprintf(text,"%s/cfg/",dir); mkdir(text); 
+		sprintf(text,"%s/memcard/",dir); mkdir(text); 
+		sprintf(text,"%s/snap/",dir); mkdir(text); 
+#endif
+	}
+}
+
 int main (int argc, char **argv)
 {
+	char text[512];
 	FILE *f;
 
+	/* get initial home directory */
+	gethomedir(mamedir,"mame4all");
+	strcpy(romdir,"");
+	
 	/* Open dingux Initialization */
 	odx_init(1000,16,44100,16,0,60);
 
 	/* Show intro screen */
 	odx_intro_screen();
 
+	/* Read default configuration */
+	sprintf(text,"%s/frontend/mame.cfg",mamedir);
+	f=fopen(text,"r");
+	if (f) {
+		fscanf(f,"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s",&odx_freq,&odx_video_depth,&odx_video_aspect,&odx_video_sync,
+		&odx_frameskip,&odx_sound,&odx_clock_cpu,&odx_clock_sound,&odx_cpu_cores,&odx_ramtweaks,&last_game_selected,&odx_cheat,romdir);
+		fclose(f);
+	}
+
 	/* Initialize list of available games */
 	game_list_init(argc);
 	if (game_num_avail==0)
 	{
-		odx_gamelist_text_out(35, 110, "ERROR: NO AVAILABLE GAMES FOUND");
-		odx_video_flip();
-		odx_joystick_press();
-		odx_exit("");
+		while (game_num_avail == 0) {
+			odx_gamelist_text_out(35, 110, "ERROR: NO AVAILABLE GAMES FOUND");
+			odx_video_flip();
+			odx_joystick_press();
+			if (get_romdir(romdir) == -1)
+				odx_exit("");
+			else
+				game_list_init(argc);
+		}
 	}
 
-	/* Read default configuration */
-	f=fopen("frontend/mame.cfg","r");
-	if (f) {
-		fscanf(f,"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",&odx_freq,&odx_video_depth,&odx_video_aspect,&odx_video_sync,
-		&odx_frameskip,&odx_sound,&odx_clock_cpu,&odx_clock_sound,&odx_cpu_cores,&odx_ramtweaks,&last_game_selected,&odx_cheat);
-		fclose(f);
-	}
-	
 	/* Select Game */
 	select_game(playemu,playgame); 
 
 	/* Write default configuration */
-	f=fopen("frontend/mame.cfg","w");
+	f=fopen(text,"w");
 	if (f) {
-		fprintf(f,"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",odx_freq,odx_video_depth,odx_video_aspect,odx_video_sync,
-		odx_frameskip,odx_sound,odx_clock_cpu,odx_clock_sound,odx_cpu_cores,odx_ramtweaks,last_game_selected,odx_cheat);
+		fprintf(f,"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s",odx_freq,odx_video_depth,odx_video_aspect,odx_video_sync,
+		odx_frameskip,odx_sound,odx_clock_cpu,odx_clock_sound,odx_cpu_cores,odx_ramtweaks,last_game_selected,odx_cheat,romdir);
 		fclose(f);
 		/* sync(); */
 	}

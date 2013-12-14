@@ -749,7 +749,25 @@ void copyscrollbitmap_remap(struct osd_bitmap *dest,struct osd_bitmap *src,
 		const struct rectangle *clip,int transparency,int transparent_color)
 {
 	int srcwidth,srcheight,destwidth,destheight;
+	/* The following rectangle clip added from Mame 0.37b16 */
+	struct rectangle orig_clip;
 
+
+	if (clip)
+	{
+		orig_clip.min_x = clip->min_x;
+		orig_clip.max_x = clip->max_x;
+		orig_clip.min_y = clip->min_y;
+		orig_clip.max_y = clip->max_y;
+	}
+	else
+	{
+		orig_clip.min_x = 0;
+		orig_clip.max_x = dest->width-1;
+		orig_clip.min_y = 0;
+		orig_clip.max_y = dest->height-1;
+	}
+	clip = &orig_clip;
 
 	if (rows == 0 && cols == 0)
 	{

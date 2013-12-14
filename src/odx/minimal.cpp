@@ -195,19 +195,19 @@ void odx_sound_play(void *buff, int len)
 
 static void odx_sound_callback(void *data, Uint8 *stream, int len)
 {
-	SDL_LockMutex(sndlock);
+	//SDL_LockMutex(sndlock);
 	
 	if( odx_sndlen < len ) {
 		memcpy( stream, data, odx_sndlen );
 		odx_sndlen = 0;
-		SDL_UnlockMutex(sndlock);
+		//SDL_UnlockMutex(sndlock);
 		return;
 	}
 	memcpy( stream, data, len );
 	odx_sndlen -= len;
 	memcpy( data, data + len, odx_sndlen );
 	
-	SDL_UnlockMutex(sndlock);
+	//SDL_UnlockMutex(sndlock);
 }
 
 void odx_sound_thread_start(void)

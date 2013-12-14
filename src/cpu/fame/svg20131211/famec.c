@@ -12,8 +12,6 @@
 #include <string.h>
 #include <assert.h>
 
-#include "fame.h"
-
 #ifdef _MSC_VER
 /* Ignore unary minus applied to unsigned type */
 #pragma warning( disable : 4146 )
@@ -23,30 +21,27 @@
 /*
  Do not use the following lines to enable/disable features
  They are here as a reference only
- Define them in your project as you need instead ie. in fame.h
+ Define them in your project as you need instead
 */
 /* #define FAME_INLINE_LOOP */
-/* #define FAME_IRQ_CLOCKING*/
+/* #define FAME_IRQ_CLOCKING */
 /* #define FAME_CHECK_BRANCHES */
 /* #define FAME_DIRECT_MAPPING */
 /* #define FAME_EXTRA_INLINE */
 /* #define FAME_EMULATE_TRACE */
 /* #define FAME_BYPASS_TAS_WRITEBACK */
 /* #define FAME_ACCURATE_TIMING */
+/* #define FAME_GLOBAL_CONTEXT */
 /* #define FAME_DEBUG */
 /* #define FAME_GOTOS */
 /* #define FAME_BIG_ENDIAN */
-/* #define FAME_USE_CONTEXT_SWITCH */
-/* #define FAME_SECURE_ALL_BANKS */
-/* #define FAME_PREVIOUSPC */
-/* #define FAME_CHANGE_PC */
 
+#define FAME_SECURE_ALL_BANKS
 
 #ifndef FAME_ADDR_BITS
 #define FAME_ADDR_BITS  24
 #endif
 
-#define FAME_PC_BITS  32
 #ifndef FAME_PC_BITS
 #define FAME_PC_BITS  24
 #endif
@@ -60,7 +55,7 @@
 #endif
 
 #ifndef FAME_PREFIX
-#define FAME_PREFIX fame68k
+#define FAME_PREFIX famem68k
 #endif
 
 /* Options */
@@ -69,7 +64,7 @@
 #define FAME_FNT(P,F)  CONCAT(P,_##F)
 #define FAME_DT(P,D)   CONCAT(P,D)
 #define FAME_API(F)    FAME_FNT(FAME_PREFIX,F)
-#define FAME_CONTEXT   FAME_DT(FAME_PREFIX,context)
+#define FAME_CONTEXT   FAME_DT(FAME_PREFIX,context) 
 
 
 #ifndef INLINE
@@ -81,6 +76,26 @@
 #else
 #define EXTRA_INLINE INLINE
 #endif
+
+/* Return codes */
+#define M68K_OK 0
+#define M68K_RUNNING 1
+#define M68K_NO_SUP_ADDR_SPACE 2
+#define M68K_INV_REG -1
+
+/* Hardware interrupt state */
+#define M68K_IRQ_LEVEL_ERROR -1
+#define M68K_IRQ_INV_PARAMS -2
+
+/* Defines to specify hardware interrupt type */
+#define M68K_AUTOVECTORED_IRQ -1
+#define M68K_SPURIOUS_IRQ -2
+
+/* Defines to specify address space */
+#define M68K_SUP_ADDR_SPACE 0
+#define M68K_USER_ADDR_SPACE 2
+#define M68K_PROG_ADDR_SPACE 0
+#define M68K_DATA_ADDR_SPACE 1
 
 /******************************/
 /* 68K core types definitions */
@@ -250,56 +265,36 @@
 #endif
 
 #ifdef FAME_GOTOS
-
-#ifdef FAME_PREVIOUSPC
-#define NEXT                    \
-    FAME_CONTEXT.ppc = PC; \
-    FETCH_WORD(Opcode);         \
-    DEBUG_OPCODE(Opcode) \
-    goto *JumpTable[Opcode];
-#else  //FAME_PREVIOUSPC
 #define NEXT                    \
     FETCH_WORD(Opcode);         \
     DEBUG_OPCODE(Opcode) \
     goto *JumpTable[Opcode];
-#endif //FAME_PREVIOUSPC
 
 #ifdef FAME_INLINE_LOOP
 #define RET(A)                                      \
     io_cycle_counter -= (A);                        \
     if (io_cycle_counter <= 0) goto famec_Exec_End;	\
     NEXT
-#else  // FAME_INLINE_LOOP
+#else
 #define RET(A)                                      \
     io_cycle_counter -= (A);                        \
     if (io_cycle_counter <= 0) goto famec_Exec_End;	\
     goto famec_Exec;
-#endif  // FAME_INLINE_LOOP
+#endif
+
 #define RET_STOP(C) \
     io_cycle_counter -= (C);                        \
     if (io_cycle_counter > 0) io_cycle_counter = 0;	\
     goto famec_Exec_End;
 
+#else
 
-#else  // FAME_GOTOS
-
-
-#ifdef FAME_PREVIOUSPC
-#define NEXT \
-	do { \
-		FAME_CONTEXT.ppc = PC; \
-		FETCH_WORD(Opcode); \
-		DEBUG_OPCODE(Opcode) \
-		JumpTable[Opcode](); \
-	} while(io_cycle_counter>0);
-#else  // FAME_PREVIOUSPC
 #define NEXT \
 	do { \
 		FETCH_WORD(Opcode); \
 		DEBUG_OPCODE(Opcode) \
 		JumpTable[Opcode](); \
 	} while(io_cycle_counter>0);
-#endif //FAME_PREVIOUSPC
 
 #ifdef FAME_INLINE_LOOP
 #define RET(A) \
@@ -311,18 +306,21 @@
 	    JumpTable[Opcode](); \
     } \
     return;
-#else // FAME_INLINE_LOOP
+
+#else
+
 #define RET(A) \
     io_cycle_counter -= (A);  \
     return;
-#endif  // FAME_INLINE_LOOP
+
+#endif
 
 #define RET_STOP(C) \
     io_cycle_counter -= (C);                        \
     if (io_cycle_counter > 0) io_cycle_counter = 0;	\
     return;
 
-#endif  // FAME_GOTOS
+#endif
 
 #define M68K_PPL (FAME_CONTEXT.sr >> 8) & 7
 
@@ -334,35 +332,23 @@
 
 #define READ_BASED_PC_IDX(IDX) BasePC[((PC & M68K_ADDR_MASK) >> 1) + IDX]
 
-#ifdef FAME_USE_CONTEXT_SWITCH
 #define SET_PC(A)               \
-	BasePC = FAME_CONTEXT.FetchList[(((A) & M68K_ADDR_MASK) >> M68K_FETCHSFT) & M68K_FETCHMASK];    \
+    BasePC = (u16 *)Fetch[(((A) & M68K_ADDR_MASK) >> M68K_FETCHSFT) & M68K_FETCHMASK];    \
 	PC = A;
-#else
-#define SET_PC(A)               \
-	BasePC = Fetch[(((A) & M68K_ADDR_MASK) >> M68K_FETCHSFT) & M68K_FETCHMASK];    \
-	PC = A;
-#endif
 
 #define INC_PC(I) (PC += I)
 
 #else
 
-#define UNBASED_PC ((uint32_t)PC - BasePC)
+#define UNBASED_PC ((u32)PC - BasePC)
 
 #define READ_BASED_PC (*PC)
 
 #define READ_BASED_PC_IDX(IDX) PC[IDX]
 
-#ifdef FAME_USE_CONTEXT_SWITCH
-#define SET_PC(A)               \
-    BasePC = FAME_CONTEXT.FetchList[((A) >> M68K_FETCHSFT) & M68K_FETCHMASK];    \
-    PC = (uint16_t*)(((A) & M68K_ADDR_MASK) + BasePC);
 #define SET_PC(A)               \
     BasePC = Fetch[((A) >> M68K_FETCHSFT) & M68K_FETCHMASK];    \
-    PC = (uint16_t*)(((A) & M68K_ADDR_MASK) + BasePC);
-#else
-#endif
+    PC = (u16*)(((A) & M68K_ADDR_MASK) + BasePC);
 
 #define INC_PC(I) (PC += (I) >> 1)
 
@@ -409,33 +395,33 @@
     	AREG(7) += 4;
 
 #define GET_SWORD           \
-		((int16_t)READ_BASED_PC)
+		((s16)READ_BASED_PC)
 
 #define FETCH_BYTE(A)       \
 		(A) = READ_BASED_PC & 0xFF; INC_PC(2);
 
 #define FETCH_SBYTE(A)      \
-		(A) = (int8_t)((READ_BASED_PC) & 0xFF); INC_PC(2);
+		(A) = (s8)((READ_BASED_PC) & 0xFF); INC_PC(2);
 
 #define FETCH_WORD(A)       \
 		(A) = READ_BASED_PC; INC_PC(2);
 
 #define FETCH_SWORD(A)      \
-		(A) = (int16_t)READ_BASED_PC; INC_PC(2);
+		(A) = (s16)READ_BASED_PC; INC_PC(2);
 
 #define DECODE_EXT_WORD     \
 	{                           \
-	    uint32_t ext = READ_BASED_PC; INC_PC(2);       \
-	    adr += (int8_t)(ext);                               \
+	    u32 ext = READ_BASED_PC; INC_PC(2);       \
+	    adr += (s8)(ext);                               \
 	    if (ext & 0x0800) adr += DREGs32(ext >> 12);    \
 	    else adr += DREGs16(ext >> 12);                 \
 	}
 
 #define READSX_BYTE_F(A, D)             \
-    D = (int8_t)Read_Byte(A);
+    D = (s8)Read_Byte(A);
 
 #define READSX_WORD_F(A, D)             \
-    D = (int16_t)Read_Word(A);
+    D = (s16)Read_Word(A);
 
 
 #define WRITE_BYTE_F(A, D)      \
@@ -448,7 +434,7 @@
     Write_Word(AREG(7) -= 2, D);   \
 
 #define POP_16_F(D)                     \
-    D = (uint16_t)Read_Word(AREG(7));   \
+    D = (u16)Read_Word(AREG(7));   \
     AREG(7) += 2;
 
 #define GET_CCR                                     \
@@ -509,11 +495,11 @@
 		} \
 	}
 
-#define BANKEND_TAG ((uint32_t)-1)
+#define BANKEND_TAG ((u32)-1)
 
 #define SETUP_FETCH_BANK(FNT, BANK) \
 	{ \
-		uint32_t i = 0; \
+		u32 i = 0; \
 		while (BANK[i].low_addr != BANKEND_TAG) \
 		{ \
 			FNT(BANK[i].low_addr, BANK[i].high_addr, BANK[i].offset); \
@@ -523,7 +509,7 @@
 
 #define SETUP_DATA_BANK(FNT, BANK) \
 	{ \
-		uint32_t i = 0; \
+		u32 i = 0; \
 		while (BANK[i].low_addr != BANKEND_TAG) \
 		{ \
 			FNT(BANK[i].low_addr, BANK[i].high_addr, BANK[i].mem_handler, BANK[i].data); \
@@ -543,7 +529,7 @@
 #define CHECK_BRANCH_EXCEPTION(_PC_) \
 	if ((_PC_)&1) \
 	{ \
-		uint32_t pr_PC=UNBASED_PC; \
+		u32 pr_PC=UNBASED_PC; \
 		FAME_CONTEXT.execinfo |= M68K_EMULATE_GROUP_0; \
 		execute_exception_group_0(M68K_ADDRESS_ERROR_EX, 0, pr_PC, 0x12 ); \
 		CHECK_BRANCH_EXCEPTION_GOTO_END \
@@ -554,7 +540,7 @@
 
 #define BUILD_OPCODE_TABLE \
 { \
-	uint32_t i, j; \
+	u32 i, j; \
 	for(i = 0x0000; i <= 0xFFFF; i += 0x0001) \
 		JumpTable[0x0000 + i] = CAST_OP(0x4AFC); \
 	for(i = 0x0000; i <= 0x0007; i += 0x0001) \
@@ -4559,57 +4545,169 @@
 		JumpTable[0xF000 + i] = CAST_OP(0xF000); \
 }
 
-#ifdef FAME_USE_CONTEXT_SWITCH
+typedef unsigned char  u8;
+typedef signed char    s8;
+typedef unsigned short u16;
+typedef signed short   s16;
+typedef unsigned int   u32;
+typedef signed int     s32;
+
 #ifdef FAME_EMULATE_TRACE
-#define flag_T	FAME_CONTEXT.flag_T
+static u32 flag_T;
 #endif
-#define flag_C	FAME_CONTEXT.flag_C
-#define flag_V	FAME_CONTEXT.flag_V
-#define flag_NotZ   FAME_CONTEXT.flag_NotZ
-#define flag_N	FAME_CONTEXT.flag_N
-#define flag_X	FAME_CONTEXT.flag_X        /* 16 bytes aligned */
-#define flag_S	FAME_CONTEXT.flag_S
-#define flag_I	FAME_CONTEXT.flag_I
+static u32 flag_C;
+static u32 flag_V;
+static u32 flag_NotZ;
+static u32 flag_N;
+static u32 flag_X;         /* 16 bytes aligned */
+static u32 flag_S;
+static u32 flag_I;
+
+typedef union
+{
+#ifndef FAME_BIG_ENDIAN
+    struct
+    {
+        u8 B,B1,B2,B3;
+    } b;
+    struct
+    {
+        s8 SB,SB1,SB2,SB3;
+    } sb;
+    struct
+    {
+        u16 W,W1;
+    } w;
+    struct
+    {
+        s16 SW,SW1;
+    } sw;
 #else
-#ifdef FAME_EMULATE_TRACE
-static uint32_t flag_T;
+    struct
+    {
+        u8 B3,B2,B1,B;
+    } b;
+    struct
+    {
+        s8 SB3,SB2,SB1,SB;
+    } sb;
+    struct
+    {
+        u16 W1,W;
+    } w;
+    struct
+    {
+        s16 SW1,SW;
+    } sw;
 #endif
-static uint32_t flag_C;
-static uint32_t flag_V;
-static uint32_t flag_NotZ;
-static uint32_t flag_N;
-static uint32_t flag_X;         /* 16 bytes aligned */
-static uint32_t flag_S;
-static uint32_t flag_I;
-#endif
+    u32 D;
+    s32 SD;
+} famec_union32;
+
+/* M68K registers */
+typedef enum
+{
+    M68K_REG_D0=0,
+    M68K_REG_D1,
+    M68K_REG_D2,
+    M68K_REG_D3,
+    M68K_REG_D4,
+    M68K_REG_D5,
+    M68K_REG_D6,
+    M68K_REG_D7,
+    M68K_REG_A0,
+    M68K_REG_A1,
+    M68K_REG_A2,
+    M68K_REG_A3,
+    M68K_REG_A4,
+    M68K_REG_A5,
+    M68K_REG_A6,
+    M68K_REG_A7,
+    M68K_REG_ASP,
+    M68K_REG_PC,
+    M68K_REG_SR
+} m68k_register;
+
+
+/* The memory blocks must be in native (Motorola) format */
+typedef struct
+{
+    u32 low_addr;
+    u32 high_addr;
+    u32 offset;
+} M68K_PROGRAM;
+
+/* The memory blocks must be in native (Motorola) format */
+typedef struct
+{
+    u32 low_addr;
+    u32 high_addr;
+    void    *mem_handler;
+    void    *data;
+} M68K_DATA;
+
+/* M68K CPU CONTEXT */
+typedef struct
+{
+    M68K_PROGRAM *fetch;
+    M68K_DATA *read_byte;
+    M68K_DATA *read_word;
+    M68K_DATA *write_byte;
+    M68K_DATA *write_word;
+    M68K_PROGRAM *sv_fetch;
+    M68K_DATA *sv_read_byte;
+    M68K_DATA *sv_read_word;
+    M68K_DATA *sv_write_byte;
+    M68K_DATA *sv_write_word;
+    M68K_PROGRAM *user_fetch;
+    M68K_DATA *user_read_byte;
+    M68K_DATA *user_read_word;
+    M68K_DATA *user_write_byte;
+    M68K_DATA *user_write_word;
+    void           (*reset_handler)(void);
+    void           (*iack_handler)(u32 level);
+    u32 *icust_handler;
+    famec_union32   dreg[8];
+    famec_union32   areg[8];
+    u32 asp;
+    u32  pc;
+    u32 cycles_counter;
+    u8  interrupts[8];
+    u16 sr;
+    u16 execinfo;
+} M68K_CONTEXT;
+
+
+/* Custom function handler */
+typedef void (*icust_handler_func)(u32 vector);
 
 /*
  global variable
 */
 
 /* Main CPU context */
-#ifdef FAME_USE_CONTEXT_SWITCH
+#ifdef FAME_GLOBAL_CONTEXT
 M68K_CONTEXT FAME_CONTEXT;
-int32_t io_cycle_counter;	/* also see m68kmame.h */
+s32 io_cycle_counter;
 #else
-static uint16_t *Fetch[M68K_FETCHBANK];
 static M68K_CONTEXT FAME_CONTEXT;
-static int32_t io_cycle_counter;	/* also see m68kmame.h */
+static s32 io_cycle_counter;
 #endif
 
-static int32_t cycles_needed=0;
-static int32_t cycles_to_do=0;
+static s32 cycles_needed=0;
+static s32 cycles_to_do=0;
 #if FAME_PC_BITS == 32
-static uint32_t PC;
-static uint16_t* BasePC;
+static u32 PC;
+static u16* BasePC;
 #else
-static uint16_t *PC;
-static uint32_t BasePC;
+static u16 *PC;
+static u32 BasePC;
 #endif
+static u32 Fetch[M68K_FETCHBANK];
 
 /* Lookup IRQ level to attend */
 /* Indexed by interrupts[0] */
-static uint8_t irq_level_lookup[256] =
+static u8 irq_level_lookup[256] =
 {
     0,0,1,1,2,2,2,2,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,
     5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
@@ -4620,52 +4718,43 @@ static uint8_t irq_level_lookup[256] =
     7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7
 };
 
+typedef u8 (*mem8_handler_func)(s32 address);
+typedef u16 (*mem16_handler_func)(s32 address);
+typedef u32 (*mem32_handler_func)(s32 address);
+typedef void (*memw_handler_func)(s32 address, s32 data);
+
 #ifdef FAME_SECURE_ALL_BANKS
-static uint8_t dummy_fetch[(1<<M68K_FETCHSFT)];
+static unsigned char dummy_fetch[(1<<M68K_FETCHSFT)];
 #endif
 
 #ifdef FAME_DIRECT_MAPPING
+typedef struct
+{
+    void    *mem_handler;
+    void    *data;
+} M68K_INTERNAL_DATA;
 
 #ifdef FAME_SECURE_ALL_BANKS
-static uint8_t dummy_read8(uint32_t addr)
+static void dummy_write(unsigned adr, unsigned btr){}
+static int dummy_read(unsigned adr)
 {
-    return (uint8_t)-1;
-}
-
-static uint16_t dummy_read16(uint32_t addr)
-{
-    return (uint8_t)-1;
-}
-
-static void dummy_write8(uint32_t addr, uint8_t data)
-{
-}
-
-static void dummy_write16(uint32_t addr, uint16_t data)
-{
+    return -1;
 }
 #endif
 
-#ifdef FAME_USE_CONTEXT_SWITCH
-#define DataRB FAME_CONTEXT.DataRB
-#define DataRW FAME_CONTEXT.DataRW
-#define DataWB FAME_CONTEXT.DataWB
-#define DataWW FAME_CONTEXT.DataWW
-#else
-static M68K_READ_BYTE_DATA DataRB[M68K_DATABANK];
-static M68K_READ_WORD_DATA DataRW[M68K_DATABANK];
-static M68K_WRITE_BYTE_DATA DataWB[M68K_DATABANK];
-static M68K_WRITE_WORD_DATA DataWW[M68K_DATABANK];
-#endif //FAME_USE_CONTEXT_SWITCH
+static M68K_INTERNAL_DATA DataRB[M68K_DATABANK];
+static M68K_INTERNAL_DATA DataRW[M68K_DATABANK];
+static M68K_INTERNAL_DATA DataWB[M68K_DATABANK];
+static M68K_INTERNAL_DATA DataWW[M68K_DATABANK];
 
-#else  // Not FAME_DIRECT_MAPPING
+#else
 
 #define DataRB FAME_CONTEXT.read_byte
 #define DataRW FAME_CONTEXT.read_word
 #define DataWB FAME_CONTEXT.write_byte
 #define DataWW FAME_CONTEXT.write_word
 
-#endif // FAME_DIRECT_MAPPING
+#endif
 
 /* Custom function handler */
 typedef void (*opcode_func)(void);
@@ -4673,10 +4762,10 @@ typedef void (*opcode_func)(void);
 static opcode_func JumpTable[0x10000];
 
 
-static uint32_t initialised = 0;
+static u32 initialised = 0;
 
 /* exception cycle table (taken from musashi core) */
-static const int32_t exception_cycle_table[256] =
+static const s32 exception_cycle_table[256] =
 {
     4, /*  0: Reset - Initial Stack Pointer */
     4, /*  1: Reset - Initial Program Counter */
@@ -4759,35 +4848,27 @@ static const int32_t exception_cycle_table[256] =
 static void famec_SetDummyFetch(void)
 {
 #ifdef FAME_SECURE_ALL_BANKS
-    uint32_t i,j;
+    u32 i,j;
 
     i = (0 >> M68K_FETCHSFT) & M68K_FETCHMASK;
     j = (0xFFFFFFFF >> M68K_FETCHSFT) & M68K_FETCHMASK;
     while (i <= j)
     {
-#ifdef FAME_USE_CONTEXT_SWITCH
-        FAME_CONTEXT.FetchList[i] = (uint16_t *)(dummy_fetch - (i*(1<<M68K_FETCHSFT)));
-#else
-        Fetch[i] = (uint16_t *)(dummy_fetch - (i*(1<<M68K_FETCHSFT)));
-#endif
+        Fetch[i] = ((u32)&dummy_fetch)-(i*(1<<M68K_FETCHSFT));
         i++;
     }
 #endif
 }
 
-static void famec_SetFetch(uint32_t low_addr, uint32_t high_addr, uint16_t *fetch_addr)
+void famec_SetFetch(u32 low_adr, u32 high_adr, u32 fetch_adr)
 {
-    uint32_t i, j;
+    u32 i, j;
 
-    i = (low_addr >> M68K_FETCHSFT) & M68K_FETCHMASK;
-    j = (high_addr >> M68K_FETCHSFT) & M68K_FETCHMASK;
+    i = (low_adr >> M68K_FETCHSFT) & M68K_FETCHMASK;
+    j = (high_adr >> M68K_FETCHSFT) & M68K_FETCHMASK;
 
     while (i <= j)
-#ifdef FAME_USE_CONTEXT_SWITCH
-        FAME_CONTEXT.FetchList[i++] = fetch_addr;
-#else
-        Fetch[i++] = fetch_addr;
-#endif
+        Fetch[i++] = fetch_adr;
 }
 
 #ifdef FAME_DIRECT_MAPPING
@@ -4795,102 +4876,75 @@ static void famec_SetFetch(uint32_t low_addr, uint32_t high_addr, uint16_t *fetc
 static void famec_SetDummyData(void)
 {
 #ifdef FAME_SECURE_ALL_BANKS
-	uint32_t i = (0 >> M68K_DATASFT) & M68K_DATAMASK;
-	uint32_t j = (0xFFFFFFFF >> M68K_DATASFT) & M68K_DATAMASK;
+    u32 i, j;
 
-	while (i <= j)
-	{
-		DataRB[i].mem_handler = dummy_read8;
-		DataRW[i].mem_handler = dummy_read16;
-		DataWB[i].mem_handler = dummy_write8;
-		DataWW[i].mem_handler = dummy_write16;
-		DataRB[i].data = NULL;
-		DataRW[i].data = NULL;
-		DataWB[i].data = NULL;
-		DataWW[i].data = NULL;
-		i++;
-	}
+    i = (0 >> M68K_DATASFT) & M68K_DATAMASK;
+    j = (0xFFFFFFFF >> M68K_DATASFT) & M68K_DATAMASK;
+
+    while (i <= j)
+    {
+        DataRB[i].mem_handler = DataRW[i].mem_handler = (void *)&dummy_read;
+        DataWB[i].mem_handler = DataWW[i].mem_handler = (void *)&dummy_write;
+        DataRB[i].data = DataRW[i].data = DataWB[i].data = DataWW[i].data = NULL;
+        i++;
+    }
 #endif
 }
 
-static void famec_SetDataRB(uint32_t low_addr, uint32_t high_addr, m68k_read8_t mh, const uint8_t *dt)
+static void famec_SetDataRB(u32 low_adr, u32 high_adr, void *mh, void *dt)
 {
-    uint32_t i = (low_addr >> M68K_DATASFT) & M68K_DATAMASK;
-    uint32_t j = (high_addr >> M68K_DATASFT) & M68K_DATAMASK;
-	uint32_t la = low_addr;
-	uint32_t ha = high_addr;
+    u32 i, j;
+
+    i = (low_adr >> M68K_DATASFT) & M68K_DATAMASK;
+    j = (high_adr >> M68K_DATASFT) & M68K_DATAMASK;
 
     while (i <= j)
     {
-		DataRB[i].low_addr = la;
-		DataRB[i].high_addr = ha;
         DataRB[i].mem_handler = mh;
         DataRB[i++].data = dt;
-
-		/* Update addresses */
-		la = ha + 1;
-		ha += 1 << FAME_DATABITS;
-	}
+    }
 }
 
-static void famec_SetDataRW(uint32_t low_addr, uint32_t high_addr, m68k_read16_t mh, const uint16_t *dt)
+static void famec_SetDataRW(u32 low_adr, u32 high_adr, void *mh, void *dt)
 {
-    uint32_t i = (low_addr >> M68K_DATASFT) & M68K_DATAMASK;
-    uint32_t j = (high_addr >> M68K_DATASFT) & M68K_DATAMASK;
-	uint32_t la = low_addr;
-	uint32_t ha = high_addr;
+    u32 i, j;
+
+    i = (low_adr >> M68K_DATASFT) & M68K_DATAMASK;
+    j = (high_adr >> M68K_DATASFT) & M68K_DATAMASK;
 
     while (i <= j)
     {
-		DataRW[i].low_addr = la;
-		DataRW[i].high_addr = ha;
         DataRW[i].mem_handler = mh;
         DataRW[i++].data = dt;
-
-		/* Update addresses */
-		la = ha + 1;
-		ha += 1 << FAME_DATABITS;
-	}
+    }
 }
 
-static void famec_SetDataWB(uint32_t low_addr, uint32_t high_addr, m68k_write8_t mh, void *dt)
+static void famec_SetDataWB(u32 low_adr, u32 high_adr, void *mh, void *dt)
 {
-    uint32_t i = (low_addr >> M68K_DATASFT) & M68K_DATAMASK;
-    uint32_t j = (high_addr >> M68K_DATASFT) & M68K_DATAMASK;
-	uint32_t la = low_addr;
-	uint32_t ha = high_addr;
+    u32 i, j;
+
+    i = (low_adr >> M68K_DATASFT) & M68K_DATAMASK;
+    j = (high_adr >> M68K_DATASFT) & M68K_DATAMASK;
 
     while (i <= j)
     {
-		DataWB[i].low_addr = la;
-		DataWB[i].high_addr = ha;
         DataWB[i].mem_handler = mh;
         DataWB[i++].data = dt;
-
-		/* Update addresses */
-		la = ha + 1;
-		ha += 1 << FAME_DATABITS;
-	}
+    }
 }
 
-static void famec_SetDataWW(uint32_t low_addr, uint32_t high_addr, m68k_write16_t mh, void *dt)
+static void famec_SetDataWW(u32 low_adr, u32 high_adr, void *mh, void *dt)
 {
-	uint32_t i = (low_addr >> M68K_DATASFT) & M68K_DATAMASK;
-	uint32_t j = (high_addr >> M68K_DATASFT) & M68K_DATAMASK;
-	uint32_t la = low_addr;
-	uint32_t ha = high_addr;
+    u32 i, j;
+
+    i = (low_adr >> M68K_DATASFT) & M68K_DATAMASK;
+    j = (high_adr >> M68K_DATASFT) & M68K_DATAMASK;
 
     while (i <= j)
     {
-		DataWW[i].low_addr = la;
-		DataWW[i].high_addr = ha;
         DataWW[i].mem_handler = mh;
         DataWW[i++].data = dt;
-
-		/* Update addresses */
-		la = ha + 1;
-		ha += 1 << FAME_DATABITS;
-	}
+    }
 }
 #endif
 
@@ -4910,43 +4964,38 @@ static void famec_SetBanks(void)
 #endif
 }
 
-void fame68k_SetBanks(void)
-{
-    famec_SetBanks();
-}
-
 #ifdef FAME_ACCURATE_TIMING
 /*
  Functions used to compute accurate opcode timing (MUL/DIV)
 */
 
-static EXTRA_INLINE uint8_t bitset_count(uint32_t data)
+static EXTRA_INLINE u8 bitset_count(u32 data)
 {
-    const uint32_t MASK1  = 0x55555555;
-    const uint32_t MASK2  = 0x33333333;
-    const uint32_t MASK4  = 0x0f0f0f0f;
-    const uint32_t MASK6 = 0x0000003f;
+    unsigned int const MASK1  = 0x55555555;
+    unsigned int const MASK2  = 0x33333333;
+    unsigned int const MASK4  = 0x0f0f0f0f;
+    unsigned int const MASK6 = 0x0000003f;
 
-    const uint32_t w = (data & MASK1) + ((data >> 1) & MASK1);
-    const uint32_t x = (w & MASK2) + ((w >> 2) & MASK2);
-    const uint32_t y = ((x + (x >> 4)) & MASK4);
-    const uint32_t z = (y + (y >> 8));
-    const uint32_t c = (z + (z >> 16)) & MASK6;
+    unsigned int const w = (data & MASK1) + ((data >> 1) & MASK1);
+    unsigned int const x = (w & MASK2) + ((w >> 2) & MASK2);
+    unsigned int const y = ((x + (x >> 4)) & MASK4);
+    unsigned int const z = (y + (y >> 8));
+    unsigned int const c = (z + (z >> 16)) & MASK6;
 
-    return (uint8_t)c;
+    return c;
 }
 
 /*
  DIVU
  Unsigned division
 */
-static uint32_t getDivu68kCycles(uint32_t dividend, uint16_t divisor)
+static u32 getDivu68kCycles(u32 dividend, u16 divisor)
 {
-    uint32_t mcycles;
-    uint32_t hdivisor;
+    u32 mcycles;
+    u32 hdivisor;
     int i;
 
-    if ( (uint16_t) divisor == 0)
+    if ( (u16) divisor == 0)
         return 0;
 
     /* Overflow */
@@ -4954,11 +5003,11 @@ static uint32_t getDivu68kCycles(uint32_t dividend, uint16_t divisor)
         return (mcycles = 5) * 2;
 
     mcycles = 38;
-    hdivisor = ((uint32_t) divisor) << 16;
+    hdivisor = ((u32) divisor) << 16;
 
     for ( i = 0; i < 15; i++)
     {
-        uint32_t temp;
+        u32 temp;
         temp = dividend;
 
         dividend <<= 1;
@@ -4987,13 +5036,13 @@ static uint32_t getDivu68kCycles(uint32_t dividend, uint16_t divisor)
  DIVS
  Signed division
 */
-static uint32_t getDivs68kCycles(int32_t dividend, int16_t divisor)
+static u32 getDivs68kCycles(s32 dividend, s16 divisor)
 {
-    uint32_t mcycles;
-    uint32_t aquot;
+    u32 mcycles;
+    u32 aquot;
     int i;
 
-    if ( (int16_t) divisor == 0)
+    if ( (s16) divisor == 0)
         return 0;
 
     mcycles = 6;
@@ -5002,13 +5051,13 @@ static uint32_t getDivs68kCycles(int32_t dividend, int16_t divisor)
         mcycles++;
 
     /*  Check for absolute overflow */
-    if ( ((uint32_t) abs( dividend) >> 16) >= (uint16_t) abs( divisor))
+    if ( ((u32) abs( dividend) >> 16) >= (u16) abs( divisor))
     {
         return (mcycles + 2) * 2;
     }
 
     /* Absolute quotient */
-    aquot = (uint32_t) abs( dividend) / (uint16_t) abs( divisor);
+    aquot = (u32) abs( dividend) / (u16) abs( divisor);
 
     mcycles += 55;
 
@@ -5024,7 +5073,7 @@ static uint32_t getDivs68kCycles(int32_t dividend, int16_t divisor)
 
     for ( i = 0; i < 15; i++)
     {
-        if ( (int16_t) aquot >= 0)
+        if ( (s16) aquot >= 0)
             mcycles++;
         aquot <<= 1;
     }
@@ -5037,12 +5086,12 @@ static uint32_t getDivs68kCycles(int32_t dividend, int16_t divisor)
  Read / Write functions
 */
 
-static EXTRA_INLINE uint32_t Read_Byte(uint32_t addr)
+static EXTRA_INLINE u32 Read_Byte(u32 addr)
 {
-    uint32_t i = 0;
-    int32_t val;
+    u32 i=0;
+    s32 val;
 
-    addr &= M68K_ADDR_MASK;
+    addr&=M68K_ADDR_MASK;
 #ifdef FAME_DEBUG
     printf("Reading byte from addr = 0x%08X\n",addr);
 #endif
@@ -5052,18 +5101,18 @@ static EXTRA_INLINE uint32_t Read_Byte(uint32_t addr)
         i++;
 
     if (FAME_CONTEXT.read_byte[i].low_addr == BANKEND_TAG)
-        return (uint32_t)-1;
+        return (u32)-1;
 #else
-    i = addr >> M68K_DATASFT;
+    i=addr>>M68K_DATASFT;
 #endif
 
      if (DataRB[i].mem_handler)
-        val= (*DataRB[i].mem_handler)(addr);
+        val= (*((mem8_handler_func *)&DataRB[i].mem_handler))(addr);
     else
 #ifndef FAME_BIG_ENDIAN
-        val = DataRB[i].data[addr ^ 1];
+        val = *((u8 *)(((u32)DataRB[i].data) + (addr^1)));
 #else
-        val = DataRB[i].data[addr];
+        val = *((u8 *)(((u32)DataRB[i].data) + (addr)));
 #endif
 
 #ifdef FAME_DEBUG
@@ -5073,12 +5122,12 @@ static EXTRA_INLINE uint32_t Read_Byte(uint32_t addr)
     return val;
 }
 
-static EXTRA_INLINE uint32_t Read_Word(uint32_t addr)
+static EXTRA_INLINE u32 Read_Word(u32 addr)
 {
-    uint32_t i = 0;
-    int32_t val;
+    u32 i=0;
+    s32 val;
 
-    addr &= M68K_ADDR_MASK;
+    addr&=M68K_ADDR_MASK;
 #ifdef FAME_DEBUG
     printf("Reading from addr = 0x%08X\n",addr);
 #endif
@@ -5088,15 +5137,15 @@ static EXTRA_INLINE uint32_t Read_Word(uint32_t addr)
         i++;
 
     if (FAME_CONTEXT.read_word[i].low_addr == BANKEND_TAG)
-        return (uint32_t)-1;
+        return (u32)-1;
 #else
-    i = addr >> M68K_DATASFT;
+    i=addr>>M68K_DATASFT;
 #endif
 
     if (DataRW[i].mem_handler)
-        val = (*DataRW[i].mem_handler)(addr);
+        val= (*((mem16_handler_func *)&DataRW[i].mem_handler))(addr);
     else
-        val = DataRW[i].data[addr >> 1];
+        val = *((u16 *)(((u32)DataRW[i].data) + addr));
 
 #ifdef FAME_DEBUG
     printf("Reading 0x%08X = 0x%04X...\n",addr,val);
@@ -5105,11 +5154,11 @@ static EXTRA_INLINE uint32_t Read_Word(uint32_t addr)
     return val;
 }
 
-static EXTRA_INLINE void Write_Byte(uint32_t addr, uint32_t data)
+static EXTRA_INLINE void Write_Byte(u32 addr, u32 data)
 {
-    uint32_t i = 0;
+    u32 i=0;
 
-    addr &= M68K_ADDR_MASK;
+    addr&=M68K_ADDR_MASK;
 #ifdef FAME_DEBUG
     printf("Writing byte 0x%08X = 0x%04X...\n",addr,data);
 #endif
@@ -5120,25 +5169,25 @@ static EXTRA_INLINE void Write_Byte(uint32_t addr, uint32_t data)
     if (FAME_CONTEXT.write_byte[i].low_addr == BANKEND_TAG)
         return;
 #else
-    i = addr >> M68K_DATASFT;
+    i=addr>>M68K_DATASFT;
 #endif
 
     if (DataWB[i].mem_handler != NULL)
-        (*DataWB[i].mem_handler)(addr, (uint8_t)data);
+        (*((memw_handler_func *)&DataWB[i].mem_handler))(addr,data);
     else
 #ifndef FAME_BIG_ENDIAN
-        DataWB[i].data[addr ^ 1] = (uint8_t)data;
+        *((u8 *)(((u32)DataWB[i].data)+ (addr^1))) = data;
 #else
-        DataWB[i].data[addr] = data;
+        *((u8 *)(((u32)DataWB[i].data)+ (addr))) = data;
 #endif
 }
 
 
-static EXTRA_INLINE void Write_Word(uint32_t addr, uint16_t data)
+static EXTRA_INLINE void Write_Word(u32 addr, u32 data)
 {
-    uint32_t i = 0;
+    u32 i=0;
 
-    addr &= M68K_ADDR_MASK;
+    addr&=M68K_ADDR_MASK;
 #ifdef FAME_DEBUG
     printf("Writing 0x%08X = 0x%04X...\n",addr,data);
 #endif
@@ -5149,21 +5198,21 @@ static EXTRA_INLINE void Write_Word(uint32_t addr, uint16_t data)
     if (FAME_CONTEXT.write_word[i].low_addr == BANKEND_TAG)
         return;
 #else
-    i = addr >> M68K_DATASFT;
+    i=addr>>M68K_DATASFT;
 #endif
 
     if (DataWW[i].mem_handler != NULL)
-        (*DataWW[i].mem_handler)(addr, data);
+        (*((memw_handler_func *)&DataWW[i].mem_handler))(addr,data);
     else
-        DataWW[i].data[addr >> 1] = data;
+        *((u16 *)(((u32)DataWW[i].data) + addr)) = data;
 }
 
-static uint32_t Opcode;
+static u32 Opcode;
 
 /*
- Checks interrupts and starts
+ Chequea las interrupciones y las inicia
 */
-static EXTRA_INLINE int32_t interrupt_chk(void)
+static EXTRA_INLINE s32 interrupt_chk(void)
 {
     /* Bit 0 MUST be zero at all times */
     assert((FAME_CONTEXT.interrupts[0] & 1) == 0);
@@ -5171,24 +5220,12 @@ static EXTRA_INLINE int32_t interrupt_chk(void)
     if (FAME_CONTEXT.interrupts[0])
     {
         /* There is a pending IRQ */
-        const uint8_t irql = irq_level_lookup[FAME_CONTEXT.interrupts[0]];
+        const u8 irql = irq_level_lookup[FAME_CONTEXT.interrupts[0]];
 
         if (irql == 7)		/* NMI */
             return irql;
         else if (irql > flag_I)
-	{
-#ifdef FAME_PREVIOUSPC
-	    /*
-	     * This bit of code had nothing to do with FAME_PREVIOUSPC
-	     * rather it makes the AtarNamco module work for certain Atari games (which happen to use FAME_PREVIOUSPC)
-	     * This isn't a real solution either.
-	     * The flag_I probably needs to be updated somewhere or TRACE mode enabled
-	     */
-	    const uint32_t ppl = (FAME_CONTEXT.sr >> 8) & 0x7;
-	    if (irql > ppl)
-#endif
-		return irql;
-	}
+            return irql;
     }
 
 #ifdef FAME_EMULATE_TRACE
@@ -5206,27 +5243,27 @@ static EXTRA_INLINE int32_t interrupt_chk(void)
 }
 
 
-static EXTRA_INLINE void execute_exception(int32_t vect)
+static EXTRA_INLINE void execute_exception(s32 vect)
 {
 	/* comprobar si hay tabla funciones manejadoras */
     if (FAME_CONTEXT.icust_handler && FAME_CONTEXT.icust_handler[vect])
     {
         FAME_CONTEXT.sr = GET_SR;
         FAME_CONTEXT.pc = UNBASED_PC;
-        FAME_CONTEXT.icust_handler[vect](vect);
+        (*(icust_handler_func*)&FAME_CONTEXT.icust_handler[vect])(vect);
     }
     else
     {
-        uint32_t newPC;
-        uint32_t oldPC;
-        uint32_t oldSR = GET_SR;
+        u32 newPC;
+        u32 oldPC;
+        u32 oldSR = GET_SR;
 
-        READ_LONG_F(vect << 2, newPC)
+        READ_LONG_F(vect * 4, newPC)
 
         /* swap A7 and USP */
         if (!flag_S)
         {
-            uint32_t tmpSP;
+            u32 tmpSP;
 
             tmpSP = ASP;
             ASP = AREG(7);
@@ -5234,9 +5271,6 @@ static EXTRA_INLINE void execute_exception(int32_t vect)
         }
 
         oldPC = UNBASED_PC;
-#ifdef FAME_PREVIOUSPC
-	FAME_CONTEXT.ppc = oldPC;
-#endif
         PUSH_32_F(oldPC)
         PUSH_16_F(oldSR)
 
@@ -5249,26 +5283,25 @@ static EXTRA_INLINE void execute_exception(int32_t vect)
 	io_cycle_counter -= exception_cycle_table[vect];
 }
 
-static EXTRA_INLINE void interrupt_attend(int32_t line)
+static EXTRA_INLINE void interrupt_attend(s32 line)
 {
-	/* to meet the IRQ, the CPU wakes from standing */
+	/* al atender la IRQ, la CPU sale del estado parado */
 	FAME_CONTEXT.execinfo &= ~M68K_HALTED;
 
-	/* Deactivate interrupt */
-	FAME_CONTEXT.interrupts[0] &= ~(1 << ((uint32_t)line));
+	/* Desactivar interrupcion */
+	FAME_CONTEXT.interrupts[0] &= ~(1 << ((u32)line));
 
-	execute_exception(FAME_CONTEXT.interrupts[(uint32_t)line]);
-	
-	/* IRQ acknowledge handler */
+	execute_exception(FAME_CONTEXT.interrupts[(u32)line]);
+
+	/* comprobar si hay rutina de acknowledge */
 	if (FAME_CONTEXT.iack_handler != NULL)
 		FAME_CONTEXT.iack_handler(line);
 
-	flag_I = (uint32_t)line;
+	flag_I = (u32)line;
 }
 
-#ifdef FAME_CHECK_BRANCHES
 /* Group 0 exceptions are not handled actually */
-static EXTRA_INLINE void execute_exception_group_0(int32_t vect, uint16_t inst_reg, int32_t addr, uint16_t spec_info)
+static EXTRA_INLINE void execute_exception_group_0(s32 vect, u16 inst_reg, s32 addr, u16 spec_info)
 {
     execute_exception(vect);
     if (!(FAME_CONTEXT.icust_handler && FAME_CONTEXT.icust_handler[vect]))
@@ -5278,10 +5311,9 @@ static EXTRA_INLINE void execute_exception_group_0(int32_t vect, uint16_t inst_r
         PUSH_16_F(spec_info);
     }
 }
-#endif
 
 /* Performs the required actions to finish the emulate call */
-static EXTRA_INLINE void finish_emulate(const int32_t cycles_to_add)
+static EXTRA_INLINE void finish_emulate(const s32 cycles_to_add)
 {
     FAME_CONTEXT.sr = GET_SR;
     FAME_CONTEXT.pc = UNBASED_PC;
@@ -5326,7 +5358,7 @@ void FAME_API(init)(void)
     BUILD_OPCODE_TABLE
     initialised = 1;
 #endif
- 
+
 #ifdef FAME_DEBUG
     puts("FAME initialized.");
 #endif
@@ -5341,7 +5373,7 @@ void FAME_API(init)(void)
 /*     M68K_NO_SUP_ADDR_SPACE (2):  No se puede resetear porque no hay mapa   */
 /*             de memoria supervisor de extraccion de opcodes                 */
 /******************************************************************************/
-uint32_t FAME_API(reset)(void)
+u32 FAME_API(reset)(void)
 {
 #ifndef FAME_GOTOS
     assert(initialised);
@@ -5351,7 +5383,6 @@ uint32_t FAME_API(reset)(void)
     if (FAME_CONTEXT.execinfo & M68K_RUNNING)
         return M68K_RUNNING;
 
-#ifdef FAME_SV_USER
     /* Si no hay mapa de memoria supervisor, salir con M68K_NO_SUP_ADDR_SPACE */
     if (!FAME_CONTEXT.sv_fetch)
         return M68K_NO_SUP_ADDR_SPACE;
@@ -5361,7 +5392,6 @@ uint32_t FAME_API(reset)(void)
     FAME_CONTEXT.read_word = FAME_CONTEXT.sv_read_word;
     FAME_CONTEXT.write_byte = FAME_CONTEXT.sv_write_byte;
     FAME_CONTEXT.write_word = FAME_CONTEXT.sv_write_word;
-#endif
 
     /* Resetear registros */
     memset(&FAME_CONTEXT.dreg[0], 0, 16*4);
@@ -5399,25 +5429,25 @@ uint32_t FAME_API(reset)(void)
 /*        -2  No se ha podido habilitar porque el vector no es valido o       */
 /*	                 el nivel es igual a 0.                                   */
 /******************************************************************************/
-int32_t FAME_API(raise_irq)(uint32_t level, int32_t vector)
+s32 FAME_API(raise_irq)(s32 level, s32 vector)
 {
-    /* Interrupt mask level */
+    /* Enmascarar nivel de interrupcion */
     level &=7;
 
-    /* Interrupt level = 0 is not valid */
+    /* Nivel de interrupcion = 0 no es valido */
     if (!level) return M68K_IRQ_INV_PARAMS;
 
-    /* Check if there is an interruption enabled at that level */
+    /* Comprobar si existe una interrupcion activada en ese nivel */
     if (FAME_CONTEXT.interrupts[0] & (1 << level))
         return M68K_IRQ_LEVEL_ERROR;
 
-    /* The interrupt vector can not be > 255 or less than -2 */
+    /* El vector de interrupcion no puede ser > 255 ni menor que -2 */
     if ((vector > 255) || (vector < M68K_SPURIOUS_IRQ))
     {
         return M68K_IRQ_INV_PARAMS;
     }
 
-    /* Enlist the interruption in interrupts */
+    /* Dar de alta la interrupcion en interrupts */
     FAME_CONTEXT.interrupts[0] |= (1 << level);
 
     switch (vector)
@@ -5426,23 +5456,22 @@ int32_t FAME_API(raise_irq)(uint32_t level, int32_t vector)
         FAME_CONTEXT.interrupts[level] = 0x18;
         break;
     case M68K_AUTOVECTORED_IRQ:
-        FAME_CONTEXT.interrupts[level] = (uint8_t)level + 0x18;
+        FAME_CONTEXT.interrupts[level] = level + 0x18;
         break;
     default:
-        FAME_CONTEXT.interrupts[level] = (uint8_t)vector;
+        FAME_CONTEXT.interrupts[level] = vector;
         break;
     }
 #ifdef FAME_DEBUG
     printf("RAISE interrupts[%i]=0x%X\n",level,FAME_CONTEXT.interrupts[level]);
 #endif
 
-    /* Test if the CPU is stopped (by STOP) */
+    /* Testear si la CPU esta detenida (mediante STOP) */
     if (FAME_CONTEXT.execinfo & M68K_HALTED)
     {
-        /* If the NMI or IRQ mask exceeds interruption, leaving stood */
-	const uint32_t ppl = (FAME_CONTEXT.sr >> 8) & 0x7;
-
-        if ((level == 7) || (level > ppl))
+        /* Si la IRQ es NMI o si supera la mascara de interrupcion, */
+        /* salir de estado parado                                   */
+        if ((level == 7) || (level > ((FAME_CONTEXT.sr >> 8) & 0x7)))
         {
             FAME_CONTEXT.execinfo &= ~M68K_HALTED;
         }
@@ -5462,7 +5491,7 @@ int32_t FAME_API(raise_irq)(uint32_t level, int32_t vector)
 /*        -2  No se ha podido retirar porque el nivel es 0 o mayor            */
 /*				o igual que 7 (no se puede retirar la NMI)                    */
 /******************************************************************************/
-int32_t FAME_API(lower_irq)(uint32_t level)
+s32 FAME_API(lower_irq)(s32 level)
 {
     /* Enmascarar nivel de interrupcion */
     level &=7;
@@ -5495,7 +5524,7 @@ int32_t FAME_API(lower_irq)(uint32_t level)
 /* No recibe parametros                                                       */
 /* Retorno: Tamano del contexto en bytes                                      */
 /******************************************************************************/
-uint32_t FAME_API(get_context_size)(void)
+s32 FAME_API(get_context_size)(void)
 {
     return sizeof(M68K_CONTEXT);
 }
@@ -5505,7 +5534,7 @@ uint32_t FAME_API(get_context_size)(void)
 /* Parametro: Direccion del contexto                                       */
 /* No retorna ningun valor                                                 */
 /***************************************************************************/
-void FAME_API(get_context)(M68K_CONTEXT *context)
+void FAME_API(get_context)(void *context)
 {
     memcpy(context,&FAME_CONTEXT,sizeof(M68K_CONTEXT));
 }
@@ -5515,7 +5544,7 @@ void FAME_API(get_context)(M68K_CONTEXT *context)
 /* Parametro: Direccion del contexto                                       */
 /* No retorna ningun valor                                                 */
 /***************************************************************************/
-void FAME_API(set_context)(const M68K_CONTEXT *context)
+void FAME_API(set_context)(void *context)
 {
     memcpy(&FAME_CONTEXT,context,sizeof(M68K_CONTEXT));
     famec_SetBanks();
@@ -5526,7 +5555,7 @@ void FAME_API(set_context)(const M68K_CONTEXT *context)
 /* No recibe parametros                                                     */
 /* Retorna 68k PC                                                           */
 /****************************************************************************/
-uint32_t FAME_API(get_pc)(void)
+u32 FAME_API(get_pc)(void)
 {
     return (FAME_CONTEXT.execinfo & M68K_RUNNING) ? UNBASED_PC : FAME_CONTEXT.pc;
 }
@@ -5538,7 +5567,7 @@ uint32_t FAME_API(get_pc)(void)
 /*  Observacion: En caso de que el indice no sea correcto                  */
 /*               la funcion devolvera -1                                   */
 /***************************************************************************/
-int32_t FAME_API(get_register)(m68k_register reg)
+s32 FAME_API(get_register)(m68k_register reg)
 {
     switch (reg)
     {
@@ -5569,12 +5598,7 @@ int32_t FAME_API(get_register)(m68k_register reg)
         return FAME_API(get_pc)();
 
     case M68K_REG_SR:
-	return (FAME_CONTEXT.execinfo & M68K_RUNNING) ? GET_SR : FAME_CONTEXT.sr;
-
-#ifdef FAME_PREVIOUSPC
-    case M68K_REG_PPC:
-	return FAME_CONTEXT.ppc;
-#endif
+		return (FAME_CONTEXT.execinfo & M68K_RUNNING) ? GET_SR : FAME_CONTEXT.sr;
 
     default:
         return M68K_INV_REG;
@@ -5588,7 +5612,7 @@ int32_t FAME_API(get_register)(m68k_register reg)
 /*           0  La operacion se ha realizado satisfactoriamente        */
 /*           1  El indice del registro no es valido (fuera de limites) */
 /***********************************************************************/
-int32_t FAME_API(set_register)(m68k_register reg, uint32_t value)
+s32 FAME_API(set_register)(m68k_register reg, u32 value)
 {
     switch (reg)
     {
@@ -5653,48 +5677,29 @@ int32_t FAME_API(set_register)(m68k_register reg, uint32_t value)
 /*  Parametro: Direccion de la palabra y tipo de acceso  */
 /*  Retorno: La palabra o -1 en caso de dir. no valida   */
 /*********************************************************/
-uint32_t FAME_API(fetch)(uint32_t addr, uint32_t memory_space)
+s32 FAME_API(fetch)(u32 addr, u32 memory_space)
 {
-    uint32_t i = 0;
-    int32_t val;
-    M68K_READ_WORD_DATA *ds = NULL;
+    u32 i=0;
+    s32 val;
+    M68K_DATA *ds = NULL;
     M68K_PROGRAM *ps = NULL;
 
-#ifdef FAME_SV_USER
     switch (memory_space & 2)
     {
     case M68K_SUP_ADDR_SPACE:
         if ((memory_space & 1) == M68K_PROG_ADDR_SPACE)
             ps = FAME_CONTEXT.sv_fetch;
         else
-            ds = (M68K_READ_WORD_DATA *)FAME_CONTEXT.sv_read_word;
+            ds = FAME_CONTEXT.sv_read_word;
         break;
 
     case M68K_USER_ADDR_SPACE:
         if ((memory_space & 1) == M68K_PROG_ADDR_SPACE)
             ps = FAME_CONTEXT.user_fetch;
         else
-            ds = (M68K_READ_WORD_DATA *)FAME_CONTEXT.user_read_word;
+            ds = FAME_CONTEXT.user_read_word;
         break;
     }
-#else
-    switch (memory_space & 2)
-    {
-    case M68K_SUP_ADDR_SPACE:
-        if ((memory_space & 1) == M68K_PROG_ADDR_SPACE)
-            ps = FAME_CONTEXT.fetch;
-        else
-            ds = (M68K_READ_WORD_DATA *)FAME_CONTEXT.read_word;
-        break;
-
-    case M68K_USER_ADDR_SPACE:
-        if ((memory_space & 1) == M68K_PROG_ADDR_SPACE)
-            ps = FAME_CONTEXT.fetch;
-        else
-            ds = (M68K_READ_WORD_DATA *)FAME_CONTEXT.read_word;
-        break;
-    }
-#endif
 
     if (ps == NULL)
     {
@@ -5713,7 +5718,7 @@ uint32_t FAME_API(fetch)(uint32_t addr, uint32_t memory_space)
 #ifdef FAME_DEBUG
             printf("ERROR de BUS en region %d...\n",i);
 #endif
-            return (uint32_t)-1;
+            return -1;
         }
         else
         {
@@ -5722,14 +5727,14 @@ uint32_t FAME_API(fetch)(uint32_t addr, uint32_t memory_space)
 #ifdef FAME_DEBUG
                 puts("Handled...\n");
 #endif
-                val = (*ds[i].mem_handler)(addr);
+                val= (*((mem16_handler_func *)&ds[i].mem_handler))(addr);
             }
             else
             {
 #ifdef FAME_DEBUG
                 printf("Ptr en region %d... addr: %p\n",i,ds[i].data);
 #endif
-                val = ds[i].data[addr >> 1];
+                val = *((u16 *)(((u32)ds[i].data) + addr));
 #ifdef FAME_DEBUG
                 puts("read");
 #endif
@@ -5742,12 +5747,9 @@ uint32_t FAME_API(fetch)(uint32_t addr, uint32_t memory_space)
     }
     else
     {
-#ifdef FAME_USE_CONTEXT_SWITCH
-        uint16_t *ptr = FAME_CONTEXT.FetchList[(addr >> M68K_FETCHSFT) & M68K_FETCHMASK];
-#else
-        uint16_t *ptr = Fetch[(addr >> M68K_FETCHSFT) & M68K_FETCHMASK];
-#endif
-        val = ptr[(addr & M68K_ADDR_MASK) >> 1];
+        u32 tmp=Fetch[((addr) >> M68K_FETCHSFT) & M68K_FETCHMASK];
+        u16 *p= (u16*)(((addr) & M68K_ADDR_MASK) + (tmp));
+        val = *p;
 #ifdef FAME_DEBUG
         printf("@%08X *%p=%04X\n",addr,p,val);
 #endif
@@ -5762,7 +5764,7 @@ uint32_t FAME_API(fetch)(uint32_t addr, uint32_t memory_space)
 /*  Parametro: Ninguno                                */
 /*  Retorno: cycles_counter                           */
 /******************************************************/
-uint32_t FAME_API(get_cycles_counter)(void)
+u32 FAME_API(get_cycles_counter)(void)
 {
     if (FAME_CONTEXT.execinfo & M68K_RUNNING)
 		return (cycles_to_do - io_cycle_counter) + FAME_CONTEXT.cycles_counter;
@@ -5776,9 +5778,9 @@ uint32_t FAME_API(get_cycles_counter)(void)
 /*  Parametro: Ninguno                                */
 /*  Retorno: cycles_counter                           */
 /******************************************************/
-uint32_t FAME_API(trip_cycles_counter)(void)
+u32 FAME_API(trip_cycles_counter)(void)
 {
-    int32_t ret = FAME_CONTEXT.cycles_counter;
+    s32 ret=FAME_CONTEXT.cycles_counter;
 
     if (FAME_CONTEXT.execinfo & M68K_RUNNING)
     {
@@ -5790,15 +5792,15 @@ uint32_t FAME_API(trip_cycles_counter)(void)
 }
 
 /**********************************************************/
-/*  m68k_control_cycles_counter(clocks)                   */
+/*  m68k_control_cycles_counter(n)                        */
 /*  Retorna el cycles_counter y lo reinicializa si        */
-/*  cycles_counter = clocks                               */
-/*  Parametro: ciclos = clocks                            */
+/*  cycles_counter = n                                    */
+/*  Parametro: ciclos = n                                 */
 /*  Retorno: cycles_counter                               */
 /**********************************************************/
-uint32_t FAME_API(control_cycles_counter)(uint32_t clocks)
+u32 FAME_API(control_cycles_counter)(s32 cycles)
 {
-    return (clocks)?FAME_API(trip_cycles_counter)():FAME_API(get_cycles_counter)();
+    return (cycles)?FAME_API(trip_cycles_counter)():FAME_API(get_cycles_counter)();
 }
 
 /******************************************************/
@@ -5847,7 +5849,7 @@ void FAME_API(stop_emulating)(void)
 /*  Parametro: Ninguno                                */
 /*  Retorno: Ninguno                                  */
 /******************************************************/
-void FAME_API(add_cycles)(uint32_t clocks)
+void FAME_API(add_cycles)(s32 cycles)
 {
     if (FAME_CONTEXT.execinfo & M68K_RUNNING)
     {
@@ -5855,11 +5857,11 @@ void FAME_API(add_cycles)(uint32_t clocks)
 		  when the CPU is running, io_cycle_counter stores the remaining cycles to be run
 		  therefore, we have to substract in order to "increment" the clock counter
     	*/
-        io_cycle_counter -= clocks;
+        io_cycle_counter -= cycles;
     }
     else
     {
-        FAME_CONTEXT.cycles_counter += clocks;
+        FAME_CONTEXT.cycles_counter += cycles;
     }
 }
 
@@ -5871,7 +5873,7 @@ void FAME_API(add_cycles)(uint32_t clocks)
 /*  Parametro: Ninguno                                */
 /*  Retorno: Ninguno                                  */
 /******************************************************/
-void FAME_API(release_cycles)(uint32_t clocks)
+void FAME_API(release_cycles)(s32 cycles)
 {
     if (FAME_CONTEXT.execinfo & M68K_RUNNING)
     {
@@ -5879,11 +5881,11 @@ void FAME_API(release_cycles)(uint32_t clocks)
     	  when the CPU is running, io_cycle_counter stores the remaining cycles to be run
     	  therefore, we have to add in order to "decrement" the clock counter
     	*/
-        io_cycle_counter += clocks;
+        io_cycle_counter += cycles;
     }
     else
     {
-        FAME_CONTEXT.cycles_counter -= clocks;
+        FAME_CONTEXT.cycles_counter -= cycles;
     }
 }
 
@@ -5892,7 +5894,7 @@ void FAME_API(release_cycles)(uint32_t clocks)
 /* No recibe parametros                                                      */
 /* Retorna el estado de la CPU                                               */
 /*****************************************************************************/
-uint32_t FAME_API(get_cpu_state)(void)
+u32 FAME_API(get_cpu_state)(void)
 {
     return FAME_CONTEXT.execinfo;
 }
@@ -5905,8 +5907,12 @@ uint32_t FAME_API(get_cpu_state)(void)
 /*
  m68k_emulate()
  Parametros: Numero de ciclos a ejecutar
+ Retorno: Exito de la operacion
+          0  La operacion se ha realizado satisfactoriamente
+          -1 La CPU esta detenida debido a un ERROR DE BUS DOBLE (linea)
+             El PC ha salido de los limites (bucle no en linea)
 */
-void FAME_API(emulate)(uint32_t clocks)
+u32 FAME_API(emulate)(s32 cycles)
 {
 #ifdef FAME_GOTOS
     if (!initialised)
@@ -5925,7 +5931,7 @@ void FAME_API(emulate)(uint32_t clocks)
 #if 0
     /* El bit M68K_FAULTED no esta actualmente en uso */
     /* Comprobar si la CPU esta detenida debido a un doble error de bus */
-    if (FAME_CONTEXT.execinfo & M68K_FAULTED) return (uint32_t)-1;
+    if (FAME_CONTEXT.execinfo & M68K_FAULTED) return (u32)-1;
 #endif
 
     /* Poner la CPU en estado de ejecucion */
@@ -5945,24 +5951,24 @@ void FAME_API(emulate)(uint32_t clocks)
 #endif
 
     /* guardar ciclos de ejecucion solicitados */
-    io_cycle_counter = cycles_to_do = clocks;
+    io_cycle_counter = cycles_to_do = cycles;
     cycles_needed = 0;
 
 #ifdef FAME_EMULATE_TRACE
     if (!(FAME_CONTEXT.execinfo & M68K_EMULATE_TRACE))
 #endif
     {
-        int32_t line = interrupt_chk();
-	if (line > 0)
+        s32 line = interrupt_chk();
+       if (line > 0)
         {
         	interrupt_attend(line);
 
 #ifdef FAME_IRQ_CLOCKING
-		if(io_cycle_counter <= 0)
-		{
-			finish_emulate(cycles_to_do - io_cycle_counter);
-			return;
-		}
+			if(io_cycle_counter <= 0)
+			{
+				finish_emulate(cycles_to_do - io_cycle_counter);
+				return M68K_OK;
+			}
 #endif
         }
 #ifdef FAME_EMULATE_TRACE
@@ -5978,16 +5984,16 @@ void FAME_API(emulate)(uint32_t clocks)
 #endif
     }
 
-    /* Check whether the CPU is stopped */
+    /* Comprobar si la CPU esta parada */
     if (FAME_CONTEXT.execinfo & M68K_HALTED)
     {
-        /* The CPU is stopped by the STOP instruction */
-        /* Add clock cycles required */
+        /* La CPU esta detenida mediante la instruccion STOP */
+        /* Agregar ciclos de reloj requeridos */
         finish_emulate(cycles_to_do);
-        return;
+        return M68K_OK;
     }
 
-#ifndef FAME_INLINE_LOOP
+#ifdef FAME_GOTOS
 famec_Exec:
 #endif
 
@@ -6020,22 +6026,24 @@ famec_Exec_End:
     else
 #endif
         if (cycles_needed>0)
-	{
-	    int32_t line = interrupt_chk();
-	    io_cycle_counter= cycles_needed;
-	    cycles_needed=0;
-	    if (line>0)
-	    {
-		    interrupt_attend(line);
-	    }
+			{
+				s32 line=interrupt_chk();
+				io_cycle_counter= cycles_needed;
+				cycles_needed=0;
+				if (line>0)
+				{
+					interrupt_attend(line);
+				}
 #ifdef FAME_EMULATE_TRACE
-	    else if (!(flag_T))
+				else
+					if (!(flag_T))
 #endif
-	    if (io_cycle_counter > 0)
-	    {
-		    NEXT
-	    }
+						if (io_cycle_counter > 0)
+						{
+							NEXT
+						}
         }
 
 	finish_emulate(cycles_to_do - io_cycle_counter);
+    return M68K_OK;
 }

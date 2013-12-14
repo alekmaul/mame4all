@@ -87,6 +87,9 @@ struct MachineSound
 #if (HAS_MSM5205)
 #include "sound/msm5205.h"
 #endif
+#if (HAS_MSM5232)
+#include "sound/msm5232.h"
+#endif
 #if (HAS_UPD7759)
 #include "sound/upd7759.h"
 #endif
@@ -123,6 +126,9 @@ struct MachineSound
 #if (HAS_QSOUND)
 #include "sound/qsound.h"
 #endif
+#if (HAS_IREMGA20)
+#include "sound/iremga20.h"
+#endif
 #if (HAS_SPEAKER)
 #include "sound/speaker.h"
 #endif
@@ -133,7 +139,7 @@ struct MachineSound
 
 enum
 {
-	SOUND_DUMMY,
+	SOUND_DUMMY = 0,
 #if (HAS_CUSTOM)
 	SOUND_CUSTOM,
 #endif
@@ -227,6 +233,9 @@ enum
 #if (HAS_MSM5205)
 	SOUND_MSM5205,	/* CPU-based ADPCM system */
 #endif
+#if (HAS_MSM5232)
+	SOUND_MSM5232,
+#endif
 #if (HAS_UPD7759)
 	SOUND_UPD7759,	/* ROM-based ADPCM system */
 #endif
@@ -262,6 +271,9 @@ enum
 #endif
 #if (HAS_QSOUND)
 	SOUND_QSOUND,
+#endif
+#if (HAS_IREMGA20)
+    SOUND_IREMGA20,
 #endif
 #if (HAS_SPEAKER)
 	SOUND_SPEAKER,

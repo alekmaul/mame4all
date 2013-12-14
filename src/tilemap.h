@@ -96,7 +96,10 @@ struct tilemap_mask {
 struct tilemap {
 	UINT32 (*get_memory_offset)( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows );
 	int *memory_offset_to_cached_index;
+#if NOT_USE_CACHED_INDEX_TO_MEMORY_OFFSET
+#else
 	UINT32 *cached_index_to_memory_offset;
+#endif
 	int logical_flip_to_cached_flip[4];
 
 	/* callback to interpret video VRAM for the tilemap */
@@ -120,6 +123,7 @@ struct tilemap {
 	int type;
 	int transparent_pen;
 	unsigned int transmask[4];
+	unsigned int bg_transmask[4];
 
 	void (*draw)( int, int );
 	void (*draw_opaque)( int, int );
@@ -127,7 +131,9 @@ struct tilemap {
 	UINT8 *priority,	/* priority for each tile */
 		**priority_row;
 
+#if USE_VISIBLE
 	UINT8 *visible; /* boolean flag for each tile */
+#endif
 
 	UINT8 *dirty_vram; /* boolean flag for each tile */
 
@@ -171,6 +177,8 @@ void tilemap_dispose( struct tilemap *tilemap );
 */
 
 void tilemap_set_transparent_pen( struct tilemap *tilemap, int pen );
+void tilemap_set_transmask( struct tilemap *tilemap, int which, unsigned int penmask );
+void tilemap_set_all_transmask( struct tilemap *tilemap, int which, unsigned int fgmask, unsigned int bgmask );
 void tilemap_set_scroll_cols( struct tilemap *tilemap, int scroll_cols );
 void tilemap_set_scroll_rows( struct tilemap *tilemap, int scroll_rows );
 /* scroll_rows and scroll_cols default to 1 for XY scrolling */
