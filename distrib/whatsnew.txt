@@ -26,6 +26,8 @@ MAME4ALL OD 1.1 (dd/mm/2013)
 	updated : Fixed colors and other things in Arabian (from Mame 0.37b16)
 	updated : Fixed colors in World Tennis (from Mame 0.37b16)
 	updated : Fixed colors in battle Lane (from Mame 0.37b16)
+	Updated : Change L & R to Left/Right for game options
+	Updated : Only one OPK file instead of multiple dge files
 
 	Added : Combat Hawk from Mame 0.115 (same drivers as 'Bank Panic' and similar kind of game) (from A320 Slaanesh Native version)
 	Added : Mermaid collision detection from Mame 0.125 to make game fully playable. Also added Rougien, a neat very 80's space game (from A320 Slaanesh Native version)
@@ -46,7 +48,6 @@ MAME4ALL OD 1.1 (dd/mm/2013)
 	updated : Nintendo 8080 games: Sheriff, Bandido, Space Fever and Helifire now have sound (from A320 Slaanesh Native version)
 	updated : DISCRETE SOUND from MAME 0.81 which allows many more games to have DISCRETE sound now (from A320 Slaanesh Native version)
 	updated : Night Driver. Now with sound and flashing screen on crash from Mame 0.89 (from A320 Slaanesh Native version)
-
 
 MAME4ALL OD 1.0 (21/10/2012)
 ----------------------------
