@@ -27,35 +27,18 @@ UINT32 *palette_16bit_lookup;
 #define BLIT_8_TO_16_half(DEST,SRC,LEN)  \
 { \
 	register int n = LEN>>3; \
-	/*register unsigned int *u32dest = (unsigned int *)DEST;*/ \
-	register unsigned short *u32dest = (unsigned short *)DEST; \
+	register unsigned int *u32dest = (unsigned int *)DEST; \
 	register unsigned char *src = SRC; \
 	while (n) \
 	{ \
-		/* *u32dest++ = (odx_palette[*(src+3)] << 16) | odx_palette[*src];*/ \
-		*u32dest++ = odx_palette[*src]; \
-		src+=2; \
-		*u32dest++ = odx_palette[*src]; \
-		src+=2; \
-		/* src+=4; */ \
-		/* *u32dest++ = (odx_palette[*(src+3)] << 16) | odx_palette[*src];*/ \
-		*u32dest++ = odx_palette[*src]; \
-		src+=2; \
-		*u32dest++ = odx_palette[*src]; \
-		src+=2; \
-		/* src+=4; */ \
-		/* *u32dest++ = (odx_palette[*(src+3)] << 16) | odx_palette[*src];*/ \
-		*u32dest++ = odx_palette[*src]; \
-		src+=2; \
-		*u32dest++ = odx_palette[*src]; \
-		src+=2; \
-		/* src+=4; */ \
-		/* *u32dest++ = (odx_palette[*(src+3)] << 16) | odx_palette[*src];*/ \
-		*u32dest++ = odx_palette[*src]; \
-		src+=2; \
-		*u32dest++ = odx_palette[*src]; \
-		src+=2; \
-		/* src+=4; */ \
+		*u32dest++ = (odx_palette[*(src+3)] << 16) | odx_palette[*src]; \
+		src+=4; \
+		*u32dest++ = (odx_palette[*(src+3)] << 16) | odx_palette[*src]; \
+		 src+=4; \
+		*u32dest++ = (odx_palette[*(src+3)] << 16) | odx_palette[*src]; \
+		src+=4; \
+		*u32dest++ = (odx_palette[*(src+3)] << 16) | odx_palette[*src]; \
+		src+=4; \
 		n--; \
 	} \
 	if ((n=(LEN&7))) \
@@ -75,10 +58,14 @@ UINT32 *palette_16bit_lookup;
 	register unsigned char *src = SRC; \
 	while (n) \
 	{ \
-		 *u32dest++ = (odx_palette_rgb[*(src++ + 1)] << 16) | odx_palette_rgb[*src++];  \
-		 *u32dest++ = (odx_palette_rgb[*(src++ + 1)] << 16) | odx_palette_rgb[*src++];  \
-		 *u32dest++ = (odx_palette_rgb[*(src++ + 1)] << 16) | odx_palette_rgb[*src++];  \
-		 *u32dest++ = (odx_palette_rgb[*(src++ + 1)] << 16) | odx_palette_rgb[*src++];  \
+		 *u32dest++ = (odx_palette_rgb[*(src + 1)] << 16) | odx_palette_rgb[*src];  \
+		 src += 2; \
+		 *u32dest++ = (odx_palette_rgb[*(src + 1)] << 16) | odx_palette_rgb[*src];  \
+		 src += 2; \
+		 *u32dest++ = (odx_palette_rgb[*(src + 1)] << 16) | odx_palette_rgb[*src];  \
+		 src += 2; \
+		 *u32dest++ = (odx_palette_rgb[*(src + 1)] << 16) | odx_palette_rgb[*src];  \
+		 src += 2; \
 		n--; \
 	} \
 	if ((n=(LEN&7))) \
@@ -180,18 +167,18 @@ INLINE void blitscreen_dirty0_color8_halfscale(struct osd_bitmap *bitmap)
 
 INLINE void blitscreen_dirty0_color8_horzscale(struct osd_bitmap *bitmap)
 {
-	register unsigned short *buffer_scr = (unsigned short *)(SCREEN8+gfx_xoffset+(320*gfx_yoffset));
+	register unsigned short *buffer_scr = (unsigned short *)(SCREEN8+gfx_xoffset+(ODX_SCREEN_WIDTH*gfx_yoffset));
 	unsigned char *buffer_mem = (unsigned char *)(bitmap->line[skiplines]+skipcolumns);
 	int buffer_mem_offset = (bitmap->line[1] - bitmap->line[0])-gfx_width;
 	int step,i;
 	int x,y=gfx_display_lines;
 	
-	if (gfx_width>320)
+	if (gfx_width>ODX_SCREEN_WIDTH)
 	{
 		/* Strech */
-		step=320/(gfx_width-320);
+		step=ODX_SCREEN_WIDTH/(gfx_width-ODX_SCREEN_WIDTH);
 		do {
-			x=320; i=step;
+			x=ODX_SCREEN_WIDTH; i=step;
 			do {
 				*buffer_scr++=(odx_palette_rgb[*buffer_mem++]);
 				x--; i--;
@@ -204,9 +191,9 @@ INLINE void blitscreen_dirty0_color8_horzscale(struct osd_bitmap *bitmap)
 	else
 	{
 		/* Scale */
-		step=320/(320-gfx_width);
+		step=ODX_SCREEN_WIDTH/(ODX_SCREEN_WIDTH-gfx_width);
 		do {
-			x=320; i=1;
+			x=ODX_SCREEN_WIDTH; i=1;
 			do {
 				i--;
 				if (i) { *buffer_scr++=(odx_palette_rgb[*buffer_mem++]); }
@@ -434,18 +421,18 @@ INLINE void blitscreen_dirty0_palettized16_noscale(struct osd_bitmap *bitmap)
 
 INLINE void blitscreen_dirty0_palettized16_horzscale(struct osd_bitmap *bitmap)
 {
-	register unsigned short *buffer_scr = SCREEN16 + gfx_xoffset + (320*gfx_yoffset);
+	register unsigned short *buffer_scr = SCREEN16 + gfx_xoffset + (ODX_SCREEN_WIDTH*gfx_yoffset);
 	unsigned short *buffer_mem = ((unsigned short*)(bitmap->line[skiplines])) + skipcolumns;
 	int buffer_mem_offset = ((bitmap->line[1] - bitmap->line[0])>>1)-gfx_width;
 	int step,i;
 	int x,y=gfx_display_lines;
 	
-	if (gfx_width>320)
+	if (gfx_width>ODX_SCREEN_WIDTH)
 	{
 		/* Strech */
-		step=320/(gfx_width-320);
+		step=ODX_SCREEN_WIDTH/(gfx_width-ODX_SCREEN_WIDTH);
 		do {
-			x=320; i=step;
+			x=ODX_SCREEN_WIDTH; i=step;
 			do {
 				*buffer_scr++=palette_16bit_lookup[*buffer_mem++];
 				x--; i--;
@@ -458,9 +445,9 @@ INLINE void blitscreen_dirty0_palettized16_horzscale(struct osd_bitmap *bitmap)
 	else
 	{
 		/* Scale */
-		step=320/(320-gfx_width);
+		step=ODX_SCREEN_WIDTH/(ODX_SCREEN_WIDTH-gfx_width);
 		do {
-			x=320; i=1;
+			x=ODX_SCREEN_WIDTH; i=1;
 			do {
 				i--;
 				if (i) { *buffer_scr++=palette_16bit_lookup[*buffer_mem++]; }
@@ -661,12 +648,7 @@ void blitscreen_dirty1_color16(struct osd_bitmap *bitmap)
                     			w = gfx_display_columns - x;
 				for (h = 0; ((h < 16) && ((y + h) < gfx_display_lines)); h++)
 				{
-					int wx;
-					for (wx=0;wx<w;wx++)
-					{
-						address0[wx] = lb0[wx];
-					}
-					//memcpy(address0,lb0,w<<1);
+					memcpy(address0,lb0,w<<1);
 					lb0 += width;
 					address0 += gfx_width;
 				}
@@ -682,43 +664,37 @@ void blitscreen_dirty1_color16(struct osd_bitmap *bitmap)
 INLINE void blitscreen_dirty0_color16_noscale(struct osd_bitmap *bitmap)
 //void blitscreen_dirty0_color16(struct osd_bitmap *bitmap)
 {
-	//int y=gfx_display_lines,x;
-	int x,y;
+	int y=gfx_display_lines,x;
 	int width=(bitmap->line[1] - bitmap->line[0])>>1;
 	int columns=gfx_display_columns<<1;
 	unsigned short *lb = ((unsigned short*)(bitmap->line[skiplines])) + skipcolumns;
 	register unsigned short *address = SCREEN16 + gfx_xoffset + (gfx_yoffset * gfx_width);
 
-	//do
-	for (y = 0; y < gfx_display_lines; y++)
+	do
 	{
-	    //memcpy(address,lb,columns);
-		for (x = 0; x < columns; x++)
-		{
-			address[x] = lb[x];
-		}
+	    memcpy(address,lb,columns);
 		lb+=width;
 		address+=gfx_width;
-		//y--;
+		y--;
 	}
-	//while (y);
+	while (y);
 	//FLIP_VIDEO
 }
 
 INLINE void blitscreen_dirty0_color16_horzscale(struct osd_bitmap *bitmap)
 {
-	unsigned short *buffer_scr = SCREEN16 + gfx_xoffset + (320*gfx_yoffset);
+	unsigned short *buffer_scr = SCREEN16 + gfx_xoffset + (ODX_SCREEN_WIDTH*gfx_yoffset);
 	register unsigned short *buffer_mem = ((unsigned short*)(bitmap->line[skiplines])) + skipcolumns;
 	int buffer_mem_offset = ((bitmap->line[1] - bitmap->line[0])>>1)-gfx_width;
 	int step,i;
 	int x,y=gfx_display_lines;
 	
-	if (gfx_width>320)
+	if (gfx_width>ODX_SCREEN_WIDTH)
 	{
 		/* Strech */
-		step=320/(gfx_width-320);
+		step=ODX_SCREEN_WIDTH/(gfx_width-ODX_SCREEN_WIDTH);
 		do {
-			x=320; i=step;
+			x=ODX_SCREEN_WIDTH; i=step;
 			do {
 				*buffer_scr++=*buffer_mem++;
 				x--; i--;
@@ -731,9 +707,9 @@ INLINE void blitscreen_dirty0_color16_horzscale(struct osd_bitmap *bitmap)
 	else
 	{
 		/* Scale */
-		step=320/(320-gfx_width);
+		step=ODX_SCREEN_WIDTH/(ODX_SCREEN_WIDTH-gfx_width);
 		do {
-			x=320; i=1;
+			x=ODX_SCREEN_WIDTH; i=1;
 			do {
 				i--;
 				if (i) { *buffer_scr++=*buffer_mem++; }
