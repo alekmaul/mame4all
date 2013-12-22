@@ -95,7 +95,7 @@ static struct MemoryReadAddress readmem[] =
 	{ 0x0b001, 0x0b001, input_port_1_r },
 	{ 0x0b002, 0x0b002, input_port_2_r },
 	{ 0x0b003, 0x0b003, input_port_3_r },
-	{ 0x0d000, 0x0d00f, raiden_sound_r },
+	{ 0x0d000, 0x0d00d, raiden_sound_r },
 	{ 0xa0000, 0xfffff, MRA_ROM },
 	{ -1 }	/* end of table */
 };
@@ -107,7 +107,7 @@ static struct MemoryWriteAddress writemem[] =
 	{ 0x0a000, 0x0afff, raiden_shared_w, &raiden_shared_ram },
 	{ 0x0b000, 0x0b007, raiden_control_w },
 	{ 0x0c000, 0x0c7ff, raiden_text_w, &videoram },
-	{ 0x0d000, 0x0d00f, seibu_soundlatch_w, &seibu_shared_sound_ram },
+	{ 0x0d000, 0x0d00d, seibu_soundlatch_w, &seibu_shared_sound_ram },
 	{ 0x0d060, 0x0d067, MWA_RAM, &raiden_scroll_ram },
 	{ 0xa0000, 0xfffff, MWA_ROM },
 	{ -1 }	/* end of table */
@@ -142,7 +142,7 @@ static struct MemoryReadAddress alt_readmem[] =
 {
 	{ 0x00000, 0x07fff, MRA_RAM },
 	{ 0x08000, 0x08fff, raiden_shared_r },
-	{ 0x0a000, 0x0a00f, raiden_sound_r },
+	{ 0x0a000, 0x0a00d, raiden_sound_r },
 	{ 0x0e000, 0x0e000, input_port_0_r },
 	{ 0x0e001, 0x0e001, input_port_1_r },
 	{ 0x0e002, 0x0e002, input_port_2_r },
@@ -156,7 +156,7 @@ static struct MemoryWriteAddress alt_writemem[] =
 	{ 0x00000, 0x06fff, MWA_RAM },
 	{ 0x07000, 0x07fff, MWA_RAM, &spriteram, &spriteram_size },
 	{ 0x08000, 0x08fff, raiden_shared_w, &raiden_shared_ram },
-	{ 0x0a000, 0x0a00f, seibu_soundlatch_w, &seibu_shared_sound_ram },
+	{ 0x0a000, 0x0a00d, seibu_soundlatch_w, &seibu_shared_sound_ram },
 	{ 0x0b000, 0x0b007, raiden_control_w },
 	{ 0x0c000, 0x0c7ff, raidena_text_w, &videoram },
 	{ 0x0f000, 0x0f035, MWA_RAM, &raiden_scroll_ram },
@@ -339,8 +339,8 @@ static struct MachineDriver machine_driver_raiden =
 			SEIBU_SOUND_SYSTEM_CPU(14318180/4)
 		}
 	},
-	60, DEFAULT_REAL_60HZ_VBLANK_DURATION*2,	/* frames per second, vblank duration */
-	70,	/* CPU interleave  */
+	60, DEFAULT_REAL_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
+	170,	/* CPU interleave  */
 	seibu_sound_init_2,
 
 	/* video hardware */
@@ -368,13 +368,13 @@ static struct MachineDriver machine_driver_raidena =
 	{
 		{
 			CPU_V30, /* NEC V30 CPU */
-			19000000, /* 20MHz is correct, but glitched!? */
+			10000000, /* 10MHz is verified */
 			alt_readmem,alt_writemem,0,0,
 			raiden_interrupt,1
 		},
 		{
 			CPU_V30, /* NEC V30 CPU */
-			19000000, /* 20MHz is correct, but glitched!? */
+			10000000, /* 10MHz is verified */
 			sub_readmem,sub_writemem,0,0,
 			raiden_interrupt,1
 		},
@@ -382,8 +382,8 @@ static struct MachineDriver machine_driver_raidena =
 			SEIBU_SOUND_SYSTEM_CPU(14318180/4)
 		}
 	},
-	60, DEFAULT_REAL_60HZ_VBLANK_DURATION*2,	/* frames per second, vblank duration */
-	60,	/* CPU interleave  */
+	60, DEFAULT_REAL_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
+	130,	/* CPU interleave  */
 	seibu_sound_init_2,
 
 	/* video hardware */
@@ -450,7 +450,7 @@ ROM_START( raidena )
 	ROM_LOAD_V20_ODD ( "raiden05.rom",   0x0c0000, 0x20000, 0xed03562e )
 	ROM_LOAD_V20_EVEN( "raiden06.rom",   0x0c0000, 0x20000, 0xa19d5b5d )
 
-	ROM_REGION( 0x18000, REGION_CPU3 ) /* 64k code for sound Z80 */
+	ROM_REGION( 0x20000*2, REGION_CPU3 ) /* 64k code for sound Z80 */
 	ROM_LOAD( "raiden08.rom", 0x000000, 0x08000, 0x731adb43 )
 	ROM_CONTINUE(             0x010000, 0x08000 )
 
@@ -614,12 +614,17 @@ static void init_raidena(void)
 {
 	memory_patcha();
 	common_decrypt();
-	seibu_sound_decrypt();
+
+	/* copy the sound cpu rom  */
+	memcpy(&memory_region(REGION_CPU3)[0x18000], &memory_region(REGION_CPU3)[0x0], 0x8000);
+
+	/* Use the new decrypt function */
+	seibu_sound_decrypt(REGION_CPU3,0x20000);
 }
 
 
 /***************************************************************************/
 
 GAME( 1990, raiden,  0,      raiden,  raiden, raiden,  ROT270, "Seibu Kaihatsu", "Raiden" )
-GAMEX(1990, raidena, raiden, raidena, raiden, raidena, ROT270, "Seibu Kaihatsu", "Raiden (Alternate Hardware)", GAME_NO_SOUND )
+GAME(1990, raidena, raiden, raidena, raiden, raidena, ROT270, "Seibu Kaihatsu", "Raiden (Alternate Hardware)")
 GAME( 1990, raidenk, raiden, raidena, raiden, raidenk, ROT270, "Seibu Kaihatsu (IBL Corporation license)", "Raiden (Korea)" )

@@ -341,8 +341,8 @@ static struct MachineDriver machine_driver_##GAMENAME = 			\
 	/* basic machine hardware */									\
 	{																\
 		{															\
-			CPU_8080,												\
-			3072000,	/* 3 Mhz ? */								\
+			CPU_8085A,												\
+			11000000/2,	/* 5,5 Mhz */								\
 			readmem,GAMENAME##_writemem,0,0,						\
 			ignore_interrupt,1										\
 		}															\

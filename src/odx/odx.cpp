@@ -187,6 +187,7 @@ int main (int argc, char **argv)
         {
             for (i = 0; drivers[i] && (game_index == -1); i++)
             {
+				//ALEK fprintf(stderr,"%s -> %s\n",argv[j],drivers[i]->name); fflush(stderr);
                 if (strcasecmp(argv[j],drivers[i]->name) == 0)
                 {
                     game_index = i;

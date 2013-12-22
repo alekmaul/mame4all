@@ -119,9 +119,7 @@ static struct MemoryWriteAddress sub_writemem[] =
 
 /******************************************************************************/
 
-#if 0
 SEIBU_SOUND_SYSTEM_YM3812_MEMORY_MAP(input_port_4_r); /* Coin port */
-#endif
 
 /******************************************************************************/
 
@@ -265,10 +263,10 @@ static struct GfxLayout fg_layout =
 
 static struct GfxDecodeInfo dynduke_gfxdecodeinfo[] =
 {
-	{ REGION_GFX1, 0, &charlayout,   1280, 16 },
+	{ REGION_GFX1, 0, &spritelayout,  768, 32 },
 	{ REGION_GFX2, 0, &bg_layout,    2048, 32 }, /* Really 0 */
 	{ REGION_GFX3, 0, &fg_layout,     512, 16 },
-	{ REGION_GFX4, 0, &spritelayout,  768, 32 },
+	{ REGION_GFX4, 0, &charlayout,   1280, 16 },
 	{ -1 } /* end of array */
 };
 
@@ -293,21 +291,19 @@ static struct MachineDriver machine_driver_dynduke =
 	{
 		{
 			CPU_V30, /* NEC V30-8 CPU */
-			16000000, /* Guess */
+			8000000, /* verified from mame 0.148 */
 			readmem,writemem,0,0,
 			dynduke_interrupt,1
 		},
 		{
 			CPU_V30, /* NEC V30-8 CPU */
-			16000000, /* Guess */
+			8000000, /* verified from mame 0.148 */
 			sub_readmem,sub_writemem,0,0,
 			dynduke_interrupt,1
 		},
-#if 0
 		{
 			SEIBU_SOUND_SYSTEM_CPU(14318180/4)
 		}
-#endif
 	},
 	60, DEFAULT_REAL_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
 	60,	/* CPU interleave  */
@@ -336,23 +332,31 @@ static struct MachineDriver machine_driver_dynduke =
 /***************************************************************************/
 
 ROM_START( dynduke )
-	ROM_REGION( 0x100000, REGION_CPU1 ) /* v30 main cpu */
-	ROM_LOAD_V20_ODD ("dd1.cd8",   0x0a0000, 0x10000, 0xa5e2a95a )
-	ROM_LOAD_V20_EVEN("dd2.cd7",   0x0a0000, 0x10000, 0x7e51af22 )
-	ROM_LOAD_V20_ODD ("dd3.ef8",   0x0c0000, 0x20000, 0xa56f8692 )
-	ROM_LOAD_V20_EVEN("dd4.ef7",   0x0c0000, 0x20000, 0xee4b87b3 )
+	ROM_REGION( 0x60000, REGION_CPU1 ) /* v30 main cpu */
+	ROM_LOAD_V20_ODD ("dd1.cd8",   0x000000, 0x10000, 0xa5e2a95a )
+	ROM_LOAD_V20_EVEN("dd2.cd7",   0x000000, 0x10000, 0x7e51af22 )
+	ROM_LOAD_V20_ODD ("dd3.ef8",   0x020000, 0x20000, 0xa56f8692 )
+	ROM_LOAD_V20_EVEN("dd4.ef7",   0x020000, 0x20000, 0xee4b87b3 )
 
-	ROM_REGION( 0x100000, REGION_CPU2 ) /* v30 sub cpu */
-	ROM_LOAD_V20_ODD ("dd5.p8",  0x0e0000, 0x10000, 0x883d319c )
-	ROM_LOAD_V20_EVEN("dd6.p7",  0x0e0000, 0x10000, 0xd94cb4ff )
+	ROM_REGION( 0x20000, REGION_CPU2 ) /* v30 sub cpu */
+	ROM_LOAD_V20_ODD ("dd5.p8",  0x000000, 0x10000, 0x883d319c )
+	ROM_LOAD_V20_EVEN("dd6.p7",  0x000000, 0x10000, 0xd94cb4ff )
 
-	ROM_REGION( 0x18000, REGION_CPU3 ) /* sound Z80 */
-	ROM_LOAD( "dd8.w8", 0x000000, 0x08000, 0x3c29480b )
-	ROM_CONTINUE(       0x010000, 0x08000 )
+	ROM_REGION( 0x20000*2, REGION_CPU3 ) /* sound Z80 */
+	ROM_LOAD( "dd8.w8",       0x000000, 0x08000, 0x3c29480b )
+	ROM_RELOAD(               0x018000, 0x08000 )
+	ROM_CONTINUE(             0x010000, 0x08000 )
 
-	ROM_REGION( 0x020000, REGION_GFX1 | REGIONFLAG_DISPOSE )
-	ROM_LOAD( "dd9.jk5",	0x000000, 0x04000, 0xf2bc9af4 ) /* chars */
-	ROM_LOAD( "dd10.jk3",	0x010000, 0x04000, 0xc2a9f19b )
+
+	ROM_REGION( 0x200000, REGION_GFX1 | REGIONFLAG_DISPOSE )
+	ROM_LOAD_GFX_EVEN(  "dd.n1", 0x000000, 0x40000, 0xcf1db927 ) /* sprites */
+	ROM_LOAD_GFX_ODD (  "dd.n2", 0x000000, 0x40000, 0x5328150f )
+	ROM_LOAD_GFX_EVEN(  "dd.m1", 0x080000, 0x40000, 0x80776452 )
+	ROM_LOAD_GFX_ODD (  "dd.m2", 0x080000, 0x40000, 0xff61a573 )
+	ROM_LOAD_GFX_EVEN(  "dd.e1", 0x100000, 0x40000, 0x84a0b87c )
+	ROM_LOAD_GFX_ODD (  "dd.e2", 0x100000, 0x40000, 0xa9585df2 )
+	ROM_LOAD_GFX_EVEN(  "dd.f1", 0x180000, 0x40000, 0x9aed24ba )
+	ROM_LOAD_GFX_ODD (  "dd.f2", 0x180000, 0x40000, 0x3eb5783f )
 
 	ROM_REGION( 0x180000, REGION_GFX2 | REGIONFLAG_DISPOSE )
 	ROM_LOAD( "dd.a2",		0x000000, 0x40000, 0x598f343f ) /* background */
@@ -368,15 +372,9 @@ ROM_START( dynduke )
 	ROM_LOAD( "dd.n45",		0x080000, 0x40000, 0x85d918e1 )
 	ROM_LOAD( "dd.mn5",		0x0c0000, 0x40000, 0xe71e34df )
 
-	ROM_REGION( 0x200000, REGION_GFX4 | REGIONFLAG_DISPOSE )
-	ROM_LOAD_GFX_EVEN(  "dd.n1", 0x000000, 0x40000, 0xcf1db927 ) /* sprites */
-	ROM_LOAD_GFX_ODD (  "dd.n2", 0x000000, 0x40000, 0x5328150f )
-	ROM_LOAD_GFX_EVEN(  "dd.m1", 0x080000, 0x40000, 0x80776452 )
-	ROM_LOAD_GFX_ODD (  "dd.m2", 0x080000, 0x40000, 0xff61a573 )
-	ROM_LOAD_GFX_EVEN(  "dd.e1", 0x100000, 0x40000, 0x84a0b87c )
-	ROM_LOAD_GFX_ODD (  "dd.e2", 0x100000, 0x40000, 0xa9585df2 )
-	ROM_LOAD_GFX_EVEN(  "dd.f1", 0x180000, 0x40000, 0x9aed24ba )
-	ROM_LOAD_GFX_ODD (  "dd.f2", 0x180000, 0x40000, 0x3eb5783f )
+	ROM_REGION( 0x020000, REGION_GFX4 | REGIONFLAG_DISPOSE )
+	ROM_LOAD( "dd9.jk5",	0x000000, 0x04000, 0xf2bc9af4 ) /* chars */
+	ROM_LOAD( "dd10.jk3",	0x010000, 0x04000, 0xc2a9f19b )
 
 	ROM_REGION( 0x10000, REGION_SOUND1 )	/* ADPCM samples */
 	ROM_LOAD( "dd7.x10", 0x000000, 0x10000, 0x9cbc7b41 )
@@ -393,9 +391,11 @@ ROM_START( dbldyn )
 	ROM_LOAD_V20_ODD ("5.8p",  0x0e0000, 0x10000, 0xea56d719 )
 	ROM_LOAD_V20_EVEN("6.7p",  0x0e0000, 0x10000, 0x9ffa0ecd )
 
-	ROM_REGION( 0x18000, REGION_CPU3 ) /* sound Z80 */
-	ROM_LOAD( "8.8w", 0x000000, 0x08000, 0xf4066081 )
-	ROM_CONTINUE(     0x010000, 0x08000 )
+	ROM_REGION( 0x20000*2, REGION_CPU3 ) /* sound Z80 */
+	ROM_LOAD( "8.8w",         0x000000, 0x08000, 0xf4066081 )
+	ROM_CONTINUE(             0x010000, 0x08000 )
+	ROM_RELOAD(               0x018000, 0x08000 )
+
 
 	ROM_REGION( 0x020000, REGION_GFX1 | REGIONFLAG_DISPOSE )
 	ROM_LOAD( "9.5k",	    0x004000, 0x4000, 0x16bec703 ) /* chars */
@@ -438,7 +438,7 @@ ROM_END
 
 static void init_dynduke(void)
 {
-	seibu_sound_decrypt();
+	seibu_sound_decrypt(REGION_CPU3,0x20000);
 }
 
 

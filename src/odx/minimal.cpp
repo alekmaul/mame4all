@@ -330,7 +330,7 @@ void odx_set_clock(int mhz)
 {
 
 }
-
+ 
 void odx_set_video_mode(int bpp,int width,int height)
 {
 	/*

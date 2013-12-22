@@ -1612,16 +1612,16 @@ ROM_START( herbiedk )
 ROM_END
 
 ROM_START( herocast )
-	ROM_REGION( 0x10000, REGION_CPU1 )	/* 64k for code */
-	/* the loading addresses are most likely wrong */
-	/* the ROMs are probably not contiguous. */
-	/* For example there's a table which suddenly stops at */
-	/* 1dff and resumes at 3e00 */
-	ROM_LOAD( "red-dot.rgt",  0x0000, 0x2000, 0x9c4af229 )	/* encrypted */
-	ROM_LOAD( "wht-dot.lft",  0x2000, 0x2000, 0xc10f9235 )	/* encrypted */
-	/* space for diagnostic ROM */
-	ROM_LOAD( "2532.3f",      0x4000, 0x1000, 0x553b89bb )	/* ??? contains unencrypted */
-													/* code mapped at 3000 */
+	ROM_REGION( 0x10000, REGION_CPU1 )   /* 64k for code */
+	ROM_LOAD( "red-dot.rgt",  0x0c00, 0x0400, 0x9c4af229 )  /* encrypted */
+	ROM_CONTINUE(             0x0800, 0x0400 )
+	ROM_CONTINUE(             0x0400, 0x0400 )
+	ROM_CONTINUE(             0x0000, 0x0400 )
+	ROM_CONTINUE(             0x2000, 0x0e00 )
+	ROM_CONTINUE(             0x6e00, 0x0200 )
+	ROM_LOAD( "wht-dot.lft",  0x4000, 0x1000, 0xc10f9235 )  /* encrypted */
+	ROM_CONTINUE(             0x6000, 0x0e00 )
+	ROM_CONTINUE(             0x2e00, 0x0200 )
 
 	ROM_REGION( 0x1000, REGION_CPU2 )	/* sound */
 	ROM_LOAD( "silver.3h",    0x0000, 0x0800, 0x67863ce9 )
@@ -1689,4 +1689,4 @@ GAME( 1983, dkong3j,  dkong3,  dkong3,   dkong3,   0,        ROT90, "Nintendo", 
 
 GAMEX(1983, hunchbkd, 0,       hunchbkd, hunchbdk, 0,        ROT90, "Century", "Hunchback (Donkey Kong conversion)", GAME_WRONG_COLORS )
 GAMEX(1984, herbiedk, 0,       herbiedk, herbiedk, 0,        ROT90, "CVS", "Herbie at the Olympics (DK conversion)", GAME_WRONG_COLORS )	/*"Seatongrove UK Ltd"*/
-GAMEX(1984, herocast, 0,       dkong,    dkong,    herocast, ROT90, "Seatongrove (Crown license)", "herocast", GAME_NOT_WORKING )
+GAME(1984, herocast, 0,       dkong,    dkong,    herocast, ROT90, "Seatongrove (Crown license)", "herocast" )

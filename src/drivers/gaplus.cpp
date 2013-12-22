@@ -445,7 +445,7 @@ static struct GfxDecodeInfo gfxdecodeinfo[] =
 
 static struct namco_interface namco_interface =
 {
-	23920,	/* sample rate (approximate value) */
+	24576000/1024,	/* 24000 Hz sample rate */
 	8,	  /* number of voices */
 	100,	/* playback volume */
 	REGION_SOUND1	/* memory region */

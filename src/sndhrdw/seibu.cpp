@@ -181,6 +181,7 @@ There is also a 0xff fill at the end of the rom.
 */
 
 /* Game using encrypted sound cpu - Raiden, Dynamite Duke, Dead Angle */
+#if 0
 void seibu_sound_decrypt(void)
 {
 	unsigned char *RAM = memory_region(REGION_CPU3);
@@ -213,4 +214,78 @@ void seibu_sound_decrypt(void)
 
 	for (i=0; i<0x18000; i++)
 		RAM[i]=RAM[i]^xor_table[i%128];
+}
+#endif
+
+#define BITSWAP8(val,B7,B6,B5,B4,B3,B2,B1,B0) \
+	       ((BIT(val,B7) << 7) | \
+		(BIT(val,B6) << 6) | \
+		(BIT(val,B5) << 5) | \
+		(BIT(val,B4) << 4) | \
+		(BIT(val,B3) << 3) | \
+		(BIT(val,B2) << 2) | \
+		(BIT(val,B1) << 1) | \
+		(BIT(val,B0) << 0))
+
+
+static UINT8 decrypt_data(int a,int src)
+{
+    if ( BIT(a,9)  &  BIT(a,8))             src ^= 0x80;
+    if ( BIT(a,11) &  BIT(a,4) &  BIT(a,1)) src ^= 0x40;
+    if ( BIT(a,11) & ~BIT(a,8) &  BIT(a,1)) src ^= 0x04;
+    if ( BIT(a,13) & ~BIT(a,6) &  BIT(a,4)) src ^= 0x02;
+    if (~BIT(a,11) &  BIT(a,9) &  BIT(a,2)) src ^= 0x01;
+
+    if (BIT(a,13) &  BIT(a,4)) src = BITSWAP8(src,7,6,5,4,3,2,0,1);
+    if (BIT(a, 8) &  BIT(a,4)) src = BITSWAP8(src,7,6,5,4,2,3,1,0);
+
+    return src;
+}
+
+static UINT8 decrypt_opcode(int a,int src)
+{
+    if ( BIT(a,9)  &  BIT(a,8))             src ^= 0x80;
+    if ( BIT(a,11) &  BIT(a,4) &  BIT(a,1)) src ^= 0x40;
+    if (~BIT(a,13) & BIT(a,12))             src ^= 0x20;
+    if (~BIT(a,6)  &  BIT(a,1))             src ^= 0x10;
+    if (~BIT(a,12) &  BIT(a,2))             src ^= 0x08;
+    if ( BIT(a,11) & ~BIT(a,8) &  BIT(a,1)) src ^= 0x04;
+    if ( BIT(a,13) & ~BIT(a,6) &  BIT(a,4)) src ^= 0x02;
+    if (~BIT(a,11) &  BIT(a,9) &  BIT(a,2)) src ^= 0x01;
+
+    if (BIT(a,13) &  BIT(a,4)) src = BITSWAP8(src,7,6,5,4,3,2,0,1);
+    if (BIT(a, 8) &  BIT(a,4)) src = BITSWAP8(src,7,6,5,4,2,3,1,0);
+    if (BIT(a,12) &  BIT(a,9)) src = BITSWAP8(src,7,6,4,5,3,2,1,0);
+    if (BIT(a,11) & ~BIT(a,6)) src = BITSWAP8(src,6,7,5,4,3,2,1,0);
+
+    return src;
+}
+
+
+void seibu_sound_decrypt(int cpu_region,int length)
+{
+    UINT8 *rom = memory_region(cpu_region);
+    int diff =  memory_region_length(cpu_region)/2;
+    int i;
+
+    memory_set_opcode_base(cpu_region-REGION_CPU1,rom+diff);
+
+    for (i = 0;i < length;i++)
+    {
+	UINT8 src = rom[i];
+
+	rom[i]      = decrypt_data(i,src);
+	rom[i+diff] = decrypt_opcode(i,src);
+    }
+}
+
+void seibu_adpcm_decrypt(int region)
+{
+    data8_t *ROM = memory_region(region);
+    int i;
+
+    for (i = 0; i < memory_region_length(region); i++)
+    {
+	ROM[i] = BITSWAP8(ROM[i], 7, 5, 3, 1, 6, 4, 2, 0);
+    }
 }

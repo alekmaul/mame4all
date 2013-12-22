@@ -33,3 +33,5 @@ WRITE_HANDLER( buffer_spriteram_2_w );
 void buffer_spriteram(unsigned char *ptr,int length);
 void buffer_spriteram_2(unsigned char *ptr,int length);
 
+extern unsigned int *videoram32; // ALEK for taito_f3
+extern unsigned int *spriteram32; // ALEK for taito_f3

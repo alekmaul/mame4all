@@ -16,6 +16,8 @@
 
 #define COMPATCORES 1
 
+char build_version[] = "GCW0 V1.1";
+
 static unsigned char splash_bmp[BMP_SIZE];
 static unsigned char menu_bmp[BMP_SIZE];
 
@@ -70,7 +72,10 @@ static void odx_intro_screen(void) {
 		fclose(f);
 	}
 	blit_bmp_8bpp(od_screen8,splash_bmp);
+	odx_gamelist_text_out(1,230,build_version);
 	odx_video_flip();
+	odx_joystick_press();
+	
 	sprintf(name,"skins/menu.bmp");
 	f=fopen(name,"rb");
 	if (f) {
@@ -171,6 +176,12 @@ static void game_list_view(int *pos) {
 	/* Draw background image */
 	blit_bmp_8bpp(od_screen8,menu_bmp);
 
+	/* draw text */
+	odx_gamelist_text_out( 4, 30,"Select ROM");
+	odx_gamelist_text_out( 4, 230,"A=Select Game/Start  B=Back");
+	odx_gamelist_text_out( 268, 230,"L+R=Exit");
+	odx_gamelist_text_out( 264,2,build_version);
+
 	/* Check Limits */
 	if (*pos<0)
 		*pos=game_num_avail-1;
@@ -178,21 +189,21 @@ static void game_list_view(int *pos) {
 		*pos=0;
 					   
 	/* Set View Pos */
-	if (*pos<10) {
+	if (*pos<11) { // ALEK 10
 		view_pos=0;
 	} else {
-		if (*pos>game_num_avail-11) {
-			view_pos=game_num_avail-21;
+		if (*pos>game_num_avail-12) { // ALEK 11
+			view_pos=game_num_avail-22; // ALEK 21
 			view_pos=(view_pos<0?0:view_pos);
 		} else {
-			view_pos=*pos-10;
+			view_pos=*pos-11; // ALEK 10
 		}
 	}
 
 	/* Show List */
 	for (i=0;i<NUMGAMES;i++) {
 		if (drivers[i].available==1) {
-			if (aux_pos>=view_pos && aux_pos<=view_pos+20) {
+			if (aux_pos>=view_pos && aux_pos<=view_pos+21) { // ALEK 20
 				odx_gamelist_text_out( screen_x, screen_y, drivers[i].description);
 				if (aux_pos==*pos) {
 					odx_gamelist_text_out( screen_x-10, screen_y,">" );
@@ -216,7 +227,6 @@ static void game_list_select (int index, char *game, char *emu) {
 			{
 				strcpy(game,drivers[i].name);
 				strcpy(emu,drivers[i].exe);
-				//odx_cpu_cores=drivers[i].cores & 1;
 				break;
 			}
 			aux_pos++;
@@ -262,10 +272,16 @@ static int show_options(char *game)
 
 	while(1)
 	{
-		int y_Pos = y_PosTop;
+		y_Pos = y_PosTop;
 	
 		/* Draw background image */
 		blit_bmp_8bpp(od_screen8,menu_bmp);
+
+		/* draw text */
+		odx_gamelist_text_out( 4, 30,"Game Options");
+		odx_gamelist_text_out( 4, 230,"A=Select Game/Start  B=Back");
+		odx_gamelist_text_out( 268, 230,"L+R=Exit");
+		odx_gamelist_text_out( 264,2,build_version);
 
 		/* Draw the options */
 		strncpy (text,game_list_description(last_game_selected),33);
@@ -535,8 +551,8 @@ static void select_game(char *emu, char *game)
 		if ((ExKey & OD_L) && (ExKey & OD_R) ) { odx_exit(""); }
 		if (ExKey & OD_UP) last_game_selected--;
 		if (ExKey & OD_DOWN) last_game_selected++;
-		if (ExKey & OD_LEFT) last_game_selected-=21;
-		if (ExKey & OD_RIGHT) last_game_selected+=21;
+		if (ExKey & OD_LEFT) last_game_selected-=22; // ALEK 21
+		if (ExKey & OD_RIGHT) last_game_selected+=22; // ALEK 21
 
 		if ((ExKey & OD_A) || (ExKey & OD_START) )
 		{
@@ -737,19 +753,20 @@ void execute_game (char *playemu, char *playgame)
 	
 	args[n]=NULL;
 
-/*ALEK	
+//#if 1
 	for (i=0; i<n; i++)
 	{
-		printf("%s ",args[i]);
+		fprintf(stdout,"%s ",args[i]);
 	}
-	printf("\n");
-*/
+	fprintf(stdout,"\n");
+	fflush(stdout);
+//#endif
 
 	odx_deinit();
 	execv(args[0], args); 
 }
 
-
+ 
 #define FILE_LIST_ROWS 19
 #define MAX_FILES 512
 typedef struct  {
@@ -829,7 +846,7 @@ signed int get_romdir(char *result) {
 		} else {
 			memcpy(current_dir_short, current_dir_name, current_dir_length + 1);
 		}
-
+ 
 		repeat = 1;
 
 		char print_buffer[81];
@@ -837,7 +854,11 @@ signed int get_romdir(char *result) {
 		while(repeat) {
 			blit_bmp_8bpp(od_screen8,menu_bmp);
 			
+			odx_gamelist_text_out( 182, 30,"Select a ROM directory");
 			odx_gamelist_text_out( 4, 215,current_dir_short );
+			odx_gamelist_text_out( 4, 230,"A=Enter dir START=Select dir");
+			odx_gamelist_text_out( 280, 230,"B=Quit");
+			odx_gamelist_text_out( 264,2,build_version);
 			
 			for(i = 0, current_filedir_number = i + current_filedir_scroll_value; i < FILE_LIST_ROWS; i++, current_filedir_number++) {
 #define CHARLEN ((320/6)-2)
@@ -981,7 +1002,8 @@ int main (int argc, char **argv)
 	if (game_num_avail==0)
 	{
 		while (game_num_avail == 0) {
-			odx_gamelist_text_out(35, 110, "ERROR: NO AVAILABLE GAMES FOUND");
+			odx_gamelist_text_out(10, 20, "Error: No available games found !");
+			odx_gamelist_text_out(10, 40, "Press a key to select a rom directory");
 			odx_video_flip();
 			odx_joystick_press();
 			if (get_romdir(romdir) == -1)

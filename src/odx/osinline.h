@@ -14,7 +14,7 @@ extern char *dirty_new;
 
 #define osd_cycles odx_timer_read
 
-#define clip_short _clip_short
+//ALEK #define clip_short _clip_short
 #define clip_short_pre() int a; const int m=0x7fff
 #define _clip_short(x) { int sign = x >> 31; if (sign != (x >> 15)) x = sign ^ ((1 << 15) - 1); }
 

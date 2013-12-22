@@ -1,5 +1,7 @@
 #include "../machine/pacplus.cpp"
 #include "../machine/theglob.cpp"
+#include "../machine/jumpshot.cpp"
+#include "../machine/shootbul.cpp"
 
 /***************************************************************************
 
@@ -363,7 +365,7 @@ INPUT_PORTS_START( pacman )
 	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
 	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN1 )
 	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_COIN2 )
-	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN3 )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SERVICE1 )
 
 	PORT_START	/* IN1 */
 	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL )
@@ -424,7 +426,7 @@ INPUT_PORTS_START( mspacman )
 	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
 	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN1 )
 	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_COIN2 )
-	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN3 )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SERVICE1 )
 
 	PORT_START	/* IN1 */
 	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL )
@@ -481,7 +483,7 @@ INPUT_PORTS_START( maketrax )
 	PORT_DIPSETTING(    0x10, DEF_STR( Cocktail ) )
 	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN1 )
 	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_COIN2 )
-	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN3 )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SERVICE1 )
 
 	PORT_START	/* IN1 */
 	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL )
@@ -527,7 +529,7 @@ INPUT_PORTS_START( mbrush )
 	PORT_DIPSETTING(    0x10, DEF_STR( Cocktail ) )
 	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN1 )
 	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_COIN2 )
-	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN3 )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SERVICE1 )
 
 	PORT_START	/* IN1 */
 	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL )
@@ -573,7 +575,7 @@ INPUT_PORTS_START( paintrlr )
 	PORT_DIPSETTING(    0x10, DEF_STR( Cocktail ) )
 	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN1 )
 	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_COIN2 )
-	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN3 )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SERVICE1 )
 
 	PORT_START	/* IN1 */
 	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL )
@@ -617,7 +619,7 @@ INPUT_PORTS_START( ponpoko )
 	PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 )
 	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN1 )
 	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_COIN2 )
-	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN3 )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SERVICE1 )
 
 	/* The 2nd player controls are used even in upright mode */
 	PORT_START	/* IN1 */
@@ -1131,6 +1133,101 @@ INPUT_PORTS_START( alibaba )
 	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
 INPUT_PORTS_END
 
+INPUT_PORTS_START( jumpshot )
+	PORT_START /* IN0 */
+	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY )
+	PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY )
+	PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY )
+	PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY )
+	PORT_DIPNAME( 0x10, 0x10, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN1 )
+	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_COIN2 )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SERVICE1 )
+
+	PORT_START /* IN1 */
+	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 )
+	PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER2 )
+	PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 )
+	PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER2 )
+	PORT_SERVICE( 0x10, IP_ACTIVE_LOW )
+	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 )
+	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2  )
+	PORT_DIPNAME( 0x80, 0x80, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+
+	PORT_START /* DSW 1 */
+	PORT_DIPNAME( 0x03, 0x01, "Time"  )
+//	PORT_DIPSETTING(    0x00,  "2 Minutes"  )
+	PORT_DIPSETTING(    0x02,  "2 Minutes" )
+	PORT_DIPSETTING(    0x03,  "3 Minutes" )
+	PORT_DIPSETTING(    0x01,  "4 Minutes"  )
+	PORT_DIPNAME( 0x04, 0x04, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x04, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x08, 0x08, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x08, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x10, 0x10, DEF_STR( Free_Play ) )
+	PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x20, 0x00, "2 Players Game" )
+	PORT_DIPSETTING(    0x20, "1 Credit" )
+	PORT_DIPSETTING(    0x00, "2 Credits" )
+	PORT_DIPNAME( 0x40, 0x40, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x80, 0x80, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x80, DEF_STR( Off) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+
+	PORT_START /* DSW 2 */
+	PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_UNUSED )
+INPUT_PORTS_END
+
+
+INPUT_PORTS_START( shootbul )
+	PORT_START /* IN0 */
+	PORT_ANALOG( 0x0f, 0x0f, IPT_TRACKBALL_X , 50, 25, 0, 0)
+	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN1 )
+	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_COIN2 )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN3 )
+
+	PORT_START /* IN1 */
+	PORT_ANALOG( 0x0f, 0x0f, IPT_TRACKBALL_Y | IPF_REVERSE, 50, 25, 0, 0)
+	PORT_SERVICE( 0x10, IP_ACTIVE_LOW )
+	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 )
+	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START1 )
+	PORT_DIPNAME( 0x80, 0x80, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+
+	PORT_START /* DSW 1 */
+	PORT_DIPNAME( 0x07, 0x07, "Time"  )
+	PORT_DIPSETTING(    0x01, "Short")
+	PORT_DIPSETTING(    0x07, "Average" )
+	PORT_DIPSETTING(    0x03, "Long" )
+	PORT_DIPSETTING(    0x05, "Longer" )
+	PORT_DIPSETTING(    0x06, "Longest" )
+	PORT_DIPNAME( 0x08, 0x08, "Title Page Sounds"  )
+	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x08, DEF_STR( On ) )
+	PORT_DIPNAME( 0x10, 0x10, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x20, 0x20, DEF_STR( Unknown ))
+	PORT_DIPSETTING(    0x20, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x40, 0x40, DEF_STR( Unknown ))
+	PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNUSED )
+
+	PORT_START /* DSW 2 */
+	PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_UNUSED )
+INPUT_PORTS_END
 
 static struct GfxLayout tilelayout =
 {
@@ -2157,6 +2254,27 @@ ROM_START( alibaba )
 	ROM_LOAD( "7.p6",         0x000, 0x1000, 0x00000000 )	/* Unused? */
 ROM_END
 
+ROM_START( shootbul )
+    ROM_REGION( 0x10000, REGION_CPU1 ) /* 64k for code */
+    ROM_LOAD( "sb6e.cpu",     0x0000, 0x1000, 0x25daa5e9 )
+    ROM_LOAD( "sb6f.cpu",     0x1000, 0x1000, 0x92144044 )
+    ROM_LOAD( "sb6h.cpu",     0x2000, 0x1000, 0x43b7f99d )
+    ROM_LOAD( "sb6j.cpu",     0x3000, 0x1000, 0xbc4d3bbf )
+
+    ROM_REGION( 0x1000, REGION_GFX1 | REGIONFLAG_DISPOSE )
+    ROM_LOAD( "sb5e.cpu",     0x0000, 0x1000, 0x07c6c5aa )
+
+    ROM_REGION( 0x1000, REGION_GFX2 | REGIONFLAG_DISPOSE )
+    ROM_LOAD( "sb5f.cpu",     0x0000, 0x1000, 0xeaec6837 )
+
+    ROM_REGION( 0x0120, REGION_PROMS )
+    ROM_LOAD( "7f.rom",       0x0000, 0x0020, 0xec578b98 )
+    ROM_LOAD( "4a.rom",       0x0020, 0x0100, 0x81a6b30f )
+
+    ROM_REGION( 0x0200, REGION_SOUND1 ) /* sound PROMs */
+    ROM_LOAD( "82s126.1m",    0x0000, 0x0100, 0xa9cc86bf )
+    ROM_LOAD( "82s126.3m",    0x0100, 0x0100, 0x77245b66 ) /* timing - not used */
+ROM_END
 
 
 static READ_HANDLER( maketrax_special_port2_r )
@@ -2325,6 +2443,16 @@ static void init_pacplus(void)
 	pacplus_decode();
 }
 
+static void init_jumpshot(void)
+{
+	jumpshot_decode();
+}
+
+static void init_shootbul(void)
+{
+	shootbul_decode();
+}
+
 /*          rom       parent    machine   inp       init */
 GAME( 1980, pacman,   0,        pacman,   pacman,   0,        ROT90,  "Namco", "PuckMan (Japan set 1)" )
 GAME( 1980, pacmanjp, pacman,   pacman,   pacman,   0,        ROT90,  "Namco", "PuckMan (Japan set 2)" )
@@ -2354,8 +2482,9 @@ GAME( 1983, mrtnt,    0,        pacman,   mrtnt,    eyes,     ROT90,  "Telko", "
 GAME( 1985, lizwiz,   0,        pacman,   lizwiz,   0,        ROT90,  "Techstar (Sunn license)", "Lizard Wizard" )
 GAME( 1983, theglob,  0,        theglob,  theglob,  0,        ROT90,  "Epos Corporation", "The Glob" )
 GAME( 1984, beastf,   theglob,  theglob,  theglob,  0,        ROT90,  "Epos Corporation", "Beastie Feastie" )
-GAMEX(????, jumpshot, 0,        pacman,   pacman,   0,        ROT90,  "<unknown>", "Jump Shot", GAME_NOT_WORKING )	/* not working, encrypted */
 GAME( 1982, dremshpr, 0,        dremshpr, dremshpr, 0,        ROT270, "Sanritsu", "Dream Shopper" )
 GAME( 1983, vanvan,   0,        vanvan,   vanvan,   0,        ROT270, "Karateco", "Van Van Car" )
 GAME( 1983, vanvans,  vanvan,   vanvan,   vanvans,  0,        ROT270, "Sanritsu", "Van Van Car (Sanritsu)" )
 GAME( 1982, alibaba,  0,        alibaba,  alibaba,  0,        ROT90,  "Sega", "Ali Baba and 40 Thieves" )
+GAME( 1985, jumpshot, 0,		pacman,   jumpshot, jumpshot, ROT90,  "Bally Midway", "Jump Shot" )
+GAME( 1985, shootbul, 0,        pacman,   shootbul, shootbul, ROT90,  "Bally Midway", "Shoot the Bull" )

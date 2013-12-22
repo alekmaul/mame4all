@@ -469,19 +469,19 @@ static struct MachineDriver machine_driver_bosco =
 	{
 		{
 			CPU_Z80,
-			3125000,	/* 3.125 Mhz */
+			18432000/6,	/* 3.072 Mhz */
 			readmem_cpu1,writemem_cpu1,0,0,
 			bosco_interrupt_1,1
 		},
 		{
 			CPU_Z80,
-			3125000,	/* 3.125 Mhz */
+			18432000/6,	/* 3.072 Mhz */
 			readmem_cpu2,writemem_cpu2,0,0,
 			bosco_interrupt_2,1
 		},
 		{
 			CPU_Z80,
-			3125000,	/* 3.125 Mhz */
+			18432000/6,	/* 3.072 Mhz */
 			readmem_cpu3,writemem_cpu3,0,0,
 			bosco_interrupt_3,2
 		}

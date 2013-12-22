@@ -1049,14 +1049,14 @@ static struct MachineDriver machine_driver_neogeo =
 {
 	{
 		{
-			CPU_M68000,
-			12000000,
+			CPU_M68000, 
+			12000000, /* verified */
 			neogeo_readmem,neogeo_writemem,0,0,
 			neogeo_interrupt,1
 		},
 		{
 			CPU_Z80 | CPU_AUDIO_CPU | CPU_16BIT_PORT,
-			6000000,
+			4000000, /* verified */
 			sound_readmem,sound_writemem,neo_readio,neo_writeio,
 			ignore_interrupt,0
 		}
@@ -1095,13 +1095,13 @@ static struct MachineDriver machine_driver_raster =
 	{
 		{
 			CPU_M68000,
-			12000000,
+			12000000, /* verified */
 			neogeo_readmem,neogeo_writemem,0,0,
 			neogeo_raster_interrupt,RASTER_LINES
 		},
 		{
 			CPU_Z80 | CPU_AUDIO_CPU | CPU_16BIT_PORT,
-			6000000,
+			4000000, /* verified */
 			sound_readmem,sound_writemem,neo_readio,neo_writeio,
 			ignore_interrupt,0
 		}

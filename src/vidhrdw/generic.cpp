@@ -25,7 +25,8 @@ size_t spriteram_3_size;	/* ... here just for convenience */
 unsigned char *dirtybuffer;
 struct osd_bitmap *tmpbitmap;
 
-
+unsigned int *videoram32; // ALEK for taito_f3
+unsigned int *spriteram32; // ALEK for taito_f3
 
 /***************************************************************************
 
