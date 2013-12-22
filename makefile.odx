@@ -22,7 +22,7 @@ VPATH=src $(wildcard src/cpu/*)
 
 # define regarding OS, which compiler, linker and utilities to use
 ifeq "$(OSTYPE)" "msys"	
-TOOLCHAIN = /c/MinGW32
+TOOLCHAIN = /d/MinGW32
 CC          = $(TOOLCHAIN)/bin/gcc
 CPP         = $(TOOLCHAIN)/bin/gcc
 LD          = $(TOOLCHAIN)/bin/gcc
@@ -54,7 +54,7 @@ W_OPTS = -Wall -Wno-write-strings -Wno-sign-compare
 ifeq "$(OSTYPE)" "msys"
 F_OPTS = -fomit-frame-pointer -ffunction-sections -ffast-math -fsingle-precision-constant -fsigned-char -fpermissive
 CFLAGS = -O2 -Isrc -Isrc/$(MAMEOS) -Isrc/zlib $(W_OPTS) $(F_OPTS)
-#CFLAGS += -g
+CFLAGS += -g
 
 LIB_PATH  = $(TOOLCHAIN)/lib
 LIBS      = -lSDLmain -lSDL -lm -lmingw32 -mwindows

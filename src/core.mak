@@ -16,6 +16,7 @@ COREOBJS = $(OBJ)/version.o $(OBJ)/info.o $(OBJ)/audit.o $(OBJ)/datafile.o \
 	$(OBJ)/tilemap.o $(OBJ)/sprite.o $(OBJ)/gfxobj.o \
 	$(OBJ)/drawgfx.o $(OBJ)/palette.o $(OBJ)/common.o \
 	$(OBJ)/cpuintrf.o $(OBJ)/memory.o $(OBJ)/timer.o \
+	$(OBJ)/scanline.o \
 	$(sort $(CPUOBJS)) \
 	$(OBJ)/sndintrf.o $(OBJ)/sound/streams.o $(OBJ)/sound/mixer.o \
 	$(SOUNDOBJS) \

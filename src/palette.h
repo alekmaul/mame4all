@@ -181,6 +181,7 @@ extern unsigned short *palette_shadow_table;
 
 extern unsigned char *paletteram;
 extern unsigned char *paletteram_2;	/* use when palette RAM is split in two parts */
+extern unsigned int *paletteram32; // ALEK for taito_f3
 
 READ_HANDLER( paletteram_r );
 READ_HANDLER( paletteram_2_r );

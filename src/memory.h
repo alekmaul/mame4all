@@ -242,12 +242,23 @@ extern unsigned char *cpu_bankbase[];	/* array of bank bases */
 	Macros
 
 ***************************************************************************/
+/* ----- Memory start block used by later versions of MAME ----- */
+#define MEMORY_READ_START(name)	    struct MemoryReadAddress name[] = {
+#define MEMORY_READ16_START(name)   struct MemoryReadAddress name[] = {
+#define MEMORY_WRITE_START(name)    struct MemoryWriteAddress name[] = {
+#define MEMORY_WRITE16_START(name)  struct MemoryWriteAddress name[] = {
+#define PORT_READ_START(name)	    struct IOReadPort name[] = {
+#define PORT_WRITE_START(name)	    struct IOWritePort name[] = {
+#define MEMORY_END		    { -1 }  /* end of table */ };
+#define PORT_END		    { -1 }  /* end of table */ };
 
 /* ----- 16-bit memory accessing ----- */
 #define READ_WORD(a)		  (*(UINT16 *)(a))
 #define WRITE_WORD(a,d) 	  (*(UINT16 *)(a) = (d))
 #define COMBINE_WORD(w,d)	  (((w) & ((d) >> 16)) | ((d) & 0xffff))
 #define COMBINE_WORD_MEM(a,d) (WRITE_WORD((a), (READ_WORD(a) & ((d) >> 16)) | (d)))
+/* ----- New 16-bit memory accessing ----- */
+#define COMBINE_DATA(a) 	  (*(UINT16 *)(a) = (data))
 
 /* ----- opcode reading ----- */
 #define cpu_readop(A)		(OP_ROM[A])

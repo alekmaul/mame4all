@@ -99,7 +99,8 @@ const struct GameDriver *drivers[] =
 	DRIVER( lizwiz )	/* (c) 1985 Techstar + "Sunn presents" */
 	DRIVER( theglob )	/* (c) 1983 Epos Corporation */
 	DRIVER( beastf )	/* (c) 1984 Epos Corporation */
-	DRIVER( jumpshot )
+	DRIVER( jumpshot )  /* (c) 1985 Bally Midway */
+	DRIVER( shootbul )  /* (c) 1985 Bally Midway */
 	DRIVER( dremshpr )	/* (c) 1982 Sanritsu */
 	DRIVER( vanvan )	/* (c) 1983 Karateco (bootleg?) */
 	DRIVER( vanvans )	/* (c) 1983 Sanritsu */
@@ -497,7 +498,7 @@ TESTDRIVER( suzuk8h2 )
 	DRIVER( masao )		/* bootleg */
 	DRIVER( hunchbkd )	/* (c) 1983 Century */
 	DRIVER( herbiedk )	/* (c) 1984 CVS */
-TESTDRIVER( herocast )
+	DRIVER( herocast )
 	DRIVER( popeye )
 	DRIVER( popeye2 )
 	DRIVER( popeyebl )	/* bootleg */
@@ -754,6 +755,7 @@ TESTDRIVER( kengo )
 	DRIVER( bmaster )	/* (c) 1991 Irem */
 	DRIVER( gunforce )	/* (c) 1991 Irem (World) */
 	DRIVER( gunforcu )	/* (c) 1991 Irem America (US) */
+	DRIVER( gunforcj )	/* (c) 1991 Irem America (US) */
 	DRIVER( hook )		/* (c) 1992 Irem (World) */
 	DRIVER( hooku )		/* (c) 1992 Irem America (US) */
 	DRIVER( mysticri )	/* (c) 1992 Irem (World) */
@@ -767,8 +769,8 @@ TESTDRIVER( kengo )
 	DRIVER( inthunt )	/* (c) 1993 Irem (World) */
 	DRIVER( inthuntu )	/* (c) 1993 Irem (US) */
 	DRIVER( kaiteids )	/* (c) 1993 Irem (Japan) */
-TESTDRIVER( nbbatman )	/* (c) 1993 Irem America (US) */
-TESTDRIVER( leaguemn )	/* (c) 1993 Irem (Japan) */
+	DRIVER( nbbatman )	/* (c) 1993 Irem America (US) */
+	DRIVER( leaguemn )	/* (c) 1993 Irem (Japan) */
 	DRIVER( lethalth )	/* (c) 1991 Irem (World) */
 	DRIVER( thndblst )	/* (c) 1991 Irem (Japan) */
 	DRIVER( psoldier )	/* (c) 1993 Irem (Japan) */
@@ -778,7 +780,7 @@ TESTDRIVER( gussun )
 TESTDRIVER( shisen2 )
 TESTDRIVER( quizf1 )
 TESTDRIVER( atompunk )
-TESTDRIVER( bbmanw )
+//TESTDRIVER( bbmanw )
 	/* M107 */
 TESTDRIVER( firebarr )	/* (c) 1993 Irem (Japan) */
 	DRIVER( dsoccr94 )	/* (c) 1994 Irem (Data East Corporation license) */
@@ -2044,8 +2046,8 @@ TESTDRIVER( xexex )		/* GX067 (c) 1991 */
 	DRIVER( vendettj )	/* GX081 (c) 1991 (Japan) */
 	DRIVER( wecleman )	/* GX602 (c) 1986 */
 	DRIVER( hotchase )	/* GX763 (c) 1988 */
-TESTDRIVER( chqflag )	/* GX717 (c) 1988 */
-TESTDRIVER( chqflagj )	/* GX717 (c) 1988 (Japan) */
+	DRIVER( chqflag )	/* GX717 (c) 1988 */
+	DRIVER( chqflagj )	/* GX717 (c) 1988 (Japan) */
 	DRIVER( ultraman )	/* GX910 (c) 1991 Banpresto/Bandai */
 
 	/* Konami "Nemesis hardware" games */
@@ -2640,8 +2642,8 @@ V1.2   May 27,1999
 	DRIVER( cabal2 )	/* (c) 1988 Tad + Fabtek license */
 	DRIVER( cabalbl )	/* bootleg */
 	DRIVER( toki )		/* (c) 1989 Tad */
-	DRIVER( toki2 )		/* (c) 1989 Tad */
-	DRIVER( toki3 )		/* (c) 1989 Tad */
+	DRIVER( tokia )		/* (c) 1989 Tad */
+	DRIVER( tokij )		/* (c) 1989 Tad */
 	DRIVER( tokiu )		/* (c) 1989 Tad + Fabtek license */
 	DRIVER( tokib )		/* bootleg */
 	DRIVER( bloodbro )	/* (c) 1990 Tad */
@@ -2881,6 +2883,11 @@ TESTDRIVER( dlair )
 	DRIVER( rougien)	/* (c) 1982 Sanritsu */
 	DRIVER( magix )		/* (c) 1995 Yun Sung */
 	DRIVER( royalmah )	/* (c) 1982 Falcon */
+
+	DRIVER( hangonjr )	/* (c) 1985 */
+	DRIVER( transfrm )	/* 834-5803 (c) 1986 */
+TESTDRIVER( astrofl )	/* 834-5803 (c) 1986 */
+	DRIVER( ridleofp )	/* (c) 1986 Sega / Nasco */
 
 #else
 

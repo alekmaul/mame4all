@@ -232,6 +232,7 @@ $(OBJ)/drivers/lkage.o: src/machine/lkage.cpp src/vidhrdw/lkage.cpp src/drivers/
 $(OBJ)/drivers/taito_l.o: src/vidhrdw/taito_l.cpp src/drivers/taito_l.cpp src/sndhrdw/taitosnd.cpp
 $(OBJ)/drivers/taito_b.o: src/vidhrdw/taito_b.cpp src/drivers/taito_b.cpp
 $(OBJ)/drivers/taito_f2.o: src/vidhrdw/taito_f2.cpp src/drivers/taito_f2.cpp
+#$(OBJ)/drivers/taito_f3.o: src/sndhrdw/taito_f3.cpp  src/vidhrdw/taito_f3.cpp src/drivers/taito_f3.cpp
 OBJ_TAITO = $(OBJ)/drivers/crbaloon.o $(OBJ)/drivers/qix.o $(OBJ)/drivers/taitosj.o $(OBJ)/drivers/bking2.o $(OBJ)/drivers/gsword.o \
     $(OBJ)/drivers/retofinv.o $(OBJ)/drivers/tsamurai.o $(OBJ)/drivers/flstory.o $(OBJ)/drivers/gladiatr.o $(OBJ)/drivers/lsasquad.o \
 	$(OBJ)/drivers/bublbobl.o $(OBJ)/drivers/mexico86.o $(OBJ)/drivers/rastan.o $(OBJ)/drivers/rainbow.o $(OBJ)/drivers/arkanoid.o \
@@ -292,6 +293,7 @@ OBJ_VICDUAL = $(OBJ)/sndhrdw/carnival.o $(OBJ)/sndhrdw/depthch.o $(OBJ)/sndhrdw/
 
 $(OBJ)/drivers/sega.o: src/vidhrdw/sega.cpp src/sndhrdw/sega.cpp src/machine/sega.cpp src/drivers/sega.cpp
 $(OBJ)/drivers/segar.o: src/vidhrdw/segar.cpp src/sndhrdw/segar.cpp src/machine/segar.cpp src/drivers/segar.cpp
+$(OBJ)/drivers/segasyse.o: src/vidhrdw/segasyse.cpp src/drivers/segasyse.cpp
 $(OBJ)/drivers/zaxxon.o: src/vidhrdw/zaxxon.cpp src/sndhrdw/zaxxon.cpp src/drivers/zaxxon.cpp
 $(OBJ)/drivers/turbo.o: src/machine/turbo.cpp src/vidhrdw/turbo.cpp src/drivers/turbo.cpp
 $(OBJ)/drivers/suprloco.o: src/vidhrdw/suprloco.cpp src/drivers/suprloco.cpp
@@ -302,7 +304,7 @@ $(OBJ)/drivers/system1.o: src/vidhrdw/system1.cpp src/drivers/system1.cpp
 $(OBJ)/drivers/system16.o: src/machine/system16.cpp src/vidhrdw/system16.cpp src/sndhrdw/system16.cpp src/drivers/system16.cpp
 OBJ_SEGA = $(OBJ)/machine/segacrpt.o $(OBJ)/drivers/sega.o $(OBJ)/drivers/segar.o $(OBJ)/drivers/zaxxon.o $(OBJ)/drivers/congo.o \
 	$(OBJ)/drivers/turbo.o $(OBJ)/drivers/kopunch.o $(OBJ)/drivers/suprloco.o $(OBJ)/drivers/appoooh.o $(OBJ)/drivers/bankp.o \
-	$(OBJ)/drivers/dotrikun.o $(OBJ)/drivers/system1.o $(OBJ)/drivers/system16.o
+	$(OBJ)/drivers/dotrikun.o $(OBJ)/drivers/system1.o $(OBJ)/drivers/system16.o $(OBJ)/drivers/segasyse.o
 
 $(OBJ)/drivers/deniam.o: src/vidhrdw/deniam.cpp src/drivers/deniam.cpp
 OBJ_DENIAM = $(OBJ)/drivers/deniam.o
@@ -575,7 +577,7 @@ OBJ_SEIBU = $(OBJ)/drivers/wiz.o $(OBJ)/drivers/stfight.o $(OBJ)/sndhrdw/seibu.o
     $(OBJ)/drivers/raiden.o $(OBJ)/drivers/dcon.o $(OBJ)/drivers/kncljoe.o
 
 $(OBJ)/drivers/cabal.o: src/vidhrdw/cabal.cpp src/drivers/cabal.cpp
-$(OBJ)/drivers/toki.o: src/vidhrdw/toki.cpp src/drivers/toki.cpp
+$(OBJ)/drivers/toki.o: src/vidhrdw/toki.cpp src/sndhrdw/toki.cpp src/drivers/toki.cpp
 $(OBJ)/drivers/bloodbro.o: src/vidhrdw/bloodbro.cpp src/drivers/bloodbro.cpp
 OBJ_TAD = $(OBJ)/drivers/cabal.o $(OBJ)/drivers/toki.o $(OBJ)/drivers/bloodbro.o
 

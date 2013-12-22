@@ -1194,6 +1194,7 @@ const unsigned char *palette_recalc(void)
 ******************************************************************************/
 
 unsigned char *paletteram,*paletteram_2;
+unsigned int *paletteram32; // ALEK for taito_f3
 
 READ_HANDLER( paletteram_r )
 {

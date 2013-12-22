@@ -4,7 +4,7 @@ http://www.portabledev.com/pages/dingoo/jeuxdev.-perso/mame4all_od.php
 
 History 
 -------
-	Seee whatsnew.txt file
+	See whatsnew.txt file
 
 Thanks and regards.
 
