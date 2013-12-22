@@ -160,7 +160,7 @@
 
 #include "driver.h"
 #include "state.h"
-#include "cpu\z80\z80.h"
+#include "cpu/z80/z80.h"
 
 /*-- Variables --*/
 
