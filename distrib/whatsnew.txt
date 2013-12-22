@@ -1,53 +1,65 @@
-MAME4ALL OD 1.1 (dd/mm/2013)
-----------------------------
-	Added : video depth option
-	Added : Fame core for 68000 CPU (just choose it as option, thanks Slaanesh for help to add it in my OD version)
-	Added : neomame executable
-	Added : Analog joystick management for gcw0
-	Added : Pirate Pete and Jungle Hunt (Brazil) from Mame 0.68
-	Added : Metal Slug X, Garou, King Of Fighter 99, Captain Tomaday because they were not in the neogeo list
-	Added : m90 driver, added games Bomber Man World, BomberMan, Dynablaster, Hasamu (from Mame 037b8 et 078)
-	Fixed : bug of SDL_Init after video mode set
-	Fixed : Optimize some functions
-	Fixed : Fix bug (seg fault) when leaving game to return to menu (L+R+START)
-	Fixed : bug (seg fault) for mk3 game
-	Updated : Change L & R to Left/Right for game browsing
-	Updated : Change LockAudio for mutex management
-	Updated : button configuration (B/A/Y/X for #1..4 now)
-	Updated : Change video blitting, now, just using a direct video surface, no more layer
-	updated : Thunder Cross & Thunder Cross (Japan) now work correctly
-	updated : FireTrap now works correctly (from Mame 0.64 8751 protection simulation)
-	updated : Kick Start Wheelie King now works correctly (from Mame 0.68)
-	updated : port settings in taitosj driver (from Mame 0.68)
-	updated : The Bounty now works correctly (from Mame 0.68)
-	updated : Change galaga cpu frequency to 3.072 Mhz
-	updated : Add sound to zaccaria driver (from Mame 0.56)
-	updated : Aeroboto and FormationZ now works correctly (from Mame 0.68) but you need last rom set (prom roms are needed).
-	updated : Fixed colors and other things in Arabian (from Mame 0.37b16)
-	updated : Fixed colors in World Tennis (from Mame 0.37b16)
-	updated : Fixed colors in battle Lane (from Mame 0.37b16)
-	Updated : Change L & R to Left/Right for game options
-	Updated : Only one OPK file instead of multiple dge files
+MAME4ALL GCW0 1.1 (25/12/2013)
+------------------------------
+	Added: video depth option
+	Added: Fame core for 68000 CPU (just choose it as option, thanks Slaanesh for help to add it in my OD version)
+	Added: neomame executable
+	Added: Analog joystick management for gcw0
+	Added: Pirate Pete and Jungle Hunt (Brazil) from Mame 0.68
+	Added: Metal Slug X, Garou, King Of Fighter 99, Captain Tomaday because they were not in the neogeo list
+	Added: m90 driver, added games Bomber Man World, BomberMan, Dynablaster, Hasamu (from Mame 037b8 et 078)
+	Fixed: bug of SDL_Init after video mode set
+	Fixed: Optimize some functions
+	Fixed: Fix bug (seg fault) when leaving game to return to menu (L+R+START)
+	Fixed: bug (seg fault) for mk3 game
+	Fixed: z80 speed for neogeo driver according to last Mame version
+	Fixed : Boscodian speed according to last Mame version
+	Updated: Change L & R to Left/Right for game browsing
+	Updated: Change LockAudio for mutex management
+	Updated: button configuration (B/A/Y/X for #1..4 now)
+	Updated: Change video blitting, now, just using a direct video surface, no more layer
+	updated: Thunder Cross & Thunder Cross (Japan) now work correctly
+	updated: FireTrap now works correctly (from Mame 0.64 8751 protection simulation)
+	updated: Kick Start Wheelie King now works correctly (from Mame 0.68)
+	updated: port settings in taitosj driver (from Mame 0.68)
+	updated: The Bounty now works correctly (from Mame 0.68)
+	updated: Change galaga cpu frequency to 3.072 Mhz
+	updated: Add sound to zaccaria driver (from Mame 0.56)
+	updated: Aeroboto and FormationZ now works correctly (from Mame 0.68) but you need last rom set (prom roms are needed).
+	updated: Fixed colors and other things in Arabian (from Mame 0.37b16)
+	updated: Fixed colors in World Tennis (from Mame 0.37b16)
+	updated: Fixed colors in battle Lane (from Mame 0.37b16)
+	Updated: Change L & R to Left/Right for game options
+	Updated: Only one OPK file instead of multiple dge files
+	Updated: Add samples for some games in opk file
+	Updated: Add artwork for some games in opk file
+	Updated: remove unused flags in driver structure
+	
+	Added: Combat Hawk from Mame 0.115 (same drivers as 'Bank Panic' and similar kind of game) (from A320 Slaanesh Native version).
+	Added: Mermaid collision detection from Mame 0.125 to make game fully playable. Also added Rougien, a neat very 80's space game (from A320 Slaanesh Native version).
+	Added: Hang-On Jr, Transformer and Riddle of Pythagoras to VectSega from Mame 0.37b16 (from A320 Slaanesh Native version).
+	Added: M92 module. The following games now work: Gunforce, Blade Master, Lethal Thunder, Undercover Cops, Mystic Riders, Major Title 2, Hook, R-Type Leo, In the Hunt, Ninja Baseball Batman and associated clones. (from A320 Slaanesh Native version).
 
-	Added : Combat Hawk from Mame 0.115 (same drivers as 'Bank Panic' and similar kind of game) (from A320 Slaanesh Native version)
-	Added : Mermaid collision detection from Mame 0.125 to make game fully playable. Also added Rougien, a neat very 80's space game (from A320 Slaanesh Native version)
+	Fixed: Jumpshot (and add ShoottheBull) in pacman driver (from A320 Slaanesh Native version).
 
-	Updated : sn76496 noise feedback chaned to 0x14002 (from A320 Slaanesh Native version)
-	Updated : Ali Baba colors, will make use of later versions of the ROM (>= Mame 0.79) to display the correct colors (from A320 Slaanesh Native version)
-	Updated : Green Beret and Mr Goemon graphics rendering. Should be perfect now (from A320 Slaanesh Native version)
-	Updated : Time Pilot graphics rendering. Perfect emulation now (from A320 Slaanesh Native version)
-	Updated : Popeye (set 1 & 2). Decrypted from Mame 0.53 (from A320 Slaanesh Native version)
-	Updated : Yie Ar Kung Fu speech is now correct (from A320 Slaanesh Native version)
-	Updated : Wiz for the correct background color (from A320 Slaanesh Native version)
-	Updated : Bank Panic CPU and sound frequencies (from A320 Slaanesh Native version)
-	Updated : vlm5030 speech generator from Mame 0.66. Fixes speech/effects in many games (from A320 Slaanesh Native version)
-	Updated : Crazy Balloon. Imrpoved sound (from A320 Slaanesh Native version)
-	Updated : Improved handling of AY8910 for FM sound chips that use it (ie. ym2203, ym2608 and ym2610) (from A320 Slaanesh Native version)
-	Updated : World Cup 90 now has correct sound (ie. ym2203, ym2608 and ym2610) (from A320 Slaanesh Native version)
-	updated : Sunset Riders protection issues from Mame 0.81. Should be more playable now (from A320 Slaanesh Native version)
-	updated : Nintendo 8080 games: Sheriff, Bandido, Space Fever and Helifire now have sound (from A320 Slaanesh Native version)
-	updated : DISCRETE SOUND from MAME 0.81 which allows many more games to have DISCRETE sound now (from A320 Slaanesh Native version)
-	updated : Night Driver. Now with sound and flashing screen on crash from Mame 0.89 (from A320 Slaanesh Native version)
+	Updated: sn76496 noise feedback chaned to 0x14002 (from A320 Slaanesh Native version)
+	Updated: Ali Baba colors, will make use of later versions of the ROM (>= Mame 0.79) to display the correct colors (from A320 Slaanesh Native version)
+	Updated: Green Beret and Mr Goemon graphics rendering. Should be perfect now (from A320 Slaanesh Native version)
+	Updated: Time Pilot graphics rendering. Perfect emulation now (from A320 Slaanesh Native version)
+	Updated: Popeye (set 1 & 2). Decrypted from Mame 0.53 (from A320 Slaanesh Native version)
+	Updated: Yie Ar Kung Fu speech is now correct (from A320 Slaanesh Native version)
+	Updated: Wiz for the correct background color (from A320 Slaanesh Native version)
+	Updated: Bank Panic CPU and sound frequencies (from A320 Slaanesh Native version)
+	Updated: vlm5030 speech generator from Mame 0.66. Fixes speech/effects in many games (from A320 Slaanesh Native version)
+	Updated: Crazy Balloon. Imrpoved sound (from A320 Slaanesh Native version)
+	Updated: Improved handling of AY8910 for FM sound chips that use it (ie. ym2203, ym2608 and ym2610) (from A320 Slaanesh Native version)
+	Updated: World Cup 90 now has correct sound (ie. ym2203, ym2608 and ym2610) (from A320 Slaanesh Native version)
+	updated: Sunset Riders protection issues from Mame 0.81. Should be more playable now (from A320 Slaanesh Native version)
+	updated: Nintendo 8080 games: Sheriff, Bandido, Space Fever and Helifire now have sound (from A320 Slaanesh Native version)
+	updated: DISCRETE SOUND from MAME 0.81 which allows many more games to have DISCRETE sound now (from A320 Slaanesh Native version)
+	updated: Night Driver. Now with sound and flashing screen on crash from Mame 0.89 (from A320 Slaanesh Native version)
+
+	Updated: chqflag.c driver. Chequered Flag now working (from A320 Slaanesh Native version).
+	Updated: toki.c driver from Mame 0.37b16. Toki now working  (from A320 Slaanesh Native version).
 
 MAME4ALL OD 1.0 (21/10/2012)
 ----------------------------
