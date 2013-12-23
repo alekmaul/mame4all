@@ -7,12 +7,14 @@ MAME4ALL GCW0 1.1 (25/12/2013)
 	Added: Pirate Pete and Jungle Hunt (Brazil) from Mame 0.68
 	Added: Metal Slug X, Garou, King Of Fighter 99, Captain Tomaday because they were not in the neogeo list
 	Added: m90 driver, added games Bomber Man World, BomberMan, Dynablaster, Hasamu (from Mame 037b8 et 078)
+	Added: Space Cruiser in taitosj from Mame 0.82
 	Fixed: bug of SDL_Init after video mode set
 	Fixed: Optimize some functions
 	Fixed: Fix bug (seg fault) when leaving game to return to menu (L+R+START)
 	Fixed: bug (seg fault) for mk3 game
 	Fixed: z80 speed for neogeo driver according to last Mame version
 	Fixed : Boscodian speed according to last Mame version
+	Fixed : Bakutotsu Kijuutei is now working (namcos1 driver)
 	Updated: Change L & R to Left/Right for game browsing
 	Updated: Change LockAudio for mutex management
 	Updated: button configuration (B/A/Y/X for #1..4 now)
@@ -38,9 +40,8 @@ MAME4ALL GCW0 1.1 (25/12/2013)
 	Added: Mermaid collision detection from Mame 0.125 to make game fully playable. Also added Rougien, a neat very 80's space game (from A320 Slaanesh Native version).
 	Added: Hang-On Jr, Transformer and Riddle of Pythagoras to VectSega from Mame 0.37b16 (from A320 Slaanesh Native version).
 	Added: M92 module. The following games now work: Gunforce, Blade Master, Lethal Thunder, Undercover Cops, Mystic Riders, Major Title 2, Hook, R-Type Leo, In the Hunt, Ninja Baseball Batman and associated clones. (from A320 Slaanesh Native version).
-
 	Fixed: Jumpshot (and add ShoottheBull) in pacman driver (from A320 Slaanesh Native version).
-
+	Fixed: KiKi KaiKai in mexico86 driver (from A320 Slaanesh Native version).
 	Updated: sn76496 noise feedback chaned to 0x14002 (from A320 Slaanesh Native version)
 	Updated: Ali Baba colors, will make use of later versions of the ROM (>= Mame 0.79) to display the correct colors (from A320 Slaanesh Native version)
 	Updated: Green Beret and Mr Goemon graphics rendering. Should be perfect now (from A320 Slaanesh Native version)
@@ -57,7 +58,6 @@ MAME4ALL GCW0 1.1 (25/12/2013)
 	updated: Nintendo 8080 games: Sheriff, Bandido, Space Fever and Helifire now have sound (from A320 Slaanesh Native version)
 	updated: DISCRETE SOUND from MAME 0.81 which allows many more games to have DISCRETE sound now (from A320 Slaanesh Native version)
 	updated: Night Driver. Now with sound and flashing screen on crash from Mame 0.89 (from A320 Slaanesh Native version)
-
 	Updated: chqflag.c driver. Chequered Flag now working (from A320 Slaanesh Native version).
 	Updated: toki.c driver from Mame 0.37b16. Toki now working  (from A320 Slaanesh Native version).
 

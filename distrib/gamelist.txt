@@ -1,4 +1,4 @@
-This is the complete list of games supported by MAME GCW0 1.1 (based on 0.37b5) (Dec 14 2013)
+This is the complete list of games supported by MAME GCW0 1.1 (based on 0.37b5) (Dec 23 2013)
 
 The list is generated automatically and is not 100% accurate, particularly in
 the "Screen Flip" column. Please let us know of any errors you find so we can
@@ -63,7 +63,8 @@ Internal Name - This is the unique name that should be specified on the command
 | Lizard Wizard                    |  Yes  |  Yes  |  Yes  |  Yes  | lizwiz   |
 | Glob, The                        |  Yes  |  Yes  |  Yes  |  Yes  | theglob  |
 | Beastie Feastie                  |  Yes  |  Yes  |  Yes  |  Yes  | beastf   |
-| Jump Shot                        |   No  |  Yes  |  Yes  |  Yes  | jumpshot |
+| Jump Shot                        |  Yes  |  Yes  |  Yes  |  Yes  | jumpshot |
+| Shoot the Bull                   |  Yes  |  Yes  |  Yes  |  Yes  | shootbul |
 | Dream Shopper                    |  Yes  |  Yes  |  Yes  |  Yes  | dremshpr |
 | Van Van Car                      |  Yes  |  Yes  |  Yes  |  Yes  | vanvan   |
 | Van Van Car (Sanritsu)           |  Yes  |  Yes  |  Yes  |  Yes  | vanvans  |
@@ -329,6 +330,7 @@ Internal Name - This is the unique name that should be specified on the command
 | World Stadium (Japan)            |  Yes  |  Yes  |  Yes  |  Yes  | ws       |
 | Beraboh Man (Japan)              |  Yes  |  Yes  |  Yes  |  Yes  | berabohm |
 | Marchen Maze (Japan)             |  Yes  |  Yes  |  Yes  |  Yes  | mmaze    |
+| Bakutotsu Kijuutei               |  Yes  |  Yes  |  Yes  |  Yes  | bakutotu |
 | World Court (Japan)              |  Yes  |  Yes  |  Yes  |  Yes  | wldcourt |
 | Splatter House (Japan)           |  Yes  |  Yes  |  Yes  |  Yes  | splatter |
 | Face Off (Japan)                 |  Yes  |  Yes  |  Yes  |  Yes  | faceoff  |
@@ -411,6 +413,7 @@ Internal Name - This is the unique name that should be specified on the command
 | Masao                            |  Yes  |  Yes  |  Yes  |  Yes  | masao    |
 | Hunchback (Donkey Kong conversion|  Yes  |   No  |  Yes  |  Yes  | hunchbkd |
 | Herbie at the Olympics (DK conver|  Yes  |   No  |  Yes  |  Yes  | herbiedk |
+| herocast                         |  Yes  |  Yes  | Yes(2)|  Yes  | herocast |
 | Popeye (set 1)                   |  Yes  |  Yes  |  Yes  |   No  | popeye   |
 | Popeye (set 2)                   |  Yes  |  Yes  |  Yes  |   No  | popeye2  |
 | Popeye (bootleg)                 |  Yes  |  Yes  |  Yes  |   No  | popeyebl |
@@ -626,6 +629,7 @@ Internal Name - This is the unique name that should be specified on the command
 | Blade Master (World)             |  Yes  |  Yes  |  Yes  |  Yes  | bmaster  |
 | Gunforce - Battle Fire Engulfed T|  Yes  |  Yes  |  Yes  |  Yes  | gunforce |
 | Gunforce - Battle Fire Engulfed T|  Yes  |  Yes  |  Yes  |  Yes  | gunforcu |
+| Gunforce - Battle Fire Engulfed T|  Yes  |  Yes  |  Yes  |  Yes  | gunforcj |
 | Hook (World)                     |  Yes  |  Yes  |  Yes  |  Yes  | hook     |
 | Hook (US)                        |  Yes  |  Yes  |  Yes  |  Yes  | hooku    |
 | Mystic Riders (World)            |  Yes  |  Yes  |  Yes  |  Yes  | mysticri |
@@ -639,6 +643,8 @@ Internal Name - This is the unique name that should be specified on the command
 | In The Hunt (World)              |  Yes  |  Yes  |  Yes  |  Yes  | inthunt  |
 | In The Hunt (US)                 |  Yes  |  Yes  |  Yes  |  Yes  | inthuntu |
 | Kaitei Daisensou (Japan)         |  Yes  |  Yes  |  Yes  |  Yes  | kaiteids |
+| Ninja Baseball Batman (US)       |  Yes  |  Yes  |  Yes  |  Yes  | nbbatman |
+| Yakyuu Kakutou League-Man (Japan)|  Yes  |  Yes  |  Yes  |  Yes  | leaguemn |
 | Lethal Thunder (World)           |  Yes  |  Yes  |  Yes  |  Yes  | lethalth |
 | Thunder Blaster (Japan)          |  Yes  |  Yes  |  Yes  |  Yes  | thndblst |
 | Perfect Soldiers (Japan)         |  Yes  |  Yes  |  Yes  |  Yes  | psoldier |
@@ -671,6 +677,7 @@ Internal Name - This is the unique name that should be specified on the command
 | Zoo Keeper (set 2)               |  Yes  |  Yes  |  Yes  |   No  | zookeep2 |
 | Zoo Keeper (set 3)               |  Yes  |  Yes  |  Yes  |   No  | zookeep3 |
 | Space Seeker                     |  Yes  |  Yes  |  Yes  |  Yes  | spaceskr |
+| Space Cruiser                    |  Yes  |  Yes  |  Yes  |  Yes  | spacecr  |
 | Jungle King (Japan)              |  Yes  |  Yes  |  Yes  |  Yes  | junglek  |
 | Jungle King (Japan, earlier)     |  Yes  |  Yes  |  Yes  |  Yes  | junglkj2 |
 | Jungle Hunt (US)                 |  Yes  |  Yes  |  Yes  |  Yes  | jungleh  |
@@ -718,7 +725,7 @@ Internal Name - This is the unique name that should be specified on the command
 | Super Bobble Bobble              |  Yes  |  Yes  |  Yes  |  Yes  | sboblbob |
 | Kick and Run                     |  Yes  |  Yes  |  Yes  |  Yes  | kicknrun |
 | Mexico 86                        |  Yes  |  Yes  |  Yes  |  Yes  | mexico86 |
-| KiKi KaiKai                      |   No  |  Yes  |  Yes  |  Yes  | kikikai  |
+| KiKi KaiKai                      |  Yes  |  Yes  |  Yes  |  Yes  | kikikai  |
 | Rastan (World)                   |  Yes  |  Yes  |  Yes  |  Yes  | rastan   |
 | Rastan (US set 1)                |  Yes  |  Yes  |  Yes  |  Yes  | rastanu  |
 | Rastan (US set 2)                |  Yes  |  Yes  |  Yes  |  Yes  | rastanu2 |
@@ -1568,6 +1575,8 @@ Internal Name - This is the unique name that should be specified on the command
 | Crime Fighters 2 (Japan)         |  Yes  |  Yes  |  Yes  |  Yes  | vendettj |
 | WEC Le Mans 24                   |  Yes  |   No  |  Yes  |  Yes  | wecleman |
 | Hot Chase                        |  Yes  |  Yes  |  Yes  |  Yes  | hotchase |
+| Chequered Flag                   |  Yes  |  Yes  |  Yes  |  Yes  | chqflag  |
+| Chequered Flag (Japan)           |  Yes  |  Yes  |  Yes  |  Yes  | chqflagj |
 | Ultraman (Japan)                 |  Yes  |  Yes  |  Yes  |  Yes  | ultraman |
 | Nemesis (hacked?)                |  Yes  |  Yes  |  Yes  |  Yes  | nemesis  |
 | Nemesis (World?)                 |  Yes  |  Yes  |  Yes  |  Yes  | nemesuk  |
@@ -2010,7 +2019,7 @@ Internal Name - This is the unique name that should be specified on the command
 | Dynamite Duke                    |  Yes  |  Yes  |   No  |  Yes  | dynduke  |
 | Double Dynamites, The            |  Yes  |  Yes  |   No  |  Yes  | dbldyn   |
 | Raiden                           |  Yes  |  Yes  |  Yes  |  Yes  | raiden   |
-| Raiden (Alternate Hardware)      |  Yes  |  Yes  |   No  |  Yes  | raidena  |
+| Raiden (Alternate Hardware)      |  Yes  |  Yes  |  Yes  |  Yes  | raidena  |
 | Raiden (Korea)                   |  Yes  |  Yes  |  Yes  |  Yes  | raidenk  |
 | D-Con                            |  Yes  |  Yes  |  Yes  |   No  | dcon     |
 | Knuckle Joe (set 1)              |  Yes  |  Yes  |  Yes  |  Yes  | kncljoe  |
@@ -2018,11 +2027,11 @@ Internal Name - This is the unique name that should be specified on the command
 | Cabal (US set 1)                 | No(1) |  Yes  |Partial|   No  | cabal    |
 | Cabal (US set 2)                 | No(1) |  Yes  |Partial|   No  | cabal2   |
 | Cabal (bootleg)                  |  Yes  |  Yes  |Partial|   No  | cabalbl  |
-| Toki (set 1)                     | No(1) |  Yes  |  Yes  |   No  | toki     |
-| Toki (set 2)                     | No(1) |  Yes  |  Yes  |   No  | toki2    |
-| Toki (set 3)                     | No(1) |  Yes  |  Yes  |   No  | toki3    |
-| Toki (US)                        | No(1) |  Yes  |  Yes  |   No  | tokiu    |
-| Toki (bootleg)                   |  Yes  |  Yes  |  Yes  |   No  | tokib    |
+| Toki (World set 1)               |  Yes  |  Yes  |  Yes  |  Yes  | toki     |
+| Toki (World set 2)               |  Yes  |  Yes  |  Yes  |  Yes  | tokia    |
+| JuJu Densetsu (Japan)            |  Yes  |  Yes  |  Yes  |  Yes  | tokij    |
+| Toki (US)                        |  Yes  |  Yes  |  Yes  |  Yes  | tokiu    |
+| Toki (bootleg)                   |  Yes  |  Yes  |  Yes  |  Yes  | tokib    |
 | Blood Bros.                      |  Yes  |  Yes  |  Yes  |  Yes  | bloodbro |
 | West Story                       |  Yes  |  Yes  |  Yes  |  Yes  | weststry |
 | Exerion                          |  Yes  | Close |  Yes  |  Yes  | exerion  |
@@ -2188,6 +2197,9 @@ Internal Name - This is the unique name that should be specified on the command
 | Rougien                          |  Yes  |  Yes  |  Yes  |  Yes  | rougien  |
 | Magix                            |  Yes  |  Yes  |Partial|  Yes  | magix    |
 | Royal Mahjong                    |  Yes  |  Yes  |  Yes  |  Yes  | royalmah |
+| Hang-On Jr.                      |  Yes  |  Yes  |  Yes  |  Yes  | hangonjr |
+| Transformer                      |  Yes  |  Yes  |  Yes  |  Yes  | transfrm |
+| Riddle of Pythagoras (Japan)     |  Yes  |  Yes  |  Yes  |  Yes  | ridleofp |
 +----------------------------------+-------+-------+-------+-------+----------+
 
 (1) There are variants of the game (usually bootlegs) that work correctly
