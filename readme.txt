@@ -1,4 +1,4 @@
-MAME4ALL OPENDINGUX - Source Code 
+MAME4ALL GCW0 - Source Code 
 ------------------------------------------
 http://www.portabledev.com/pages/dingoo/jeuxdev.-perso/mame4all_od.php
 
@@ -10,8 +10,8 @@ Thanks and regards.
 
 - Alekmaul (alekmaul@portabledev.com)
 
-COMPILE EXECUTABLES FOR OPEN DINGUX CONSOLE
--------------------------------------------
+COMPILE EXECUTABLES FOR GCW CONSOLE
+-----------------------------------
 
 make -f makefile.odx
 make -f makefile.odx TARGET=neomame

@@ -22,7 +22,7 @@ VPATH=src $(wildcard src/cpu/*)
 
 # define regarding OS, which compiler, linker and utilities to use
 ifeq "$(OSTYPE)" "msys"	
-TOOLCHAIN = /d/MinGW32
+TOOLCHAIN = /c/MinGW32
 CC          = $(TOOLCHAIN)/bin/gcc
 CPP         = $(TOOLCHAIN)/bin/gcc
 LD          = $(TOOLCHAIN)/bin/gcc
