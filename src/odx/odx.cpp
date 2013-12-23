@@ -138,10 +138,11 @@ int main (int argc, char **argv)
 	/* if frontend options were used, return to DOS with the error code */
 	if (res != 1234)
 	{
-	      	odx_deinit();
-	      	execl("mame.dge", "mame.dge", "cache", NULL);
+		odx_deinit();
+		execl("mame.dge", "mame.dge", "cache", NULL);
 		exit (res);
 	}
+
 
     /* handle playback which is not available in mame.cfg */
 	init_inpdir(); /* Init input directory for opening .inp for playback */

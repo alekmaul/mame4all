@@ -219,6 +219,11 @@ void save_screen_snapshot(struct osd_bitmap *bitmap);
 #define ACCESSING_LSB (!(data & 0x00ff0000))
 #define ACCESSING_MSB (!(data & 0xff000000))
 
+/* 32-bit memory accessing */
+#define ACCESSING_LSB32				(!(data & 0x000000ff))
+#define ACCESSING_MSB32				(!(data & 0xff000000))
+
+
 #define BIT(x,n) (((x)>>(n))&1)
 #define BITSWAP8(val,B7,B6,B5,B4,B3,B2,B1,B0) \
 		((BIT(val,B7) << 7) | \

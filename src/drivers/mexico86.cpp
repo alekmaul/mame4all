@@ -56,20 +56,16 @@ static WRITE_HANDLER( shared_w )
 }
 
 /*
-$f008 - write
-bit 7 = ? (unused?)
-bit 6 = ? (unused?)
-bit 5 = ? (unused?)
-bit 4 = ? (usually set in game)
-bit 3 = ? (usually set in game)
-bit 2 = sound cpu reset line
-bit 1 = microcontroller reset line
-bit 0 = ? (unused?)
-*/
 static WRITE_HANDLER( mexico86_f008_w )
 {
 	cpu_set_reset_line(1,(data & 4) ? CLEAR_LINE : ASSERT_LINE);
 	cpu_set_reset_line(2,(data & 2) ? CLEAR_LINE : ASSERT_LINE);
+}
+*/
+
+static READ_HANDLER( kiki_2203_r )
+{
+	return(YM2203_status_port_0_r(0) & 0x7f);
 }
 
 
@@ -90,7 +86,7 @@ static struct MemoryWriteAddress writemem[] =
 {
 	{ 0x0000, 0xbfff, MWA_ROM },
 	{ 0xc000, 0xe7ff, shared_w, &shared },	/* shared with sound cpu */
-	{ 0xc000, 0xcfff, MWA_RAM, &mexico86_videoram },
+	{ 0xc000, 0xc4ff, MWA_RAM, &mexico86_videoram },
 	{ 0xd500, 0xd7ff, MWA_RAM, &mexico86_objectram, &mexico86_objectram_size },
 	{ 0xe800, 0xe8ff, MWA_RAM, &mexico86_protection_ram },	/* shared with mcu */
 	{ 0xe900, 0xefff, MWA_RAM },
@@ -106,7 +102,7 @@ static struct MemoryReadAddress sound_readmem[] =
 	{ 0x0000, 0x7fff, MRA_ROM },
 	{ 0x8000, 0xa7ff, shared_r },
 	{ 0xa800, 0xbfff, MRA_RAM },
-	{ 0xc000, 0xc000, YM2203_status_port_0_r },
+	{ 0xc000, 0xc000, /* YM2203_status_port_0_r*/ kiki_2203_r },
 	{ 0xc001, 0xc001, YM2203_read_port_0_r },
 	{ -1 }  /* end of table */
 };
@@ -360,60 +356,100 @@ static struct YM2203interface ym2203_interface =
 };
 
 
+static struct MachineDriver machine_driver_mexico86 =
+{
+	{
+		{
+			CPU_Z80,
+			6000000,		/* 6 MHz??? */
+			readmem,writemem,0,0,
+			ignore_interrupt,0	/* IRQs are triggered by the 68705 */
+		},
+		{
+			CPU_Z80,
+			6000000,		/* 6 MHz??? */
+			sound_readmem,sound_writemem,0,0,
+			interrupt,1
+		},
+		{
+			CPU_M68705,
+			4000000/2,	/* xtal is 4MHz (????) I think it's divided by 2 internally */
+			m68705_readmem,m68705_writemem,0,0,
+			mexico86_m68705_interrupt,1
+		}
+		/* There is also a third Z80 but only used in Mexico 86 for the 4-player mode */
+	},
+	60, DEFAULT_60HZ_VBLANK_DURATION,  /* frames per second, vblank duration */
+	100,	/* 100 CPU slices per frame - an high value to ensure proper */
+			/* synchronization of the CPUs */
+	0,
 
-#define MACHINEDRIVER(NAME) 														\
-static struct MachineDriver machine_driver_##NAME = 								\
-{																					\
-	{																				\
-		{																			\
-			CPU_Z80,																\
-			6000000,		/* 6 MHz??? */											\
-			readmem,writemem,0,0,													\
-			ignore_interrupt,0	/* IRQs are triggered by the 68705 */				\
-		},																			\
-		{																			\
-			CPU_Z80,																\
-			6000000,		/* 6 MHz??? */											\
-			sound_readmem,sound_writemem,0,0,										\
-			interrupt,1																\
-		},																			\
-		{																			\
-			CPU_M68705,																\
-			4000000/2,	/* xtal is 4MHz (????) I think it's divided by 2 internally */	\
-			m68705_readmem,m68705_writemem,0,0,										\
-			mexico86_m68705_interrupt,2												\
-		}																			\
-	},																				\
-	60, DEFAULT_60HZ_VBLANK_DURATION,  /* frames per second, vblank duration */		\
-	100,	/* 100 CPU slices per frame - an high value to ensure proper */			\
-			/* synchronization of the CPUs */										\
-	0,																				\
-																					\
-	/* video hardware */															\
-	32*8, 32*8, { 0*8, 32*8-1, 2*8, 30*8-1 },										\
-	gfxdecodeinfo,																	\
-	256, 256,																		\
-	mexico86_vh_convert_color_prom,													\
-																					\
-	VIDEO_TYPE_RASTER,																\
-	0,																				\
-	0,																				\
-	0,																				\
-	NAME##_vh_screenrefresh,														\
-																					\
-	/* sound hardware */															\
-	0,0,0,0,																		\
-	{																				\
-		{																			\
-			SOUND_YM2203,															\
-			&ym2203_interface														\
-		}																			\
-	}																				\
+	/* video hardware */
+	32*8, 32*8, { 0*8, 32*8-1, 2*8, 30*8-1 },
+	gfxdecodeinfo,
+	256, 256,
+	mexico86_vh_convert_color_prom,
+
+	VIDEO_TYPE_RASTER,
+	0,
+	0,
+	0,
+	mexico86_vh_screenrefresh,
+
+	/* sound hardware */
+	0,0,0,0,
+	{
+		{
+			SOUND_YM2203,
+			&ym2203_interface
+		}
+	}
 };
 
+static struct MachineDriver machine_driver_kikikai =
+{
+	{
+		{
+			CPU_Z80,
+			6000000,		/* 6 MHz??? */
+			readmem,writemem,0,0,
+			kikikai_interrupt, 1	 // IRQs should be triggered by the MCU, but we don't have it
+		},
+		{
+			CPU_Z80,
+			6000000,		/* 6 MHz??? */
+			sound_readmem,sound_writemem,0,0,
+			interrupt,1
+		}
+		/* No code available for MCU */
+		/* There is also a third Z80 but only used in Mexico 86 for the 4-player mode */
+	},
+	60, DEFAULT_60HZ_VBLANK_DURATION,  /* frames per second, vblank duration */
+	100,	/* 100 CPU slices per frame - an high value to ensure proper */
+			/* synchronization of the CPUs */
+	0,
 
-MACHINEDRIVER( mexico86 )
-MACHINEDRIVER( kikikai )
+	/* video hardware */
+	32*8, 32*8, { 0*8, 32*8-1, 2*8, 30*8-1 },
+	gfxdecodeinfo,
+	256, 256,
+	mexico86_vh_convert_color_prom,
+
+	VIDEO_TYPE_RASTER,
+	0,
+	0,
+	0,
+	kikikai_vh_screenrefresh,
+
+	/* sound hardware */
+	0,0,0,0,
+	{
+		{
+			SOUND_YM2203,
+			&ym2203_interface
+		}
+	}
+};
 
 
 /***************************************************************************
@@ -480,15 +516,15 @@ ROM_END
 
 ROM_START( kikikai )
 	ROM_REGION( 0x28000, REGION_CPU1 )	 /* 196k for code */
-	ROM_LOAD( "a85-17.rom", 0x00000, 0x08000, 0xc141d5ab ) /* 1st half, main code		 */
+	ROM_LOAD( "a85-17.rom", 0x00000, 0x08000, 0xc141d5ab ) /* 1st half, main code			 */
 	ROM_CONTINUE(           0x20000, 0x08000 )			   /* 2nd half, banked at 0x8000 */
 	ROM_LOAD( "a85-16.rom", 0x10000, 0x10000, 0x4094d750 ) /* banked at 0x8000			 */
 
 	ROM_REGION( 0x10000, REGION_CPU2 )	 /* 64k for the audio cpu */
 	ROM_LOAD( "a85-11.rom", 0x0000, 0x8000, 0xcc3539db )
 
-	ROM_REGION( 0x0800, REGION_CPU3 )	/* 2k for the microcontroller */
-	ROM_LOAD( "knightb.uc", 0x0000, 0x0800, 0x3cc2bbe4 )
+	//ROM_REGION( 0x0800, REGION_CPU3 )	/* 2k for the microcontroller */
+	//ROM_LOAD( "knightb.uc", 0x0000, 0x0800, 0x3cc2bbe4 )
 
 	ROM_REGION( 0x40000, REGION_GFX1 | REGIONFLAG_DISPOSE )
 	ROM_LOAD( "a85-15.rom", 0x00000, 0x10000, 0xaebc8c32 )
@@ -503,7 +539,15 @@ ROM_START( kikikai )
 ROM_END
 
 
+void init_kikikai(void)
+{
+    unsigned char *ROM = memory_region(REGION_CPU1);
+
+    //AT: set as default to avoid banking problems
+    //memcpy(&ROM[0x10000], &ROM[0x4000], 0x8000);
+}
+
 
 GAME( 1986, kicknrun, 0,        mexico86, mexico86, 0, ROT0, "Taito Corporation", "Kick and Run" )
 GAME( 1986, mexico86, kicknrun, mexico86, mexico86, 0, ROT0, "bootleg", "Mexico 86" )
-GAMEX(1986, kikikai,  0,        kikikai,  kikikai,  0, ROT90, "Taito Corporation", "KiKi KaiKai", GAME_NOT_WORKING )
+GAME( 1986, kikikai,  0,        kikikai,  kikikai,  kikikai, ROT90, "Taito Corporation", "KiKi KaiKai" )

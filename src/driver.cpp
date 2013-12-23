@@ -389,7 +389,7 @@ TESTDRIVER( liblrabl )	/* (c) 1983 */
 	DRIVER( berabohm )	/* (c) 1988 (Japan) */
 	/* 1988 Alice in Wonderland (English version of Marchen maze) */
 	DRIVER( mmaze )		/* (c) 1988 (Japan) */
-TESTDRIVER( bakutotu )	/* (c) 1988 */
+	DRIVER( bakutotu )	/* (c) 1988 */
 	DRIVER( wldcourt )	/* (c) 1988 (Japan) */
 	DRIVER( splatter )	/* (c) 1988 (Japan) */
 	DRIVER( faceoff )	/* (c) 1988 (Japan) */
@@ -820,6 +820,7 @@ TESTDRIVER( firebarr )	/* (c) 1993 Irem (Japan) */
 
 	/* Taito SJ System games */
 	DRIVER( spaceskr )	/* (c) 1981 Taito Corporation */
+	DRIVER( spacecr )	/* (c) 1981 Taito Corporation */
 	DRIVER( junglek )	/* (c) 1982 Taito Corporation */
 	DRIVER( junglkj2 )	/* (c) 1982 Taito Corporation */
 	DRIVER( jungleh )	/* (c) 1982 Taito America Corporation */

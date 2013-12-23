@@ -4,8 +4,8 @@ struct driver {
 	char exe[8];
 	int available;
 };
-
-#define NUMGAMES (2287+3+2+2+1+1+1)
+ 
+#define NUMGAMES (2287+3+2+2+1+1+1+1+1)
 
 struct driver drivers[NUMGAMES] = {
 
@@ -164,6 +164,7 @@ struct driver drivers[NUMGAMES] = {
 { "Bagman (Stern set 2)"                                                                                  ,"bagmans2"     , "mame", 0 } ,												
 { "Bagman"                                                                                                ,"bagman"       , "mame", 0 } ,												
 { "Bakatonosama Mahjong Manyuki"                                                                          ,"bakatono"     , "neomame", 0 } ,												
+{ "Bakutotsu Kijuutei"                                                                                    ,"bakutotu"     , "mame", 0 } ,												
 { "Balloon Bomber"                                                                                        ,"ballbomb"     , "mame", 0 } ,												
 { "Baluba-louk no Densetsu"                                                                               ,"baluba"       , "mame", 0 } ,												
 { "Bandido"                                                                                               ,"bandido"      , "mame", 0 } ,												
@@ -1775,6 +1776,7 @@ struct driver drivers[NUMGAMES] = {
 { "Space Bird (bootleg)"                                                                                  ,"spacebrd"     , "mame", 0 } ,												
 { "Space Chaser (CV version)"                                                                             ,"schasrcv"     , "mame", 0 } ,												
 { "Space Chaser"                                                                                          ,"schaser"      , "mame", 0 } ,												
+{ "Space Cruiser"                                                                                         ,"spacecr"      , "mame", 0 } ,												
 { "Space Demon"                                                                                           ,"spacedem"     , "mame", 0 } ,												
 { "Space Duel"                                                                                            ,"spacduel"     , "mame", 0 } ,												
 { "Space Dungeon"                                                                                         ,"sdungeon"     , "mame", 0 } ,												

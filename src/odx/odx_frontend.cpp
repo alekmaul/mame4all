@@ -753,15 +753,14 @@ void execute_game (char *playemu, char *playgame)
 	
 	args[n]=NULL;
 
-//#if 1
+#if 0
 	for (i=0; i<n; i++)
 	{
-		fprintf(stdout,"%s ",args[i]);
+		fprintf(stderr,"%s ",args[i]);
 	}
-	fprintf(stdout,"\n");
-	fflush(stdout);
-//#endif
-
+	fprintf(stderr,"\n");
+	fflush(stderr);
+#endif
 	odx_deinit();
 	execv(args[0], args); 
 }
@@ -975,7 +974,7 @@ void gethomedir(char *dir, char* name) {
 
 int main (int argc, char **argv)
 {
-	char text[512];
+	char text[512], curDir[512];
 	FILE *f;
 
 	/* get initial home directory */
@@ -1001,6 +1000,10 @@ int main (int argc, char **argv)
 	game_list_init(argc);
 	if (game_num_avail==0)
 	{
+		/* save current dir */
+		getcwd(curDir, 256);
+		
+		/* Check for rom dir */
 		while (game_num_avail == 0) {
 			odx_gamelist_text_out(10, 20, "Error: No available games found !");
 			odx_gamelist_text_out(10, 40, "Press a key to select a rom directory");
@@ -1011,6 +1014,8 @@ int main (int argc, char **argv)
 			else
 				game_list_init(argc);
 		}
+		/* go back to default dir to avoid issue when launching mame after */
+		chdir(curDir);
 	}
 
 	/* Select Game */
@@ -1024,7 +1029,7 @@ int main (int argc, char **argv)
 		fclose(f);
 		/* sync(); */
 	}
-	
+
 	/* Execute Game */
 	execute_game (playemu,playgame);
 	

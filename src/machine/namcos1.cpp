@@ -5,6 +5,8 @@
 
 #define NAMCOS1_MAX_BANK 0x400
 
+#define USE_MTRANDOM 1
+
 /* from vidhrdw */
 READ_HANDLER( namcos1_videoram_r );
 WRITE_HANDLER( namcos1_videoram_w );
@@ -25,7 +27,6 @@ static int namcos1_reset = 0;
 
 
 static int berabohm_input_counter;
-
 
 
 /*******************************************************************************
@@ -478,9 +479,78 @@ static WRITE_HANDLER( ws_key_w ) {
 *	Key emulation (CUS181) for SplatterHouse								   *
 *																			   *
 *******************************************************************************/
+#ifdef USE_MTRANDOM
+
+// Courtesy of Shawn J. Cokus, University of Washington
+
+typedef unsigned long uint32;
+
+#define N              (624)                 // length of state vector
+#define M              (397)                 // a period parameter
+#define K              (0x9908B0DFU)         // a magic constant
+#define hiBit(u)       ((u) & 0x80000000U)   // mask all but highest   bit of u
+#define loBit(u)       ((u) & 0x00000001U)   // mask all but lowest    bit of u
+#define loBits(u)      ((u) & 0x7FFFFFFFU)   // mask     the highest   bit of u
+#define mixBits(u, v)  (hiBit(u)|loBits(v))  // move hi bit of u to hi bit of v
+
+static uint32   state[N+1];     // state vector + 1 extra to not violate ANSI C
+static uint32   *next;          // next random value is computed from here
+static int      left = -1;      // can *next++ this many times before reloading
+
+static void seedMT(uint32 seed)
+{
+	register uint32 x = (seed | 1U) & 0xFFFFFFFFU, *s = state;
+	register int    j;
+
+	for(left=0, *s++=x, j=N; --j;
+		*s++ = (x*=69069U) & 0xFFFFFFFFU);
+}
+
+static uint32 reloadMT(void)
+{
+	register uint32 *p0=state, *p2=state+2, *pM=state+M, s0, s1;
+	register int    j;
+
+	if(left < -1)
+		seedMT(4357U);
+
+	left=N-1, next=state+1;
+
+	for(s0=state[0], s1=state[1], j=N-M+1; --j; s0=s1, s1=*p2++)
+		*p0++ = *pM++ ^ (mixBits(s0, s1) >> 1) ^ (loBit(s1) ? K : 0U);
+
+	for(pM=state, j=M; --j; s0=s1, s1=*p2++)
+		*p0++ = *pM++ ^ (mixBits(s0, s1) >> 1) ^ (loBit(s1) ? K : 0U);
+
+	s1=state[0], *p0 = *pM ^ (mixBits(s0, s1) >> 1) ^ (loBit(s1) ? K : 0U);
+	s1 ^= (s1 >> 11);
+	s1 ^= (s1 <<  7) & 0x9D2C5680U;
+	s1 ^= (s1 << 15) & 0xEFC60000U;
+	return(s1 ^ (s1 >> 18));
+}
+
+INLINE uint32 randomMT(void)
+{
+	uint32 y;
+
+	if(--left < 0)
+		return(reloadMT());
+
+	y  = *next++;
+	y ^= (y >> 11);
+	y ^= (y <<  7) & 0x9D2C5680U;
+	y ^= (y << 15) & 0xEFC60000U;
+	return(y ^ (y >> 18));
+}
+
+#endif
 
 static READ_HANDLER( splatter_key_r ) {
-//	logerror("CPU #%d PC %08x: keychip read %04X=%02x\n",cpu_getactivecpu(),cpu_get_pc(),offset,key[offset]);
+
+	unsigned long data;
+
+	//logerror("CPU #%d PC %08x: keychip read %04X=%02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,key[offset]);
+
 	switch( ( offset >> 4 ) & 0x07 ) {
 		case 0x00:
 		case 0x06:
@@ -500,14 +570,17 @@ static READ_HANDLER( splatter_key_r ) {
 
 		case 0x04:
 			{
-				int data = 0x29;
-
+#ifdef USE_MTRANDOM
+				data = randomMT() & 0xff;
+#else
+				data = rand() & 0xff;
+#endif
 				if ( offset >= 0x1000 )
 					data |= 0x80;
 				if ( offset >= 0x2000 )
 					data |= 0x04;
 
-				return data;
+				return (data);
 			}
 			break;
 	}
@@ -517,7 +590,7 @@ static READ_HANDLER( splatter_key_r ) {
 }
 
 static WRITE_HANDLER( splatter_key_w ) {
-//	logerror("CPU #%d PC %08x: keychip write %04X=%02x\n",cpu_getactivecpu(),cpu_get_pc(),offset,data);
+	//logerror("CPU #%d PC %08x: keychip write %04X=%02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,data);
 	/* ignored */
 }
 
@@ -1239,6 +1312,29 @@ void init_bakutotu( void )
 		1						/* use tilemap flag : speedup optimize */
 	};
 	namcos1_driver_init(&bakutotu_specific);
+	
+	// resolves CPU deadlocks caused by sloppy coding(see driver\namcos1.c)
+	{
+		data8_t target[8] = {0x34,0x37,0x35,0x37,0x96,0x00,0x2e,0xed};
+		data8_t *rombase, *srcptr, *endptr, *scanptr;
+
+		rombase = memory_region(REGION_USER1);
+		srcptr = rombase + 0x1e000;
+		endptr = srcptr + 0xa000;
+
+		while ( (scanptr = memchr(srcptr, 0x34, endptr-srcptr)) )
+		{
+			if (!memcmp(scanptr, target, 8))
+			{
+				scanptr[7] = 0xfc;
+				srcptr = scanptr + 8;
+
+				logerror ("faulty loop patched at %06x\n", scanptr-rombase+7);
+			}
+			else
+				srcptr = scanptr + 1;
+		}
+	}
 }
 
 /*******************************************************************************
@@ -1269,6 +1365,10 @@ void init_splatter( void )
 		1								/* use tilemap flag : speedup optimize */
 	};
 	namcos1_driver_init(&splatter_specific);
+
+#ifdef USE_MTRANDOM
+	seedMT(rand());
+#endif
 }
 
 /*******************************************************************************

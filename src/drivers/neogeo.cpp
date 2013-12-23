@@ -4595,11 +4595,13 @@ GAME( 1990, bstars,   neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "Bas
 GAME( 1990, tpgolf,   neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "Top Player's Golf" )
 GAME( 1990, mahretsu, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "Mahjong Kyoretsuden" )
 GAME( 1990, ridhero,  neogeo,   raster, neogeo,  mgd2,   ROT0_16BIT, "SNK", "Riding Hero" )
+//GAMEB( 1990, ridheroh, ridhero,  neogeo, raster, neogeo,  neogeo,   ROT0, "SNK", "Riding Hero (set 2)" )
 GAME( 1991, alpham2,  neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "Alpha Mission II / ASO II - Last Guardian" )
 GAME( 1990, cyberlip, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "Cyber-Lip" )
 GAME( 1990, superspy, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "The Super Spy" )
 GAME( 1992, mutnat,   neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "Mutation Nation" )
 GAME( 1991, kotm,     neogeo,   neogeo, neogeo,  mgd2,   ROT0_16BIT, "SNK", "King of the Monsters" )
+//GAMEB( 1991, kotmh,    kotm,     neogeo, neogeo, neogeo,  neogeo,   ROT0, "SNK", "King of the Monsters (set 2)" )
 GAME( 1991, sengoku,  neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "Sengoku / Sengoku Denshou (set 1)" )
 GAME( 1991, sengokh,  sengoku,  neogeo, neogeo,  neogeo, ROT0,       "SNK", "Sengoku / Sengoku Denshou (set 2)" )
 GAME( 1991, burningf, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "Burning Fight (set 1)" )
@@ -4613,9 +4615,11 @@ GAME( 1991, eightman, neogeo,   neogeo, neogeo,  mgd2,   ROT0,       "SNK / Pall
 GAME( 1991, legendos, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "Legend of Success Joe / Ashitano Joe Densetsu" )
 GAME( 1991, 2020bb,   neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK / Pallas", "2020 Super Baseball (set 1)" )
 GAME( 1991, 2020bbh,  2020bb,   neogeo, neogeo,  neogeo, ROT0,       "SNK / Pallas", "2020 Super Baseball (set 2)" )
+//GAMEB( 1991, 2020bbh,  2020bb,   neogeo, neogeo, neogeo,  neogeo,   ROT0, "SNK / Pallas", "2020 Super Baseball (set 3)" )
 GAME( 1991, socbrawl, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "Soccer Brawl" )
 GAME( 1991, fatfury1, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "Fatal Fury - King of Fighters / Garou Densetsu - shukumei no tatakai" )
 GAME( 1991, roboarmy, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "Robo Army" )
+//GAMEB( 1991, roboarma, roboarmy, neogeo, neogeo, neogeo,  neogeo,   ROT0, "SNK", "Robo Army (set 2)" )
 GAME( 1992, fbfrenzy, neogeo,   neogeo, neogeo,  mgd2,   ROT0,       "SNK", "Football Frenzy" )
 GAME( 1992, kotm2,    neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "King of the Monsters 2 - The Next Thing" )
 GAME( 1993, sengoku2, neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "SNK", "Sengoku 2 / Sengoku Denshou 2")
@@ -4625,11 +4629,14 @@ GAME( 1993, 3countb,  neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "SNK", "3 C
 GAME( 1992, aof,      neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "SNK", "Art of Fighting / Ryuuko no Ken" )
 GAME( 1993, samsho,   neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "SNK", "Samurai Shodown / Samurai Spirits" )
 GAME( 1994, tophuntr, neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "SNK", "Top Hunter - Roddy & Cathy" )
+//GAMEB( 1994, tophunta, tophuntr, neogeo, ras320, neogeo,  neogeo,   ROT0, "SNK", "Top Hunter - Roddy & Cathy (set 2)" )
 GAME( 1992, fatfury2, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "Fatal Fury 2 / Garou Densetsu 2 - arata-naru tatakai" )
 GAME( 1992, ssideki,  neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "Super Sidekicks / Tokuten Ou" )
 GAME( 1994, kof94,    neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "SNK", "The King of Fighters '94" )
 GAME( 1994, aof2,     neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "SNK", "Art of Fighting 2 / Ryuuko no Ken 2" )
+//GAMEB( 1994, aof2a,    aof2,     neogeo, neogeo, neogeo,  neogeo,   ROT0, "SNK", "Art of Fighting 2 / Ryuuko no Ken 2 (set 2)" )
 GAME( 1993, fatfursp, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "SNK", "Fatal Fury Special / Garou Densetsu Special" )
+//GAMEB( 1993, fatfursa, fatfursp, neogeo, neo320, neogeo,  neogeo,   ROT0, "SNK", "Fatal Fury Special / Garou Densetsu Special (set 2)" )
 GAME( 1995, savagere, neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "SNK", "Savage Reign / Fu'un Mokushiroku - kakutou sousei" )
 GAME( 1994, ssideki2, neogeo,   raster, neogeo,  neogeo, ROT0_16BIT, "SNK", "Super Sidekicks 2 - The World Championship / Tokuten Ou 2 - real fight football" )
 GAME( 1994, samsho2,  neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "SNK", "Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen" )
@@ -4655,16 +4662,20 @@ GAME( 1998, neocup98, neogeo,   raster, neogeo,  neogeo, ROT0_16BIT, "SNK", "Neo
 GAME( 1999, mslugx,   neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "SNK", "Metal Slug X - Super Vehicle-001" )
 GAME( 1999, kof99,    neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "SNK", "The King of Fighters '99 - Millennium Battle" )
 GAME( 1999, garou,    neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "SNK", "Garou - Mark of the Wolves" )
+//GAMEB( 2000, mslug3,   neogeo,   neogeo, raster, neogeo,  mslug3,   ROT0, "SNK", "Metal Slug 3" ) /* Encrypted Code & GFX */
+//GAMEB( 2000, mslug3n,  mslug3,   neogeo, raster, neogeo,  mslug3n,  ROT0, "SNK", "Metal Slug 3 (not encrypted)" ) /* Encrypted GFX */
 
 /* Alpha Denshi Co. / ADK (changed name in 1993) */
 GAME( 1990, maglord,  neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Alpha Denshi Co.", "Magician Lord (set 1)" )
 GAME( 1990, maglordh, maglord,  neogeo, neogeo,  neogeo, ROT0,       "Alpha Denshi Co.", "Magician Lord (set 2)" )
 GAME( 1990, ncombat,  neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Alpha Denshi Co.", "Ninja Combat" )
+//GAMEB( 1990, ncombata, ncombat,  neogeo, neogeo, neogeo,  neogeo,   ROT0, "Alpha Denshi Co.", "Ninja Combat (set 2)" )
 GAME( 1990, bjourney, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Alpha Denshi Co.", "Blue's Journey / Raguy" )
 GAME( 1991, crsword,  neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Alpha Denshi Co.", "Crossed Swords" )
 GAME( 1991, trally,   neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Alpha Denshi Co.", "Thrash Rally" )
 GAME( 1992, ncommand, neogeo,   neogeo, neogeo,  mgd2,   ROT0,       "Alpha Denshi Co.", "Ninja Commando" )
 GAME( 1992, wh1,      neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Alpha Denshi Co.", "World Heroes" )
+//GAMEB( 1992, wh1h,     wh1,      neogeo, ras320, neogeo,  neogeo,   ROT0, "Alpha Denshi Co.", "World Heroes (set 2)" )
 GAME( 1993, wh2,      neogeo,   neogeo, neogeo,  neogeo, ROT0,       "ADK",              "World Heroes 2" )
 GAME( 1994, wh2j,     neogeo,   neogeo, neogeo,  neogeo, ROT0,       "ADK / SNK",        "World Heroes 2 Jet" )
 GAME( 1994, aodk,     neogeo,   neogeo, neogeo,  neogeo, ROT0,       "ADK / SNK",        "Aggressors of Dark Kombat / Tsuukai GANGAN Koushinkyoku" )
@@ -4673,6 +4684,7 @@ GAME( 1995, mosyougi, neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "ADK / SNK"
 GAME( 1996, overtop,  neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "ADK",              "Over Top" )
 GAME( 1996, ninjamas, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "ADK / SNK",        "Ninja Master's - haoh-ninpo-cho" )
 GAME( 1996, twinspri, neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "ADK",              "Twinkle Star Sprites" )
+//GAMEB( 1996, zintrckb, neogeo,   neogeo, neogeo, neogeo,  neogeo,   ROT0, "hack / bootleg",   "Zintrick / Oshidashi Zentrix (hack / bootleg)" )
 
 /* Aicom */
 GAME( 1994, janshin,  neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Aicom", "Jyanshin Densetsu - Quest of Jongmaster" )
@@ -4683,6 +4695,7 @@ GAME( 1993, spinmast, neogeo,   raster, neogeo,  neogeo, ROT0_16BIT, "Data East 
 GAME( 1994, wjammers, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Data East Corporation", "Windjammers / Flying Power Disc" )
 GAME( 1994, karnovr,  neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "Data East Corporation", "Karnov's Revenge / Fighter's History Dynamite" )
 GAME( 1994, strhoop,  neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Data East Corporation", "Street Hoop / Street Slam / Dunk Dream" )
+//GAMEB( 1996, ghostlop, neogeo,   neogeo, raster, neogeo,  neogeo,   ROT0, "Data East Corporation", "Ghostlop (prototype)" )
 GAME( 1996, magdrop2, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Data East Corporation", "Magical Drop II" )
 GAME( 1997, magdrop3, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Data East Corporation", "Magical Drop III" )
 
@@ -4706,6 +4719,9 @@ GAME( 1996, mslug,    neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Nazca", "M
 /* NMK */
 GAME( 1994, zedblade, neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "NMK", "Zed Blade / Operation Ragnarok" )
 
+/* Psikyo */
+//GAMEB( 1999, s1945p,   neogeo,   neogeo, neo320, neogeo,  s1945p,   ROT0, "Psikyo", "Strikers 1945 Plus" )	/* Encrypted GFX */
+
 /* Sammy */
 GAME( 1992, viewpoin, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Sammy", "Viewpoint" )
 
@@ -4716,6 +4732,7 @@ GAME( 1996, ragnagrd, neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "Saurus", "
 GAME( 1996, pgoal,    neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Saurus", "Pleasure Goal / Futsal - 5 on 5 Mini Soccer" )
 GAME( 1996, stakwin2, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Saurus", "Stakes Winner 2" )
 GAME( 1997, shocktro, neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "Saurus", "Shock Troopers" )
+//GAMEB( 1997, shocktra, shocktro, neogeo, neogeo, neogeo,  neogeo,   ROT0, "Saurus", "Shock Troopers (set 2)" )
 GAME( 1998, shocktr2, neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "Saurus", "Shock Troopers - 2nd Squad" )
 
 /* Sunsoft */
@@ -4724,6 +4741,7 @@ GAME( 1996, wakuwak7, neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "Sunsoft", 
 
 /* Taito */
 GAME( 1994, pbobble,  neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Taito", "Puzzle Bobble / Bust-A-Move (Neo-Geo)" )
+//GAMEB( 1994, pbobblna, pbobblen, neogeo, neo320, neogeo,  neogeo,   ROT0, "Taito", "Puzzle Bobble / Bust-A-Move (Neo-Geo) (set 2)" )
 GAME( 1999, pbobbl2n, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Taito (SNK license)", "Puzzle Bobble 2 / Bust-A-Move Again (Neo-Geo)" )
 
 /* Takara */
@@ -4739,9 +4757,11 @@ GAME( 1996, tws96,    neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Tecmo", "T
 
 /* Yumekobo */
 GAME( 1998, blazstar, neogeo,   neogeo, neogeo,  neogeo, ROT0_16BIT, "Yumekobo", "Blazing Star" )
+//GAMEB( 1999, preisle2, neogeo,   neogeo, neogeo, neogeo,  preisle2, ROT0, "Yumekobo", "Prehistoric Isle 2" ) /* Encrypted GFX */
 
 /* Viccom */
 GAME( 1994, fightfev, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Viccom", "Fight Fever / Crystal Legacy" )
+//GAMEB( 1994, fightfva, fightfev, neogeo, neogeo, neogeo,  neogeo,   ROT0, "Viccom", "Fight Fever (set 2)" )
 
 /* Video System Co. */
 GAME( 1994, pspikes2, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Video System Co.", "Power Spikes II" )
@@ -4760,3 +4780,5 @@ GAME( 1997, puzzldpr, puzzledp, neogeo, neogeo,  neogeo, ROT0,       "Taito (Vis
 GAME( 1998, breakrev, breakers, neogeo, neogeo,  neogeo, ROT0_16BIT, "Visco", "Breakers Revenge")
 GAME( 1998, flipshot, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Visco", "Battle Flip Shot" )
 GAME( 1999, ctomaday, neogeo,   neogeo, neogeo,  neogeo, ROT0,       "Visco", "Captain Tomaday" )
+//GAMEB( 1999, ganryu,   neogeo,   neogeo, neogeo, neogeo,  ganryu,   ROT0, "Visco", "Musashi Ganryuuki" )	/* Encrypted GFX */
+//GAMEB( 2000, bangbead, neogeo,   neogeo, raster, neogeo,  bangbead, ROT0, "Visco", "Bang Bead" )

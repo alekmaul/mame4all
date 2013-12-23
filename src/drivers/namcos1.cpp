@@ -216,6 +216,11 @@ static void nvram_handler(void *file,int read_or_write)
 	}
 }
 
+static WRITE_HANDLER( namcos1_sub_firq_w )
+{
+	cpu_set_irq_line(1, 1, HOLD_LINE);
+}
+
 /**********************************************************************/
 
 static struct MemoryReadAddress main_readmem[] =
@@ -242,9 +247,10 @@ static struct MemoryWriteAddress main_writemem[] =
 	{ 0xc000, 0xdfff, namcos1_0_banked_area6_w },
 	{ 0xe000, 0xefff, namcos1_bankswitch_w },
 	{ 0xf000, 0xf000, namcos1_cpu_control_w },
-	{ 0xf200, 0xf200, MWA_NOP }, /* watchdog? */
-//	{ 0xf400, 0xf400, MWA_NOP }, /* unknown */
-//	{ 0xf600, 0xf600, MWA_NOP }, /* unknown */
+	{ 0xf200, 0xf200, MWA_NOP }, /* watchdog */
+	{ 0xf400, 0xf400, MWA_NOP }, /* unknown */
+	{ 0xf600, 0xf600, MWA_NOP }, /* main video update(handler installs separately) */
+	{ 0xfa00, 0xfa00, namcos1_sub_firq_w }, // asserts FIRQ on CPU1
 	{ 0xfc00, 0xfc01, namcos1_subcpu_bank_w },
 	{ -1 }	/* end of table */
 };
@@ -273,9 +279,9 @@ static struct MemoryWriteAddress sub_writemem[] =
 	{ 0xa000, 0xbfff, namcos1_1_banked_area5_w },
 	{ 0xc000, 0xdfff, namcos1_1_banked_area6_w },
 	{ 0xf000, 0xf000, MWA_NOP }, /* IO Chip */
-	{ 0xf200, 0xf200, MWA_NOP }, /* watchdog? */
-//	{ 0xf400, 0xf400, MWA_NOP }, /* unknown */
-//	{ 0xf600, 0xf600, MWA_NOP }, /* unknown */
+	{ 0xf200, 0xf200, MWA_NOP }, /* watchdog */
+	{ 0xf400, 0xf400, MWA_NOP }, /* unknown */
+	{ 0xf600, 0xf600, MWA_NOP }, /* sub video update(handler installs separately) */
 	{ -1 }	/* end of table */
 };
 
@@ -536,6 +542,55 @@ INPUT_PORTS_START( ns1 )
 	PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* OUT:coin lockout */
 	PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* OUT:coin counter 1 */
 	PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* OUT:coin counter 2 */
+	PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_COIN2 )
+	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_COIN1 )
+	PORT_BITX(0x20, IP_ACTIVE_LOW, IPT_SERVICE, "Service Button", KEYCODE_F1, IP_JOY_NONE )
+	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_SERVICE1 )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNUSED )
+INPUT_PORTS_END
+
+/* Bakutotsu Kijyutei input port definition - dip switches are different */
+INPUT_PORTS_START( bakutotu )
+	PORT_START      /* IN0 */
+	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT )
+	PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT )
+	PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN )
+	PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_UP )
+	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 )
+	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 )
+	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START1 )
+
+	PORT_START      /* IN1 */
+	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER2 )
+	PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_PLAYER2 )
+	PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER2 )
+	PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER2 )
+	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 )
+	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 )
+	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER2 )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START2 )
+
+	PORT_START      /* DSW1 */
+	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED )
+	PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNUSED )
+	PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNUSED )
+	PORT_DIPNAME( 0x08, 0x08, DEF_STR( Service_Mode ) )
+	PORT_DIPSETTING(    0x08, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x10, 0x10, "Freeze" )
+	PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNUSED )
+	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNUSED )
+	PORT_DIPNAME( 0x80, 0x80, "Sprite Viewer" )
+	PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+
+	PORT_START      /* IN2 : mcu PORT2 */
+	PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL )   /* OUT:coin lockout */
+	PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_SPECIAL )   /* OUT:coin counter 1 */
+	PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_SPECIAL )   /* OUT:coin counter 2 */
 	PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_COIN2 )
 	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_COIN1 )
 	PORT_BITX(0x20, IP_ACTIVE_LOW, IPT_SERVICE, "Service Button", KEYCODE_F1, IP_JOY_NONE )
@@ -1051,6 +1106,73 @@ static struct MachineDriver machine_driver_faceoff =
 
 	nvram_handler
 };
+
+static struct MachineDriver machine_driver_bakutotu =
+{
+	/* basic machine hardware */
+	{
+		{
+			CPU_M6809,
+			49152000/32,	/* Not sure if divided by 32 or 24 */
+			main_readmem,main_writemem,0,0,
+			interrupt,1,
+		},
+		{
+			CPU_M6809,
+			49152000/32,	/* Not sure if divided by 32 or 24 */
+			sub_readmem,sub_writemem,0,0,
+			interrupt,1,
+		},
+		{
+			CPU_M6809,
+			49152000/32,	/* Not sure if divided by 32 or 24 */
+			sound_readmem,sound_writemem,0,0,
+			interrupt,1
+		},
+		{
+			CPU_HD63701,	/* or compatible 6808 with extra instructions */
+			49152000/8/4,
+			mcu_readmem,mcu_writemem,mcu_readport,mcu_writeport,
+			interrupt,1
+		}
+	},
+	60, DEFAULT_REAL_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
+	0, /* CPU slice timer is made by machine_init */
+	init_namcos1,
+
+	/* video hardware */
+	36*8, 28*8, { 0*8, 36*8-1, 0*8, 28*8-1 },
+	gfxdecodeinfo,
+	128*16+6*256+6*256+1,	/* sprites, tiles, shadowed tiles, background */
+		128*16+6*256+1,
+	namcos1_vh_convert_color_prom,
+
+	VIDEO_TYPE_RASTER | VIDEO_MODIFIES_PALETTE | VIDEO_UPDATE_BEFORE_VBLANK,
+	0,
+	namcos1_vh_start,
+	namcos1_vh_stop,
+	namcos1_vh_screenrefresh,
+
+	/* sound hardware */
+	SOUND_SUPPORTS_STEREO,0,0,0,
+	{
+		{
+			SOUND_YM2151,
+			&ym2151_interface
+		},
+		{
+			SOUND_NAMCO,
+			&namco_interface
+		},
+		{
+			SOUND_DAC,
+			&dac_interface
+		}
+	},
+
+	nvram_handler
+};
+
 
 
 /***********************************************************************
@@ -2426,7 +2548,7 @@ GAME( 1988, ws,       0,        ns1,     ns1,     ws,       ROT0,         "Namco
 GAME( 1988, berabohm, 0,        ns1,     berabohm,berabohm, ROT0_16BIT,   "Namco", "Beraboh Man (Japan)" )
 //GAME( 1988, alice,    0,        ns1,     ns1,     alice,    ROT0_16BIT,   "Namco", "Alice In Wonderland" )
 GAME( 1988, mmaze,    0,        ns1,     ns1,     alice,    ROT0_16BIT,   "Namco", "Marchen Maze (Japan)" )
-GAMEX(1988, bakutotu, 0,        ns1,     ns1,     bakutotu, ROT0,         "Namco", "Bakutotsu Kijuutei", GAME_NOT_WORKING )
+GAME( 1988, bakutotu, 0,        bakutotu,bakutotu,bakutotu, ROT0,         "Namco", "Bakutotsu Kijuutei" )
 GAME( 1988, wldcourt, 0,        ns1,     ns1,     wldcourt, ROT0,         "Namco", "World Court (Japan)" )
 GAME( 1988, splatter, 0,        ns1,     ns1,     splatter, ROT0_16BIT,   "Namco", "Splatter House (Japan)" )
 GAME( 1988, faceoff,  0,        faceoff, faceoff, faceoff,  ROT0,         "Namco", "Face Off (Japan)" )

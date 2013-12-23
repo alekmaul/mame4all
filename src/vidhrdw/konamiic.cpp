@@ -767,8 +767,8 @@ static void shuffle(UINT16 *buf,int len)
 
 	for (i = 0;i < len/2;i++)
 	{
-		t = buf[len/2 + i];
-		buf[len/2 + i] = buf[len + i];
+		t = buf[(len>>1) + i];
+		buf[(len>>1) + i] = buf[len + i];
 		buf[len + i] = t;
 	}
 
@@ -1665,7 +1665,6 @@ int K052109_vh_start(int gfx_memory_region,int plane0,int plane1,int plane2,int 
 		K052109_vh_stop();
 		return 1;
 	}
-
 	memset(K052109_ram,0,0x6000);
 
 	K052109_colorram_F = &K052109_ram[0x0000];
@@ -3048,7 +3047,7 @@ int K053247_vh_start(int gfx_memory_region,int plane0,int plane1,int plane2,int 
 	};
 
 
-	/* find first empty slot to decode gfx */
+  /* find first empty slot to decode gfx */
 	for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
 		if (Machine->gfx[gfx_index] == 0)
 			break;
@@ -3075,10 +3074,11 @@ int K053247_vh_start(int gfx_memory_region,int plane0,int plane1,int plane2,int 
 	K053247_gfx = Machine->gfx[gfx_index];
 	K053247_callback = callback;
 	K053246_OBJCHA_line = CLEAR_LINE;
+  
 	K053247_ram = (unsigned char*)malloc(0x1000);
 	if (!K053247_ram) return 1;
 
-	memset(K053247_ram,0,0x1000);
+  memset(K053247_ram,0,0x1000);
 
 	return 0;
 }
@@ -3665,14 +3665,15 @@ int K051316_vh_start(int chip, int gfx_memory_region,int bpp,
 		/* decode the graphics */
 		Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&charlayout);
 	}
-	else if (bpp == 7)
+	else if (bpp == 7 || bpp == 8)
 	{
+		int i;
 		static struct GfxLayout charlayout =
 		{
 			16,16,
 			0,				/* filled in later */
-			7,
-			{ 1, 2, 3, 4, 5, 6, 7 },
+			0,                              /* filled in later */
+			{ 0 },                  /* filled in later */
 			{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 					8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 },
 			{ 0*128, 1*128, 2*128, 3*128, 4*128, 5*128, 6*128, 7*128,
@@ -3680,16 +3681,19 @@ int K051316_vh_start(int chip, int gfx_memory_region,int bpp,
 			256*8
 		};
 
-
 		/* tweak the structure for the number of tiles we have */
 		charlayout.total = memory_region_length(gfx_memory_region) / 256;
+		charlayout.planes = bpp;
+		if (bpp == 7) for (i = 0;i < 7;i++) charlayout.planeoffset[i] = i+1;
+		else for (i = 0;i < 8;i++) charlayout.planeoffset[i] = i;
 
 		/* decode the graphics */
 		Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&charlayout);
+
 	}
 	else
 	{
-//logerror("K051316_vh_start supports only 4 or 7 bpp\n");
+		//logerror("K051316_vh_start supports only 4, 7 or 8 bpp\n");
 		return 1;
 	}
 
@@ -3714,6 +3718,7 @@ int K051316_vh_start(int chip, int gfx_memory_region,int bpp,
 		K051316_vh_stop(chip);
 		return 1;
 	}
+
 
 	tilemap_set_clip(K051316_tilemap[chip],0);
 

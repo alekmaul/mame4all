@@ -544,6 +544,105 @@ INPUT_PORTS_START( spaceskr )
 	PORT_DIPSETTING(    0x00, "A only" )
 INPUT_PORTS_END
 
+INPUT_PORTS_START( spacecr )
+	PORT_START      /* IN0 */
+	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_2WAY )
+	PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_2WAY )
+	PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 )
+	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN )
+
+	PORT_START      /* IN1 */
+	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_2WAY | IPF_COCKTAIL )
+	PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_2WAY | IPF_COCKTAIL )
+	PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL )
+	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN )
+
+	PORT_START      /* IN2 */
+	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_COIN2 )
+	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN1 )
+	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START1 )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START2 )
+
+	PORT_START      /* Service */
+	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_COIN3 )
+	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_TILT )
+	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN )
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN )
+
+
+	PORT_START
+
+	PORT_START      /* DSW1 */
+	PORT_DIPNAME( 0x01, 0x01, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x01, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x02, 0x02, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x02, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x04, 0x04, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x04, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x18, 0x18, DEF_STR( Lives ) )
+	PORT_DIPSETTING(    0x00, "6" )
+	PORT_DIPSETTING(    0x08, "5" )
+	PORT_DIPSETTING(    0x10, "4" )
+	PORT_DIPSETTING(    0x18, "3" )
+	PORT_DIPNAME( 0x20, 0x20, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x20, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x40, 0x00, DEF_STR( Cabinet ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( Upright ) )
+	PORT_DIPSETTING(    0x40, DEF_STR( Cocktail ) )
+	PORT_DIPNAME( 0x80, 0x00, DEF_STR( Flip_Screen ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x80, DEF_STR( On ) )
+
+	PORT_START      /* DSW2 Coinage */
+	DSW2_PORT
+
+	PORT_START      /* DSW3 */
+	PORT_DIPNAME( 0x01, 0x01, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x01, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x02, 0x02, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x02, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x04, 0x04, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x04, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x08, 0x08, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x08, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x10, 0x10, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x20, 0x20, "Year Display" )
+	PORT_DIPSETTING(    0x00, DEF_STR( No ) )
+	PORT_DIPSETTING(    0x20, DEF_STR( Yes ) )
+	PORT_BITX(    0x40, 0x40, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Invulnerability", IP_KEY_NONE, IP_JOY_NONE )
+	PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x80, 0x80, DEF_STR( Coinage ) )
+	PORT_DIPSETTING(    0x80, "A and B" )
+	PORT_DIPSETTING(    0x00, "A only" )
+INPUT_PORTS_END
+
 INPUT_PORTS_START( junglek )
 	PORT_START      /* IN0 */
 	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_8WAY )
@@ -2150,6 +2249,36 @@ ROM_START( spaceskr )
 	ROM_LOAD( "eb16.22",      0x0000, 0x0100, 0xb833b5ea )
 ROM_END
 
+ROM_START( spacecr )
+	ROM_REGION( 0x12000, REGION_CPU1 )      /* 64k for code */
+	ROM_LOAD( "cg01.69",         0x0000, 0x1000, 0x2fe28b71 )
+	ROM_LOAD( "cg02.68",         0x1000, 0x1000, 0x88f4f856 )
+	ROM_LOAD( "cg03.67",         0x2000, 0x1000, 0x2223319c )
+	ROM_LOAD( "cg04.66",         0x3000, 0x1000, 0x4daeb8b5 )
+	ROM_LOAD( "cg05.65",         0x4000, 0x1000, 0xcdc40ca0 )
+	ROM_LOAD( "cg06.64",         0x5000, 0x1000, 0x2cc6b4c0 )
+	ROM_LOAD( "cg07.55",         0x6000, 0x1000, 0xe4c8780a )
+	ROM_LOAD( "cg08.54",         0x7000, 0x1000, 0x2c23ff4d )
+	ROM_LOAD( "cg09.53",         0x10000, 0x1000, 0x3c8bb95e ) /* banked at 6000 */
+	ROM_LOAD( "cg10.52",         0x11000, 0x1000, 0x0ff17fce ) /* banked at 7000 */
+
+	ROM_REGION( 0x10000, REGION_CPU2 )      /* 64k for the audio CPU */
+	ROM_LOAD( "cg17.70",         0x0000, 0x1000, 0x53486204 )
+	ROM_LOAD( "cg18.71",         0x1000, 0x1000, 0xd1acf96c )
+	ROM_LOAD( "cg19.72",         0x2000, 0x1000, 0xffd27215 )
+
+	ROM_REGION( 0x8000, REGION_GFX1 )       /* graphic ROMs used at runtime */
+	ROM_LOAD( "cg11.1",         0x0000, 0x1000, 0x1e4ae527 )
+	ROM_LOAD( "cg12.2",         0x1000, 0x1000, 0xaa57b616 )
+	ROM_LOAD( "cg13.3",         0x2000, 0x1000, 0x945a1b69 )
+	ROM_LOAD( "cg14.4",         0x3000, 0x1000, 0x1a29d06b )
+	ROM_LOAD( "cg15.5",         0x4000, 0x1000, 0x656f9713 )
+	ROM_LOAD( "cg16.6",         0x5000, 0x1000, 0xe2c0d585 )
+
+	ROM_REGION( 0x0100, REGION_PROMS )      /* layer PROM */
+	ROM_LOAD( "eb16.22",      0x0000, 0x0100, 0xb833b5ea )
+ROM_END
+
 ROM_START( junglek )
     ROM_REGION( 0x12000, REGION_CPU1 ) /* 64k for code */
     ROM_LOAD( "kn21-1.bin",   0x00000, 0x1000, 0x45f55d30 )
@@ -2735,6 +2864,7 @@ static void init_kikstart(void)
 }
 
 GAME( 1981, spaceskr, 0,        nomcu,    spaceskr,   0,       ROT180, "Taito Corporation", "Space Seeker" )
+GAME( 1981, spacecr,  0,        nomcu,    spacecr,    0,       ROT90,  "Taito Corporation", "Space Cruiser" )
 GAME( 1982, junglek,  0,        nomcu,    junglek,    0,       ROT0,   "Taito Corporation", "Jungle King (Japan)" )
 GAME( 1982, junglkj2, junglek,  nomcu,    junglek,    0,       ROT0,   "Taito Corporation", "Jungle King (Japan, earlier)" )
 GAME( 1982, jungleh,  junglek,  nomcu,    junglek,    0,       ROT0,   "Taito America Corporation", "Jungle Hunt (US)" )
