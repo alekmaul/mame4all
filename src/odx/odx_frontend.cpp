@@ -89,14 +89,21 @@ static void game_list_init_nocache(void)
 	char text[512];
 	int i;
 	FILE *f;
+	
+	fprintf(stderr,"previous romdir is %s\n",romdir);fflush(stderr);
+	
 	if (strlen(romdir))
 		strcpy(text,romdir);
 	else
 		sprintf(text,"%s/roms",mamedir);
+	
+	fprintf(stderr,"now romdir is %s\n",text);fflush(stderr);
+	
 	DIR *d=opendir(text);
 	char game[32];
 	if (d)
 	{
+		fprintf(stderr,"browse directory \n");fflush(stderr);
 		struct dirent *actual=readdir(d);
 		while(actual)
 		{
@@ -107,6 +114,7 @@ static void game_list_init_nocache(void)
 					sprintf(game,"%s.zip",drivers[i].name);
 					if (strcmp(actual->d_name,game)==0)
 					{
+		fprintf(stderr,"find %s %s\n",actual->d_name,game);fflush(stderr);
 						drivers[i].available=1;
 						game_num_avail++;
 						break;
@@ -526,9 +534,36 @@ static void odx_exit(char *param)
 	odx_deinit();
 }
 
+void odx_load_config(void) {
+	char curCfg[512];
+	FILE *f;
+	sprintf(curCfg,"%s/frontend/mame.cfg",mamedir);
+
+	f=fopen(curCfg,"r");
+	if (f) {
+		fscanf(f,"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s",&odx_freq,&odx_video_depth,&odx_video_aspect,&odx_video_sync,
+		&odx_frameskip,&odx_sound,&odx_clock_cpu,&odx_clock_sound,&odx_cpu_cores,&odx_ramtweaks,&last_game_selected,&odx_cheat,romdir);
+		fclose(f);
+	}
+}
+
+void odx_save_config(void) {
+	char curCfg[512];
+	FILE *f;
+
+	/* Write default configuration */
+	sprintf(curCfg,"%s/frontend/mame.cfg",mamedir);
+	f=fopen(curCfg,"w");
+	if (f) {
+		fprintf(f,"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s",odx_freq,odx_video_depth,odx_video_aspect,odx_video_sync,
+		odx_frameskip,odx_sound,odx_clock_cpu,odx_clock_sound,odx_cpu_cores,odx_ramtweaks,last_game_selected,odx_cheat,romdir);
+		fclose(f);
+		/* sync(); */
+	}
+}
+
 static void select_game(char *emu, char *game)
 {
-
 	unsigned long ExKey;
 
 	/* No Selected game */
@@ -548,7 +583,7 @@ static void select_game(char *emu, char *game)
 		while(!(ExKey=odx_joystick_read())) { 
 		}
 
-		if ((ExKey & OD_L) && (ExKey & OD_R) ) { odx_exit(""); }
+		if ((ExKey & OD_L) && (ExKey & OD_R) ) { odx_save_config(); odx_exit(""); }
 		if (ExKey & OD_UP) last_game_selected--;
 		if (ExKey & OD_DOWN) last_game_selected++;
 		if (ExKey & OD_LEFT) last_game_selected-=22; // ALEK 21
@@ -974,7 +1009,7 @@ void gethomedir(char *dir, char* name) {
 
 int main (int argc, char **argv)
 {
-	char text[512], curDir[512];
+	char curCfg[512], curDir[512];
 	FILE *f;
 
 	/* get initial home directory */
@@ -988,13 +1023,7 @@ int main (int argc, char **argv)
 	odx_intro_screen();
 
 	/* Read default configuration */
-	sprintf(text,"%s/frontend/mame.cfg",mamedir);
-	f=fopen(text,"r");
-	if (f) {
-		fscanf(f,"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s",&odx_freq,&odx_video_depth,&odx_video_aspect,&odx_video_sync,
-		&odx_frameskip,&odx_sound,&odx_clock_cpu,&odx_clock_sound,&odx_cpu_cores,&odx_ramtweaks,&last_game_selected,&odx_cheat,romdir);
-		fclose(f);
-	}
+	odx_load_config();
 
 	/* Initialize list of available games */
 	game_list_init(argc);
@@ -1009,10 +1038,12 @@ int main (int argc, char **argv)
 			odx_gamelist_text_out(10, 40, "Press a key to select a rom directory");
 			odx_video_flip();
 			odx_joystick_press();
-			if (get_romdir(romdir) == -1)
+			if (get_romdir(romdir) == -1) {
 				odx_exit("");
-			else
+			}
+			else {
 				game_list_init(argc);
+			}
 		}
 		/* go back to default dir to avoid issue when launching mame after */
 		chdir(curDir);
@@ -1022,13 +1053,7 @@ int main (int argc, char **argv)
 	select_game(playemu,playgame); 
 
 	/* Write default configuration */
-	f=fopen(text,"w");
-	if (f) {
-		fprintf(f,"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s",odx_freq,odx_video_depth,odx_video_aspect,odx_video_sync,
-		odx_frameskip,odx_sound,odx_clock_cpu,odx_clock_sound,odx_cpu_cores,odx_ramtweaks,last_game_selected,odx_cheat,romdir);
-		fclose(f);
-		/* sync(); */
-	}
+	odx_save_config();
 
 	/* Execute Game */
 	execute_game (playemu,playgame);
