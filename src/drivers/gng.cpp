@@ -170,34 +170,39 @@ OUTPUT:
 
 
 
-WRITE_HANDLER( gng_bankswitch_w );
-READ_HANDLER( gng_bankedrom_r );
-void gng_init_machine(void);
-
-extern unsigned char *gng_fgvideoram,*gng_fgcolorram;
-extern unsigned char *gng_bgvideoram,*gng_bgcolorram;
+extern unsigned char *gng_fgvideoram;
+extern unsigned char *gng_bgvideoram;
 WRITE_HANDLER( gng_fgvideoram_w );
-WRITE_HANDLER( gng_fgcolorram_w );
 WRITE_HANDLER( gng_bgvideoram_w );
-WRITE_HANDLER( gng_bgcolorram_w );
 WRITE_HANDLER( gng_bgscrollx_w );
 WRITE_HANDLER( gng_bgscrolly_w );
 WRITE_HANDLER( gng_flipscreen_w );
 int gng_vh_start(void);
 void gng_vh_screenrefresh(struct osd_bitmap *bitmap,int full_refresh);
+void gng_eof_callback(void);
 
 
 
-WRITE_HANDLER( gng_bankswitch_w )
+static WRITE_HANDLER( gng_bankswitch_w )
 {
-	unsigned char *RAM = memory_region(REGION_CPU1);
+	unsigned char *rom = memory_region(REGION_CPU1);
 
 
-	static int bank[] = { 0x10000, 0x12000, 0x14000, 0x16000, 0x04000, 0x18000 };
-	cpu_setbank (1, &RAM[bank[data]]);
+	if (data == 4)
+	{
+		cpu_setbank(1,rom + 0x4000);
+	}
+	else
+	{
+		cpu_setbank(1,rom + 0x10000 + (data & 3) * 0x2000);
+	}
 }
 
 
+static WRITE_HANDLER( gng_coin_counter_w )
+{
+	coin_counter_w(offset,data);
+}
 
 static struct MemoryReadAddress readmem[] =
 {
@@ -207,7 +212,7 @@ static struct MemoryReadAddress readmem[] =
 	{ 0x3002, 0x3002, input_port_2_r },
 	{ 0x3003, 0x3003, input_port_3_r },
 	{ 0x3004, 0x3004, input_port_4_r },
-	{ 0x3c00, 0x3c00, MRA_NOP },    /* watchdog? */
+	{ 0x3c00, 0x3c00, MRA_NOP },	/* watchdog? */
 	{ 0x4000, 0x5fff, MRA_BANK1 },
 	{ 0x6000, 0xffff, MRA_ROM },
 	{ -1 }	/* end of table */
@@ -217,10 +222,8 @@ static struct MemoryWriteAddress writemem[] =
 {
 	{ 0x0000, 0x1dff, MWA_RAM },
 	{ 0x1e00, 0x1fff, MWA_RAM, &spriteram, &spriteram_size },
-	{ 0x2000, 0x23ff, gng_fgvideoram_w, &gng_fgvideoram },
-	{ 0x2400, 0x27ff, gng_fgcolorram_w, &gng_fgcolorram },
-	{ 0x2800, 0x2bff, gng_bgvideoram_w, &gng_bgvideoram },
-	{ 0x2c00, 0x2fff, gng_bgcolorram_w, &gng_bgcolorram },
+	{ 0x2000, 0x27ff, gng_fgvideoram_w, &gng_fgvideoram },
+	{ 0x2800, 0x2fff, gng_bgvideoram_w, &gng_bgvideoram },
 	{ 0x3800, 0x38ff, paletteram_RRRRGGGGBBBBxxxx_split2_w, &paletteram_2 },
 	{ 0x3900, 0x39ff, paletteram_RRRRGGGGBBBBxxxx_split1_w, &paletteram },
 	{ 0x3a00, 0x3a00, soundlatch_w },
@@ -228,6 +231,8 @@ static struct MemoryWriteAddress writemem[] =
 	{ 0x3b0a, 0x3b0b, gng_bgscrolly_w },
 	{ 0x3c00, 0x3c00, MWA_NOP },   /* watchdog? */
 	{ 0x3d00, 0x3d00, gng_flipscreen_w },
+//	{ 0x3d01, 0x3d01, reset sound cpu?
+	{ 0x3d02, 0x3d03, gng_coin_counter_w },
 	{ 0x3e00, 0x3e00, gng_bankswitch_w },
 	{ 0x4000, 0xffff, MWA_ROM },
 	{ -1 }	/* end of table */
@@ -263,7 +268,7 @@ INPUT_PORTS_START( gng )
 	PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN )
 	PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN )
 	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN )
-	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN3 )
+	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_SERVICE1 )
 	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_COIN1 )
 	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN2 )
 
@@ -348,7 +353,7 @@ INPUT_PORTS_START( makaimur )
 	PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN )
 	PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN )
 	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN )
-	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN3 )
+	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_SERVICE1 )
 	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_COIN1 )
 	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN2 )
 
@@ -557,7 +562,7 @@ static struct YM2203interface ym2203_interface =
 {
 	2,			/* 2 chips */
 	1500000,	/* 1.5 MHz (?) */
-	{ YM2203_VOL(10,40), YM2203_VOL(10,40) },
+	{ YM2203_VOL(20,40), YM2203_VOL(20,40) },
 	{ 0 },
 	{ 0 },
 	{ 0 },
@@ -583,19 +588,18 @@ static struct MachineDriver machine_driver_gng =
 			interrupt,4
 		}
 	},
-	60, 2500,	/* frames per second, vblank duration */
-				/* hand tuned to get rid of sprite lag */
+	60, DEFAULT_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
 	1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */
 	0,
 
 	/* video hardware */
 	32*8, 32*8, { 0*8, 32*8-1, 2*8, 30*8-1 },
 	gfxdecodeinfo,
-	192, 192,
+	256, 256,
 	0,
 
-	VIDEO_TYPE_RASTER | VIDEO_MODIFIES_PALETTE | VIDEO_UPDATE_AFTER_VBLANK,
-	0,
+	VIDEO_TYPE_RASTER | VIDEO_MODIFIES_PALETTE | VIDEO_BUFFERS_SPRITERAM,
+	gng_eof_callback,
 	gng_vh_start,
 	0,
 	gng_vh_screenrefresh,
@@ -620,8 +624,8 @@ static struct MachineDriver machine_driver_gng =
 
 ROM_START( gng )
 	ROM_REGION( 0x18000, REGION_CPU1 )	/* 64k for code * 5 pages */
-	ROM_LOAD( "gg3.bin",      0x08000, 0x8000, 0x9e01c65e )
 	ROM_LOAD( "gg4.bin",      0x04000, 0x4000, 0x66606beb )	/* 4000-5fff is page 0 */
+	ROM_LOAD( "gg3.bin",      0x08000, 0x8000, 0x9e01c65e )
 	ROM_LOAD( "gg5.bin",      0x10000, 0x8000, 0xd6397b2b )	/* page 1, 2, 3 and 4 */
 
 	ROM_REGION( 0x10000, REGION_CPU2 )	/* 64k for the audio CPU */
@@ -649,9 +653,9 @@ ROM_END
 
 ROM_START( gnga )
 	ROM_REGION( 0x18000, REGION_CPU1 )	/* 64k for code * 5 pages */
+	ROM_LOAD( "gng.n10",      0x04000, 0x4000, 0x60343188 )
 	ROM_LOAD( "gng.n9",       0x08000, 0x4000, 0xb6b91cfb )
 	ROM_LOAD( "gng.n8",       0x0c000, 0x4000, 0xa5cfa928 )
-	ROM_LOAD( "gng.n10",      0x04000, 0x4000, 0x60343188 )
 	ROM_LOAD( "gng.n13",      0x10000, 0x4000, 0xfd9a8dda )
 	ROM_LOAD( "gng.n12",      0x14000, 0x4000, 0x13cf6238 )
 
@@ -709,8 +713,8 @@ ROM_END
 
 ROM_START( makaimur )
 	ROM_REGION( 0x18000, REGION_CPU1 )	/* 64k for code * 5 pages */
-	ROM_LOAD( "8n.rom",       0x08000, 0x8000, 0x9612d66c )
 	ROM_LOAD( "10n.rom",      0x04000, 0x4000, 0x81e567e0 )	/* 4000-5fff is page 0 */
+	ROM_LOAD( "8n.rom",       0x08000, 0x8000, 0x9612d66c )
 	ROM_LOAD( "12n.rom",      0x10000, 0x8000, 0x65a6a97b )	/* page 1, 2, 3 and 4 */
 
 	ROM_REGION( 0x10000, REGION_CPU2 )	/* 64k for the audio CPU */
@@ -738,8 +742,8 @@ ROM_END
 
 ROM_START( makaimuc )
 	ROM_REGION( 0x18000, REGION_CPU1 )	/* 64k for code * 5 pages */
-	ROM_LOAD( "mj03c.bin",       0x08000, 0x8000, 0xd343332d )
 	ROM_LOAD( "mj04c.bin",      0x04000, 0x4000, 0x1294edb1 )	/* 4000-5fff is page 0 */
+	ROM_LOAD( "mj03c.bin",       0x08000, 0x8000, 0xd343332d )
 	ROM_LOAD( "mj05c.bin",      0x10000, 0x8000, 0x535342c2 )	/* page 1, 2, 3 and 4 */
 
 	ROM_REGION( 0x10000, REGION_CPU2 )	/* 64k for the audio CPU */

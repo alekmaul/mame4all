@@ -7,12 +7,12 @@
 ***************************************************************************/
 
 #include "driver.h"
+#include "vidhrdw/generic.h"
 
-extern unsigned char *spriteram;
-extern size_t spriteram_size;
 
-unsigned char *gng_fgvideoram,*gng_fgcolorram;
-unsigned char *gng_bgvideoram,*gng_bgcolorram;
+unsigned char *gng_fgvideoram;
+unsigned char *gng_bgvideoram;
+
 static struct tilemap *bg_tilemap,*fg_tilemap;
 static int flipscreen;
 
@@ -26,14 +26,17 @@ static int flipscreen;
 
 static void get_fg_tile_info(int tile_index)
 {
-	unsigned char attr = gng_fgcolorram[tile_index];
-	SET_TILE_INFO(0,gng_fgvideoram[tile_index] + ((attr & 0xc0) << 2),attr & 0x0f)
+	unsigned char attr = gng_fgvideoram[tile_index + 0x400];
+	SET_TILE_INFO(
+			0,
+			gng_fgvideoram[tile_index] + ((attr & 0xc0) << 2),
+			attr & 0x0f)
 	tile_info.flags = TILE_FLIPYX((attr & 0x30) >> 4);
 }
 
 static void get_bg_tile_info(int tile_index)
 {
-	unsigned char attr = gng_bgcolorram[tile_index];
+	unsigned char attr = gng_bgvideoram[tile_index + 0x400];
 	SET_TILE_INFO(1,gng_bgvideoram[tile_index] + ((attr & 0xc0) << 2),attr & 0x07)
 	tile_info.flags = TILE_FLIPYX((attr & 0x30) >> 4) | TILE_SPLIT((attr & 0x08) >> 3);
 }
@@ -57,7 +60,7 @@ int gng_vh_start(void)
 	fg_tilemap->transparent_pen = 3;
 
 	bg_tilemap->transmask[0] = 0xff; /* split type 0 is totally transparent in front half */
-	bg_tilemap->transmask[1] = 0x01; /* split type 1 has pen 1 transparent in front half */
+	bg_tilemap->transmask[1] = 0x41; /* split type 1 has pens 0 and 6 transparent in front half */
 
 	return 0;
 }
@@ -71,38 +74,14 @@ int gng_vh_start(void)
 
 WRITE_HANDLER( gng_fgvideoram_w )
 {
-	if (gng_fgvideoram[offset] != data)
-	{
-		gng_fgvideoram[offset] = data;
-		tilemap_mark_tile_dirty(fg_tilemap,offset);
-	}
-}
-
-WRITE_HANDLER( gng_fgcolorram_w )
-{
-	if (gng_fgcolorram[offset] != data)
-	{
-		gng_fgcolorram[offset] = data;
-		tilemap_mark_tile_dirty(fg_tilemap,offset);
-	}
+	gng_fgvideoram[offset] = data;
+	tilemap_mark_tile_dirty(fg_tilemap,offset & 0x3ff);
 }
 
 WRITE_HANDLER( gng_bgvideoram_w )
 {
-	if (gng_bgvideoram[offset] != data)
-	{
-		gng_bgvideoram[offset] = data;
-		tilemap_mark_tile_dirty(bg_tilemap,offset);
-	}
-}
-
-WRITE_HANDLER( gng_bgcolorram_w )
-{
-	if (gng_bgcolorram[offset] != data)
-	{
-		gng_bgcolorram[offset] = data;
-		tilemap_mark_tile_dirty(bg_tilemap,offset);
-	}
+	gng_bgvideoram[offset] = data;
+	tilemap_mark_tile_dirty(bg_tilemap,offset & 0x3ff);
 }
 
 
@@ -140,10 +119,13 @@ static void draw_sprites(struct osd_bitmap *bitmap)
 	const struct GfxElement *gfx = Machine->gfx[2];
 	const struct rectangle *clip = &Machine->visible_area;
 	int offs;
-	for (offs = spriteram_size - 4;offs >= 0;offs -= 4){
-		unsigned char attributes = spriteram[offs+1];
-		int sx = spriteram[offs + 3] - 0x100 * (attributes & 0x01);
-		int sy = spriteram[offs + 2];
+
+
+	for (offs = spriteram_size - 4;offs >= 0;offs -= 4)
+	{
+		unsigned char attributes = buffered_spriteram[offs+1];
+		int sx = buffered_spriteram[offs + 3] - 0x100 * (attributes & 0x01);
+		int sy = buffered_spriteram[offs + 2];
 		int flipx = attributes & 0x04;
 		int flipy = attributes & 0x08;
 
@@ -155,7 +137,7 @@ static void draw_sprites(struct osd_bitmap *bitmap)
 		}
 
 		drawgfx(bitmap,gfx,
-				spriteram[offs] + ((attributes<<2) & 0x300),
+				buffered_spriteram[offs] + ((attributes<<2) & 0x300),
 				(attributes >> 4) & 3,
 				flipx,flipy,
 				sx,sy,
@@ -176,4 +158,9 @@ void gng_vh_screenrefresh(struct osd_bitmap *bitmap,int full_refresh)
 	draw_sprites(bitmap);
 	tilemap_draw(bitmap,bg_tilemap,TILEMAP_FRONT);
 	tilemap_draw(bitmap,fg_tilemap,0);
+}
+
+void gng_eof_callback(void)
+{
+	buffer_spriteram_w(0,0);
 }
