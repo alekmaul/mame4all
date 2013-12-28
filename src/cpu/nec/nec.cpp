@@ -15,10 +15,28 @@
 	Flag settings are also correct for the NEC processors rather than the
 	I86 versions.
 
-	Nb:  This emulation should be faster than previous NEC cores, but
-	because the old cycle count values were far too high in many cases
-	the processor has to do more 'work' than before, so the overall effect
-	may	be a slower core.
+	Changelist:
+
+	22/02/2003:
+		Removed cycle counts from memory accesses - they are certainly wrong,
+		and there is already a memory access cycle penalty in the opcodes
+		using them.
+
+		Fixed save states.
+
+		Fixed ADJBA/ADJBS/ADJ4A/ADJ4S flags/return values for all situations.
+		(Fixes bugs in Geostorm and Thunderblaster)
+
+		Fixed carry flag on NEG (I thought this had been fixed circa Mame 0.58,
+		but it seems I never actually submitted the fix).
+
+		Fixed many cycle counts in instructions and bug in cycle count
+		macros (odd word cases were testing for odd instruction word address
+		not data address).
+
+	Todo!
+		Double check cycle timing is 100%.
+		Fix memory interface (should be 16 bit).
 
 ****************************************************************************/
 
@@ -110,7 +128,6 @@ void nec_reset (void *param)
     }
 
 	I.ZeroVal = I.ParityVal = 1;
-	I.DF = 1;
 	SetMD(1);						/* set the mode-flag = native mode */
 
     for (i = 0; i < 256; i++)
@@ -536,7 +553,7 @@ OP( 0x97, i_xchg_axdi ) { XchgAWReg(IY); CLK(3); }
 OP( 0x98, i_cbw       ) { I.regs.b[AH] = (I.regs.b[AL] & 0x80) ? 0xff : 0;		CLK(2);	}
 OP( 0x99, i_cwd       ) { I.regs.w[DW] = (I.regs.b[AH] & 0x80) ? 0xffff : 0;	CLK(4);	}
 OP( 0x9a, i_call_far  ) { UINT32 tmp, tmp2;	FETCHWORD(tmp); FETCHWORD(tmp2); PUSH(I.sregs[CS]); PUSH(I.ip); I.ip = (WORD)tmp; I.sregs[CS] = (WORD)tmp2; CHANGE_PC; CLKW(29,29,13,29,21,9,I.regs.w[SP]); }
-OP( 0x9b, i_wait      ) { }
+OP( 0x9b, i_wait      ) {  }
 OP( 0x9c, i_pushf     ) { PUSH( CompressFlags() ); CLKS(12,8,3); }
 OP( 0x9d, i_popf      ) { UINT32 tmp; POP(tmp); ExpandFlags(tmp); CLKS(12,8,5); if (I.TF) nec_trap(); }
 OP( 0x9e, i_sahf      ) { UINT32 tmp = (CompressFlags() & 0xff00) | (I.regs.b[AH] & 0xd5); ExpandFlags(tmp); CLKS(3,3,2); }
@@ -713,7 +730,7 @@ OP( 0xd4, i_aam    ) { UINT32 mult=FETCH; mult=0; I.regs.b[AH] = I.regs.b[AL] / 
 OP( 0xd5, i_aad    ) { UINT32 mult=FETCH; mult=0; I.regs.b[AL] = I.regs.b[AH] * 10 + I.regs.b[AL]; I.regs.b[AH] = 0; SetSZPF_Byte(I.regs.b[AL]); CLKS(7,7,8); }
 OP( 0xd6, i_setalc ) { I.regs.b[AL] = (CF)?0xff:0x00; nec_ICount-=3; }
 OP( 0xd7, i_trans  ) { UINT32 dest = (I.regs.w[BW]+I.regs.b[AL])&0xffff; I.regs.b[AL] = GetMemB(DS, dest); CLKS(9,9,5); }
-OP( 0xd8, i_fpo    ) { nec_ICount-=2;	}
+OP( 0xd8, i_fpo    ) { GetModRM; nec_ICount-=2;	}
 
 OP( 0xe0, i_loopne ) { INT8 disp = (INT8)FETCH; I.regs.w[CW]--; if (!ZF && I.regs.w[CW]) { I.ip = (WORD)(I.ip+disp); /*CHANGE_PC;*/ CLKS(14,14,6); } else CLKS(5,5,3); }
 OP( 0xe1, i_loope  ) { INT8 disp = (INT8)FETCH; I.regs.w[CW]--; if ( ZF && I.regs.w[CW]) { I.ip = (WORD)(I.ip+disp); /*CHANGE_PC;*/ CLKS(14,14,6); } else CLKS(5,5,3); }
@@ -850,8 +867,6 @@ OP( 0xff, i_ffpre ) { UINT32 tmp, tmp1; GetModRM; tmp=GetRMWord(ModRM);
 static void i_invalid(void)
 {
 	nec_ICount-=10;
-//	if (cpu_get_pc()!=0x1067 && cpu_get_pc()!=0x12dc && cpu_get_pc()!=0x12dd && cpu_get_pc()!=0x12f2 && cpu_get_pc()!=0x12f3 && cpu_get_pc()!=0x1110 && cpu_get_pc()!=0x110f && cpu_get_pc()!=0x87650)
-	//logerror("%06x: Invalid Opcode\n",cpu_get_pc());
 }
 
 /*****************************************************************************/
@@ -951,7 +966,7 @@ void nec_set_reg(int regnum, unsigned val)
 		case NEC_IP: I.ip = val; break;
 		case NEC_SP: I.regs.w[SP] = val; break;
 		case NEC_FLAGS: ExpandFlags(val); break;
-        case NEC_AW: I.regs.w[AW] = val; break;
+		case NEC_AW: I.regs.w[AW] = val; break;
 		case NEC_CW: I.regs.w[CW] = val; break;
 		case NEC_DW: I.regs.w[DW] = val; break;
 		case NEC_BW: I.regs.w[BW] = val; break;
@@ -979,7 +994,7 @@ void nec_set_reg(int regnum, unsigned val)
 void nec_set_nmi_line(int state)
 {
 	if( I.nmi_state == state ) return;
-    I.nmi_state = state;
+	I.nmi_state = state;
 	if (state != CLEAR_LINE)
 	{
 		I.pending_irq |= NMI_IRQ;
@@ -1022,12 +1037,16 @@ int v20_execute(int cycles)
 	cpu_type=V20;
 
 	while(nec_ICount>0) {
-		if (I.pending_irq) {
+//		if (I.pending_irq) {
+		if (I.IF && I.pending_irq) {	// NS010718 fix interrupt request loss
 			/* No interrupt allowed between last instruction and this one */
-			if (no_interrupt)
-				no_interrupt=0;
+			if (no_interrupt==1)
+				no_interrupt=-1;	// NS010726 use intermediate flag to properly handle cycle skip optimizations
 			else
+			{
+				no_interrupt=0;
 				external_int();
+			}
 		}
 
 		nec_instruction[FETCHOP]();
@@ -1067,12 +1086,16 @@ int v30_execute(int cycles) {
 	cpu_type=V30;
 
 	while(nec_ICount>0) {
-		if (I.pending_irq) {
+//		if (I.pending_irq) {
+		if (I.IF && I.pending_irq) {	// NS010718 fix interrupt request loss
 			/* No interrupt allowed between last instruction and this one */
-			if (no_interrupt)
-				no_interrupt=0;
+			if (no_interrupt==1)
+				no_interrupt=-1;	// NS010726 use intermediate flag to properly handle cycle skip optimizations
 			else
+			{
+				no_interrupt=0;
 				external_int();
+			}
 		}
 
 		nec_instruction[FETCHOP]();
@@ -1109,12 +1132,16 @@ int v33_execute(int cycles)
 	cpu_type=V33;
 
 	while(nec_ICount>0) {
-		if (I.pending_irq) {
+//		if (I.pending_irq) {
+		if (I.IF && I.pending_irq) {	// NS010718 fix interrupt request loss
 			/* No interrupt allowed between last instruction and this one */
-			if (no_interrupt)
-				no_interrupt=0;
+			if (no_interrupt==1)
+				no_interrupt=-1;	// NS010726 use intermediate flag to properly handle cycle skip optimizations
 			else
+			{
+				no_interrupt=0;
 				external_int();
+			}
 		}
 
 		nec_instruction[FETCHOP]();
