@@ -70,19 +70,21 @@ WRITE_HANDLER( cabal_sound_irq_trigger_word_w )
 	cpu_spinuntil_time(TIME_IN_USEC(50));
 }
 
+#if 0
 /* Use this if the sound cpu is cpu 1 */
-void seibu1_sound_init_1(void)
+void seibu_sound_init_1(void)
 {
 	sound_cpu=1;
 	setvector_callback(VECTOR_INIT);
 }
+#endif
 
-READ_HANDLER( seibu1_soundlatch_r )
+static READ_HANDLER( seibu_soundlatch_r )
 {
 	return main2sub[offset];
 }
 
-WRITE_HANDLER( seibu1_main_data_w )
+static WRITE_HANDLER( seibu_main_data_w )
 {
 	sub2main[offset] = data;
 }
@@ -103,16 +105,20 @@ WRITE_HANDLER( seibu_irq_clear_w )
 	setvector_callback(VECTOR_INIT);
 }
 
-WRITE_HANDLER( seibu1_rst10_ack_w )
+#if 0
+WRITE_HANDLER( seibu_rst10_ack_w )
 {
     /* Unused for now */
 }
 
-WRITE_HANDLER( seibu1_rst18_ack_w )
+WRITE_HANDLER( seibu_rst18_ack_w )
 {
     timer_set(TIME_NOW,RST18_CLEAR,setvector_callback);
 }
-
+#else
+extern WRITE_HANDLER( seibu_rst10_ack_w );
+extern WRITE_HANDLER( seibu_rst18_ack_w );
+#endif
 
 READ_HANDLER( seibu_main_word_r )
 {
@@ -211,7 +217,7 @@ WRITE_HANDLER( seibu_adpcm_ctl_2_w )
     }
 }
 
-WRITE_HANDLER( seibu1_bank_w )
+static WRITE_HANDLER( seibu_bank_w )
 {
     UINT8 *rom = memory_region(REGION_CPU1+sound_cpu);
 
@@ -278,8 +284,8 @@ static UINT8 decrypt_opcode(int a,int src)
 
 }
 
-#if 0
-void seibu_sound_decrypt(int cpu_region,int length)
+
+static void seibu_sound_decrypt(int cpu_region,int length)
 {
     UINT8 *rom = memory_region(cpu_region);
     int diff =  memory_region_length(cpu_region)/2;
@@ -295,7 +301,7 @@ void seibu_sound_decrypt(int cpu_region,int length)
 	rom[i+diff] = decrypt_opcode(i,src);
     }
 }
-#endif
+
 
 /***************************************************************************/
 
@@ -304,7 +310,7 @@ static struct MemoryReadAddress sound_readmem[] =
 	{ 0x0000, 0x1fff, MRA_ROM },
 	{ 0x2000, 0x27ff, MRA_RAM },
 	{ 0x4008, 0x4008, YM3812_status_port_0_r },
-	{ 0x4010, 0x4011, seibu1_soundlatch_r },
+	{ 0x4010, 0x4011, seibu_soundlatch_r },
 	{ 0x4012, 0x4012, seibu_main_data_pending_r },
 	{ 0x4013, 0x4013, input_port_0_r },
 	{ 0x6000, 0x6000, OKIM6295_status_0_r },
@@ -318,12 +324,12 @@ static struct MemoryWriteAddress sound_writemem[] =
 	{ 0x2000, 0x27ff, MWA_RAM },
 	{ 0x4000, 0x4000, seibu_pending_w },
 	{ 0x4001, 0x4001, seibu_irq_clear_w },
-	{ 0x4002, 0x4002, seibu1_rst10_ack_w },
-	{ 0x4003, 0x4003, seibu1_rst18_ack_w },
-	{ 0x4007, 0x4007, seibu1_bank_w },
+	{ 0x4002, 0x4002, seibu_rst10_ack_w },
+	{ 0x4003, 0x4003, seibu_rst18_ack_w },
+	{ 0x4007, 0x4007, seibu_bank_w },
 	{ 0x4008, 0x4008, YM3812_control_port_0_w },
 	{ 0x4009, 0x4009, YM3812_write_port_0_w },
-	{ 0x4018, 0x4019, seibu1_main_data_w },
+	{ 0x4018, 0x4019, seibu_main_data_w },
 	{ 0x401b, 0x401b, seibu_coin_w },
 	{ 0x6000, 0x6000, OKIM6295_data_0_w },
 	{ 0x8000, 0xffff, MWA_ROM },

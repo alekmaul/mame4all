@@ -5,7 +5,7 @@ struct driver {
 	int available;
 };
  
-#define NUMGAMES (2287+3+2+2+1+1+1+1+1)
+#define NUMGAMES (2287+3+2+2+1+1+1+1+1+1+1+1)
 
 struct driver drivers[NUMGAMES] = {
 
@@ -70,6 +70,7 @@ struct driver drivers[NUMGAMES] = {
 { "Alien Syndrome (set 1)"                                                                                ,"aliensyn"     , "mame", 0 } ,												
 { "Alien Syndrome (set 2)"                                                                                ,"aliensya"     , "mame", 0 } ,												
 { "Alien Syndrome (set 3)"                                                                                ,"aliensyb"     , "mame", 0 } ,												
+//{ "Alien vs. Predator (Euro 940520)"                                                                      ,"avsp"         , "mame", 0 } ,												
 { "Aliens (Japan)"                                                                                        ,"aliensj"      , "mame", 0 } ,												
 { "Aliens (US)"                                                                                           ,"aliensu"      , "mame", 0 } ,												
 { "Aliens (World set 1)"                                                                                  ,"aliens"       , "mame", 0 } ,												
@@ -287,6 +288,7 @@ struct driver drivers[NUMGAMES] = {
 { "Bubbles (Solid Red label)"                                                                             ,"bubblesr"     , "mame", 0 } ,												
 { "Bubbles"                                                                                               ,"bubbles"      , "mame", 0 } ,												
 { "Bump 'n' Jump"                                                                                         ,"bnj"          , "mame", 0 } ,												
+{ "Hissatsu Buraiken (Japan)"                                                                             ,"buraiken"     , "mame", 0 } ,												
 { "Burger Time (Data East set 1)"                                                                         ,"btime"        , "mame", 0 } ,												
 { "Burger Time (Data East set 2)"                                                                         ,"btime2"       , "mame", 0 } ,												
 { "Burger Time (Midway)"                                                                                  ,"btimem"       , "mame", 0 } ,												
@@ -401,6 +403,7 @@ struct driver drivers[NUMGAMES] = {
 { "Cosmic Avenger"                                                                                        ,"cavenger"     , "mame", 0 } ,												
 { "Cosmic Chasm (set 1)"                                                                                  ,"cchasm"       , "mame", 0 } ,												
 { "Cosmic Chasm (set 2)"                                                                                  ,"cchasm1"      , "mame", 0 } ,												
+{ "Cosmic Cop (World)"                                                                                    ,"cosmccop"      , "mame", 0 } ,												
 { "Cosmic Guerilla"                                                                                       ,"cosmicg"      , "mame", 0 } ,												
 { "Cosmic Monsters"                                                                                       ,"cosmicmo"     , "mame", 0 } ,												
 { "Cosmo Gang the Video (Japan)"                                                                          ,"cosmognj"     , "mame", 0 } ,												
@@ -957,6 +960,7 @@ struct driver drivers[NUMGAMES] = {
 { "Karnov (Japan)"                                                                                        ,"karnovj"      , "mame", 0 } ,												
 { "Karnov (US)"                                                                                           ,"karnov"       , "mame", 0 } ,												
 { "Karnov's Revenge / Fighter's History Dynamite"                                                         ,"karnovr"      , "neomame", 0 } ,												
+{ "Ken-Go"                                                                                                ,"kengo"        , "mame", 0 } ,												
 { "KiKi KaiKai"                                                                                           ,"kikikai"      , "mame", 0 } ,												
 { "Kick (cocktail)"                                                                                       ,"kicka"        , "mame", 0 } ,												
 { "Kick (upright)"                                                                                        ,"kick"         , "mame", 0 } ,												

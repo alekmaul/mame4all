@@ -154,7 +154,7 @@ static int cps1_interrupt(void)
 *
 ********************************************************************/
 
-static struct QSound_interface qsound_interface =
+struct QSound_interface qsound_interface =
 {
 	QSOUND_CLOCK,
 	REGION_SOUND1,
@@ -185,12 +185,12 @@ READ_HANDLER( qsound_rom_r )
 	}
 }
 
-static READ_HANDLER( qsound_sharedram_r )
+READ_HANDLER( qsound_sharedram_r )
 {
 	return qsound_sharedram[offset / 2] | 0xff00;
 }
 
-static WRITE_HANDLER( qsound_sharedram_w )
+WRITE_HANDLER( qsound_sharedram_w )
 {
 	qsound_sharedram[offset / 2] = data;
 }
@@ -349,7 +349,7 @@ static struct MemoryWriteAddress sound_writemem[] =
 	{ -1 }  /* end of table */
 };
 
-static struct MemoryReadAddress qsound_readmem[] =
+struct MemoryReadAddress qsound_readmem[] =
 {
 	{ 0x0000, 0x7fff, MRA_ROM },
 	{ 0x8000, 0xbfff, MRA_BANK1 },  /* banked (contains music data) */
@@ -359,7 +359,7 @@ static struct MemoryReadAddress qsound_readmem[] =
 	{ -1 }  /* end of table */
 };
 
-static struct MemoryWriteAddress qsound_writemem[] =
+struct MemoryWriteAddress qsound_writemem[] =
 {
 	{ 0x0000, 0xbfff, MWA_ROM },
 	{ 0xc000, 0xcfff, MWA_RAM, &qsound_sharedram },
@@ -3467,7 +3467,7 @@ SPRITE_LAYOUT(cps1_spritelayout, CPS1_CHARS/4, CPS1_ROM_SIZE/4*8, CPS1_ROM_SIZE/
 SPRITE_LAYOUT(cps1_tilelayout,   CPS1_CHARS/4, CPS1_ROM_SIZE/4*8, CPS1_ROM_SIZE/4*16)
 TILE32_LAYOUT(cps1_tilelayout32, CPS1_CHARS/16, CPS1_ROM_SIZE/4*8, CPS1_ROM_SIZE/4*16)
 
-static struct GfxDecodeInfo cps1_gfxdecodeinfo[] =
+struct GfxDecodeInfo cps1_gfxdecodeinfo[] =
 {
 	{ REGION_GFX1, 0, &cps1_charlayout,    32*16,             32 },
 	{ REGION_GFX1, 0, &cps1_spritelayout,  0,                 32 },
@@ -6034,24 +6034,31 @@ GAME( 1991, sf2,      0,        sf2,      sf2,      0,        ROT0,       "Capco
 GAME( 1991, sf2a,     sf2,      sf2,      sf2,      0,        ROT0,       "Capcom", "Street Fighter II - The World Warrior (US 910206)" )
 GAME( 1991, sf2b,     sf2,      sf2,      sf2,      0,        ROT0,       "Capcom", "Street Fighter II - The World Warrior (US 910214)" )
 GAME( 1991, sf2e,     sf2,      sf2,      sf2,      0,        ROT0,       "Capcom", "Street Fighter II - The World Warrior (US 910228)" )
+//GAME( 1991, sf2ui,    sf2,      sf2,      sf2,      cps1,     ROT0_16BIT, "Capcom", "Street Fighter II - The World Warrior (US 910522)" )
 GAME( 1991, sf2j,     sf2,      sf2,      sf2,      0,        ROT0,       "Capcom", "Street Fighter II - The World Warrior (Japan 911210)" )
 GAME( 1991, sf2jb,    sf2,      sf2,      sf2,      0,        ROT0,       "Capcom", "Street Fighter II - The World Warrior (Japan 910214)" )
+//GAME( 1991, sf2jc,    sf2,      sf2,      sf2j,     cps1,     ROT0_16BIT, "Capcom", "Street Fighter II - The World Warrior (Japan 910306)" )
+//GAME( 1991, 3wonders, 0,        cps1,     3wonders, cps1,     ROT0_16BIT, "Capcom", "Three Wonders (World)" )
 GAME( 1991, 3wonders, 0,        cps1,     3wonders, 0,        ROT0,       "Capcom", "Three Wonders (US)" )
 GAME( 1991, wonder3,  3wonders, cps1,     3wonders, 0,        ROT0,       "Capcom", "Wonder 3 (Japan)" )
 GAME( 1991, kod,      0,        cps1,     kod,      0,        ROT0,       "Capcom", "The King of Dragons (World)" )
+//GAME( 1991, kodu,     kod,      cps1,     kod,      cps1,     ROT0,       "Capcom", "The King of Dragons (US)" )
 GAME( 1991, kodj,     kod,      cps1,     kod,      0,        ROT0,       "Capcom", "The King of Dragons (Japan)" )
 GAMEX(1991, kodb,     kod,      cps1,     kod,      0,        ROT0,       "Capcom", "The King of Dragons (bootleg)", GAME_NOT_WORKING )
 GAME( 1991, captcomm, 0,        cps1,     captcomm, 0,        ROT0_16BIT, "Capcom", "Captain Commando (World)" )
 GAME( 1991, captcomu, captcomm, cps1,     captcomm, 0,        ROT0_16BIT, "Capcom", "Captain Commando (US)" )
 GAME( 1991, captcomj, captcomm, cps1,     captcomm, 0,        ROT0_16BIT, "Capcom", "Captain Commando (Japan)" )
 GAME( 1991, knights,  0,        cps1,     knights,  0,        ROT0_16BIT, "Capcom", "Knights of the Round (World)" )
+//GAME( 1991, knightsu, knights,  cps1,     knights,  cps1,     ROT0_16BIT, "Capcom", "Knights of the Round (US)" )
 GAME( 1991, knightsj, knights,  cps1,     knights,  0,        ROT0_16BIT, "Capcom", "Knights of the Round (Japan)" )
 GAME( 1992, sf2ce,    0,        sf2,      sf2,      0,        ROT0,       "Capcom", "Street Fighter II' - Champion Edition (World)" )
 GAME( 1992, sf2cea,   sf2ce,    sf2,      sf2,      0,        ROT0,       "Capcom", "Street Fighter II' - Champion Edition (US rev A)" )
 GAME( 1992, sf2ceb,   sf2ce,    sf2,      sf2,      0,        ROT0,       "Capcom", "Street Fighter II' - Champion Edition (US rev B)" )
 GAME( 1992, sf2cej,   sf2ce,    sf2,      sf2,      0,        ROT0,       "Capcom", "Street Fighter II' - Champion Edition (Japan)" )
 GAME( 1992, sf2rb,    sf2ce,    sf2,      sf2,      0,        ROT0,       "hack",  "Street Fighter II' - Champion Edition (Rainbow)" )
+//GAME( 1992, sf2rb2,   sf2ce,    sf2,      sf2,      cps1,     ROT0_16BIT, "hack",  "Street Fighter II' - Champion Edition (Rainbow set 2)" )
 GAME( 1992, sf2red,   sf2ce,    sf2,      sf2,      0,        ROT0,       "hack",  "Street Fighter II' - Champion Edition (Red Wave)" )
+//GAME( 1992, sf2v004,  sf2ce,    sf2,      sf2,      cps1,     ROT0_16BIT, "hack",  "Street Fighter II! - Champion Edition (V004)" )
 GAME( 1992, sf2accp2, sf2ce,    sf2accp2, sf2,      0,        ROT0,       "hack",  "Street Fighter II' - Champion Edition (Accelerator Pt.II)" )
 GAME( 1992, varth,    0,        cps1,     varth,    0,        ROT270,     "Capcom", "Varth - Operation Thunderstorm (World)" )
 GAME( 1992, varthu,   varth,    cps1,     varth,    0,        ROT270,     "Capcom (Romstar license)", "Varth - Operation Thunderstorm (US)" )
@@ -6075,6 +6082,7 @@ GAME( 1993, punisher, 0,        qsound,   punisher, punisher, ROT0,       "Capco
 GAME( 1993, punishru, punisher, qsound,   punisher, punisher, ROT0,       "Capcom", "The Punisher (US)" )
 GAME( 1993, punishrj, punisher, qsound,   punisher, punisher, ROT0,       "Capcom", "The Punisher (Japan)" )
 GAME( 1993, slammast, 0,        qsound,   slammast, slammast, ROT0_16BIT, "Capcom", "Saturday Night Slam Masters (World)" )
+//GAME( 1993, slammasu, slammast, qsound,   slammast, slammast, ROT0_16BIT, "Capcom", "Saturday Night Slam Masters (US)" )
 GAME( 1993, mbomberj, slammast, qsound,   slammast, slammast, ROT0_16BIT, "Capcom", "Muscle Bomber - The Body Explosion (Japan)" )
 GAME( 1993, mbombrd,  slammast, qsound,   slammast, slammast, ROT0_16BIT, "Capcom", "Muscle Bomber Duo - Ultimate Team Battle (World)" )
 GAME( 1993, mbombrdj, slammast, qsound,   slammast, slammast, ROT0_16BIT, "Capcom", "Muscle Bomber Duo - Heat Up Warriors (Japan)" )
@@ -6085,4 +6093,4 @@ GAME( 1995, pang3,    0,        pang3,    pang3,    0,        ROT0_16BIT, "Mitch
 GAME( 1995, pang3j,   pang3,    pang3,    pang3,    pang3,    ROT0_16BIT, "Mitchell", "Pang! 3 (Japan)" )
 
 
-#include "cps2.cpp"
+//ALEK #include "cps2.cpp"

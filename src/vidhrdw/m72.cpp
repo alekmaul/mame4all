@@ -30,7 +30,7 @@ void xmultipl_init_machine(void)
 	m72_init_sound();
 }
 
-void poundfor_init_machine(void)
+void kengo_init_machine(void)
 {
 	irq1 = 0x18;
 	irq2 = 0x1a;
@@ -39,9 +39,11 @@ void poundfor_init_machine(void)
 
 int m72_interrupt(void)
 {
-	int line = 15 - cpu_getiloops();
+	//int line = 15 - cpu_getiloops();
+	int line = 255 - cpu_getiloops();
 
-	if (line == 15)	/* vblank */
+	//if (line == 15)	/* vblank */
+	if (line == 255)	/* vblank */
 	{
 		rastersplit = 0;
 		interrupt_vector_w(0,irq1);
@@ -49,10 +51,12 @@ int m72_interrupt(void)
 	}
 	else
 	{
-		if (line != ((splitline - 128)>>4))
+		//if (line != ((splitline - 128)>>4))
+		if (line != (splitline - 128))
 			return ignore_interrupt();
 
-		rastersplit = splitline - 128 + 1;
+		//rastersplit = splitline - 128 + 1;
+		rastersplit = splitline + 1;
 
 		/* this is used to do a raster effect and show the score display at
 		   the bottom of the screen or other things. The line where the
@@ -75,50 +79,50 @@ int m72_interrupt(void)
 
 static void m72_get_bg_tile_info(int tile_index)
 {
-	unsigned char attr = m72_videoram2[4*tile_index+1];
-	SET_TILE_INFO(2,m72_videoram2[4*tile_index] + ((attr & 0x3f) << 8),m72_videoram2[4*tile_index+2] & 0x0f)
+	unsigned char attr = m72_videoram2[(tile_index<<2)+1];
+	SET_TILE_INFO(2,m72_videoram2[(tile_index<<2)] + ((attr & 0x3f) << 8),m72_videoram2[(tile_index<<2)+2] & 0x0f)
 	tile_info.flags = TILE_FLIPYX((attr & 0xc0) >> 6);
 }
 
 static void m72_get_fg_tile_info(int tile_index)
 {
-	unsigned char attr = m72_videoram1[4*tile_index+1];
-	SET_TILE_INFO(1,m72_videoram1[4*tile_index] + ((attr & 0x3f) << 8),m72_videoram1[4*tile_index+2] & 0x0f)
-/* bchopper: (videoram[4*tile_index+2] & 0x10) is used, priority? */
+	unsigned char attr = m72_videoram1[(tile_index<<2)+1];
+	SET_TILE_INFO(1,m72_videoram1[(tile_index<<2)] + ((attr & 0x3f) << 8),m72_videoram1[(tile_index<<2)+2] & 0x0f)
+/* bchopper: (videoram[(tile_index<<2)+2] & 0x10) is used, priority? */
 	tile_info.flags = TILE_FLIPYX((attr & 0xc0) >> 6);
 
-	tile_info.priority = (m72_videoram1[4*tile_index+2] & 0x80) >> 7;
+	tile_info.priority = (m72_videoram1[(tile_index<<2)+2] & 0x80) >> 7;
 }
 
 static void dbreed_get_bg_tile_info(int tile_index)
 {
-	unsigned char attr = m72_videoram2[4*tile_index+1];
-	SET_TILE_INFO(2,m72_videoram2[4*tile_index] + ((attr & 0x3f) << 8),m72_videoram2[4*tile_index+2] & 0x0f)
+	unsigned char attr = m72_videoram2[(tile_index<<2)+1];
+	SET_TILE_INFO(2,m72_videoram2[(tile_index<<2)] + ((attr & 0x3f) << 8),m72_videoram2[(tile_index<<2)+2] & 0x0f)
 	tile_info.flags = TILE_FLIPYX((attr & 0xc0) >> 6);
 
 	/* this seems to apply only to Dragon Breed, it breaks R-Type and Gallop */
-	tile_info.priority = (m72_videoram2[4*tile_index+2] & 0x80) >> 7;
+	tile_info.priority = (m72_videoram2[(tile_index<<2)+2] & 0x80) >> 7;
 }
 
 static void rtype2_get_bg_tile_info(int tile_index)
 {
-	unsigned char attr = m72_videoram2[4*tile_index+2];
-	SET_TILE_INFO(1,m72_videoram2[4*tile_index] + (m72_videoram2[4*tile_index+1] << 8),attr & 0x0f)
+	unsigned char attr = m72_videoram2[(tile_index<<2)+2];
+	SET_TILE_INFO(1,m72_videoram2[(tile_index<<2)] + (m72_videoram2[(tile_index<<2)+1] << 8),attr & 0x0f)
 	tile_info.flags = TILE_FLIPYX((attr & 0x60) >> 5);
 }
 
 static void rtype2_get_fg_tile_info(int tile_index)
 {
-	unsigned char attr = m72_videoram1[4*tile_index+2];
-	SET_TILE_INFO(1,m72_videoram1[4*tile_index] + (m72_videoram1[4*tile_index+1] << 8),attr & 0x0f)
+	unsigned char attr = m72_videoram1[(tile_index<<2)+2];
+	SET_TILE_INFO(1,m72_videoram1[(tile_index<<2)] + (m72_videoram1[(tile_index<<2)+1] << 8),attr & 0x0f)
 	tile_info.flags = TILE_FLIPYX((attr & 0x60) >> 5);
 
-	tile_info.priority = m72_videoram1[4*tile_index+3] & 0x01;
+	tile_info.priority = m72_videoram1[(tile_index<<2)+3] & 0x01;
 
 /* TODO: this is used on the continue screen by rtype2. Maybe it selects split tilemap */
 /* like in M92 (top 8 pens appear over sprites), however if it is only used in that */
 /* place there's no need to support it, it's just a black screen... */
-	tile_info.priority |= (m72_videoram1[4*tile_index+2] & 0x80) >> 7;
+	tile_info.priority |= (m72_videoram1[(tile_index<<2)+2] & 0x80) >> 7;
 
 /* (videoram[tile_index+2] & 0x10) is used by majtitle on the green, but it's not clear for what */
 /* (videoram[tile_index+3] & 0xfe) are used as well */
@@ -126,18 +130,18 @@ static void rtype2_get_fg_tile_info(int tile_index)
 
 static void majtitle_get_bg_tile_info(int tile_index)
 {
-	unsigned char attr = m72_videoram2[4*tile_index+2];
-	SET_TILE_INFO(1,m72_videoram2[4*tile_index] + (m72_videoram2[4*tile_index+1] << 8),attr & 0x0f)
+	unsigned char attr = m72_videoram2[(tile_index<<2)+2];
+	SET_TILE_INFO(1,m72_videoram2[(tile_index<<2)] + (m72_videoram2[(tile_index<<2)+1] << 8),attr & 0x0f)
 	tile_info.flags = TILE_FLIPYX((attr & 0x60) >> 5);
-/* (videoram[4*tile_index+2] & 0x10) is used, but it's not clear for what (priority?) */
+/* (videoram[(tile_index<<2)+2] & 0x10) is used, but it's not clear for what (priority?) */
 }
 
-INLINE void hharry_get_tile_info(int gfxnum,unsigned char *videoram,int tile_index)
+inline void hharry_get_tile_info(int gfxnum,unsigned char *videoram,int tile_index)
 {
-	unsigned char attr = videoram[4*tile_index+1];
-	SET_TILE_INFO(gfxnum,videoram[4*tile_index] + ((attr & 0x3f) << 8),videoram[4*tile_index+2] & 0x0f)
+	unsigned char attr = videoram[(tile_index<<2)+1];
+	SET_TILE_INFO(gfxnum,videoram[(tile_index<<2)] + ((attr & 0x3f) << 8),videoram[(tile_index<<2)+2] & 0x0f)
 	tile_info.flags = TILE_FLIPYX((attr & 0xc0) >> 6);
-/* (videoram[4*tile_index+2] & 0x10) is used, but it's not clear for what (priority?) */
+/* (videoram[(tile_index<<2)+2] & 0x10) is used, but it's not clear for what (priority?) */
 }
 
 static void hharry_get_bg_tile_info(int tile_index)
@@ -263,6 +267,16 @@ int hharry_vh_start(void)
 	return 0;
 }
 
+int poundfor_vh_start(void)
+{
+	int res = rtype2_vh_start();
+
+	xadjust = -6;
+
+	return res;
+}
+
+
 void m72_vh_stop(void)
 {
 	free(m72_spriteram);
@@ -333,7 +347,7 @@ WRITE_HANDLER( m72_videoram1_w )
 	if (m72_videoram1[offset] != data)
 	{
 		m72_videoram1[offset] = data;
-		tilemap_mark_tile_dirty(fg_tilemap,offset/4);
+		tilemap_mark_tile_dirty(fg_tilemap,offset>>2);
 	}
 }
 
@@ -342,7 +356,7 @@ WRITE_HANDLER( m72_videoram2_w )
 	if (m72_videoram2[offset] != data)
 	{
 		m72_videoram2[offset] = data;
-		tilemap_mark_tile_dirty(bg_tilemap,offset/4);
+		tilemap_mark_tile_dirty(bg_tilemap,offset>>2);
 	}
 }
 
@@ -353,8 +367,8 @@ WRITE_HANDLER( majtitle_videoram2_w )
 		m72_videoram2[offset] = data;
 //		tilemap_mark_tile_dirty(bg_tilemap,offset/4);
 // tilemap can be 256x64, but seems to be used at 128x64 (scroll wraparound) */
-if ((offset/4)%256 < 128)
-		tilemap_mark_tile_dirty(bg_tilemap,offset/4);
+		if (((offset>>2)&255) < 128)
+		tilemap_mark_tile_dirty(bg_tilemap,offset>>2);
 	}
 }
 
@@ -407,6 +421,15 @@ WRITE_HANDLER( m72_scrolly2_w )
 	for (i = rastersplit+1;i < 256;i++)
 		scrolly2[i] = scrolly2[rastersplit];
 }
+
+WRITE_HANDLER( m72_dmaon_w )
+{
+	if (offset == 0)
+	{
+	    memcpy(m72_spriteram,spriteram,spriteram_size);
+	}
+}
+
 
 WRITE_HANDLER( m72_spritectrl_w )
 {

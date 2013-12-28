@@ -16,7 +16,7 @@
 
 #define COMPATCORES 1
 
-char build_version[] = "GCW0 V1.1";
+char build_version[] = "GCW0 V1.2";
 
 static unsigned char splash_bmp[BMP_SIZE];
 static unsigned char menu_bmp[BMP_SIZE];
@@ -90,20 +90,15 @@ static void game_list_init_nocache(void)
 	int i;
 	FILE *f;
 	
-	fprintf(stderr,"previous romdir is %s\n",romdir);fflush(stderr);
-	
 	if (strlen(romdir))
 		strcpy(text,romdir);
 	else
 		sprintf(text,"%s/roms",mamedir);
 	
-	fprintf(stderr,"now romdir is %s\n",text);fflush(stderr);
-	
 	DIR *d=opendir(text);
 	char game[32];
 	if (d)
 	{
-		fprintf(stderr,"browse directory \n");fflush(stderr);
 		struct dirent *actual=readdir(d);
 		while(actual)
 		{
@@ -114,7 +109,6 @@ static void game_list_init_nocache(void)
 					sprintf(game,"%s.zip",drivers[i].name);
 					if (strcmp(actual->d_name,game)==0)
 					{
-		fprintf(stderr,"find %s %s\n",actual->d_name,game);fflush(stderr);
 						drivers[i].available=1;
 						game_num_avail++;
 						break;
@@ -788,7 +782,7 @@ void execute_game (char *playemu, char *playgame)
 	
 	args[n]=NULL;
 
-#if 0
+#if 1
 	for (i=0; i<n; i++)
 	{
 		fprintf(stderr,"%s ",args[i]);
@@ -1009,8 +1003,7 @@ void gethomedir(char *dir, char* name) {
 
 int main (int argc, char **argv)
 {
-	char curCfg[512], curDir[512];
-	FILE *f;
+	char curDir[512];
 
 	/* get initial home directory */
 	gethomedir(mamedir,"mame4all");

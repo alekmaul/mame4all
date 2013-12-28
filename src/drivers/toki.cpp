@@ -569,6 +569,10 @@ static struct MachineDriver machine_driver_tokib =
 
 ROM_START( tokij )
 	ROM_REGION( 0x60000, REGION_CPU1 )	/* 6*64k for 68000 code */
+	ROM_LOAD_EVEN( "tokijp.006",   0x00000, 0x20000, 0x03d726b1 )
+	ROM_LOAD_ODD ( "tokijp.004",       0x00000, 0x20000, 0x54a45e12 )
+	ROM_LOAD_EVEN( "tokijp.005",   0x40000, 0x10000, 0xd6a82808 )
+	ROM_LOAD_ODD ( "tokijp.003",   0x40000, 0x10000, 0xa01a5b10 )
 
 	ROM_REGION( 0x20000*2, REGION_CPU2 )	/* Z80 code, banked data */
 	ROM_LOAD( "tokijp.008",   0x00000, 0x02000, 0x6c87c4c5 )	/* encrypted */

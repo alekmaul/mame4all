@@ -617,9 +617,9 @@ int osd_allocate_colors(unsigned int totalcolors,const unsigned char *palette,un
 
 		for (i = 0;i < totalcolors;i++)
 		{
-			r = 255 * brightness * pow(palette[3*i+0] / 255.0f, 1 / osd_gamma_correction) / 100;
-			g = 255 * brightness * pow(palette[3*i+1] / 255.0f, 1 / osd_gamma_correction) / 100;
-			b = 255 * brightness * pow(palette[3*i+2] / 255.0f, 1 / osd_gamma_correction) / 100;
+			r = 255 * brightness * pow(palette[3*i+0] / 255.0, 1 / osd_gamma_correction) / 100;
+			g = 255 * brightness * pow(palette[3*i+1] / 255.0, 1 / osd_gamma_correction) / 100;
+			b = 255 * brightness * pow(palette[3*i+2] / 255.0, 1 / osd_gamma_correction) / 100;
 			*pens++ = makecol(r,g,b);
 		}
 
@@ -993,7 +993,7 @@ void osd_update_video_and_audio(struct osd_bitmap *bitmap)
 				for (i = 0;i < 256;i++)
 				{
 					float rate = brightness * brightness_paused_adjust * pow(i / 255.0, 1 / osd_gamma_correction) / 100;
-					bright_lookup[i] = 255 * rate + 0.5f;
+					bright_lookup[i] = 255 * rate + 0.5;
 				}
 			}
 			if (dirtypalette)
@@ -1030,7 +1030,7 @@ void osd_update_video_and_audio(struct osd_bitmap *bitmap)
 				for (i = 0;i < 256;i++)
 				{
 					float rate = brightness * brightness_paused_adjust * pow(i / 255.0, 1 / osd_gamma_correction) / 100;
-					bright_lookup[i] = 255 * rate + 0.5f;
+					bright_lookup[i] = 255 * rate + 0.5;
 				}
 			}
 			if (dirtypalette)

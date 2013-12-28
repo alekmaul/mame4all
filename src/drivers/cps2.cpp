@@ -4,142 +4,224 @@
   ===============
 
 
+    Driver by Paul Leaman (paul@vortexcomputing.demon.co.uk)
 
+    Thanks to Raz, Crashtest and the CPS2 decryption team without whom
+    none of this would have been possible.
 
 ***************************************************************************/
 
-#if 1
-/* Graphics viewer functions */
-extern int  cps2_vh_start(void);
-extern void cps2_vh_stop(void);
-extern void cps2_vh_screenrefresh(struct osd_bitmap *bitmap,int full_refresh);
-#else
-/* Dummy CPS1 functions */
-#define cps2_vh_start			cps1_ch_start
-#define cps2_vh_stop			cps2_vh_stop
-#define cps2_vh_screenrefresh	cps2_vh_screenrefresh
-#endif
+#include "driver.h"
+#include "machine/eeprom.h"
+#include "cpu/m68000/m68000.h"
 
-/* Export this function so that the vidhrdw routine can drive the
+#include "cps1.h"       /* External CPS1 definitions */
+
+/*
+Export this function so that the vidhrdw routine can drive the
 Q-Sound hardware
 */
 WRITE_HANDLER( cps2_qsound_sharedram_w )
 {
-	qsound_sharedram_w(offset, data);
+	qsound_sharedram_w(offset ,data);
+    //ALEK qsound_sharedram1_w(offset/2, data, 0xff00);
 }
-
 
 /* Maximum size of Q Sound Z80 region */
 #define QSOUND_SIZE 0x50000
 
 /* Maximum 680000 code size */
 #undef  CODE_SIZE
-#define CODE_SIZE   0x0800000
+#define CODE_SIZE   0x0400000
 
 
-void init_cps2(void)
+extern unsigned char *cps2_objram1,*cps2_objram2;
+extern unsigned char *cps2_output;
+extern size_t cps2_output_size;
+extern int cps2_vh_start(void);
+
+
+int cps2_interrupt(void)
 {
-	unsigned char *RAM = memory_region(REGION_CPU1);
-	FILE *fp;
-	int i;
-	const int decode=CODE_SIZE/2;
+	/* 2 is vblank, 4 is some sort of scanline interrupt, 6 is both at the same time. */
 
-	fp = fopen ("ROM.DMP", "w+b");
-	if (fp)
+//usrintf_showmessage("%04x %04x %04x",cps1_output[0x4e/2],cps1_output[0x50/2],cps1_output[0x52/2]);
+	if (cpu_getiloops() == 0)
+		return 2;
+	else if (~cps1_output[0x4e/2] & 0x200)
 	{
-		for (i=0; i<decode; i+=2)
-		{
-			int value=READ_WORD(&RAM[i]);
-			fputc(value>>8,   fp);
-			fputc(value&0xff, fp);
-		}
-		fclose(fp);
+		if (cps1_output[0x52/2])	/* scanline counter? */
+			cps1_output[0x52/2]--;
+		return 4;
 	}
 
-
-	/* Decrypt it ! */
-
-	fp=fopen ("ROMD.DMP", "w+b");
-	if (fp)
-	{
-		for (i=0; i<decode; i+=2)
-		{
-			int value=READ_WORD(&RAM[decode+i]);
-			fputc(value>>8,   fp);
-			fputc(value&0xff, fp);
-		}
-
-		fclose(fp);
-	}
-
-
-	/*
-	Poke in a dummy program to stop the 68K core from crashing due
-	to silly addresses.
-	*/
-	WRITE_WORD(&RAM[0x0000], 0x00ff);
-	WRITE_WORD(&RAM[0x0002], 0x8000);  /* Dummy stack pointer */
-	WRITE_WORD(&RAM[0x0004], 0x0000);
-	WRITE_WORD(&RAM[0x0006], 0x00c2);  /* Dummy start vector */
-
-	for (i=0x0008; i<0x00c0; i+=4)
-	{
-		WRITE_WORD(&RAM[i+0], 0x0000);
-		WRITE_WORD(&RAM[i+2], 0x00c0);
-	}
-
-	WRITE_WORD(&RAM[0x00c0], 0x4e73);   /* RETE */
-	WRITE_WORD(&RAM[0x00c2], 0x6000);
-	WRITE_WORD(&RAM[0x00c4], 0x00c2);   /* BRA 00c2 */
+	return 0;
 }
 
-static struct MachineDriver machine_driver_cps2 =
+
+
+static struct EEPROM_interface cps2_eeprom_interface =
 {
-	/* basic machine hardware */
-	{
-		{
-			CPU_M68000,
-			10000000,
-			cps1_readmem,cps1_writemem,0,0,
-			cps1_qsound_interrupt, 1  /* ??? interrupts per frame */
-		},
-		{
-			CPU_Z80 | CPU_AUDIO_CPU,
-			8000000,  /* 4 Mhz ??? TODO: find real FRQ */
-			qsound_readmem,qsound_writemem,0,0,
-			interrupt,4
-		}
-	},
-	60, 0,
-	1,
-	0,
-	#ifdef MESS
-	0,
-	#endif
-
-	/* video hardware */
-	0x30*8+32*2, 0x1c*8+32*3, { 32, 32+0x30*8-1, 32+16, 32+16+0x1c*8-1 },
-
-	cps1_gfxdecodeinfo,
-	32*16+32*16+32*16+32*16,   /* lotsa colours */
-	32*16+32*16+32*16+32*16,   /* Colour table length */
-	0,
-
-	VIDEO_TYPE_RASTER | VIDEO_MODIFIES_PALETTE,
-	0,
-	cps2_vh_start,
-	cps2_vh_stop,
-	cps2_vh_screenrefresh,
-
-	/* sound hardware */
-	SOUND_SUPPORTS_STEREO,0,0,0,
-	{
-		{
-			SOUND_QSOUND,
-			&qsound_interface
-		}
-	}
+	6,		/* address bits */
+	16,		/* data bits */
+	"0110",	/*  read command */
+	"0101",	/* write command */
+	"0111"	/* erase command */
 };
+
+static void cps2_nvram_handler(void *file,int read_or_write)
+{
+	if (read_or_write)
+		EEPROM_save(file);
+	else
+	{
+        EEPROM_init(&cps2_eeprom_interface);
+
+		if (file)
+			EEPROM_load(file);
+	}
+}
+
+READ_HANDLER( cps2_eeprom_port_r )
+{
+    return (input_port_2_r(offset) & 0xfffe) | EEPROM_read_bit();
+}
+
+WRITE_HANDLER( cps2_eeprom_port_w )
+{
+    if (ACCESSING_MSB)
+    {
+		/* bit 0 - Unused */
+		/* bit 1 - Unused */
+        /* bit 2 - Unused */
+        /* bit 3 - Unused */
+        /* bit 4 - Eeprom data  */
+        /* bit 5 - Eeprom clock */
+        /* bit 6 - */
+        /* bit 7 - */
+
+        /* EEPROM */
+        EEPROM_write_bit(data & 0x1000);
+        EEPROM_set_clock_line((data & 0x2000) ? ASSERT_LINE : CLEAR_LINE);
+        EEPROM_set_cs_line((data & 0x4000) ? CLEAR_LINE : ASSERT_LINE);
+
+	}
+    else
+    {
+        /* bit 0 - coin counter */
+		/* bit 1 - Unused */
+        /* bit 2 - Unused */
+        /* bit 3 - On all the time - allows access to Z80 address space */
+        /* bit 4 - lock 1  */
+        /* bit 5 - */
+        /* bit 6 - */
+        /* bit 7 - */
+
+        coin_counter_w(0, data & 0x0001);
+        coin_lockout_w(0,~data & 0x0010);
+        coin_lockout_w(1,~data & 0x0020);
+        coin_lockout_w(2,~data & 0x0040);
+        coin_lockout_w(3,~data & 0x0080);
+        /*
+        set_led_status(0,data & 0x01);
+        set_led_status(1,data & 0x10);
+        set_led_status(2,data & 0x20);
+        */
+    }
+}
+
+READ_HANDLER( cps2_qsound_volume_r )
+{
+	/* games skip reads/writes to 0x660000-0x663fff when bit 14 is set */
+    return 0xe021;
+}
+
+
+
+#ifdef A68K0
+
+data8_t CPS2_Read8(offs_t address)
+{
+	return m68k_read_pcrelative_8(address);
+}
+
+data16_t CPS2_Read16(offs_t address)
+{
+	return m68k_read_pcrelative_16(address);
+}
+
+data32_t CPS2_Read32(offs_t address)
+{
+	return m68k_read_pcrelative_32(address);
+}
+
+void init_cps2_memory(void)
+{
+	// Patch Memory array with Decryption Calls
+
+	m68000_memory_interface_set(8,(void *)CPS2_Read8);
+	m68000_memory_interface_set(9,(void *)CPS2_Read16);
+	m68000_memory_interface_set(10,(void *)CPS2_Read32);
+	m68000_memory_interface_set(11,(void *)CPS2_Read16);
+	m68000_memory_interface_set(12,(void *)CPS2_Read32);
+}
+
+#endif
+
+
+
+static READ_HANDLER( kludge_r )
+{
+	return 0xffff;
+}
+
+
+static struct MemoryReadAddress cps2_readmem[]=
+{
+
+	{ 0x000000, 0x3fffff, MRA_ROM },				/* 68000 ROM */
+	{ 0x400000, 0x40000b, MRA_RAM },				/* CPS2 object output */
+	{ 0x618000, 0x619fff, qsound_sharedram_r },		/* Q RAM */
+	{ 0x660000, 0x663fff, MRA_RAM },				/* unknown, bit 14 of 804030 must be 0 for accesses to happen */
+	{ 0x664000, 0x664001, MRA_RAM },				/* Unknown - accessed at routine 0xcf4a in SFZJ*/
+	{ 0x708000, 0x709fff, cps2_objram2_r },			/* Object RAM */
+	{ 0x70a000, 0x70bfff, cps2_objram2_r },			/* mirror */
+	{ 0x70c000, 0x70dfff, cps2_objram2_r },			/* mirror */
+	{ 0x70e000, 0x70ffff, cps2_objram2_r },			/* mirror */
+	{ 0x800100, 0x8001ff, cps1_output_r },			/* Output ports mirror (sfa) */
+	{ 0x804000, 0x804001, input_port_0_r },	/* IN0 */
+	{ 0x804010, 0x804011, input_port_1_r },	/* IN1 */
+	{ 0x804020, 0x804021, cps2_eeprom_port_r  },	/* IN2 + EEPROM */
+	{ 0x804030, 0x804031, cps2_qsound_volume_r },	/* Master volume */
+	{ 0x8040b0, 0x8040b3, kludge_r },  				/* unknown (xmcotaj hangs if this is 0) */
+	{ 0x804100, 0x8041ff, cps1_output_r },			/* CPS1 Output ports */
+	{ 0x900000, 0x92ffff, MRA_RAM },				/* Video RAM */
+	{ 0xff0000, 0xffffff, MRA_RAM },				/* RAM */
+	{ -1 }  /* end of table */
+};
+
+static struct MemoryWriteAddress cps2_writemem[]=
+{
+	{ 0x000000, 0x3fffff, MWA_ROM },				/* ROM */
+	{ 0x400000, 0x40000b, MWA_RAM, &cps2_output, &cps2_output_size },		/* CPS2 output */
+	{ 0x618000, 0x619fff, qsound_sharedram_w },	/* Q RAM */
+	{ 0x660000, 0x663fff, MWA_RAM },				/* unknown, bit 14 of 804030 must be 0 for accesses to happen */
+	{ 0x664000, 0x664001, MWA_RAM },				/* Unknown */
+	{ 0x700000, 0x701fff, cps2_objram1_w, &cps2_objram1 },	/* Object RAM, no game seems to use it directly */
+	{ 0x708000, 0x709fff, cps2_objram2_w, &cps2_objram2 },	/* Object RAM */
+	{ 0x70a000, 0x70bfff, cps2_objram2_w },					/* mirror */
+	{ 0x70c000, 0x70dfff, cps2_objram2_w },					/* mirror */
+	{ 0x70e000, 0x70ffff, cps2_objram2_w },					/* mirror */
+	{ 0x800100, 0x8001ff, cps1_output_w },			/* Output ports mirror (sfa) */
+	{ 0x804040, 0x804041, cps2_eeprom_port_w },		/* EEPROM */
+	{ 0x8040a0, 0x8040a1, MWA_NOP },				/* Unknown (reset once on startup) */
+	{ 0x8040e0, 0x8040e1, cps2_objram_bank_w },		/* bit 0 = Object ram bank swap */
+	{ 0x804100, 0x8041ff, cps1_output_w, &cps1_output, &cps1_output_size },  /* Output ports */
+	{ 0x900000, 0x92ffff, MWA_RAM, &cps1_gfxram, &cps1_gfxram_size },
+	{ 0xff0000, 0xffffff, MWA_RAM },				/* RAM */
+	{ -1 }  /* end of table */
+};
+
 
 INPUT_PORTS_START( cps2 )
 	PORT_START      /* IN0 */
@@ -188,7 +270,100 @@ INPUT_PORTS_START( cps2 )
 	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_PLAYER2 )
 INPUT_PORTS_END
 
+INPUT_PORTS_START( avsp )
+    PORT_START      /* IN0 (0x00) */
+    PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 )
+    PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 )
+    PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 )
+    PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 )
+    PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 )
+    PORT_BIT( 0x0020, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 )
+    PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER1 )
+    PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_UNKNOWN )
+    PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 )
+    PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER2 )
+    PORT_BIT( 0x0400, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER2 )
+    PORT_BIT( 0x0800, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 )
+    PORT_BIT( 0x1000, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 )
+    PORT_BIT( 0x2000, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 )
+    PORT_BIT( 0x4000, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER2 )
+    PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN )
 
+    PORT_START      /* IN1 (0x10) */
+    PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER3 )
+    PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER3 )
+    PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER3 )
+    PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER3 )
+    PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER3 )
+    PORT_BIT( 0x0020, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER3 )
+    PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER3 )
+    PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_UNKNOWN )
+    PORT_BIT( 0xff00, IP_ACTIVE_LOW, IPT_UNKNOWN )
+
+    PORT_START      /* IN2 (0x20) */
+    PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_SPECIAL )   /* EEPROM bit */
+	PORT_BITX(0x0002, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( Service_Mode ), KEYCODE_F2, IP_JOY_NONE )
+    PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_SERVICE1 )
+    PORT_BIT( 0x00f8, IP_ACTIVE_LOW, IPT_UNKNOWN )
+    PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_START1 )
+    PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_START2 )
+    PORT_BIT( 0x0400, IP_ACTIVE_LOW, IPT_START3 )
+    PORT_BIT( 0x0800, IP_ACTIVE_LOW, IPT_UNKNOWN )
+    PORT_BIT( 0x1000, IP_ACTIVE_LOW, IPT_COIN1 )
+    PORT_BIT( 0x2000, IP_ACTIVE_LOW, IPT_COIN2 )
+    PORT_BIT( 0x4000, IP_ACTIVE_LOW, IPT_COIN3 )
+    PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN )
+INPUT_PORTS_END
+
+static struct MachineDriver machine_driver_cps2 =
+{
+	/* basic machine hardware */
+	{
+		{
+			CPU_M68000,
+			10000000,
+			cps2_readmem,cps2_writemem,0,0,
+			cps2_interrupt, 1  /* ??? interrupts per frame */
+		},
+		{
+			CPU_Z80 | CPU_AUDIO_CPU,
+			8000000,  /* 4 Mhz ??? TODO: find real FRQ */
+			qsound_readmem,qsound_writemem,0,0,
+			interrupt,4
+		}
+	},
+	60, 0,
+	1,
+	0,
+	#ifdef MESS
+	0,
+	#endif
+
+	/* video hardware */
+	0x30*8+32*2, 0x1c*8+32*3, { 32, 32+0x30*8-1, 32+16, 32+16+0x1c*8-1 },
+
+	cps1_gfxdecodeinfo,
+	32*16+32*16+32*16+32*16,   /* lotsa colours */
+	32*16+32*16+32*16+32*16,   /* Colour table length */
+	0,
+
+	VIDEO_TYPE_RASTER | VIDEO_MODIFIES_PALETTE,                      \
+	cps1_eof_callback,                                               \
+	cps2_vh_start,                                                   \
+	cps1_vh_stop,                                                    \
+	cps1_vh_screenrefresh,      
+
+	/* sound hardware */
+	SOUND_SUPPORTS_STEREO,0,0,0,
+	{
+		{
+			SOUND_QSOUND,
+			&qsound_interface
+		}
+	},
+	
+	cps2_nvram_handler
+};
 
 ROM_START( 19xx )
 	ROM_REGION( CODE_SIZE, REGION_CPU1 )      /* 68000 code */
@@ -250,21 +425,25 @@ ROM_END
 
 ROM_START( avsp )
 	ROM_REGION( CODE_SIZE, REGION_CPU1 )      /* 68000 code */
-	ROM_LOAD_WIDE_SWAP( "avpu.03d", 0x000000, 0x80000, 0x42757950 )
-	ROM_LOAD_WIDE_SWAP( "avpu.04d", 0x080000, 0x80000, 0x5abcdee6 )
-	ROM_LOAD_WIDE_SWAP( "avpu.05d", 0x100000, 0x80000, 0xfbfb5d7a )
-	ROM_LOAD_WIDE_SWAP( "avpu.06d", 0x180000, 0x80000, 0x190b817f )
+	ROM_LOAD_WIDE_SWAP( "avpe.03d", 0x000000, 0x80000, 0x774334a9 )
+	ROM_LOAD_WIDE_SWAP( "avpe.04d", 0x080000, 0x80000, 0x7fa83769 )
+	ROM_LOAD_WIDE_SWAP( "avp.05d",  0x100000, 0x80000, 0xfbfb5d7a )
+	ROM_LOAD_WIDE_SWAP( "avp.06d",  0x180000, 0x80000, 0x190b817f )
+
+	ROM_REGION( CODE_SIZE, REGION_USER1 )
+	ROM_LOAD_WIDE_SWAP( "avpex.03d", 0x000000, 0x80000, 0x73dd740e )
+	ROM_LOAD_WIDE_SWAP( "avpex.04d", 0x080000, 0x80000, 0x185f8c43 )
 
 	ROM_REGION( 0x1000000, REGION_GFX1 | REGIONFLAG_DISPOSE )
-	ROM_LOAD( "avp.18",   0x000000, 0x200000, 0xd92b6fc0 )
-	ROM_LOAD( "avp.17",   0x200000, 0x200000, 0x94403195 )
-	ROM_LOAD( "avp.14",   0x400000, 0x200000, 0xebba093e )
-	ROM_LOAD( "avp.13",   0x600000, 0x200000, 0x8f8b5ae4 )
-	ROM_LOAD( "avp.20",   0x800000, 0x200000, 0xf90baa21 )
-	ROM_LOAD( "avp.19",   0xa00000, 0x200000, 0xe1981245 )
-	ROM_LOAD( "avp.16",   0xc00000, 0x200000, 0xfb228297 )
-	ROM_LOAD( "avp.15",   0xe00000, 0x200000, 0xb00280df )
-
+	ROM_LOAD( "avp.13",   0x0000000, 0x200000, 0x8f8b5ae4 )
+	ROM_LOAD( "avp.15",   0x0000002, 0x200000, 0xb00280df )
+	ROM_LOAD( "avp.17",   0x0000004, 0x200000, 0x94403195 )
+	ROM_LOAD( "avp.19",   0x0000006, 0x200000, 0xe1981245 )
+	ROM_LOAD( "avp.14",   0x0800000, 0x200000, 0xebba093e )
+	ROM_LOAD( "avp.16",   0x0800002, 0x200000, 0xfb228297 )
+	ROM_LOAD( "avp.18",   0x0800004, 0x200000, 0x34fb7232 )
+	ROM_LOAD( "avp.20",   0x0800006, 0x200000, 0xf90baa21 )
+	
 	ROM_REGION( QSOUND_SIZE, REGION_CPU2 ) /* 64k for the audio CPU (+banks) */
 	ROM_LOAD( "avp.01",   0x00000, 0x08000, 0x2d3b4220 )
 	ROM_CONTINUE(         0x10000, 0x18000 )
@@ -1500,7 +1679,7 @@ ROM_END
 
 GAME( 1995, 19xx,     0,       cps2, cps2, cps2, ROT0, "Capcom", "19XX: The Battle Against Destiny (USA 951207)" )
 GAME( 1994, armwara,  0,       cps2, cps2, cps2, ROT0, "Capcom", "Armoured Warriors (Asia 940920)" )
-GAME( 1994, avsp,     0,       cps2, cps2, cps2, ROT0, "Capcom", "Aliens Vs. Predator (USA 940520)" )
+GAME( 1994, avsp,     0,       cps2, avsp, cps2, ROT0_16BIT, "Capcom", "Alien vs. Predator (Euro 940520)" )
 GAME( 1997, batcirj,  0,       cps2, cps2, cps2, ROT0, "Capcom", "Battle Circuit (Japan 970319)" )
 GAME( 1997, batcira,  batcirj, cps2, cps2, cps2, ROT0, "Capcom", "Battle Circuit (Asia 970319)" )
 GAME( 1995, cybotsj,  0,       cps2, cps2, cps2, ROT0, "Capcom", "Cyberbots: Full Metal Madness (Japan 950420)" )

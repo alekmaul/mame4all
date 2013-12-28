@@ -439,13 +439,13 @@ static struct MachineDriver machine_driver_jackal =
 	{
 		{
 			CPU_M6809,
-			2000000,	/* 2 MHz???? */
+			18432000/12,	/* 1.536 MHz from Mame 0.148 */
 			jackal_readmem,jackal_writemem,0,0,
 			jackal_interrupt,1
 		},
 		{
 			CPU_M6809,
-			2000000,	/* 2 MHz???? */
+			18432000/12,	/* 1.536 MHz from Mame 0.148 */
 			jackal_sound_readmem,jackal_sound_writemem,0,0,
 			ignore_interrupt,1
 		}
@@ -483,13 +483,13 @@ static struct MachineDriver machine_driver_topgunbl =
 	{
 		{
 			CPU_M6809,
-			2000000,	/* 2 MHz???? */
+			18432000/12,	/* 1.536 MHz from Mame 0.148 */
 			jackal_readmem,jackal_writemem,0,0,
 			jackal_interrupt,1
 		},
 		{
 			CPU_M6809,
-			2000000,	/* 2 MHz???? */
+			18432000/12,	/* 1.536 MHz from Mame 0.148 */
 			jackal_sound_readmem,jackal_sound_writemem,0,0,
 			ignore_interrupt,1
 		}

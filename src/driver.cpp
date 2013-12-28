@@ -734,10 +734,11 @@ Six Flags (?)
 	DRIVER( hharry )	/* (c) 1990 (World) */
 	DRIVER( hharryu )	/* (c) 1990 Irem America (US) */
 	DRIVER( dkgensan )	/* (c) 1990 (Japan) */
-TESTDRIVER( kengo )
+	DRIVER( kengo )	    /* (c) 1990 (Japan) */
 	DRIVER( poundfor )	/* (c) 1990 (World) */
 	DRIVER( poundfou )	/* (c) 1990 Irem America (US) */
 	DRIVER( airduel )	/* (c) 1990 (Japan) */
+	DRIVER( cosmccop )	/* (c) 1991 (Japan) */
 	DRIVER( gallop )	/* (c) 1991 (Japan) */
 	/* not M72, but same sound hardware */
 	DRIVER( sichuan2 )	/* (c) 1989 Tamtex */
@@ -1193,6 +1194,7 @@ TESTDRIVER( defndjeu )	/* bootleg */
 	DRIVER( sidearms )	/* 12/1986 (c) 1986 (World) */
 	DRIVER( sidearmr )	/* 12/1986 (c) 1986 + Romstar license (US) */
 	DRIVER( sidearjp )	/* 12/1986 (c) 1986 (Japan) */
+	DRIVER( buraiken )	/* 1987 (Japan) */
 	DRIVER( turtship )	/* (c) 1988 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware) */
 	DRIVER( dyger )		/* (c) 1989 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware) */
 	DRIVER( dygera )	/* (c) 1989 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware) */
@@ -1327,7 +1329,7 @@ TESTDRIVER( ddtoda )	/* Dungeons & Dragons: Tower of Doom (Asia 940113) */
 TESTDRIVER( ddtodr1 )	/* Dungeons & Dragons: Tower of Doom (USA 940125) */
 TESTDRIVER( ssf2t )		/* Super Street Fighter 2 Turbo (USA 940223) */
 TESTDRIVER( ssf2xj )	/* Super Street Fighter 2 X: Grand Master Challenge (Japan 940223) */
-TESTDRIVER( avsp )		/* Aliens Vs. Predator (USA 940520) */
+TESTDRIVER( avsp )		/* Alien vs. Predator (Euro 940520) */
 TESTDRIVER( vampj )		/* Vampire: The Night Warriors (Japan 940705) */
 TESTDRIVER( vampa )		/* Vampire: The Night Warriors (Asia 940705) */
 TESTDRIVER( dstlk )		/* DarkStalkers: The Night Warriors (USA 940818) */

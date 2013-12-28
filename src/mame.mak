@@ -265,7 +265,8 @@ $(OBJ)/drivers/commando.o: src/vidhrdw/commando.cpp src/drivers/commando.cpp
 $(OBJ)/drivers/gng.o: src/vidhrdw/gng.cpp src/drivers/gng.cpp
 $(OBJ)/drivers/gunsmoke.o: src/vidhrdw/gunsmoke.cpp src/drivers/gunsmoke.cpp
 $(OBJ)/drivers/srumbler.o: src/vidhrdw/srumbler.cpp src/drivers/srumbler.cpp
-$(OBJ)/drivers/lwings.o: src/machine/lwings.cpp src/vidhrdw/lwings.cpp src/drivers/lwings.cpp
+#$(OBJ)/drivers/lwings.o: src/machine/lwings.cpp src/vidhrdw/lwings.cpp src/drivers/lwings.cpp
+$(OBJ)/drivers/lwings.o: src/vidhrdw/lwings.cpp src/drivers/lwings.cpp
 $(OBJ)/drivers/sidearms.o: src/vidhrdw/sidearms.cpp src/drivers/sidearms.cpp
 $(OBJ)/drivers/bionicc.o: src/vidhrdw/bionicc.cpp src/drivers/bionicc.cpp
 $(OBJ)/drivers/1943.o: src/vidhrdw/1943.cpp src/drivers/1943.cpp
@@ -276,6 +277,7 @@ $(OBJ)/drivers/sf1.o: src/vidhrdw/sf1.cpp src/drivers/sf1.cpp
 $(OBJ)/drivers/mitchell.o: src/vidhrdw/mitchell.cpp src/drivers/mitchell.cpp
 $(OBJ)/drivers/cbasebal.o: src/vidhrdw/cbasebal.cpp src/drivers/cbasebal.cpp
 $(OBJ)/drivers/cps1.o: src/vidhrdw/cps1.cpp src/drivers/cps1.cpp
+#$(OBJ)/drivers/cps2.o: src/drivers/cps2.cpp
 OBJ_CAPCOM = $(OBJ)/drivers/vulgus.o $(OBJ)/drivers/sonson.o $(OBJ)/drivers/higemaru.o $(OBJ)/drivers/1942.o $(OBJ)/drivers/exedexes.o \
 	$(OBJ)/drivers/commando.o $(OBJ)/drivers/gng.o $(OBJ)/drivers/gunsmoke.o $(OBJ)/drivers/srumbler.o $(OBJ)/drivers/lwings.o \
 	$(OBJ)/drivers/sidearms.o $(OBJ)/drivers/bionicc.o $(OBJ)/drivers/1943.o $(OBJ)/drivers/blktiger.o $(OBJ)/drivers/tigeroad.o \

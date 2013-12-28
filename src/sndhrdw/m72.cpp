@@ -2,35 +2,45 @@
 
 IREM "M72" sound hardware
 
-used by:
+All games have a YM2151 for music, and most of them also samples. Samples
+are not handled consistently by all the games, some use a high frequency NMI
+handler to push them through a DAC, others use external hardware.
+In the following table, the NMI column indicates with a No the games whose
+NMI handler only consists of RETN. R-Type is an exception, it doesn't have
+a valid NMI handler at all.
 
-Game                          Year  Sound program ID string
-----------------------------  ----  -----------------------
-R-Type                        1987  - (earlier version, no sample player)
-Battle Chopper / Mr. Heli     1987  Rev 2.20
-Vigilante                     1988  Rev 2.20
-Ninja Spirit                  1988  Rev 2.20
-Image Fight                   1988  Rev 2.20
-Legend of Hero Tonma          1989  Rev 2.20
-X Multiply                    1989  Rev 2.20
-Dragon Breed                  1989  Rev 2.20
-Kickle Cubicle                1988  Rev 2.21
-Shisensho                     1989  Rev 2.21
-R-Type II                     1989  Rev 2.21
-Major Title                   1990  Rev 2.21
-Air Duel                      1990  Rev 3.14 M72 (no NMI handler)
-Daiku no Gensan               1990  Rev 3.14 M81
-Hammerin' Harry               1990  Rev 3.15 M81
-Ken-Go	                      1991  Rev 3.15 M81
-Pound for Pound               1990  Rev 3.15 M83 (no NMI handler)
-Gallop - Armed Police Unit    1991  Rev 3.15 M72 (no NMI handler)
-Bomber Man World              1992  Rev 3.31 M81
-Atomic Punk                   1992  Rev 3.31 M99
-Quiz F-1 1,2finish            1992  Rev 3.33 M81
-Risky Challenge               1993  Rev 3.34 M81
-Shisensho II                  1993  Rev 3.34 M81
+Game                                    Year  ID string     NMI
+--------------------------------------  ----  ------------  ---
+R-Type                                  1987  - (earlier version, no samples)
+Battle Chopper / Mr. Heli               1987  Rev 2.20      Yes
+Vigilante                               1988  Rev 2.20      Yes
+Ninja Spirit                            1988  Rev 2.20      Yes
+Image Fight                             1988  Rev 2.20      Yes
+Legend of Hero Tonma                    1989  Rev 2.20      Yes
+X Multiply                              1989  Rev 2.20      Yes
+Dragon Breed                            1989  Rev 2.20      Yes
+Kickle Cubicle                          1988  Rev 2.21      Yes
+Shisensho                               1989  Rev 2.21      Yes
+R-Type II                               1989  Rev 2.21      Yes
+Major Title                             1990  Rev 2.21      Yes
+Air Duel                                1990  Rev 3.14 M72   No
+Daiku no Gensan                         1990  Rev 3.14 M81  Yes
+Daiku no Gensan (M72)                   1990  Rev 3.15 M72   No
+Hammerin' Harry                         1990  Rev 3.15 M81  Yes
+Ken-Go	                                1991  Rev 3.15 M81  Yes
+Pound for Pound                         1990  Rev 3.15 M83   No
+Cosmic Cop                              1991  Rev 3.15 M81  Yes
+Gallop - Armed Police Unit              1991  Rev 3.15 M72   No
+Hasamu                                  1991  Rev 3.15 M81  Yes
+Bomber Man                              1991  Rev 3.15 M81  Yes
+Bomber Man World (Japan)                1992  Rev 3.31 M81  Yes
+Bomber Man World (World) / Atomic Punk  1992  Rev 3.31 M99   No
+Quiz F-1 1,2finish                      1992  Rev 3.33 M81  Yes
+Risky Challenge                         1993  Rev 3.34 M81  Yes
+Shisensho II                            1993  Rev 3.34 M81  Yes
 
 ***************************************************************************/
+
 #include "driver.h"
 
 
@@ -160,6 +170,22 @@ WRITE_HANDLER( rtype2_sample_addr_w )
 		sample_addr = (sample_addr & 0xff00) | ((data << 0) & 0x00ff);
 
 	sample_addr <<= 5;
+}
+
+WRITE_HANDLER( poundfor_sample_addr_w )
+{
+	/* poundfor writes both sample start and sample END - a first for Irem...
+	   we don't handle the end written here, 00 marks the sample end as usual. */
+	if (offset > 1) return;
+
+	sample_addr >>= 4;
+
+	if (offset == 1)
+		sample_addr = (sample_addr & 0x00ff) | ((data << 8) & 0xff00);
+	else
+		sample_addr = (sample_addr & 0xff00) | ((data << 0) & 0x00ff);
+
+	sample_addr <<= 4;
 }
 
 READ_HANDLER( m72_sample_r )

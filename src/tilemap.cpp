@@ -32,8 +32,8 @@ To Do:
 	5)	call tilemap_draw to draw the tilemaps to the screen, from back to front
 */
 
-#define USE_VISIBLE 0
-#define NOT_USE_CACHED_INDEX_TO_MEMORY_OFFSET 0
+#define USE_VISIBLE 1
+//#define NOT_USE_CACHED_INDEX_TO_MEMORY_OFFSET 0
 
 #include "driver.h"
 #include "tilemap.h"
@@ -430,7 +430,7 @@ struct tilemap *tilemap_create(
 ){
 	struct tilemap *tilemap = (struct tilemap *)calloc( 1,sizeof( struct tilemap ) );
 	if( tilemap ){
-	   memset(tilemap, 0, sizeof( struct tilemap ));
+	   //ALEK2612 memset(tilemap, 0, sizeof( struct tilemap ));
 		int num_tiles = num_cols*num_rows;
 		tilemap->num_logical_cols = num_cols;
 		tilemap->num_logical_rows = num_rows;
@@ -544,7 +544,7 @@ void tilemap_dispose( struct tilemap *tilemap ){
 /***********************************************************************************/
 
 static void unregister_pens( struct cached_tile_info *cached_tile_info, int num_pens ){
-	if( palette_used_colors )
+	//ALEK2612 if( palette_used_colors )
 	{
 		const UINT16 *pal_data = cached_tile_info->pal_data;
 		if( pal_data ){
@@ -568,7 +568,7 @@ static void unregister_pens( struct cached_tile_info *cached_tile_info, int num_
 }
 
 static void register_pens( struct cached_tile_info *cached_tile_info, int num_pens ){
-	if( palette_used_colors )
+//	if( palette_used_colors )
 	{
 	    unsigned int pen_usage = cached_tile_info->pen_usage;
 		if( pen_usage ){
@@ -1129,12 +1129,11 @@ static void render_mask( struct tilemap *tilemap, UINT32 cached_index ){
 /*
  * This is needed for m92.c
  */
-			if (tilemap->bg_transmask[(flags>>2)&3] == 0x1111)  // from init value
+ 			if (tilemap->bg_transmask[(flags>>2)&3] == 0x1111)  // from init value
 			    // Same as above init
 			    bg_transmask = (~fg_transmask)|pen_mask;
 			else
 			    bg_transmask = btransmask[(flags>>2)&3];
-
 			if( (pen_usage & fg_transmask)==0 ){ /* foreground totally opaque */
 				tilemap->foreground->data_row[row][col] = TILE_OPAQUE;
 				tilemap->background->data_row[row][col] = TILE_TRANSPARENT;

@@ -234,6 +234,8 @@ static struct CPS1config cps1_config_table[]=
 	{0,	    0x00,0x0000, 0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00, 0,0,0,      0,0x0000,0x0000,0x0000,0x0000}
 };
 
+static int cps_version;
+
 static void cps1_init_machine(void)
 {
 	const char *gamename = Machine->gamedrv->name;
@@ -267,7 +269,17 @@ static void cps1_init_machine(void)
 #endif
 }
 
+void init_cps2(void)
+{
+	unsigned char *rom = (unsigned char *)memory_region(REGION_CPU1);
+	unsigned char *xxor = (unsigned char *)memory_region(REGION_USER1);
+	int i;
 
+	for (i = 0;i < memory_region_length(REGION_CPU1);i++)
+		xxor[i] = rom[i] ^ xxor[i];
+
+	memory_set_opcode_base(0,xxor);
+}
 
 INLINE int cps1_port(int offset)
 {
@@ -419,6 +431,30 @@ static int *cps1_tile32_pen_usage;      /* pen usage array */
 static int cps1_max_char;	       /* Maximum number of 8x8 chars */
 static int cps1_max_tile16;	     /* Maximum number of 16x16 tiles */
 static int cps1_max_tile32;	     /* Maximum number of 32x32 tiles */
+
+/* PSL: CPS2 support */
+const int cps2_obj_size    =0x2000;
+data16_t *cps2_objram1,*cps2_objram2;
+data16_t *cps2_output;
+
+size_t cps2_output_size;
+static data16_t *cps2_buffered_obj;
+static int pri_ctrl;				/* Sprite layer priorities */
+static int cps2_objram_bank;
+static int cps2_objram_bank_lagged;
+static int cps2_last_sprite_offset;     /* Offset of the last sprite */
+
+#define CPS2_OBJ_BASE	0x00	/* Unknown (not base address of objects). Could be bass address of bank used when object swap bit set? */
+#define CPS2_OBJ_UK1	0x02	/* Unknown (nearly always 0x807d) */
+#define CPS2_OBJ_PRI	0x04	/* Layers priorities */
+#define CPS2_OBJ_UK2	0x06	/* Unknown (usually 0x0000, 0x1101 in ssf2, 0x0001 in 19XX) */
+#define CPS2_OBJ_XOFFS	0x08	/* X offset (usually 0x0040) */
+#define CPS2_OBJ_UK4	0x0a	/* Unknown (always 0x0010)  */
+
+INLINE int cps2_port(int offset)
+{
+    return cps2_output[offset/2];
+}
 
 int cps1_gfx_start(void)
 {
@@ -926,6 +962,412 @@ INLINE void cps1_get_video_base(void )
 	cps1_layer_enabled[3]=layercontrol & cps1_game_config->scrl3_enable_mask;
 }
 
+//ks s
+/***************************************************************************
+
+  cps2 sprite handler											by Shiriru
+
+***************************************************************************/
+static int orientation, screen_width, screen_height;
+
+static struct {
+	int clip_left, clip_right, clip_top, clip_bottom;
+	unsigned char *baseaddr;
+	int line_offset;
+} blit;
+
+static UINT16 *sprite_zbuf;
+static int sprite_zbuf_size;
+static int sprite_zbuf_baseval = 0;
+static int num_sprites;
+
+#define SPRITE_TILE_WIDTH 16
+#define SPRITE_TILE_HEIGHT 16
+#define SWAP(X,Y) { int temp = X; X = Y; Y = temp; }
+
+static int cps2_sprite_init(void)
+{
+	struct osd_bitmap *bitmap = Machine->scrbitmap;
+	const struct rectangle *clip = &Machine->visible_area;
+	int left, top, right, bottom;
+
+	orientation = Machine->orientation;
+	screen_width = Machine->scrbitmap->width;
+	screen_height = Machine->scrbitmap->height;
+
+	blit.baseaddr = bitmap->line[0];
+	blit.line_offset = bitmap->line[1]-bitmap->line[0];
+
+	left = clip->min_x;
+	top = clip->min_y;
+	right = clip->max_x+1;
+	bottom = clip->max_y+1;
+	if( orientation & ORIENTATION_SWAP_XY ){
+		SWAP(left,top)
+		SWAP(right,bottom)
+	}
+	if( orientation & ORIENTATION_FLIP_X ){
+		SWAP(left,right)
+		left = screen_width-left;
+		right = screen_width-right;
+	}
+	if( orientation & ORIENTATION_FLIP_Y ){
+		SWAP(top,bottom)
+		top = screen_height-top;
+		bottom = screen_height-bottom;
+	}
+	blit.clip_left = left;
+	blit.clip_top = top;
+	blit.clip_right = right;
+	blit.clip_bottom = bottom;
+
+	sprite_zbuf_size = Machine->drv->screen_width * Machine->drv->screen_height * 2;
+	if(!(sprite_zbuf = malloc(sprite_zbuf_size))) return 1;
+
+	num_sprites = cps2_obj_size/8;
+
+	return 0;
+}
+
+/*****************************************************/
+static void do_blit_16_cps2_zb(const unsigned char *pen_data,const UINT32 *pal_data,int flipx,int flipy,int sx,int sy, int pri_sp)
+{
+	int x1,x2, y1,y2, dx,dy;
+	int xcount0 = 0, ycount0 = 0;
+
+	if( flipx ){
+		x2 = sx;
+		x1 = x2+SPRITE_TILE_WIDTH;
+		dx = -1;
+		if( x2<blit.clip_left ) x2 = blit.clip_left;
+		if( x1>blit.clip_right ){
+			xcount0 = x1-blit.clip_right;
+			x1 = blit.clip_right;
+		}
+		if( x2>=x1 ) return;
+		x1--; x2--;
+	}
+	else {
+		x1 = sx;
+		x2 = x1+SPRITE_TILE_WIDTH;
+		dx = 1;
+		if( x1<blit.clip_left ){
+			xcount0 = blit.clip_left-x1;
+			x1 = blit.clip_left;
+		}
+		if( x2>blit.clip_right ) x2 = blit.clip_right;
+		if( x1>=x2 ) return;
+	}
+	if( flipy ){
+		y2 = sy;
+		y1 = y2+SPRITE_TILE_HEIGHT;
+		dy = -1;
+		if( y2<blit.clip_top ) y2 = blit.clip_top;
+		if( y1>blit.clip_bottom ){
+			ycount0 = y1-blit.clip_bottom;
+			y1 = blit.clip_bottom;
+		}
+		if( y2>=y1 ) return;
+		y1--; y2--;
+	}
+	else {
+		y1 = sy;
+		y2 = y1+SPRITE_TILE_HEIGHT;
+		dy = 1;
+		if( y1<blit.clip_top ){
+			ycount0 = blit.clip_top-y1;
+			y1 = blit.clip_top;
+		}
+		if( y2>blit.clip_bottom ) y2 = blit.clip_bottom;
+		if( y1>=y2 ) return;
+	}
+
+	{
+		int x,y;
+		unsigned char pen;
+		int pitch = blit.line_offset*dy/2;
+		UINT16 *dest = (UINT16 *)(blit.baseaddr + blit.line_offset*y1);
+		int pitchz = (blit.clip_right-blit.clip_left)*dy;
+		UINT16 *zbf = (UINT16 *)((unsigned char *)sprite_zbuf + (blit.clip_right-blit.clip_left)*y1*2);
+
+		if( orientation & ORIENTATION_SWAP_XY ){ /* manually rotate the sprite graphics */
+			int pen_data_off0=SPRITE_TILE_WIDTH*xcount0+ycount0;
+			for( x=x1; x!=x2; x+=dx ){
+				UINT16 *dest1;
+				UINT16 *zbf1;
+				int pen_data_off1=pen_data_off0;
+				dest1 = &dest[x];
+				zbf1 = &zbf[x];
+				for( y=y1; y!=y2; y+=dy ){
+					pen = ((*(pen_data+(pen_data_off1>>1))) >> ((pen_data_off1&1)*4)) & 0xf;
+					if (pen!=15 && (*zbf1<=pri_sp))
+					{
+						*dest1 = pal_data[pen];
+						*zbf1 = pri_sp;
+					}
+					pen_data_off1++;
+					dest1 += pitch;
+					zbf1 += pitchz;
+				}
+				pen_data_off0 += SPRITE_TILE_WIDTH;
+			}
+		}
+		else {
+			int pen_data_off0=SPRITE_TILE_WIDTH*ycount0+xcount0;
+			for( y=y1; y!=y2; y+=dy ){
+				int pen_data_off1=pen_data_off0;
+				for( x=x1; x!=x2; x+=dx ){
+					pen = ((*(pen_data+(pen_data_off1>>1))) >> ((pen_data_off1&1)*4)) & 0xf;
+					if ( pen!=15 && (zbf[x]<=pri_sp))
+					{
+						dest[x] = pal_data[pen];
+						zbf[x] = pri_sp;
+					}
+					pen_data_off1++;
+				}
+				pen_data_off0 += SPRITE_TILE_WIDTH;
+				dest += pitch;
+				zbf += pitchz;
+			}
+		}
+	}
+}
+
+
+
+static void do_blit_8_cps2_zb(const unsigned char *pen_data,const UINT32 *pal_data,int flipx,int flipy,int sx,int sy, int pri_sp)
+{
+	int x1,x2, y1,y2, dx,dy;
+	int xcount0 = 0, ycount0 = 0;
+
+	if( flipx ){
+		x2 = sx;
+		x1 = x2+SPRITE_TILE_WIDTH;
+		dx = -1;
+		if( x2<blit.clip_left ) x2 = blit.clip_left;
+		if( x1>blit.clip_right ){
+			xcount0 = x1-blit.clip_right;
+			x1 = blit.clip_right;
+		}
+		if( x2>=x1 ) return;
+		x1--; x2--;
+	}
+	else {
+		x1 = sx;
+		x2 = x1+SPRITE_TILE_WIDTH;
+		dx = 1;
+		if( x1<blit.clip_left ){
+			xcount0 = blit.clip_left-x1;
+			x1 = blit.clip_left;
+		}
+		if( x2>blit.clip_right ) x2 = blit.clip_right;
+		if( x1>=x2 ) return;
+	}
+	if( flipy ){
+		y2 = sy;
+		y1 = y2+SPRITE_TILE_HEIGHT;
+		dy = -1;
+		if( y2<blit.clip_top ) y2 = blit.clip_top;
+		if( y1>blit.clip_bottom ){
+			ycount0 = y1-blit.clip_bottom;
+			y1 = blit.clip_bottom;
+		}
+		if( y2>=y1 ) return;
+		y1--; y2--;
+	}
+	else {
+		y1 = sy;
+		y2 = y1+SPRITE_TILE_HEIGHT;
+		dy = 1;
+		if( y1<blit.clip_top ){
+			ycount0 = blit.clip_top-y1;
+			y1 = blit.clip_top;
+		}
+		if( y2>blit.clip_bottom ) y2 = blit.clip_bottom;
+		if( y1>=y2 ) return;
+	}
+
+	{
+		int x,y;
+		unsigned char pen;
+		int pitch = blit.line_offset*dy;
+		UINT8 *dest = blit.baseaddr + blit.line_offset*y1;
+		int pitchz = (blit.clip_right-blit.clip_left)*dy;
+		UINT16 *zbf = (UINT16 *)((unsigned char *)sprite_zbuf + (blit.clip_right-blit.clip_left)*y1*2);
+
+		if( orientation & ORIENTATION_SWAP_XY ){ /* manually rotate the sprite graphics */
+			int pen_data_off0=SPRITE_TILE_WIDTH*xcount0+ycount0;
+			for( x=x1; x!=x2; x+=dx ){
+				UINT8 *dest1;
+				UINT16 *zbf1;
+				int pen_data_off1=pen_data_off0;
+				dest1 = &dest[x];
+				zbf1 = &zbf[x];
+				for( y=y1; y!=y2; y+=dy ){
+					pen = ((*(pen_data+(pen_data_off1>>1))) >> ((pen_data_off1&1)*4)) & 0xf;
+					if (pen!=15 && (*zbf1<=pri_sp))
+					{
+						*dest1 = pal_data[pen];
+						*zbf1 = pri_sp;
+					}
+					pen_data_off1++;
+					dest1 += pitch;
+					zbf1 += pitchz;
+				}
+				pen_data_off0 += SPRITE_TILE_WIDTH;
+			}
+		}
+		else {
+			int pen_data_off0=SPRITE_TILE_WIDTH*ycount0+xcount0;
+			for( y=y1; y!=y2; y+=dy ){
+				int pen_data_off1=pen_data_off0;
+				for( x=x1; x!=x2; x+=dx ){
+					pen = ((*(pen_data+(pen_data_off1>>1))) >> ((pen_data_off1&1)*4)) & 0xf;
+					if ( pen!=15 && (zbf[x]<=pri_sp))
+					{
+						dest[x] = pal_data[pen];
+						zbf[x] = pri_sp;
+					}
+					pen_data_off1++;
+				}
+				pen_data_off0 += SPRITE_TILE_WIDTH;
+				dest += pitch;
+				zbf += pitchz;
+			}
+		}
+	}
+}
+
+static void do_blit_zb(const unsigned char *pen_data,int flipx,int flipy,int sx,int sy, int pri_sp)
+{
+	int x1,x2, y1,y2, dx,dy;
+	int xcount0 = 0, ycount0 = 0;
+
+	if( flipx ){
+		x2 = sx;
+		x1 = x2+SPRITE_TILE_WIDTH;
+		dx = -1;
+		if( x2<blit.clip_left ) x2 = blit.clip_left;
+		if( x1>blit.clip_right ){
+			xcount0 = x1-blit.clip_right;
+			x1 = blit.clip_right;
+		}
+		if( x2>=x1 ) return;
+		x1--; x2--;
+	}
+	else {
+		x1 = sx;
+		x2 = x1+SPRITE_TILE_WIDTH;
+		dx = 1;
+		if( x1<blit.clip_left ){
+			xcount0 = blit.clip_left-x1;
+			x1 = blit.clip_left;
+		}
+		if( x2>blit.clip_right ) x2 = blit.clip_right;
+		if( x1>=x2 ) return;
+	}
+	if( flipy ){
+		y2 = sy;
+		y1 = y2+SPRITE_TILE_HEIGHT;
+		dy = -1;
+		if( y2<blit.clip_top ) y2 = blit.clip_top;
+		if( y1>blit.clip_bottom ){
+			ycount0 = y1-blit.clip_bottom;
+			y1 = blit.clip_bottom;
+		}
+		if( y2>=y1 ) return;
+		y1--; y2--;
+	}
+	else {
+		y1 = sy;
+		y2 = y1+SPRITE_TILE_HEIGHT;
+		dy = 1;
+		if( y1<blit.clip_top ){
+			ycount0 = blit.clip_top-y1;
+			y1 = blit.clip_top;
+		}
+		if( y2>blit.clip_bottom ) y2 = blit.clip_bottom;
+		if( y1>=y2 ) return;
+	}
+
+	{
+		int x,y;
+		unsigned char pen;
+		int pitchz = (blit.clip_right-blit.clip_left)*dy;
+		UINT16 *zbf = (UINT16 *)((unsigned char *)sprite_zbuf + (blit.clip_right-blit.clip_left)*y1*2);
+
+		if( orientation & ORIENTATION_SWAP_XY ){ /* manually rotate the sprite graphics */
+			int pen_data_off0=SPRITE_TILE_WIDTH*xcount0+ycount0;
+			for( x=x1; x!=x2; x+=dx ){
+				UINT16 *zbf1;
+				int pen_data_off1=pen_data_off0;
+				zbf1 = &zbf[x];
+				for( y=y1; y!=y2; y+=dy ){
+					pen = ((*(pen_data+(pen_data_off1>>1))) >> ((pen_data_off1&1)*4)) & 0xf;
+					if (pen!=15 && (*zbf1<=pri_sp))
+					{
+						*zbf1 = pri_sp;
+					}
+					pen_data_off1++;
+					zbf1 += pitchz;
+				}
+				pen_data_off0 += SPRITE_TILE_WIDTH;
+			}
+		}
+		else {
+			int pen_data_off0=SPRITE_TILE_WIDTH*ycount0+xcount0;
+			for( y=y1; y!=y2; y+=dy ){
+				int pen_data_off1=pen_data_off0;
+				for( x=x1; x!=x2; x+=dx ){
+					pen = ((*(pen_data+(pen_data_off1>>1))) >> ((pen_data_off1&1)*4)) & 0xf;
+					if ( pen!=15 && (zbf[x]<=pri_sp))
+					{
+						zbf[x] = pri_sp;
+					}
+					pen_data_off1++;
+				}
+				pen_data_off0 += SPRITE_TILE_WIDTH;
+				zbf += pitchz;
+			}
+		}
+	}
+}
+
+
+/*****************************************************/
+void cps2_drawsprite(const struct GfxElement *gfx, unsigned int code,unsigned int color,int flipx,int flipy,int sx,int sy, int pri_sp,int flag)
+{
+	if( orientation & ORIENTATION_SWAP_XY ){
+		SWAP(sx, sy)
+		SWAP(flipx, flipy)
+	}
+	if( orientation & ORIENTATION_FLIP_X ){
+		sx = screen_width - (sx+SPRITE_TILE_WIDTH);
+		flipx = !flipx;
+	}
+	if( orientation & ORIENTATION_FLIP_Y ){
+		sy = screen_height - (sy+SPRITE_TILE_HEIGHT);
+		flipy = !flipy;
+	}
+
+	if (flag)
+	{
+		if (Machine->scrbitmap->depth == 8)
+			do_blit_8_cps2_zb(gfx->gfxdata + code * gfx->char_modulo,
+								(const UINT32 *) &gfx->colortable[gfx->color_granularity * color],
+								flipx, flipy, sx, sy, pri_sp);
+		else
+			do_blit_16_cps2_zb(gfx->gfxdata + code * gfx->char_modulo,
+								(const UINT32 *) &gfx->colortable[gfx->color_granularity * color],
+								flipx, flipy, sx, sy, pri_sp);
+	}
+	else
+	{
+		do_blit_zb(gfx->gfxdata + code * gfx->char_modulo,
+					flipx, flipy, sx, sy, pri_sp);
+	}
+}
+//ks e
 
 /***************************************************************************
 
@@ -975,9 +1417,24 @@ int cps1_vh_start(void)
 	}
 	memset(cps1_buffered_obj, 0x00, cps1_obj_size);
 
+    if (cps_version==2) {
+		cps2_buffered_obj = malloc (2*cps2_obj_size);
+		if (!cps2_buffered_obj)
+		{
+			return -1;
+		}
+		memset(cps2_buffered_obj, 0x00, 2*cps2_obj_size);
+    }
+
 	memset(cps1_gfxram, 0, cps1_gfxram_size);   /* Clear GFX RAM */
 	memset(cps1_output, 0, cps1_output_size);   /* Clear output ports */
 
+	if (cps_version == 2)
+	{
+		memset(cps2_objram1, 0, cps2_obj_size);
+		memset(cps2_objram2, 0, cps2_obj_size);
+	}
+	
 	/* Put in some defaults */
 	WRITE_WORD(&cps1_output[0x00], 0x9200);
 	WRITE_WORD(&cps1_output[0x02], 0x9000);
@@ -1002,7 +1459,23 @@ int cps1_vh_start(void)
 	{
 		cps1_transparency_scroll[i]=0x0000;
 	}
+	
 	return 0;
+}
+
+int cps2_vh_start(void)
+{
+    //if (cps_version != 99)
+    {
+        cps_version=2;
+    }
+//ks s
+	if (cps2_sprite_init())
+	{
+		return -1;
+	}
+//ks e
+    return cps1_vh_start();
 }
 
 /***************************************************************************
@@ -1020,6 +1493,8 @@ void cps1_vh_stop(void)
 		free(cps1_scroll2_old);
 	if (cps1_buffered_obj)
 		free(cps1_buffered_obj);
+    if (cps2_buffered_obj)
+        free(cps2_buffered_obj);
 	cps1_gfx_stop();
 }
 
@@ -1479,6 +1954,220 @@ void cps1_render_sprites(struct osd_bitmap *bitmap)
 }
 
 
+WRITE_HANDLER( cps2_objram_bank_w )
+{
+	if (ACCESSING_LSB)
+	{
+		cps2_objram_bank = data & 1;
+	}
+}
+
+READ_HANDLER( cps2_objram1_r )
+{
+	if (cps2_objram_bank & 1)
+		return cps2_objram2[offset];
+	else
+		return cps2_objram1[offset];
+}
+
+READ_HANDLER( cps2_objram2_r )
+{
+	if (cps2_objram_bank & 1)
+		return cps2_objram1[offset];
+	else
+		return cps2_objram2[offset];
+}
+
+WRITE_HANDLER( cps2_objram1_w )
+{
+	if (cps2_objram_bank & 1)
+		COMBINE_DATA(&cps2_objram2[offset]);
+	else
+		COMBINE_DATA(&cps2_objram1[offset]);
+}
+
+WRITE_HANDLER( cps2_objram2_w )
+{
+	if (cps2_objram_bank & 1)
+		COMBINE_DATA(&cps2_objram1[offset]);
+	else
+		COMBINE_DATA(&cps2_objram2[offset]);
+}
+
+static data16_t *cps2_objbase(void)
+{
+	int baseptr;
+	baseptr = 0x7000;
+
+	if (cps2_objram_bank_lagged & 1) baseptr ^= 0x0080;
+
+//usrintf_showmessage("%04x %d",cps2_port(CPS2_OBJ_BASE),cps2_objram_bank&1);
+
+	if (baseptr == 0x7000)
+		return cps2_buffered_obj;
+	else //if (baseptr == 0x7080)
+		return cps2_buffered_obj+cps2_obj_size/2;
+}
+
+
+void cps2_find_last_sprite(void)    /* Find the offset of last sprite */
+{
+	int offset=0;
+	data16_t *base=cps2_objbase();
+	/* Locate the end of table marker */
+	while (offset < cps2_obj_size/2)
+	{
+		if (base[offset+1]>=0x8000
+				|| base[offset+3]>=0xff00)
+		{
+			/* Marker found. This is the last sprite. */
+			cps2_last_sprite_offset=offset-4;
+			return;
+		}
+		offset+=4;
+	}
+	/* Sprites must use full sprite RAM */
+	cps2_last_sprite_offset=cps2_obj_size/2-4;
+}
+
+void cps2_render_sprites(struct osd_bitmap *bitmap,int minpri,int maxpri,int flag)		//ks
+{
+	int i;
+	data16_t *base=cps2_objbase();
+	int xoffs = 0x20-cps2_port(CPS2_OBJ_XOFFS);
+
+	if (minpri > maxpri) return;
+
+	for (i=0; i<=cps2_last_sprite_offset; i+=4)
+	{
+		int x=*(base+0);
+		int y=*(base+1);
+		int priority=(x>>13)&0x07;
+		int pri_sp=i/4+sprite_zbuf_baseval;			//ks
+
+		if (priority >= minpri && priority <= maxpri)
+		{
+			int code  =*(base+2)+((y & 0x6000) <<3);
+			int colour=*(base+3);
+			int col=colour&0x1f;
+
+			y+=0x20;
+
+			if (colour & 0xff00 )
+			{
+				/* handle blocked sprites */
+				int nx=(colour & 0x0f00) >> 8;
+				int ny=(colour & 0xf000) >> 12;
+				int nxs,nys,sx,sy;
+				nx++;
+				ny++;
+
+				if (colour & 0x40)
+				{
+					/* Y flip */
+					if (colour &0x20)
+					{
+						for (nys=0; nys<ny; nys++)
+						{
+							for (nxs=0; nxs<nx; nxs++)
+							{
+								sx = (x+nxs*16+xoffs) & 0x3ff;
+								sy = (y+nys*16) & 0x3ff;
+//ks s
+								cps2_drawsprite(Machine->gfx[1],
+										code+(nx-1)-nxs+0x10*(ny-1-nys),
+										(col&0x1f),
+										1,1,
+										sx,sy,
+										pri_sp,flag);
+//ks e
+							}
+						}
+					}
+					else
+					{
+						for (nys=0; nys<ny; nys++)
+						{
+							for (nxs=0; nxs<nx; nxs++)
+							{
+								sx = (x+nxs*16+xoffs) & 0x3ff;
+								sy = (y+nys*16) & 0x3ff;
+
+//ks s
+								cps2_drawsprite(Machine->gfx[1],
+										code+nxs+0x10*(ny-1-nys),
+										(col&0x1f),
+										0,1,
+										sx,sy,
+										pri_sp,flag);
+//ks e
+							}
+						}
+					}
+				}
+				else
+				{
+					if (colour &0x20)
+					{
+						for (nys=0; nys<ny; nys++)
+						{
+							for (nxs=0; nxs<nx; nxs++)
+							{
+								sx = (x+nxs*16+xoffs) & 0x3ff;
+								sy = (y+nys*16) & 0x3ff;
+
+//ks s
+								cps2_drawsprite(Machine->gfx[1],
+										code+(nx-1)-nxs+0x10*nys,
+										(col&0x1f),
+										1,0,
+										sx,sy,
+										pri_sp,flag);
+//ks e
+							}
+						}
+					}
+					else
+					{
+						for (nys=0; nys<ny; nys++)
+						{
+							for (nxs=0; nxs<nx; nxs++)
+							{
+								sx = (x+nxs*16+xoffs) & 0x3ff;
+								sy = (y+nys*16) & 0x3ff;
+
+//ks s
+								cps2_drawsprite(Machine->gfx[1],
+//										code+nxs+0x10*nys,
+										(code & ~0xf) + ((code + nxs) & 0xf) + 0x10*nys,	//	pgear fix
+										(col&0x1f),
+										0,0,
+										sx,sy,
+										pri_sp,flag);
+//ks e
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				/* Simple case... 1 sprite */
+//ks s
+				cps2_drawsprite(Machine->gfx[1],
+						code,
+						(col&0x1f),
+						colour&0x20,colour&0x40,
+						(x+xoffs) & 0x3ff,y & 0x3ff,
+						pri_sp,flag);
+//ks e
+			}
+		}
+		base += 4;
+	}
+	return;
+}
+
 
 /***************************************************************************
 
@@ -1864,13 +2553,21 @@ void cps1_vh_screenrefresh(struct osd_bitmap *bitmap,int full_refresh)
 
 	/* Find the offset of the last sprite in the sprite table */
 	cps1_find_last_sprite();
-
+    if (cps_version == 2)
+    {
+        cps2_find_last_sprite();
+    }
+	
 	/* Build palette */
 	cps1_build_palette();
 
 	/* Compute the used portion of the palette */
 	memset (palette_usage, 0, sizeof (palette_usage));
 	cps1_palette_sprites (&palette_usage[cps1_obj_palette]);
+    /*if (cps_version == 2)
+    {
+        cps1_palette_sprites (&palette_usage[palette_basecolor[0]], cps2_objbase(), cps2_last_sprite_offset);
+    }*/
 	if (cps1_layer_enabled[1])
 		cps1_palette_scroll1 (&palette_usage[cps1_scroll1_palette]);
 	if (cps1_layer_enabled[2])
@@ -1921,16 +2618,54 @@ void cps1_vh_screenrefresh(struct osd_bitmap *bitmap,int full_refresh)
 	l2 = (layercontrol >> 0x0a) & 03;
 	l3 = (layercontrol >> 0x0c) & 03;
 
-	fillbitmap(priority_bitmap,0,NULL);
+	if (cps_version != 2)
+	{
+		fillbitmap(priority_bitmap,0,NULL);
 
-	cps1_render_layer(bitmap,l0,distort_scroll2);
-	if (l1 == 0) cps1_render_high_layer(bitmap,l0);	/* prepare mask for sprites */
-	cps1_render_layer(bitmap,l1,distort_scroll2);
-	if (l2 == 0) cps1_render_high_layer(bitmap,l1);	/* prepare mask for sprites */
-	cps1_render_layer(bitmap,l2,distort_scroll2);
-	if (l3 == 0) cps1_render_high_layer(bitmap,l2);	/* prepare mask for sprites */
-	cps1_render_layer(bitmap,l3,distort_scroll2);
+		cps1_render_layer(bitmap,l0,distort_scroll2);
+		if (l1 == 0) cps1_render_high_layer(bitmap,l0);	/* prepare mask for sprites */
+		cps1_render_layer(bitmap,l1,distort_scroll2);
+		if (l2 == 0) cps1_render_high_layer(bitmap,l1);	/* prepare mask for sprites */
+		cps1_render_layer(bitmap,l2,distort_scroll2);
+		if (l3 == 0) cps1_render_high_layer(bitmap,l2);	/* prepare mask for sprites */
+		cps1_render_layer(bitmap,l3,distort_scroll2);
+	}
+	else
+	{
+		int l0pri,l1pri,l2pri,l3pri;
+		l0pri = (pri_ctrl >> 4*l0) & 0x0f;
+		l1pri = (pri_ctrl >> 4*l1) & 0x0f;
+		l2pri = (pri_ctrl >> 4*l2) & 0x0f;
+		l3pri = (pri_ctrl >> 4*l3) & 0x0f;
 
+		/* take out the CPS1 sprites layer */
+		if (l0 == 0) { l0 = l1; l1 = 0; l0pri = l1pri; }
+		if (l1 == 0) { l1 = l2; l2 = 0; l1pri = l2pri; }
+		if (l2 == 0) { l2 = l3; l3 = 0; l2pri = l3pri; }
+
+//		if (l1pri < l0pri) usrintf_showmessage("l1pri < l0pri!");
+//		if (l2pri < l1pri) usrintf_showmessage("l2pri < l1pri!");
+
+//ks s
+		profiler_mark(PROFILER_USER1);
+		sprite_zbuf_baseval += num_sprites;
+		if(sprite_zbuf_baseval & 0xffff0000)
+		{
+			sprite_zbuf_baseval = 0;
+			memset( sprite_zbuf, 0x00, sprite_zbuf_size );
+		}
+
+		cps2_render_sprites(bitmap,0,0,0);
+		cps2_render_sprites(bitmap,1,l0pri,1);
+		cps1_render_layer(bitmap,l0,distort_scroll2);
+		cps2_render_sprites(bitmap,l0pri+1,l1pri,1);
+		cps1_render_layer(bitmap,l1,distort_scroll2);
+		cps2_render_sprites(bitmap,l1pri+1,l2pri,1);
+		cps1_render_layer(bitmap,l2,distort_scroll2);
+		cps2_render_sprites(bitmap,l2pri+1,7,1);
+		profiler_mark(PROFILER_END);
+//ks e
+	}
 #if CPS1_DUMP_VIDEO
 	if (keyboard_pressed(KEYCODE_F))
 	{
@@ -1947,10 +2682,19 @@ void cps1_eof_callback(void)
 	/* Mish: 181099: Buffer sprites for next frame - the hardware must do
 		this at the end of vblank */
 	memcpy(cps1_buffered_obj,cps1_obj,cps1_obj_size);
+
+	if (cps_version == 2)
+	{
+		memcpy(cps2_buffered_obj,                cps2_objram1,cps2_obj_size);
+		memcpy(cps2_buffered_obj+cps2_obj_size/2,cps2_objram2,cps2_obj_size);
+
+		pri_ctrl = cps2_port(CPS2_OBJ_PRI); 		/* delay sprite priorities also */
+		cps2_objram_bank_lagged = cps2_objram_bank; 	/* delay object bank by 1 frame */
+	}
 }
 
 
-#include "cps2.cpp"
+//#include "cps2.cpp"
 
 
 
