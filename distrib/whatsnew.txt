@@ -1,4 +1,4 @@
-MAME4ALL GCW0 1.2 (01/01/2014)
+MAME4ALL GCW0 1.2 (04/01/2014)
 ------------------------------
 	Added: little hero in m62.cpp driver (from Mame095).
 	Added: Snapshot key with L+B.
