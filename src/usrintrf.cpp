@@ -17,6 +17,8 @@
   #include "mess/mess.h"
 #endif
 
+#define HISTFILE_TXT_BUFFER_LEN 24576
+
 extern int mame_debug;
 
 extern int bitmap_dirty;	/* set by osd_clearbitmap() */
@@ -2547,11 +2549,11 @@ static int displayhistory (struct osd_bitmap *bitmap, int selected)
 	if (!buf)
 	{
 		/* allocate a buffer for the text */
-		buf = (char*) malloc(8192);
+		buf = (char*) malloc(HISTFILE_TXT_BUFFER_LEN);
 		if (buf)
 		{
 			/* try to load entry */
-			if (load_driver_history (Machine->gamedrv, buf, 8192) == 0)
+			if (load_driver_history (Machine->gamedrv, buf, HISTFILE_TXT_BUFFER_LEN) == 0)
 			{
 				scroll = 0;
 				wordwrap_text_buffer (buf, maxcols);
