@@ -25,12 +25,12 @@ The emulator controls are the next ones:
   - Button SELECT: Insert credit.
   - Button START: Start game.
 * Extended controls in game (to access menus and options)
-All use the SELECT button + an additional button.
-  - Buttons SELECT+L: Show profiler.
-  - Buttons SELECT+R: Show FPS.     
-  - Buttons SELECT+Y: Pause.
-  - Buttons SELECT+X: Enter/Exit Volume menu.
-  - Buttons SELECT+B: Enter/Exit MAME menu
+  - Buttons START+SELECT : Mame menu.
+  - Buttons START+L+R: Esc (exit to mame frontend).
+  - Buttons L+R: Pause.     
+  - Buttons SELECT+R: Show FPS.
+  - Buttons START+L: Show profiler.
+  - Buttons L+B: Snapshot.
 
 * The Game Selector will search for MAME ROMs found in the roms directory. 
   - Use UP and DOWN to select a game.
@@ -99,6 +99,8 @@ Additionaly there are additional romsets from newer MAME versions.
 See "gameromlist.txt" for correct rom files into ZIP files.
 NOTE: File and directory names in Linux are case-sensitive. Put all file and 
 directory names using low case!.
+Also, neogeo games needs a bios file named neogeo.zip with files :
+ neo-geo.rom (crc=0x9036d879), ng-sfix.rom (crc=0x354029fc), ng-sm1.rom (crc=0x97cf998b).
 
 
 7. SOUND SAMPLES
@@ -178,6 +180,8 @@ The artwork collection is now included.
 
 11. DEVELOPMENT
 ---------------
+January 01,2014 :
+- Version 1.2 for GCW0 only, bug-fixes.
 December 25,2013 :
 - Version 1.1 for GCW0 only, optimizations, games added and bug-fixes.
 October 23, 2012 :
