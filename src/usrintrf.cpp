@@ -3441,7 +3441,7 @@ if (Machine->gamedrv->flags & GAME_COMPUTER)
 	/* if the user pressed F12, save the screen to a file */
 	if (input_ui_pressed(IPT_UI_SNAPSHOT))
 		osd_save_snapshot(bitmap);
-
+	
 	/* This call is for the cheat, it must be called once a frame */
 	if (options.cheat) DoCheat(bitmap);
 

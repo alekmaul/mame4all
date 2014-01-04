@@ -788,7 +788,7 @@ void name(int pc)																		\
 				cpu_getactivecpu(),cpu_get_pc());										\
 }
 
-
+ 
 /* the handlers we need to generate */
 SETOPBASE(cpu_setOPbase16,	  16,	 0)
 SETOPBASE(cpu_setOPbase16bew, 16BEW, 0)

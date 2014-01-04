@@ -46,6 +46,10 @@ void fame_set_irq_callback(int (*callback)(int irqline));
 const char *fame_info(void *context, int regnum);
 unsigned fame_dasm(char *buffer, unsigned pc);
 
+#ifdef FAME_CHANGE_PC
+void fame_change_pc(unsigned pc);
+#endif
+
 #ifdef __cplusplus
 }
 #endif

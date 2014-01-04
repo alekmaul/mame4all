@@ -164,6 +164,9 @@ static void updatekeyboard(void)
     key[KEY_F11]=(((ExKey1 & OD_L) && (ExKey1 & OD_START)) || ((ExKey1 & OD_R) && (ExKey1 & OD_SELECT)));
 	/* Profiler */
     key[KEY_LSHIFT]=((ExKey1 & OD_L) && (ExKey1 & OD_START));
+
+	/* Snapshot*/
+	key[KEY_F12]=((ExKey1 & OD_L) && (ExKey1 & OD_B));
 }
 
 int osd_is_key_pressed(int keycode)

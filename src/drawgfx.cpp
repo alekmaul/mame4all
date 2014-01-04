@@ -768,7 +768,7 @@ void copyscrollbitmap_remap(struct osd_bitmap *dest,struct osd_bitmap *src,
 		orig_clip.max_y = dest->height-1;
 	}
 	clip = &orig_clip;
-  */
+	*/
 	if (rows == 0 && cols == 0)
 	{
 		copybitmap(dest,src,0,0,0,0,clip,transparency,transparent_color);

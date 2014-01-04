@@ -4,10 +4,53 @@
 
 Irem "M62" system
 
-There's two crystals on Kid Kiki. 24.00 MHz and 3.579545 MHz for sound
-
 TODO:
-- Kid Niki is missing the drums
+- Kid Niki and Horizon are missing the drums. There is an analog section in
+  the sound board.
+
+Notes:
+- I believe that both kungfum bootlegs are derived from an Irem original which we
+  don't have (prototype/early revision?). They say "kanfu master" instead of
+  "kung-fu master" on the introduction screen, the only original doing that is
+  spartanx but the ROMs don't match after the copyright notice.
+
+
+
+The following information is gathered from Kung Fu Master; the board was most
+likely modified for other games (or, not all the games in this driver are
+really M62).
+
+The M62 board can be set up for different configurations through the use of
+jumpers.
+
+A board:
+J1: \
+J2: / ROM or RAM at 0x4000
+J3: sound prg ROM size, 2764 or 27128
+J4: send output C of the secondy AY-3-8910 to SOUND IO instead of SOUND. Is
+    this to have it amplified more?
+J5: enable a tristate on accesses to the range a000-bfff (must not be done
+    when there is ROM at this address)
+J6:
+J7: main prg ROM type, 2764 or 27128
+
+B board:
+J1: selects whether bit 4 of obj color code selects or not high priority over tiles
+J2: selects whether bit 4 of obj color code goes to A7 of obj color PROMS
+J3: I'm not sure about this. It involves A8 of sprite ram.
+J4: pixels per scanline, 256 or 384. There's also a PROM @ 6F that controls
+    video timing and how long a scanline is.
+J5: output Horizontal Sync or Composite Sync
+J6: ??? where is this ???
+J7: \ main xtal, 18.432 MHz (for low resolution games?) or
+J8: / 24 MHz (for mid resolution games?)
+J9: obj ROM type, 2764 or 27128
+
+G board:
+JP1: \
+JP2: | Tiles with color code >= the value set here have priority over sprites
+JP3: |
+JP4: /
 
 **************************************************************************/
 
@@ -1810,6 +1853,49 @@ ROM_START( yanchamr )
 	ROM_LOAD( "dr33.6f",      0x0820, 0x0100, 0x34d88d3c )	/* video timing? - common to the other games */
 ROM_END
 
+ROM_START( lithero )
+	ROM_REGION( 0x30000, REGION_CPU1 )	/* main CPU */
+	ROM_LOAD( "4.bin",        0x00000, 0x08000, 0x80903766 )
+	ROM_LOAD( "11.bin",       0x10000, 0x08000, 0x7a1ef8cb ) /* banked at 8000-9fff */
+	ROM_LOAD( "12.bin",       0x18000, 0x08000, 0xa929110b )
+/*	ROM_CONTINUE(             0x28000, 0x08000 ) */
+
+	ROM_REGION( 0x10000, REGION_CPU2 )	/* sound CPU */
+	ROM_LOAD( "ky_a-3a-.bin", 0x4000, 0x04000, 0xcb365f3b )
+	ROM_LOAD( "dr01.3cd",     0x8000, 0x04000, 0xe66897bd )
+	ROM_LOAD( "dr02.3f",      0xc000, 0x04000, 0xf9e31e26 ) /* 6803 code */
+
+	ROM_REGION( 0x18000, REGION_GFX1 |REGIONFLAG_DISPOSE )
+	ROM_LOAD( "7.bin",        0x00000, 0x8000, 0xb55e8d19 )	/* tiles */
+	ROM_LOAD( "6.bin",        0x08000, 0x8000, 0x7bbbb209 )
+	ROM_LOAD( "5.bin",        0x10000, 0x8000, 0x0370fd82 )
+
+	ROM_REGION( 0x30000, REGION_GFX2 | REGIONFLAG_DISPOSE )
+	ROM_LOAD( "16.bin",       0x00000, 0x8000, 0x5045a507 )	/* sprites */
+	ROM_LOAD( "15.bin",       0x08000, 0x8000, 0x946b16a0 )
+	ROM_LOAD( "18.bin",       0x10000, 0x8000, 0x901b69ff )
+	ROM_LOAD( "17.bin",       0x18000, 0x8000, 0x504eed93 )
+	ROM_LOAD( "14.bin",       0x20000, 0x8000, 0x429d760b )
+	ROM_LOAD( "13.bin",       0x28000, 0x8000, 0x1700cd64 )
+
+	ROM_REGION( 0x0c000, REGION_GFX3 | REGIONFLAG_DISPOSE )
+	ROM_LOAD( "8.bin",        0x00000, 0x4000, 0x4f388d63 )	/* chars */
+	ROM_LOAD( "9.bin",        0x04000, 0x4000, 0xdaafa2c1 )
+	ROM_LOAD( "10.bin",       0x08000, 0x4000, 0x60649d19 )
+
+	ROM_REGION( 0x0920, REGION_PROMS )
+	ROM_LOAD( "dr25.3f",      0x0000, 0x0100, 0x8e91430b )	/* character palette red component */
+	ROM_LOAD( "dr30.1m",      0x0100, 0x0100, 0x28c73263 )	/* sprite palette red component */
+	ROM_LOAD( "dr26.3h",      0x0200, 0x0100, 0xb563b93f )	/* character palette green component */
+	ROM_LOAD( "dr31.1n",      0x0300, 0x0100, 0x3529210e )	/* sprite palette green component */
+	ROM_LOAD( "dr27.3j",      0x0400, 0x0100, 0x70d668ef )	/* character palette blue component */
+	ROM_LOAD( "dr29.1l",      0x0500, 0x0100, 0x1173a754 )	/* sprite palette blue component */
+	ROM_LOAD( "dr32.5p",      0x0600, 0x0020, 0x11cd1f2e )	/* sprite height, one entry per 32 */
+	                                                        /* sprites. Used at run time! */
+	ROM_LOAD( "dr28.8f",      0x0620, 0x0200, 0x6cef0fbd )	/* unknown */
+	ROM_LOAD( "dr33.6f",      0x0820, 0x0100, 0x34d88d3c )	/* video timing - common to the other games */
+ROM_END
+
 ROM_START( spelunkr )
 	ROM_REGION( 0x18000, REGION_CPU1 )	/* main CPU */
 	ROM_LOAD( "spra.4e",      0x00000, 0x4000, 0xcf811201 )
@@ -1940,21 +2026,30 @@ ROM_START( spelunk2 )
 	ROM_LOAD( "sp2-b.6f",     0x0920, 0x0100, 0x34d88d3c )	/* video timing? - common to the other games */
 ROM_END
 
+static void init_kidniki(void)
+{
+	UINT8 *ROM = memory_region(REGION_CPU1);
+
+	/* in Kid Niki, bank 0 has code falling from 7fff to 8000, */
+	/* so I have to copy it there because bank switching wouldn't catch it */
+	memcpy(ROM + 0x08000, ROM + 0x10000, 0x2000);
+}
 
 
-GAME( 1984, kungfum,  0,       kungfum,  kungfum,  0, ROT0,  "Irem", "Kung Fu Master" )
-GAME( 1984, kungfud,  kungfum, kungfum,  kungfum,  0, ROT0,  "Irem (Data East license)", "Kung Fu Master (Data East)" )
-GAME( 1984, spartanx, kungfum, kungfum,  kungfum,  0, ROT0,  "Irem", "Spartan X (Japan)" )
-GAME( 1984, kungfub,  kungfum, kungfum,  kungfum,  0, ROT0,  "bootleg", "Kung Fu Master (bootleg set 1)" )
-GAME( 1984, kungfub2, kungfum, kungfum,  kungfum,  0, ROT0,  "bootleg", "Kung Fu Master (bootleg set 2)" )
-GAME( 1984, battroad, 0,       battroad, battroad, 0, ROT90, "Irem", "The Battle-Road" )
-GAME( 1984, ldrun,    0,       ldrun,    ldrun,    0, ROT0,  "Irem (licensed from Broderbund)", "Lode Runner (set 1)" )
-GAME( 1984, ldruna,   ldrun,   ldrun,    ldrun,    0, ROT0,  "Irem (licensed from Broderbund)", "Lode Runner (set 2)" )
-GAME( 1984, ldrun2,   0,       ldrun2,   ldrun2,   0, ROT0,  "Irem (licensed from Broderbund)", "Lode Runner II - The Bungeling Strikes Back" )	/* Japanese version is called Bangeringu Teikoku No Gyakushuu */
-GAME( 1985, ldrun3,   0,       ldrun3,   ldrun3,   0, ROT0,  "Irem (licensed from Broderbund)", "Lode Runner III - Majin No Fukkatsu" )
-GAME( 1986, ldrun4,   0,       ldrun4,   ldrun4,   0, ROT0,  "Irem (licensed from Broderbund)", "Lode Runner IV - Teikoku Karano Dasshutsu" )
-GAME( 1985, lotlot,   0,       lotlot,   lotlot,   0, ROT0,  "Irem (licensed from Tokuma Shoten)", "Lot Lot" )
-GAMEX(1986, kidniki,  0,       kidniki,  kidniki,  0, ROT0,  "Irem (Data East USA license)", "Kid Niki - Radical Ninja (US)", GAME_IMPERFECT_SOUND )
-GAMEX(1986, yanchamr, kidniki, kidniki,  kidniki,  0, ROT0,  "Irem", "Kaiketsu Yanchamaru (Japan)", GAME_IMPERFECT_SOUND )
-GAME( 1985, spelunkr, 0,       spelunkr, spelunkr, 0, ROT0,  "Irem (licensed from Broderbund)", "Spelunker" )
-GAME( 1986, spelunk2, 0,       spelunk2, spelunk2, 0, ROT0,  "Irem (licensed from Broderbund)", "Spelunker II" )
+GAME( 1984, kungfum,  0,       kungfum,  kungfum,  0,        ROT0,  "Irem", "Kung Fu Master" )
+GAME( 1984, kungfud,  kungfum, kungfum,  kungfum,  0,        ROT0,  "Irem (Data East license)", "Kung Fu Master (Data East)" )
+GAME( 1984, spartanx, kungfum, kungfum,  kungfum,  0,        ROT0,  "Irem", "Spartan X (Japan)" )
+GAME( 1984, kungfub,  kungfum, kungfum,  kungfum,  0,        ROT0,  "bootleg", "Kung Fu Master (bootleg set 1)" )
+GAME( 1984, kungfub2, kungfum, kungfum,  kungfum,  0,        ROT0,  "bootleg", "Kung Fu Master (bootleg set 2)" )
+GAME( 1984, battroad, 0,       battroad, battroad, 0,        ROT90, "Irem", "The Battle-Road" )
+GAME( 1984, ldrun,    0,       ldrun,    ldrun,    0,        ROT0,  "Irem (licensed from Broderbund)", "Lode Runner (set 1)" )
+GAME( 1984, ldruna,   ldrun,   ldrun,    ldrun,    0,        ROT0,  "Irem (licensed from Broderbund)", "Lode Runner (set 2)" )
+GAME( 1984, ldrun2,   0,       ldrun2,   ldrun2,   0,        ROT0,  "Irem (licensed from Broderbund)", "Lode Runner II - The Bungeling Strikes Back" )	/* Japanese version is called Bangeringu Teikoku No Gyakushuu */
+GAME( 1985, ldrun3,   0,       ldrun3,   ldrun3,   0,        ROT0,  "Irem (licensed from Broderbund)", "Lode Runner III - Majin No Fukkatsu" )
+GAME( 1986, ldrun4,   0,       ldrun4,   ldrun4,   0,        ROT0,  "Irem (licensed from Broderbund)", "Lode Runner IV - Teikoku Karano Dasshutsu" )
+GAME( 1985, lotlot,   0,       lotlot,   lotlot,   0,        ROT0,  "Irem (licensed from Tokuma Shoten)", "Lot Lot" )
+GAMEX(1986, kidniki,  0,       kidniki,  kidniki,  kidniki,  ROT0,  "Irem (Data East USA license)", "Kid Niki - Radical Ninja (US)", GAME_IMPERFECT_SOUND )
+GAMEX(1986, yanchamr, kidniki, kidniki,  kidniki,  0,        ROT0,  "Irem", "Kaiketsu Yanchamaru (Japan)", GAME_IMPERFECT_SOUND )
+GAMEX(1987, lithero,  kidniki, kidniki,  kidniki,  kidniki,  ROT0,  "bootleg", "Little Hero", GAME_IMPERFECT_SOUND )
+GAME( 1985, spelunkr, 0,       spelunkr, spelunkr, 0,        ROT0,  "Irem (licensed from Broderbund)", "Spelunker" )
+GAME( 1986, spelunk2, 0,       spelunk2, spelunk2, 0,        ROT0,  "Irem (licensed from Broderbund)", "Spelunker II" )

@@ -709,6 +709,7 @@ Six Flags (?)
 	DRIVER( lotlot )	/* (c) 1985 licensed from Tokuma Shoten */
 	DRIVER( kidniki )	/* (c) 1986 + Data East USA license */
 	DRIVER( yanchamr )	/* (c) 1986 (Japan) */
+	DRIVER( lithero )	/* (c) 1986 bootleg */
 	DRIVER( spelunkr )	/* (c) 1985 licensed from Broderbund */
 	DRIVER( spelunk2 )	/* (c) 1986 licensed from Broderbund */
 
@@ -738,7 +739,7 @@ Six Flags (?)
 	DRIVER( poundfor )	/* (c) 1990 (World) */
 	DRIVER( poundfou )	/* (c) 1990 Irem America (US) */
 	DRIVER( airduel )	/* (c) 1990 (Japan) */
-	DRIVER( cosmccop )	/* (c) 1991 (Japan) */
+	//DRIVER( cosmccop )	/* (c) 1991 (Japan) */
 	DRIVER( gallop )	/* (c) 1991 (Japan) */
 	/* not M72, but same sound hardware */
 	DRIVER( sichuan2 )	/* (c) 1989 Tamtex */

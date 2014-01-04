@@ -84,6 +84,10 @@ static struct { char *name; int id; } joy_table[] =
 	{ 0, 0 }
 } ;
 
+/* directory to have correct entries for each dir */
+char dir1[512],dir2[512],dir3[512],dir4[512],dir5[512],dir6[512],dir7[512];
+	
+
 /*
  * gets some boolean config value.
  * 0 = false, >0 = true, <0 = auto
@@ -236,8 +240,6 @@ void parse_cmdline (int argc, char **argv, int game_index)
 	int i;
 	char *tmpstr;
 	
-	char text[512];
-	
 	mame_argc = argc;
 	mame_argv = argv;
 	game = game_index;
@@ -314,13 +316,14 @@ void parse_cmdline (int argc, char **argv, int game_index)
 
 	/* set default subdirectories */
 	mdir       = get_string ("directory", "mamepath",   NULL, ".");
-	sprintf(text,"%s/nvram",mdir);   nvdir      = get_string ("directory", "nvram",   NULL, text);
-	sprintf(text,"%s/hi",mdir);      hidir      = get_string ("directory", "hi",      NULL, text);
-	sprintf(text,"%s/cfg",mdir);     cfgdir     = get_string ("directory", "cfg",     NULL, text);
-	sprintf(text,"%s/snap",mdir);    screenshotdir = get_string ("directory", "snap",     NULL, text);
-	sprintf(text,"%s/memcard",mdir); memcarddir = get_string ("directory", "memcard", NULL, text);
-	sprintf(text,"%s/sta",mdir);     stadir     = get_string ("directory", "sta",     NULL, text);
-	sprintf(text,"%s/artwork",mdir); artworkdir = get_string ("directory", "artwork", NULL, text);
+	
+	sprintf(dir1,"%s/nvram",mdir);   nvdir      = get_string ("directory", "nvram",   NULL, dir1);
+	sprintf(dir2,"%s/hi",mdir);      hidir      = get_string ("directory", "hi",      NULL, dir2);
+	sprintf(dir3,"%s/cfg",mdir);     cfgdir     = get_string ("directory", "cfg",     NULL, dir3);
+	sprintf(dir4,"%s/snap",mdir);    screenshotdir = get_string ("directory", "snap",     NULL, dir4);
+	sprintf(dir5,"%s/memcard",mdir); memcarddir = get_string ("directory", "memcard", NULL, dir5);
+	sprintf(dir6,"%s/sta",mdir);     stadir     = get_string ("directory", "sta",     NULL, dir6);
+	sprintf(dir7,"%s/artwork",mdir); artworkdir = get_string ("directory", "artwork", NULL, dir7);
 
 	cheatdir = get_string ("directory", "cheat", NULL, ".");
 

@@ -14,9 +14,18 @@ extern char *dirty_new;
 
 #define osd_cycles odx_timer_read
 
-//ALEK #define clip_short _clip_short
-#define clip_short_pre() int a; const int m=0x7fff
-#define _clip_short(x) { int sign = x >> 31; if (sign != (x >> 15)) x = sign ^ ((1 << 15) - 1); }
+#define clip_short _clip_short
+#define clip_short_pre() 
+//int a; const int m=0x7fff
+#ifdef _GCW0_
+#define _clip_short(x) { int sign = (int) (x) >> 31; if (sign != ((int) (x) >> 15)) x = sign ^ ((1 << 15) - 1); }
+// #define _clip_short(x) \
+// __asm__ __volatile__ \
+// ( "sra sign, x, 31; sra temp0, x, 15; bne sign, temp0, DontSet; xori result, sign, 0x7FFF; sw x, result; DontSet: )
+#else
+#define _clip_short(x) { int sign = (int) (x) >> 31; if (sign != ((int) (x) >> 15)) x = sign ^ ((1 << 15) - 1); }
+//#define _clip_short(x) { int sign = x >> 31; if (sign != (x >> 15)) x = sign ^ ((1 << 15) - 1); }
+#endif
 
 #define clip_short_ret _clip_short_ret
 INLINE int _clip_short_ret(int x) { _clip_short(x); return x; }

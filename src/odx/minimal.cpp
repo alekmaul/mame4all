@@ -199,6 +199,7 @@ static void odx_sound_callback(void *data, Uint8 *stream, int len)
 	
 	if( odx_sndlen < len ) {
 		memcpy( stream, data, odx_sndlen );
+		memset( stream+odx_sndlen, 0, len-odx_sndlen );
 		odx_sndlen = 0;
 		SDL_UnlockMutex(sndlock);
 		return;
@@ -217,7 +218,7 @@ void odx_sound_thread_start(void)
     odx_audio_spec.freq = odx_sound_rate;
     odx_audio_spec.channels = odx_sound_stereo ? 2: 1;
 
-	odx_audio_buffer_len = 16384; // odx_audio_spec.samples * odx_audio_spec.channels * 2 * 64;
+	odx_audio_buffer_len = 16384; //odx_audio_spec.samples * odx_audio_spec.channels * 2 * 64; 
 	void *audiobuf = malloc( odx_audio_buffer_len );
 	memset( audiobuf, 0 , odx_audio_buffer_len );
 	odx_audio_spec.userdata=audiobuf;
@@ -523,9 +524,9 @@ static void odx_text(unsigned short *scr, int x, int y, char *text, int color)
 
 void odx_gamelist_text_out(int x, int y, char *eltexto)
 {
-	char texto[43];
-	strncpy(texto,eltexto,42);
-	texto[42]=0;
+	char texto[53];
+	strncpy(texto,eltexto,52);
+	texto[52]=0;
 	if (texto[0]!='-')
 		odx_text(od_screen16,x+1,y+1,texto,0);
 	odx_text(od_screen16,x,y,texto,255);

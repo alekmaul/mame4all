@@ -4,7 +4,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <dirent.h>
+#include <dirent.h> 
 
 #include "minimal.h"
 
@@ -34,7 +34,7 @@ int odx_video_aspect=2; /* Scale best*/
 int odx_video_sync=0;   /* No vsync */
 int odx_frameskip=-1;
 int odx_sound = 2;
-int odx_volume = 3;
+//int odx_volume = 3;
 int odx_clock_cpu=100;
 int odx_clock_sound=100;
 int odx_cpu_cores=1;
@@ -271,7 +271,7 @@ static int show_options(char *game)
 		&odx_frameskip,&odx_sound,&odx_clock_cpu,&odx_clock_sound,&odx_cpu_cores,&odx_ramtweaks,&i,&odx_cheat,&odx_gsensor);
 		fclose(f);
 	}
-
+	
 	while(1)
 	{
 		y_Pos = y_PosTop;
@@ -782,7 +782,7 @@ void execute_game (char *playemu, char *playgame)
 	
 	args[n]=NULL;
 
-#if 1
+#if 0
 	for (i=0; i<n; i++)
 	{
 		fprintf(stderr,"%s ",args[i]);

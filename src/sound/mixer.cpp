@@ -180,6 +180,7 @@ void mixer_sh_update(void)
 	UINT32 accum_pos = accum_base;
 	INT16 *mix;
 	INT32 sample;
+	INT16 sample16;
 	int	i;
 #ifdef clip_short
 	clip_short_pre();
@@ -187,6 +188,7 @@ void mixer_sh_update(void)
 	profiler_mark(PROFILER_MIXER);
 
 	/* update all channels (for streams this is a no-op) */
+	memset(mix_buffer,0,ACCUMULATOR_SAMPLES*2);
 	for (i = 0, channel = mixer_channel; i < first_free_channel; i++, channel++)
 	{
 		mixer_update_channel(channel, samples_this_frame);
@@ -216,9 +218,10 @@ void mixer_sh_update(void)
             clip_short(sample);
 #endif
 #endif
+			sample16 = sample;
 
 			/* store and zero out behind us */
-			*mix++ = sample;
+			*mix++ = sample16;
 			left_accum[accum_pos] = 0;
 
 			/* advance to the next sample */
@@ -244,9 +247,10 @@ void mixer_sh_update(void)
             clip_short(sample);
 #endif
 #endif
+			sample16 = sample;
 
 			/* store and zero out behind us */
-			*mix++ = sample;
+			*mix++ = sample16;
 			left_accum[accum_pos] = 0;
 
 			/* fetch and clip the right sample */
@@ -260,10 +264,11 @@ void mixer_sh_update(void)
 #else
             clip_short(sample);
 #endif
-#endif
+#endif 
+			sample16 = sample;
 
 			/* store and zero out behind us */
-			*mix++ = sample;
+			*mix++ = sample16;
 			right_accum[accum_pos] = 0;
 
 			/* advance to the next sample */
@@ -989,7 +994,7 @@ void mix_sample_16(struct mixer_channel_data *channel, int samples_to_generate)
 }
 #else
 void mix_sample_16(struct mixer_channel_data *channel, int samples_to_generate)
-{
+{ 
 	UINT32 step_size, input_frac, output_pos;
 	INT16 *source, *source_end;
 	INT32 mixing_volume;

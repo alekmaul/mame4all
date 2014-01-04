@@ -44,7 +44,7 @@ extern data_t cpu_readmem32(offs_t offset);
 extern data_t cpu_readmem32_word(offs_t offset);
 extern void cpu_writemem32(offs_t offset,data_t data);
 extern void cpu_writemem32_word(offs_t offset,data_t data);
-extern void cpu_setOPbase24(int pc);
+extern void cpu_setOPbase24bew(int pc);
 //proto
 void fame_default_irq_callback(unsigned int level);
 
@@ -742,7 +742,7 @@ const char *fame_info(void *context, int regnum)
 }
 
 unsigned fame_dasm(char *buffer, unsigned pc)
-{
+{ 
 	change_pc24(pc);
 	sprintf(buffer, "$%04X", cpu_readop16(pc) );
 	return 2;

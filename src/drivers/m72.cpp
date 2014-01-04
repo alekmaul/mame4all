@@ -1,4 +1,3 @@
-#include "../machine/irem_cpu.h"
 #include "../vidhrdw/m72.cpp"
 #include "../sndhrdw/m72.cpp"
 
@@ -23,14 +22,14 @@ Hammerin' Harry	/ Daiku no Gensan  1990  M82(3)          N
                   Daiku no Gensan  1990  M72(4)          Y
 Pound for Pound                    1990  M85             N
 Air Duel                           1990  M72?            Y
-Cosmic Cop /                       1991  M84             N
-  Gallop - Armed Police Unit       1991  M73?            N
+Gallop - Armed Police Unit         1991  M73?(5)         N
 Ken-Go                             1991  ?           Encrypted
 
 (1) different addressing PALs, so different memory map
 (2) rtype2j has M84 written on the board, but it's the same hardware as rtype2
 (3) multiple versions supported, running on different hardware
 (4) normal M72 memory map, but IRQ vectors and sprite control as in X-Multiply
+(5) there is also a M84 version of Gallop
 
 
 TODO:
@@ -40,7 +39,14 @@ TODO:
 - Maybe there is a layer enable register, e.g. nspirit shows (for an instant)
   incomplete screens with bad colors when you start a game.
 
-- A lot of unknown I/O writes from the sound CPU in Pound for Pound.
+- Sound doesn't work in Gallop
+
+- Samples are missing in Gallop. The NMI handler for the sound CPU is just RETN,
+  so the hardware has to be different. I also can't make a good sample start
+  offset table. Same thing with Air Duel and dkgenm72.
+
+- No samples in Pound for Pound, I haven't checked why; there are a lot of unknown
+  I/O writes.
 
 - the sprite chip triggers IRQ1 when it has finished copying the sprite RAM to its
   private buffer. This isn't implemented (all games have an empty IRQ1 handler).
@@ -68,13 +74,13 @@ poundfor    0x20   17    20 0F 0A
 xmultipl    0x08   13    08 0F FA
 dbreed       "     "     "
 hharry       "     "     "
-cosmccop	0x18   --------------
 kengo       0x18   --------------
 
 ***************************************************************************/
 
 #include "driver.h"
 #include "vidhrdw/generic.h"
+#include "machine/irem_cpu.h"
 #include "sndhrdw/m72.h"
 
 
@@ -82,7 +88,7 @@ kengo       0x18   --------------
 extern unsigned char *m72_videoram1,*m72_videoram2,*majtitle_rowscrollram;
 void m72_init_machine(void);
 void xmultipl_init_machine(void);
-void kengo_init_machine(void);
+void poundfor_init_machine(void);
 int m72_interrupt(void);
 int m72_vh_start(void);
 int dbreed_vh_start(void);
@@ -104,7 +110,6 @@ WRITE_HANDLER( m72_scrollx1_w );
 WRITE_HANDLER( m72_scrollx2_w );
 WRITE_HANDLER( m72_scrolly1_w );
 WRITE_HANDLER( m72_scrolly2_w );
-WRITE_HANDLER( m72_dmaon_w );
 WRITE_HANDLER( m72_spritectrl_w );
 WRITE_HANDLER( hharry_spritectrl_w );
 WRITE_HANDLER( hharryu_spritectrl_w );
@@ -124,43 +129,16 @@ Sample playback
 
 In the later games, the sound CPU can program the start offset of the PCM
 samples, but it seems the earlier games have them hardcoded somewhere (maybe
-the protection MCU?).
-So, here I provided some tables with the start offset precomputed.
-They could be built automatically in most cases (00 marks the end of a
-sample), but a couple of games (nspirit, loht) have holes in the numbering
-so we would have to do them differently anyway.
+a PROM?). So, here I provided some tables with the start offset precomputed.
+They could be built automatically for the most part (00 marks the end of a
+sample), but some games have holes in the numbering so we would have to
+do some alterations anyway.
 
-Also, some games (dkgenm72, poundfor, airduel, gallop) have an empty NMI
-handler, so the sample playback has to be handled entirely by external
-hardware; we work around that by using (for all games, not just the ones
-without a NMI handler) a NMI interrupt gen that mimics the behaviour of
-the NMI handler in the other games.
+Note that Gallop is wrong, and it doesn't play anything anyway, because the
+NMI handler of the sound CPU consists of just RETN - so it must be using
+different hardware.
 
 ***************************************************************************/
-static int find_sample(int num)
-{
-	data8_t *rom = memory_region(REGION_SOUND1);
-	int len = memory_region_length(REGION_SOUND1);
-	int addr = 0;
-
-	while (num--)
-	{
-		/* find end of sample */
-		while (addr < len &&  rom[addr]) addr++;
-
-		/* skip 0 filler between samples */
-		while (addr < len && !rom[addr]) addr++;
-	}
-
-	return addr;
-}
-
-static void fake_nmi(void)
-{
-	int sample = m72_sample_r(0);
-	if (sample)
-		m72_sample_w(0,sample);
-}
 
 static WRITE_HANDLER( bchopper_sample_trigger_w )
 {
@@ -205,23 +183,13 @@ static WRITE_HANDLER( airduel_sample_trigger_w )
 	if (data < 16) m72_set_sample_start(a[data]);
 }
 
-static WRITE_HANDLER( dkgenm72_sample_trigger_w )
-{
-	int a[28] = { 0x00000, 0x00020, 0x01800, 0x02da0, 0x03be0, 0x05ae0, 0x06100, 0x06de0,
-			      0x07260, 0x07a60, 0x08720, 0x0a5c0, 0x0c3c0, 0x0c7a0, 0x0e140, 0x0fb00,
-				  0x10fa0, 0x10fc0, 0x10fe0, 0x11f40, 0x12b20, 0x130a0, 0x13c60, 0x14740,
-				  0x153c0, 0x197e0, 0x1af40, 0x1c080 };
-
-	if (data < 28) m72_set_sample_start(a[data]);
-}
-
 static WRITE_HANDLER( gallop_sample_trigger_w )
 {
-	int a[31] = { 0x00000, 0x00020, 0x00040, 0x01360, 0x02580, 0x04f20, 0x06240, 0x076e0,
-			      0x08660, 0x092a0, 0x09ba0, 0x0a560, 0x0cee0, 0x0de20, 0x0e620, 0x0f1c0,
-				  0x10200, 0x10220, 0x10240, 0x11380, 0x12760, 0x12780, 0x127a0, 0x13c40,
-				  0x140a0, 0x16760, 0x17e40, 0x18ee0, 0x19f60, 0x1bbc0, 0x1cee0 };
-
+	/* this is most likely wrong */
+	int a[31] = { 0x00000, 0x00040, 0x01360, 0x02580, 0x04f20, 0x06240, 0x076e0, 0x08660,
+				  0x092a0, 0x09ba0, 0x0a560, 0x0cee0, 0x0de20, 0x0e620, 0x0f1c0, 0x10240,
+				  0x11380, 0x127a0, 0x13c40, 0x140a0, 0x16760, 0x17e40, 0x18ee0, 0x19f60,
+				  0x1bbc0, 0x1cee0, 0x1e320,       0,       0,       0,       0 };
 	if (data < 31) m72_set_sample_start(a[data]);
 }
 
@@ -399,14 +367,6 @@ static unsigned char airduel_code[CODE_LEN] =
 static unsigned char airduel_crc[CRC_LEN] =	  {	0x72,0x9c,0xca,0x85, 0xc9,0x12,0xcc,0xea,
 												0x00,0x00 };
 
-/* Daiku no Gensan */
-static unsigned char dkgenm72_code[CODE_LEN] =
-{
-	0xea,0x3d,0x00,0x00,0x10	// jmp  1000:$003d
-};
-static unsigned char dkgenm72_crc[CRC_LEN] =  {	0xc8,0xb4,0xdc,0xf8, 0xd3,0xba,0x48,0xed,
-												0x79,0x08,0x1c,0xb3, 0x00,0x00 };
-
 
 unsigned char *protection_code,*protection_crc;
 
@@ -498,23 +458,11 @@ static void init_airduel(void)
 	install_port_write_handler(0,0xc0,0xc0,airduel_sample_trigger_w);
 }
 
-static void init_dkgenm72(void)
-{
-	install_protection_handler(dkgenm72_code,dkgenm72_crc);
-
-	install_port_write_handler(0,0xc0,0xc0,dkgenm72_sample_trigger_w);
-}
-
 static void init_gallop(void)
 {
 	install_port_write_handler(0,0xc0,0xc0,gallop_sample_trigger_w);
 }
 
-
-static void init_kengo(void)
-{
-	irem_cpu_decrypt(0,gunforce_decryption_table);
-}
 
 
 
@@ -530,57 +478,6 @@ static WRITE_HANDLER( soundram_w )
 {
 	soundram[offset] = data;
 }
-
-static WRITE_HANDLER( m72_port02_w )
-{
-	if (offset != 0)
-	{
-		//if (data) logerror("write %02x to port 03\n",data);
-		return;
-	}
-	//if (data & 0xec) logerror("write %02x to port 02\n",data);
-
-	/* bits 0/1 are coin counters */
-	coin_counter_w(0,data & 0x01);
-	coin_counter_w(1,data & 0x02);
-
-	/* bit 2 is flip screen (handled both by software and hardware) */
-	//flip_screen_set(((data & 0x04) >> 2) ^ (~readinputport(5) & 1));
-	
-	/* bit 3 is display disable */
-	//video_off = data & 0x08;
-	
-	/* bit 4 resets sound CPU (active low) */
-	if (data & 0x10)
-		cpu_set_reset_line(1,CLEAR_LINE);
-	else
-		cpu_set_reset_line(1,ASSERT_LINE);
-
-	/* other bits unknown */
-}
-
-static WRITE_HANDLER( rtype2_port02_w )
-{
-	if (offset != 0)
-	{
-		//if (data) logerror("write %02x to port 03\n",data);
-		return;
-	}
-	//if (data & 0xfc) logerror("write %02x to port 02\n",data);
-
-	/* bits 0/1 are coin counters */
-	coin_counter_w(0,data & 0x01);
-	coin_counter_w(1,data & 0x02);
-
-	/* bit 2 is flip screen (handled both by software and hardware) */
-	//flip_screen_set(((data & 0x04) >> 2) ^ (~readinputport(5) & 1));
-	
-	/* bit 3 is display disable */
-	//video_off = data & 0x08;
-	
-	/* other bits unknown */
-}
-
 
 static READ_HANDLER( poundfor_trackball_r )
 {
@@ -672,7 +569,6 @@ static struct MemoryWriteAddress rtype2_writemem[] =
 	{ 0x00000, 0x7ffff, MWA_ROM },
 	{ 0xb0000, 0xb0001, m72_irq_line_w },
 	{ 0xbc000, 0xbc001, m72_spritectrl_w },
-	{ 0xbc000, 0xbc001, m72_dmaon_w },
 	{ 0xc0000, 0xc03ff, MWA_RAM, &spriteram, &spriteram_size },
 	{ 0xc8000, 0xc8bff, m72_palette1_w, &paletteram },
 	{ 0xd0000, 0xd3fff, m72_videoram1_w, &m72_videoram1 },
@@ -708,9 +604,8 @@ static struct MemoryWriteAddress majtitle_writemem[] =
 	{ 0xcc000, 0xccbff, m72_palette1_w, &paletteram },
 	{ 0xd0000, 0xd3fff, MWA_RAM },	/* work RAM */
 	{ 0xe0000, 0xe0001, m72_irq_line_w },
-	{ 0xe4000, 0xe4001, MWA_RAM },	/* playfield enable? 1 during screen transitions, 0 otherwise */
+//	{ 0xe4000, 0xe4001, MWA_RAM },	/* playfield enable? 1 during screen transitions, 0 otherwise */
 	{ 0xec000, 0xec001, hharryu_spritectrl_w },
-	{ 0xec000, 0xec001, m72_dmaon_w },
 	{ -1 }	/* end of table */
 };
 
@@ -758,7 +653,6 @@ static struct MemoryWriteAddress hharryu_writemem[] =
 	{ 0xa8000, 0xa8bff, m72_palette2_w, &paletteram_2 },
 	{ 0xb0000, 0xb0001, m72_irq_line_w },
 	{ 0xbc000, 0xbc001, hharryu_spritectrl_w },
-	{ 0xbc000, 0xbc001, m72_dmaon_w },
 	{ 0xb0ffe, 0xb0fff, MWA_RAM },	/* leftover from protection?? */
 	{ 0xc0000, 0xc03ff, MWA_RAM, &spriteram, &spriteram_size },
 	{ 0xd0000, 0xd3fff, m72_videoram1_w, &m72_videoram1 },
@@ -767,8 +661,7 @@ static struct MemoryWriteAddress hharryu_writemem[] =
 	{ -1 }	/* end of table */
 };
 
-
-static struct MemoryReadAddress kengo_readmem[] =
+static struct MemoryReadAddress kengo_readmem[]=
 {
 	{ 0x00000, 0x7ffff, MRA_ROM },
 	{ 0xa0000, 0xa0bff, m72_palette1_r },
@@ -786,16 +679,14 @@ static struct MemoryWriteAddress kengo_writemem[] =
 	{ 0xa0000, 0xa0bff, m72_palette1_w, &paletteram },
 	{ 0xa8000, 0xa8bff, m72_palette2_w, &paletteram_2 },
 	{ 0xb0000, 0xb0001, m72_irq_line_w },
-	{ 0xb4000, 0xb4001, MWA_NOP },  /* ??? */
+	{ 0xb4000, 0xb4001, MWA_NOP },	/* ??? */
 	{ 0xbc000, 0xbc001, m72_dmaon_w },
 	{ 0xc0000, 0xc03ff, MWA_RAM, &spriteram, &spriteram_size },
 	{ 0x80000, 0x83fff, m72_videoram1_w, &m72_videoram1 },
 	{ 0x84000, 0x87fff, m72_videoram2_w, &m72_videoram2 },
-	{ 0xe0000, 0xe3fff, MWA_RAM },  /* work RAM */
+	{ 0xe0000, 0xe3fff, MWA_RAM },	/* work RAM */
 	{ -1 }	/* end of table */
 };
-
-
 
 static struct IOReadPort readport[] =
 {
@@ -823,10 +714,8 @@ static struct IOWritePort writeport[] =
 {
 	{ 0x00, 0x01, m72_sound_command_w },
 	{ 0x02, 0x03, m72_port02_w },	/* coin counters, reset sound cpu, other stuff? */
-	//{ 0x04, 0x05, m72_spritectrl_w },
-	{ 0x04, 0x05, m72_dmaon_w },
+	{ 0x04, 0x05, m72_spritectrl_w },
 	{ 0x06, 0x07, m72_irq_line_w },
-	{ 0x40, 0x43, MWA_NOP }, /* Interrupt controller, only written to at bootup */
 	{ 0x80, 0x81, m72_scrolly1_w },
 	{ 0x82, 0x83, m72_scrollx1_w },
 	{ 0x84, 0x85, m72_scrolly2_w },
@@ -839,10 +728,8 @@ static struct IOWritePort xmultipl_writeport[] =
 {
 	{ 0x00, 0x01, m72_sound_command_w },
 	{ 0x02, 0x03, m72_port02_w },	/* coin counters, reset sound cpu, other stuff? */
-	//{ 0x04, 0x04, hharry_spritectrl_w },
-	{ 0x04, 0x04, m72_dmaon_w },
+	{ 0x04, 0x04, hharry_spritectrl_w },
 	{ 0x06, 0x07, m72_irq_line_w },
-	{ 0x40, 0x43, MWA_NOP }, /* Interrupt controller, only written to at bootup */
 	{ 0x80, 0x81, m72_scrolly1_w },
 	{ 0x82, 0x83, m72_scrollx1_w },
 	{ 0x84, 0x85, m72_scrolly2_w },
@@ -855,7 +742,6 @@ static struct IOWritePort rtype2_writeport[] =
 {
 	{ 0x00, 0x01, m72_sound_command_w },
 	{ 0x02, 0x03, rtype2_port02_w },
-	{ 0x40, 0x43, MWA_NOP }, /* Interrupt controller, only written to at bootup */
 	{ 0x80, 0x81, m72_scrolly1_w },
 	{ 0x82, 0x83, m72_scrollx1_w },
 	{ 0x84, 0x85, m72_scrolly2_w },
@@ -867,10 +753,8 @@ static struct IOWritePort hharry_writeport[] =
 {
 	{ 0x00, 0x01, m72_sound_command_w },
 	{ 0x02, 0x03, rtype2_port02_w },	/* coin counters, reset sound cpu, other stuff? */
-	//{ 0x04, 0x04, hharry_spritectrl_w },
-	{ 0x04, 0x04, m72_dmaon_w },
+	{ 0x04, 0x04, hharry_spritectrl_w },
 	{ 0x06, 0x07, m72_irq_line_w },
-	{ 0x40, 0x43, MWA_NOP }, /* Interrupt controller, only written to at bootup */
 	{ 0x80, 0x81, m72_scrolly1_w },
 	{ 0x82, 0x83, m72_scrollx1_w },
 	{ 0x84, 0x85, m72_scrolly2_w },
@@ -878,7 +762,7 @@ static struct IOWritePort hharry_writeport[] =
 	{ -1 }  /* end of table */
 };
 
-static struct IOWritePort kengo_writeport[] = 
+static struct IOWritePort kengo_writeport[] =
 {
 	{ 0x00, 0x01, m72_sound_command_w },
 	{ 0x02, 0x03, rtype2_port02_w },
@@ -886,7 +770,7 @@ static struct IOWritePort kengo_writeport[] =
 	{ 0x82, 0x83, m72_scrollx1_w },
 	{ 0x84, 0x85, m72_scrolly2_w },
 	{ 0x86, 0x87, m72_scrollx2_w },
-//{ 0x8c, 0x8f, MWA_NOP },      /* ??? */
+//{ 0x8c, 0x8f, MWA_NOP },	/* ??? */
 	{ -1 }  /* end of table */
 };
 
@@ -941,18 +825,19 @@ static struct IOReadPort poundfor_sound_readport[] =
 {
 	{ 0x41, 0x41, YM2151_status_port_0_r },
 	{ 0x42, 0x42, soundlatch_r },
+//	{ 0x84, 0x84, m72_sample_r },
 	{ -1 }  /* end of table */
 };
 
 static struct IOWritePort poundfor_sound_writeport[] =
 {
-	{ 0x10, 0x13, poundfor_sample_addr_w },
 	{ 0x40, 0x40, YM2151_register_port_0_w },
 	{ 0x41, 0x41, YM2151_data_port_0_w },
 	{ 0x42, 0x42, m72_sound_irq_ack_w },
+//	{ 0x80, 0x81, _sample_addr_w },
+//	{ 0x82, 0x82, m72_sample_w },
 	{ -1 }  /* end of table */
 };
-
 
 
 
@@ -1927,7 +1812,7 @@ INPUT_PORTS_START( gallop )
 	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE1 )
 	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_SERVICE ) /* 0x20 is another test mode */
 	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN )
-	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SPECIAL )	/* sprite DMA complete */
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN )
 
 	PORT_START
 	PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNKNOWN )
@@ -1938,12 +1823,15 @@ INPUT_PORTS_START( gallop )
 	PORT_DIPSETTING(    0x03, "3" )
 	PORT_DIPSETTING(    0x01, "4" )
 	PORT_DIPSETTING(    0x00, "5" )
-	PORT_DIPNAME( 0x0c, 0x0c, DEF_STR( Difficulty ) )
-	PORT_DIPSETTING(    0x08, "Easy" )
-	PORT_DIPSETTING(    0x0c, "Normal" )
-	PORT_DIPSETTING(    0x04, "Hard" )
-	PORT_DIPSETTING(    0x00, "Hardest" )
-	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNUSED )
+	PORT_DIPNAME( 0x04, 0x04, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x04, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x08, 0x08, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x08, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x10, 0x10, DEF_STR( Unknown ) )
+	PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
 	PORT_DIPNAME( 0x20, 0x20, "Allow Continue" )
 	PORT_DIPSETTING(    0x00, DEF_STR( No ) )
 	PORT_DIPSETTING(    0x20, DEF_STR( Yes ) )
@@ -1957,9 +1845,10 @@ INPUT_PORTS_START( gallop )
 	PORT_DIPSETTING(    0x01, DEF_STR( Off ) )
 	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
 	PORT_DIPNAME( 0x06, 0x00, DEF_STR( Cabinet ) )
-	PORT_DIPSETTING(    0x00, DEF_STR( Upright ) )
-	PORT_DIPSETTING(    0x02, "Upright (2P)" )
+	PORT_DIPSETTING(    0x00, "Upright 1 Player" )
+	PORT_DIPSETTING(    0x02, "Upright 2 Players" )
 	PORT_DIPSETTING(    0x06, DEF_STR( Cocktail ) )
+//	PORT_DIPSETTING(    0x04, DEF_STR( Upright ) )
 	PORT_DIPNAME( 0x08, 0x08, "Coin Mode" )
 	PORT_DIPSETTING(    0x08, "Mode 1" )
 	PORT_DIPSETTING(    0x00, "Mode 2" )
@@ -1969,7 +1858,7 @@ INPUT_PORTS_START( gallop )
 	PORT_DIPSETTING(    0xb0, DEF_STR( 5C_1C ) )
 	PORT_DIPSETTING(    0xc0, DEF_STR( 4C_1C ) )
 	PORT_DIPSETTING(    0xd0, DEF_STR( 3C_1C ) )
-	PORT_DIPSETTING(    0x10, "2 Coins/1 Credit, 1 Coin/Continue" )
+	PORT_DIPSETTING(    0x10, "2 to start, 1 to continue" )
 	PORT_DIPSETTING(    0xe0, DEF_STR( 2C_1C ) )
 	PORT_DIPSETTING(    0x30, DEF_STR( 3C_2C ) )
 	PORT_DIPSETTING(    0x20, DEF_STR( 4C_3C ) )
@@ -2008,7 +1897,7 @@ INPUT_PORTS_START( kengo )
 	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE1 )
 	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_SERVICE ) /* 0x20 is another test mode */
 	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNUSED )
-	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SPECIAL )    /* sprite DMA complete */
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SPECIAL )	/* sprite DMA complete */
 
 	PORT_START
 	PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNKNOWN )
@@ -2067,10 +1956,8 @@ INPUT_PORTS_START( kengo )
 	PORT_DIPSETTING(    0x50, DEF_STR( 1C_6C ) )
 	PORT_DIPSETTING(    0x00, DEF_STR( Free_Play ) )
 	/* Coin mode 2, not supported yet */
-	// COIN_MODE_2
+    // COIN_MODE_2
 INPUT_PORTS_END
-
-
 
 static struct GfxLayout tilelayout =
 {
@@ -2144,7 +2031,7 @@ static struct MachineDriver machine_driver_rtype =
 	{
 		{
 			CPU_V30,
-			32000000/4,	/* 16 MHz external freq (8MHz internal) */
+			32000000/2,	/* 16 MHz external freq (8MHz internal) */
 			rtype_readmem,rtype_writemem,readport,writeport,
 			m72_interrupt,256
 		},
@@ -2188,7 +2075,7 @@ static struct MachineDriver machine_driver_m72 =
 	{
 		{
 			CPU_V30,
-			32000000/4,	/* 16 MHz external freq (8MHz internal) */
+			32000000/2,	/* 16 MHz external freq (8MHz internal) */
 			m72_readmem,m72_writemem,readport,writeport,
 			m72_interrupt,256
 		},
@@ -2196,8 +2083,7 @@ static struct MachineDriver machine_driver_m72 =
 			CPU_Z80 | CPU_AUDIO_CPU,
 			3579545,	/* 3.579545 MHz */
 			sound_readmem,sound_writemem,sound_readport,sound_writeport,
-			//nmi_interrupt,128	/* clocked by V1? (Vigilante) */
-			fake_nmi,128	/* clocked by V1? (Vigilante) */
+			nmi_interrupt,128	/* clocked by V1? (Vigilante) */
 								/* IRQs are generated by main Z80 and YM2151 */
 		}
 	},
@@ -2237,7 +2123,7 @@ static struct MachineDriver machine_driver_xmultipl =
 	{
 		{
 			CPU_V30,
-			32000000/4,	/* 16 MHz external freq (8MHz internal) */
+			32000000/2,	/* 16 MHz external freq (8MHz internal) */
 			xmultipl_readmem,xmultipl_writemem,readport,xmultipl_writeport,
 			m72_interrupt,256
 		},
@@ -2285,7 +2171,7 @@ static struct MachineDriver machine_driver_dbreed =
 	{
 		{
 			CPU_V30,
-			32000000/4,	/* 16 MHz external freq (8MHz internal) */
+			32000000/2,	/* 16 MHz external freq (8MHz internal) */
 			dbreed_readmem,dbreed_writemem,readport,xmultipl_writeport,
 			m72_interrupt,256
 		},
@@ -2333,7 +2219,7 @@ static struct MachineDriver machine_driver_rtype2 =
 	{
 		{
 			CPU_V30,
-			32000000/4,	/* 16 MHz external freq (8MHz internal) */
+			32000000/2,	/* 16 MHz external freq (8MHz internal) */
 			rtype2_readmem,rtype2_writemem,readport,rtype2_writeport,
 			m72_interrupt,256
 		},
@@ -2352,8 +2238,7 @@ static struct MachineDriver machine_driver_rtype2 =
 	/* video hardware */
 	512, 512, { 8*8, (64-8)*8-1, 16*8, (64-16)*8-1 },
 	rtype2_gfxdecodeinfo,
-	//1024, 1024,
-	512, 512,
+	1024, 1024,
 	0,
 
 	VIDEO_TYPE_RASTER | VIDEO_MODIFIES_PALETTE,
@@ -2382,7 +2267,7 @@ static struct MachineDriver machine_driver_majtitle =
 	{
 		{
 			CPU_V30,
-			32000000/4,	/* 16 MHz external freq (8MHz internal) */
+			32000000/2,	/* 16 MHz external freq (8MHz internal) */
 			majtitle_readmem,majtitle_writemem,readport,rtype2_writeport,
 			m72_interrupt,256
 		},
@@ -2430,7 +2315,7 @@ static struct MachineDriver machine_driver_hharry =
 	{
 		{
 			CPU_V30,
-			32000000/4,	/* 16 MHz external freq (8MHz internal) */
+			32000000/2,	/* 16 MHz external freq (8MHz internal) */
 			hharry_readmem,hharry_writemem,readport,hharry_writeport,
 			m72_interrupt,256
 		},
@@ -2478,9 +2363,9 @@ static struct MachineDriver machine_driver_hharryu =
 	{
 		{
 			CPU_V30,
-			32000000/4,	/* 16 MHz external freq (8MHz internal) */
+			32000000/2,	/* 16 MHz external freq (8MHz internal) */
 			hharryu_readmem,hharryu_writemem,readport,rtype2_writeport,
-			m72_interrupt,2566
+			m72_interrupt,256
 		},
 		{
 			CPU_Z80 | CPU_AUDIO_CPU,
@@ -2526,23 +2411,21 @@ static struct MachineDriver machine_driver_poundfor =
 	{
 		{
 			CPU_V30,
-			32000000/4,	/* 16 MHz external freq (8MHz internal) */
-			//kengo_readmem,kengo_writemem,readport,kengo_writeport,
+			32000000/2,	/* 16 MHz external freq (8MHz internal) */
 			rtype2_readmem,rtype2_writemem,poundfor_readport,rtype2_writeport,
 			m72_interrupt,256
 		},
 		{
 			CPU_Z80 | CPU_AUDIO_CPU,
 			3579545,	/* 3.579545 MHz */
-			//sound_readmem,sound_writemem,rtype2_sound_readport,rtype2_sound_writeport,
 			sound_readmem,sound_writemem,poundfor_sound_readport,poundfor_sound_writeport,
-			fake_nmi,128	/* clocked by V1? (Vigilante) */
+			nmi_interrupt,128	/* clocked by V1? (Vigilante) */
 								/* IRQs are generated by main Z80 and YM2151 */
 		}
 	},
 	55, DEFAULT_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
 	1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */
-	m72_init_machine,
+	poundfor_init_machine,
 
 	/* video hardware */
 	512, 512, { 8*8, (64-8)*8-1, 16*8, (64-16)*8-1 },
@@ -2552,7 +2435,7 @@ static struct MachineDriver machine_driver_poundfor =
 
 	VIDEO_TYPE_RASTER | VIDEO_MODIFIES_PALETTE,
 	m72_eof_callback,
-	poundfor_vh_start,
+	rtype2_vh_start,
 	m72_vh_stop,
 	m72_vh_screenrefresh,
 
@@ -2576,10 +2459,9 @@ static struct MachineDriver machine_driver_kengo =
 	{
 		{
 			CPU_V30,
-			32000000/4,	/* 16 MHz external freq (8MHz internal) */
-			//rtype2_readmem,rtype2_writemem,poundfor_readport,rtype2_writeport,
+			32000000/2,	/* 16 MHz external freq (8MHz internal) */
 			kengo_readmem,kengo_writemem,readport,kengo_writeport,
-			m72_interrupt,256 
+			m72_interrupt,256
 		},
 		{
 			CPU_Z80 | CPU_AUDIO_CPU,
@@ -2591,14 +2473,14 @@ static struct MachineDriver machine_driver_kengo =
 	},
 	55, DEFAULT_60HZ_VBLANK_DURATION,	/* frames per second, vblank duration */
 	1,	/* 1 CPU slice per frame - interleaving is forced when a sound command is written */
-	kengo_init_machine,
+	poundfor_init_machine,
 
 	/* video hardware */
 	512, 512, { 8*8, (64-8)*8-1, 16*8, (64-16)*8-1 },
 	rtype2_gfxdecodeinfo,
 	1024, 1024,
 	0,
-
+	
 	VIDEO_TYPE_RASTER | VIDEO_MODIFIES_PALETTE,
 	m72_eof_callback,
 	poundfor_vh_start,
@@ -2618,8 +2500,6 @@ static struct MachineDriver machine_driver_kengo =
 		}
 	}
 };
-
-
 
 /***************************************************************************
 
@@ -3207,32 +3087,6 @@ ROM_START( dkgensan )
 	ROM_LOAD( "gen-vo.bin",   0x00000, 0x20000, 0xd8595c66 )
 ROM_END
 
-ROM_START( kengo )
-	ROM_REGION( 0x100000 * 2, REGION_CPU1 )
-	ROM_LOAD_V20_EVEN( "ken_d-h0.rom", 0x00000, 0x20000, 0xf4ddeea5 )
-	ROM_RELOAD_V20_EVEN(               0xc0000, 0x20000 )
-	ROM_LOAD_V20_ODD ( "ken_d-l0.rom", 0x00000, 0x20000, 0x04dc0f81 )
-	ROM_RELOAD_V20_ODD (               0xc0000, 0x20000 )
-
-	ROM_REGION( 0x10000, REGION_CPU2 )	/* 64k for the audio CPU */
-	ROM_LOAD( "ken_d-sp.rom", 0x0000, 0x10000, 0x233ca1cf )
-
-	ROM_REGION( 0x080000, REGION_GFX1 | REGIONFLAG_DISPOSE )
-	ROM_LOAD( "ken_m21.rom",  0x00000, 0x20000, 0xd7722f87 )	/* sprites */
-	ROM_LOAD( "ken_m22.rom",  0x20000, 0x20000, 0xa00dac85 )
-	ROM_LOAD( "ken_m31.rom",  0x40000, 0x20000, 0xe00b95a6 )
-	ROM_LOAD( "ken_m32.rom",  0x60000, 0x20000, 0x30a844c4 )
-
-	ROM_REGION( 0x080000, REGION_GFX2 | REGIONFLAG_DISPOSE )
-	ROM_LOAD( "ken_m51.rom",  0x00000, 0x20000, 0x1646cf4f )	/* tiles */
-	ROM_LOAD( "ken_m57.rom",  0x20000, 0x20000, 0xa9f88d90 )
-	ROM_LOAD( "ken_m66.rom",  0x40000, 0x20000, 0xe9d17645 )
-	ROM_LOAD( "ken_m64.rom",  0x60000, 0x20000, 0xdf46709b )
-
-	ROM_REGION( 0x20000, REGION_SOUND1 )	/* samples */
-	ROM_LOAD( "ken_m14.rom",  0x00000, 0x20000, 0x6651e9b7 )
-ROM_END
-
 ROM_START( poundfor )
 	ROM_REGION( 0x100000, REGION_CPU1 )
 	ROM_LOAD_V20_EVEN( "ppa-h0-b.bin", 0x00000, 0x20000, 0x50d4a2d8 )
@@ -3323,32 +3177,6 @@ ROM_START( airduel )
 	ROM_LOAD( "ad-v0.bin",    0x00000, 0x20000, 0x339f474d )
 ROM_END
 
-ROM_START( cosmccop )
-	ROM_REGION( 0x100000, REGION_CPU1 )
-	ROM_LOAD_V20_EVEN( "cc-d-h0b.bin", 0x00001, 0x40000, 0x38958b01 )
-	ROM_RELOAD_V20_EVEN(                      0x80001, 0x40000 )
-	ROM_LOAD_V20_ODD( "cc-d-l0b.bin", 0x00000, 0x40000, 0xeff87f70 )
-	ROM_RELOAD_V20_ODD(                      0x80000, 0x40000 )
-
-	ROM_REGION( 0x10000, REGION_CPU2 ) /* 64k for the audio CPU */
-	ROM_LOAD( "cc-d-sp.bin", 0x0000, 0x10000, 0x3e3ace60 )
-
-	ROM_REGION( 0x080000, REGION_GFX1 | REGIONFLAG_DISPOSE )
-	ROM_LOAD( "cc-c-00.bin", 0x00000, 0x20000, 0x9d99deaa )	// cc-b-n0
-	ROM_LOAD( "cc-c-10.bin", 0x20000, 0x20000, 0x7eb083ed )	// cc-b-n1
-	ROM_LOAD( "cc-c-20.bin", 0x40000, 0x20000, 0x9421489e )	// cc-b-n2
-	ROM_LOAD( "cc-c-30.bin", 0x60000, 0x20000, 0x920ec735 )	// cc-b-n3
-
-	ROM_REGION( 0x080000, REGION_GFX2 | REGIONFLAG_DISPOSE )
-	ROM_LOAD( "cc-d-g00.bin", 0x00000, 0x20000, 0xe7f3d772 ) /* tiles */
-	ROM_LOAD( "cc-d-g10.bin", 0x20000, 0x20000, 0x418b4e4c )
-	ROM_LOAD( "cc-d-g20.bin", 0x40000, 0x20000, 0xa4b558eb )
-	ROM_LOAD( "cc-d-g30.bin", 0x60000, 0x20000, 0xf64a3166 )
-
-	ROM_REGION( 0x20000, REGION_SOUND1) /* samples */
-	ROM_LOAD( "cc-c-v0.bin", 0x00000, 0x20000, 0x6247bade )	// cc-d-v0
-ROM_END
-
 ROM_START( gallop )
 	ROM_REGION( 0x100000, REGION_CPU1 )
 	ROM_LOAD_V20_EVEN( "cc-c-h0.bin",  0x00000, 0x20000, 0x2217dcd0 )
@@ -3383,31 +3211,56 @@ ROM_START( gallop )
 	ROM_LOAD( "cc-c-v0.bin",  0x00000, 0x20000, 0x6247bade )
 ROM_END
 
+ROM_START( kengo )
+	ROM_REGION( 0x100000 * 2, REGION_CPU1 )
+	ROM_LOAD_V20_EVEN( "ken_d-h0.rom", 0x00000, 0x20000, 0xf4ddeea5 )
+	ROM_RELOAD_V20_EVEN(               0xc0000, 0x20000 )
+	ROM_LOAD_V20_ODD( "ken_d-l0.rom",  0x00000, 0x20000, 0x04dc0f81 )
+	ROM_RELOAD_V20_ODD(                0xc0000, 0x20000 )
 
+	ROM_REGION( 0x10000, REGION_CPU2 )	/* 64k for the audio CPU */
+	ROM_LOAD( "ken_d-sp.rom", 0x0000, 0x10000, 0x233ca1cf )
 
+	ROM_REGION( 0x080000, REGION_GFX1 | REGIONFLAG_DISPOSE )
+	ROM_LOAD( "ken_m31.rom",  0x00000, 0x20000, 0xe00b95a6 )	/* sprites */
+	ROM_LOAD( "ken_m21.rom",  0x20000, 0x20000, 0xd7722f87 )
+	ROM_LOAD( "ken_m32.rom",  0x40000, 0x20000, 0x30a844c4 )
+	ROM_LOAD( "ken_m22.rom",  0x60000, 0x20000, 0xa00dac85 )
 
-GAME ( 1987, rtype,    0,        rtype,    rtype,    0,        ROT0,   "Irem", "R-Type (Japan)" )
-GAME ( 1987, rtypepj,  rtype,    rtype,    rtypep,   0,        ROT0,   "Irem", "R-Type (Japan prototype)" )
-GAME ( 1987, rtypeu,   rtype,    rtype,    rtype,    0,        ROT0,   "Irem (Nintendo of America license)", "R-Type (US)" )
-GAME ( 1987, bchopper, 0,        m72,      bchopper, bchopper, ROT0,   "Irem", "Battle Chopper" )
-GAME ( 1987, mrheli,   bchopper, m72,      bchopper, mrheli,   ROT0,   "Irem", "Mr. HELI no Dai-Bouken" )
-GAME ( 1988, nspirit,  0,        m72,      nspirit,  nspirit,  ROT0,   "Irem", "Ninja Spirit" )
-GAME ( 1988, nspiritj, nspirit,  m72,      nspirit,  nspiritj, ROT0,   "Irem", "Saigo no Nindou (Japan)" )
-GAME ( 1988, imgfight, 0,        m72,      imgfight, imgfight, ROT270, "Irem", "Image Fight (Japan)" )
-GAME ( 1989, loht,     0,        m72,      loht,     loht,     ROT0,   "Irem", "Legend of Hero Tonma" )
-GAME ( 1989, xmultipl, 0,        xmultipl, xmultipl, xmultipl, ROT0,   "Irem", "X Multiply (Japan)" )
-GAME ( 1989, dbreed,   0,        dbreed,   dbreed,   dbreed,   ROT0,   "Irem", "Dragon Breed" )
-GAME ( 1989, rtype2,   0,        rtype2,   rtype2,   0,        ROT0,   "Irem", "R-Type II" )
-GAME ( 1989, rtype2j,  rtype2,   rtype2,   rtype2,   0,        ROT0,   "Irem", "R-Type II (Japan)" )
-GAME ( 1990, majtitle, 0,        majtitle, rtype2,   0,        ROT0,   "Irem", "Major Title (Japan)" )
-GAME ( 1990, hharry,   0,        hharry,   hharry,   0,        ROT0,   "Irem", "Hammerin' Harry (World)" )
-GAME ( 1990, hharryu,  hharry,   hharryu,  hharry,   0,        ROT0,   "Irem America", "Hammerin' Harry (US)" )
-GAME ( 1990, dkgensan, hharry,   hharryu,  hharry,   0,        ROT0,   "Irem", "Daiku no Gensan (Japan)" )
-//GAMEX( 1990, dkgenm72, hharry,   dkgenm72, hharry,   dkgenm72, ROT0,   "Irem", "Daiku no Gensan (Japan, M72)", GAME_NO_COCKTAIL )
-GAMEX( 1990, poundfor, 0,        poundfor, poundfor, 0,        ROT270, "Irem", "Pound for Pound (World)", GAME_IMPERFECT_SOUND )
-GAMEX( 1990, poundfou, poundfor, poundfor, poundfor, 0,        ROT270, "Irem America", "Pound for Pound (US)", GAME_IMPERFECT_SOUND )
-GAMEX( 1990, airduel,  0,        m72,      airduel,  airduel,  ROT270, "Irem", "Air Duel (Japan)", GAME_IMPERFECT_SOUND )
-GAMEX( 1991, cosmccop, 0,        kengo,    gallop,   0,        ROT0,   "Irem", "Cosmic Cop (World)", GAME_NO_COCKTAIL )
-GAMEX( 1991, gallop,   cosmccop, m72,      gallop,   gallop,   ROT0,   "Irem", "Gallop - Armed police Unit (Japan)", GAME_IMPERFECT_SOUND )
-GAMEX( 1991, kengo,    0,        kengo,    kengo,    kengo,    ROT0,   "Irem", "Ken-Go" , GAME_NO_COCKTAIL )
+	ROM_REGION( 0x080000, REGION_GFX2 | REGIONFLAG_DISPOSE )
+	ROM_LOAD( "ken_m51.rom",  0x00000, 0x20000, 0x1646cf4f )	/* tiles */
+	ROM_LOAD( "ken_m57.rom",  0x20000, 0x20000, 0xa9f88d90 )
+	ROM_LOAD( "ken_m66.rom",  0x40000, 0x20000, 0xe9d17645 )
+	ROM_LOAD( "ken_m64.rom",  0x60000, 0x20000, 0xdf46709b )
 
+	ROM_REGION( 0x20000, REGION_SOUND1 )	/* samples */
+	ROM_LOAD( "ken_m14.rom",  0x00000, 0x20000, 0x6651e9b7 )
+ROM_END
+
+static void init_kengo(void)
+{
+	irem_cpu_decrypt(0,gunforce_decryption_table);
+}
+
+GAMEX( 1987, rtype,    0,        rtype,    rtype,    0,        ROT0,   "Irem", "R-Type (Japan)", GAME_NO_COCKTAIL )
+GAMEX( 1987, rtypepj,  rtype,    rtype,    rtypep,   0,        ROT0,   "Irem", "R-Type (Japan prototype)", GAME_NO_COCKTAIL )
+GAMEX( 1987, rtypeu,   rtype,    rtype,    rtype,    0,        ROT0,   "Irem (Nintendo of America license)", "R-Type (US)", GAME_NO_COCKTAIL )
+GAMEX( 1987, bchopper, 0,        m72,      bchopper, bchopper, ROT0,   "Irem", "Battle Chopper", GAME_NO_COCKTAIL )
+GAMEX( 1987, mrheli,   bchopper, m72,      bchopper, mrheli,   ROT0,   "Irem", "Mr. HELI no Dai-Bouken", GAME_NO_COCKTAIL )
+GAMEX( 1988, nspirit,  0,        m72,      nspirit,  nspirit,  ROT0,   "Irem", "Ninja Spirit", GAME_NO_COCKTAIL )
+GAMEX( 1988, nspiritj, nspirit,  m72,      nspirit,  nspiritj, ROT0,   "Irem", "Saigo no Nindou (Japan)", GAME_NO_COCKTAIL )
+GAMEX( 1988, imgfight, 0,        m72,      imgfight, imgfight, ROT270, "Irem", "Image Fight (Japan)", GAME_NO_COCKTAIL )
+GAMEX( 1989, loht,     0,        m72,      loht,     loht,     ROT0,   "Irem", "Legend of Hero Tonma", GAME_NO_COCKTAIL )
+GAMEX( 1989, xmultipl, 0,        xmultipl, xmultipl, xmultipl, ROT0,   "Irem", "X Multiply (Japan)", GAME_NO_COCKTAIL )
+GAMEX( 1989, dbreed,   0,        dbreed,   dbreed,   dbreed,   ROT0,   "Irem", "Dragon Breed", GAME_NO_COCKTAIL )
+GAMEX( 1989, rtype2,   0,        rtype2,   rtype2,   0,        ROT0,   "Irem", "R-Type II", GAME_NO_COCKTAIL )
+GAMEX( 1989, rtype2j,  rtype2,   rtype2,   rtype2,   0,        ROT0,   "Irem", "R-Type II (Japan)", GAME_NO_COCKTAIL )
+GAMEX( 1990, majtitle, 0,        majtitle, rtype2,   0,        ROT0,   "Irem", "Major Title (Japan)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+GAMEX( 1990, hharry,   0,        hharry,   hharry,   0,        ROT0,   "Irem", "Hammerin' Harry (World)", GAME_NO_COCKTAIL )
+GAMEX( 1990, hharryu,  hharry,   hharryu,  hharry,   0,        ROT0,   "Irem America", "Hammerin' Harry (US)", GAME_NO_COCKTAIL )
+GAMEX( 1990, dkgensan, hharry,   hharryu,  hharry,   0,        ROT0,   "Irem", "Daiku no Gensan (Japan)", GAME_NO_COCKTAIL )
+GAMEX( 1990, poundfor, 0,        poundfor, poundfor, 0,        ROT270, "Irem", "Pound for Pound (World)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+GAMEX( 1990, poundfou, poundfor, poundfor, poundfor, 0,        ROT270, "Irem America", "Pound for Pound (US)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+GAMEX( 1990, airduel,  0,        m72,      airduel,  airduel,  ROT270, "Irem", "Air Duel (Japan)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+GAMEX( 1991, gallop,   0,        m72,      gallop,   gallop,   ROT0,   "Irem", "Gallop - Armed police Unit (Japan)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+GAMEX( 1991, kengo,    0,        kengo,    kengo,    kengo,    ROT0,   "Irem", "Ken-Go", GAME_NO_COCKTAIL )

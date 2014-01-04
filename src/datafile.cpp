@@ -42,15 +42,15 @@ enum
 /****************************************************************************
  *	datafile constants
  ****************************************************************************/
-#define MAX_DATAFILE_ENTRIES 1275
+#define MAX_DATAFILE_ENTRIES 3000
 #define DATAFILE_TAG '$'
 
 const char *DATAFILE_TAG_KEY = "$info";
 const char *DATAFILE_TAG_BIO = "$bio";
 const char *DATAFILE_TAG_MAME = "$mame";
 
-char *history_filename = "history.dat";
-char *mameinfo_filename = "mameinfo.dat";
+const char *history_filename = "history.dat";
+const char *mameinfo_filename = "mameinfo.dat";
 
 
 /****************************************************************************
@@ -328,9 +328,14 @@ static int ci_strcmp (const char *s1, const char *s2)
 {
 	int c1, c2;
 
-	while ((c1 = tolower(*s1++)) == (c2 = tolower(*s2++)))
+	while ((c1 = tolower(*s1)) == (c2 = tolower(*s2)))
+	{
 		if (!c1)
 			return 0;
+
+		s1++;
+		s2++;
+	}
 
 	return (c1 - c2);
 }
@@ -348,11 +353,14 @@ static int ci_strncmp (const char *s1, const char *s2, int n)
 
 	while (n)
 	{
-		if ((c1 = tolower (*s1++)) != (c2 = tolower (*s2++)))
+		if ((c1 = tolower (*s1)) != (c2 = tolower (*s2)))
 			return (c1 - c2);
 		else if (!c1)
 			break;
 		--n;
+
+		s1++;
+		s2++;
 	}
 	return 0;
 }
@@ -374,7 +382,7 @@ static int index_datafile (struct tDatafileIndex **_index)
 	if (ParseSeek (0L, SEEK_SET)) return 0;
 
 	/* allocate index */
-	idx = *_index = (struct tDatafileIndex*)malloc(MAX_DATAFILE_ENTRIES * sizeof (struct tDatafileIndex));
+	idx = *_index = (struct tDatafileIndex*) malloc (MAX_DATAFILE_ENTRIES * sizeof (struct tDatafileIndex));
 	if (NULL == idx) return 0;
 
 	/* loop through datafile */
@@ -396,6 +404,7 @@ static int index_datafile (struct tDatafileIndex **_index)
 				int	i;
 
 				token = GetNextToken ((UINT8 **)&s, &tell);
+
 				while (!done && TOKEN_SYMBOL == token)
 				{
 					/* search for matching driver name */
@@ -515,6 +524,7 @@ static int load_datafile_text (const struct GameDriver *drv, char *buffer, int b
 			}
 		}
 	}
+	
 	return (!found);
 }
 
@@ -531,7 +541,9 @@ static int load_datafile_text (const struct GameDriver *drv, char *buffer, int b
 int load_driver_history (const struct GameDriver *drv, char *buffer, int bufsize)
 {
 	static struct tDatafileIndex *hist_idx = 0;
+#if 0
 	static struct tDatafileIndex *mame_idx = 0;
+#endif
 	int history = 0, mameinfo = 0;
 	int err;
 
@@ -564,6 +576,7 @@ int load_driver_history (const struct GameDriver *drv, char *buffer, int bufsize
 		ParseClose ();
 	}
 
+#if 0
 	/* try to open mameinfo datafile */
 	if (ParseOpen (mameinfo_filename))
 	{
@@ -591,6 +604,7 @@ int load_driver_history (const struct GameDriver *drv, char *buffer, int bufsize
 		}
 		ParseClose ();
 	}
+#endif
 
 	return (history == 0 && mameinfo == 0);
 }

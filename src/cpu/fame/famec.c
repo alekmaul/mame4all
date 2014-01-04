@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
+#include <assert.h> 
 
 #include "fame.h"
 
@@ -52,8 +52,8 @@
 #endif
 
 #ifndef FAME_FETCHBITS
-#define FAME_FETCHBITS 12
-#endif
+#define FAME_FETCHBITS 12 
+#endif 
 
 #ifndef FAME_DATABITS
 #define FAME_DATABITS  12

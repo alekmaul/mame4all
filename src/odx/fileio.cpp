@@ -277,6 +277,7 @@ int osd_faccess (const char *newfilename, int filetype)
 		void *f;
 
 		sprintf (name, "%s/%s.png", screenshotdir, newfilename);
+		
 		f = fopen (name, "rb");
 		if( f )
 		{

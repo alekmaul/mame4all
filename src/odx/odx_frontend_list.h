@@ -5,7 +5,7 @@ struct driver {
 	int available;
 };
  
-#define NUMGAMES (2287+3+2+2+1+1+1+1+1+1+1+1)
+#define NUMGAMES (2287+3+2+2+1+1+1+1+1+1+1+1+1)
 
 struct driver drivers[NUMGAMES] = {
 
@@ -1056,6 +1056,7 @@ struct driver drivers[NUMGAMES] = {
 { "Lightning Fighters (US)"                                                                               ,"lgtnfght"     , "mame", 0 } ,												
 { "Liquid Kids (US)"                                                                                      ,"liquidku"     , "mame", 0 } ,												
 { "Liquid Kids (World)"                                                                                   ,"liquidk"      , "mame", 0 } ,												
+{ "Little Hero"                                                                                           ,"lithero"      , "mame", 0 } ,												
 { "Lizard Wizard"                                                                                         ,"lizwiz"       , "mame", 0 } ,												
 { "Lock'n'Chase"                                                                                          ,"lnc"          , "mame", 0 } ,												
 { "Loco-Motion"                                                                                           ,"locomotn"     , "mame", 0 } ,												

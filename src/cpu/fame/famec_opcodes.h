@@ -1,6 +1,6 @@
 #ifdef FAME_CHANGE_PC
 // proto
-void m68000_change_pc(unsigned pc);
+void fame_change_pc(unsigned pc);
 #endif
 
 /* ORI */
@@ -15469,7 +15469,8 @@ OPCODE(0x4E75)
     POP_32_F(res)
     SET_PC(res)
 #ifdef FAME_CHANGE_PC
-    m68000_change_pc(UNBASED_PC);
+    fame_change_pc(UNBASED_PC);
+	//change_pc24bew(UNBASED_PC);
 #endif
     CHECK_BRANCH_EXCEPTION(res)
     RET(16)
@@ -15580,7 +15581,7 @@ OPCODE(0x4EB9)
     }
     SET_PC(adr)
 #ifdef FAME_CHANGE_PC
-    m68000_change_pc(UNBASED_PC);
+    //m68000_change_pc(UNBASED_PC);
 #endif
     CHECK_BRANCH_EXCEPTION(adr)
     RET(20)

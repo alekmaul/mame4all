@@ -39,11 +39,9 @@
 #define FAME_SECURE_ALL_BANKS
 /* #define FAME_SV_USER */
 
-// The following are only required for Atari games (set in rules.mak)
-#if FAME_EXTRA_OPTIONS
+// The following are only required for Atari games
 #define FAME_PREVIOUSPC
 #define FAME_CHANGE_PC
-#endif
 
 /*****************/
 /* DEBUG OPTIONS */
