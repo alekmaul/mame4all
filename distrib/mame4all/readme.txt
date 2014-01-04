@@ -1,5 +1,5 @@
 =============================================================================
-MAME4ALL GCW0 1.1 (December 25, 2013) by Alekmaul (alekmaul@portabledev.com)
+MAME4ALL GCW0 1.2 (January 04, 2014) by Alekmaul (alekmaul@portabledev.com)
 =============================================================================
 Official web page for news, additional information :
 http://www.portabledev.com/pages/dingoo/jeuxdev.-perso/mame4all_od.php
@@ -180,7 +180,7 @@ The artwork collection is now included.
 
 11. DEVELOPMENT
 ---------------
-January 01,2014 :
+January 04,2014 :
 - Version 1.2 for GCW0 only, bug-fixes.
 December 25,2013 :
 - Version 1.1 for GCW0 only, optimizations, games added and bug-fixes.
