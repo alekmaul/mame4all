@@ -1,4 +1,4 @@
-This is the complete list of games supported by MAME GCW0 1.1 (based on 0.37b5) (Dec 23 2013)
+This is the complete list of games supported by MAME GCW0 1.2 (based on 0.37b5) (Dec 30 2013)
 
 The list is generated automatically and give zip file content for each game.
 
@@ -7727,6 +7727,33 @@ The list is generated automatically and give zip file content for each game.
 |                                          | dr32.5p               | 11cd1f2e |
 |                                          | dr28.8f               | 6cef0fbd |
 |                                          | dr33.6f               | 34d88d3c |
+| Little Hero                              | 4.bin                 | 80903766 |
+|                                          | 11.bin                | 7a1ef8cb |
+|                                          | 12.bin                | a929110b |
+|                                          | ky_a-3a-.bin          | cb365f3b |
+|                                          | dr01.3cd              | e66897bd |
+|                                          | dr02.3f               | f9e31e26 |
+|                                          | 7.bin                 | b55e8d19 |
+|                                          | 6.bin                 | 7bbbb209 |
+|                                          | 5.bin                 | 0370fd82 |
+|                                          | 16.bin                | 5045a507 |
+|                                          | 15.bin                | 946b16a0 |
+|                                          | 18.bin                | 901b69ff |
+|                                          | 17.bin                | 504eed93 |
+|                                          | 14.bin                | 429d760b |
+|                                          | 13.bin                | 1700cd64 |
+|                                          | 8.bin                 | 4f388d63 |
+|                                          | 9.bin                 | daafa2c1 |
+|                                          | 10.bin                | 60649d19 |
+|                                          | dr25.3f               | 8e91430b |
+|                                          | dr30.1m               | 28c73263 |
+|                                          | dr26.3h               | b563b93f |
+|                                          | dr31.1n               | 3529210e |
+|                                          | dr27.3j               | 70d668ef |
+|                                          | dr29.1l               | 1173a754 |
+|                                          | dr32.5p               | 11cd1f2e |
+|                                          | dr28.8f               | 6cef0fbd |
+|                                          | dr33.6f               | 34d88d3c |
 | Spelunker                                | spra.4e               | cf811201 |
 |                                          | spra.4d               | bb4faa4f |
 |                                          | sprm.7c               | fb6197e2 |
@@ -8158,6 +8185,18 @@ The list is generated automatically and give zip file content for each game.
 |                                          | hh_a2.rom             | b5b163b0 |
 |                                          | hh_a3.rom             | 8ef566a1 |
 |                                          | gen-vo.bin            | d8595c66 |
+| Ken-Go                                   | ken_d-h0.rom          | f4ddeea5 |
+|                                          | ken_d-l0.rom          | 04dc0f81 |
+|                                          | ken_d-sp.rom          | 233ca1cf |
+|                                          | ken_m31.rom           | e00b95a6 |
+|                                          | ken_m21.rom           | d7722f87 |
+|                                          | ken_m32.rom           | 30a844c4 |
+|                                          | ken_m22.rom           | a00dac85 |
+|                                          | ken_m51.rom           | 1646cf4f |
+|                                          | ken_m57.rom           | a9f88d90 |
+|                                          | ken_m66.rom           | e9d17645 |
+|                                          | ken_m64.rom           | df46709b |
+|                                          | ken_m14.rom           | 6651e9b7 |
 | Pound for Pound (World)                  | ppa-h0-b.bin          | 50d4a2d8 |
 |                                          | ppa-l0-b.bin          | bd997942 |
 |                                          | ppa-h1.9f             | f6c82f48 |
@@ -12490,8 +12529,8 @@ The list is generated automatically and give zip file content for each game.
 |                                          | 01h_vtb4.bin          | b388c246 |
 |                                          | 06l_vtb5.bin          | 712ac508 |
 |                                          | 06e_vtb6.bin          | 0eaf5158 |
-| Ghosts'n Goblins (World? set 1)          | gg3.bin               | 9e01c65e |
-|                                          | gg4.bin               | 66606beb |
+| Ghosts'n Goblins (World? set 1)          | gg4.bin               | 66606beb |
+|                                          | gg3.bin               | 9e01c65e |
 |                                          | gg5.bin               | d6397b2b |
 |                                          | gg2.bin               | 615f5b6f |
 |                                          | gg1.bin               | ecfccf07 |
@@ -12507,9 +12546,9 @@ The list is generated automatically and give zip file content for each game.
 |                                          | gg14.bin              | 6aaf12f9 |
 |                                          | gg13.bin              | e80c3fca |
 |                                          | gg12.bin              | 7780a925 |
-| Ghosts'n Goblins (World? set 2)          | gng.n9                | b6b91cfb |
+| Ghosts'n Goblins (World? set 2)          | gng.n10               | 60343188 |
+|                                          | gng.n9                | b6b91cfb |
 |                                          | gng.n8                | a5cfa928 |
-|                                          | gng.n10               | 60343188 |
 |                                          | gng.n13               | fd9a8dda |
 |                                          | gng.n12               | 13cf6238 |
 |                                          | gg2.bin               | 615f5b6f |
@@ -12543,8 +12582,8 @@ The list is generated automatically and give zip file content for each game.
 |                                          | gg14.bin              | 6aaf12f9 |
 |                                          | gg13.bin              | e80c3fca |
 |                                          | gg12.bin              | 7780a925 |
-| Makai-Mura                               | 8n.rom                | 9612d66c |
-|                                          | 10n.rom               | 81e567e0 |
+| Makai-Mura                               | 10n.rom               | 81e567e0 |
+|                                          | 8n.rom                | 9612d66c |
 |                                          | 12n.rom               | 65a6a97b |
 |                                          | gg2.bin               | 615f5b6f |
 |                                          | gg1.bin               | ecfccf07 |
@@ -12560,8 +12599,8 @@ The list is generated automatically and give zip file content for each game.
 |                                          | gng16.l4              | 608d68d5 |
 |                                          | gg13.bin              | e80c3fca |
 |                                          | gg12.bin              | 7780a925 |
-| Makai-Mura (Revision C)                  | mj03c.bin             | d343332d |
-|                                          | mj04c.bin             | 1294edb1 |
+| Makai-Mura (Revision C)                  | mj04c.bin             | 1294edb1 |
+|                                          | mj03c.bin             | d343332d |
 |                                          | mj05c.bin             | 535342c2 |
 |                                          | gg2.bin               | 615f5b6f |
 |                                          | gg1.bin               | ecfccf07 |
@@ -12762,6 +12801,7 @@ The list is generated automatically and give zip file content for each game.
 |                                          | 1j_sz11.bin           | 685d4c54 |
 |                                          | 3h_sz16.bin           | 500ff2bb |
 |                                          | 1h_sz10.bin           | 00b3d244 |
+|                                          | mb7114e.15g           | d96bcc98 |
 | Trojan (US)                              | t4                    | c1bbeb4e |
 |                                          | t6                    | d49592ef |
 |                                          | tb05.bin              | 9273b264 |
@@ -13044,6 +13084,31 @@ The list is generated automatically and give zip file content for each game.
 |                                          | b_12a.rom             | ce107f3c |
 |                                          | b_14a.rom             | dba06076 |
 |                                          | b_03d.rom             | 6f348008 |
+| Hissatsu Buraiken (Japan)                | av_04a.10n            | 361fc614 |
+|                                          | av_06a.13n            | 491a712c |
+|                                          | av_05.12n             | 9a214b42 |
+|                                          | 02.15h                | 107a2e17 |
+|                                          | 01.6d                 | c1e5d258 |
+|                                          | 03.8k                 | efb5883e |
+|                                          | 13.6b                 | 9b5ff305 |
+|                                          | 09.6a                 | 08323355 |
+|                                          | 12.4b                 | 6d5261ba |
+|                                          | 08.4a                 | a13d9f54 |
+|                                          | 11.3b                 | a2911d8b |
+|                                          | 07.3a                 | cde78d32 |
+|                                          | 14.8b                 | 44ac2671 |
+|                                          | 10.8a                 | b1a717cb |
+|                                          | 18.7l                 | 3c876a17 |
+|                                          | 16.3l                 | 4b1ff3ac |
+|                                          | 17.5l                 | 4eb543ef |
+|                                          | 15.2l                 | 8041de7f |
+|                                          | 22.7n                 | bdaa8b22 |
+|                                          | 20.3n                 | 566e3059 |
+|                                          | 21.5n                 | 301059aa |
+|                                          | 19.2n                 | a00485ec |
+|                                          | av_25.15n             | 88a505a7 |
+|                                          | av_24.13n             | 1f4463c8 |
+|                                          | 23.9n                 | c0a93ef6 |
 | Turtle Ship                              | turtship.003          | e7a7fc2e |
 |                                          | turtship.002          | e576f482 |
 |                                          | turtship.001          | a9b64240 |
@@ -13092,12 +13157,12 @@ The list is generated automatically and give zip file content for each game.
 |                                          | dyger.012             | e345705f |
 |                                          | dyger.013             | faf4be3a |
 |                                          | dyger.016             | 0792e8f2 |
-| Avengers (set 1)                         | 04.10n                | a94aadcc |
+| Avengers (US set 1)                      | 04.10n                | a94aadcc |
 |                                          | 06.13n                | 39cd80bd |
 |                                          | 05.12n                | 06b1cec9 |
 |                                          | 02.15h                | 107a2e17 |
 |                                          | 01.6d                 | c1e5d258 |
-|                                          | 03.8k                 | 4a297a5c |
+|                                          | 03.8k                 | efb5883e |
 |                                          | 13.6b                 | 9b5ff305 |
 |                                          | 09.6a                 | 08323355 |
 |                                          | 12.4b                 | 6d5261ba |
@@ -13117,12 +13182,12 @@ The list is generated automatically and give zip file content for each game.
 |                                          | 25.15n                | 230d9e30 |
 |                                          | 24.13n                | a6354024 |
 |                                          | 23.9n                 | c0a93ef6 |
-| Avengers (set 2)                         | avg4.bin              | 0fea7ac5 |
-|                                          | avg6.bin              | 491a712c |
-|                                          | avg5.bin              | 9a214b42 |
+| Avengers (US set 2)                      | avg4.bin              | 0fea7ac5 |
+|                                          | av_06a.13n            | 491a712c |
+|                                          | av_05.12n             | 9a214b42 |
 |                                          | 02.15h                | 107a2e17 |
 |                                          | 01.6d                 | c1e5d258 |
-|                                          | 03.8k                 | 4a297a5c |
+|                                          | 03.8k                 | efb5883e |
 |                                          | 13.6b                 | 9b5ff305 |
 |                                          | 09.6a                 | 08323355 |
 |                                          | 12.4b                 | 6d5261ba |
@@ -30782,7 +30847,11 @@ The list is generated automatically and give zip file content for each game.
 |                                          | toki.bk1              | fdaa5f4b |
 |                                          | toki.bk2              | d86ac664 |
 |                                          | tokijp.009            | ae7a6b8b |
-| JuJu Densetsu (Japan)                    | tokijp.008            | 6c87c4c5 |
+| JuJu Densetsu (Japan)                    | tokijp.006            | 03d726b1 |
+|                                          | tokijp.004            | 54a45e12 |
+|                                          | tokijp.005            | d6a82808 |
+|                                          | tokijp.003            | a01a5b10 |
+|                                          | tokijp.008            | 6c87c4c5 |
 |                                          | tokijp.007            | a67969c4 |
 |                                          | tokijp.001            | 8aa964a2 |
 |                                          | tokijp.002            | 86e87e48 |

@@ -1,4 +1,4 @@
-This is the complete list of games supported by MAME GCW0 1.1 (based on 0.37b5) (Dec 23 2013)
+This is the complete list of games supported by MAME GCW0 1.2 (based on 0.37b5) (Dec 30 2013)
 
 The list is generated automatically and is not 100% accurate, particularly in
 the "Screen Flip" column. Please let us know of any errors you find so we can
@@ -591,6 +591,7 @@ Internal Name - This is the unique name that should be specified on the command
 | Lot Lot                          |  Yes  |  Yes  |  Yes  |  Yes  | lotlot   |
 | Kid Niki - Radical Ninja (US)    |  Yes  |  Yes  |Partial|  Yes  | kidniki  |
 | Kaiketsu Yanchamaru (Japan)      |  Yes  |  Yes  |Partial|  Yes  | yanchamr |
+| Little Hero                      |  Yes  |  Yes  |Partial|  Yes  | lithero  |
 | Spelunker                        |  Yes  |  Yes  |  Yes  |  Yes  | spelunkr |
 | Spelunker II                     |  Yes  |  Yes  |  Yes  |  Yes  | spelunk2 |
 | Vigilante (World)                |  Yes  |  Yes  |  Yes  |   No  | vigilant |
@@ -614,6 +615,7 @@ Internal Name - This is the unique name that should be specified on the command
 | Hammerin' Harry (World)          |  Yes  |  Yes  |  Yes  |   No  | hharry   |
 | Hammerin' Harry (US)             |  Yes  |  Yes  |  Yes  |   No  | hharryu  |
 | Daiku no Gensan (Japan)          |  Yes  |  Yes  |  Yes  |   No  | dkgensan |
+| Ken-Go                           |  Yes  |  Yes  |  Yes  |   No  | kengo    |
 | Pound for Pound (World)          |  Yes  |  Yes  |Partial|   No  | poundfor |
 | Pound for Pound (US)             |  Yes  |  Yes  |Partial|   No  | poundfou |
 | Air Duel (Japan)                 |  Yes  |  Yes  |Partial|   No  | airduel  |
@@ -967,11 +969,12 @@ Internal Name - This is the unique name that should be specified on the command
 | Side Arms - Hyper Dyne (World)   |  Yes  |  Yes  |  Yes  |   No  | sidearms |
 | Side Arms - Hyper Dyne (US)      |  Yes  |  Yes  |  Yes  |   No  | sidearmr |
 | Side Arms - Hyper Dyne (Japan)   |  Yes  |  Yes  |  Yes  |   No  | sidearjp |
+| Hissatsu Buraiken (Japan)        |  Yes  |  Yes  |  Yes  |  Yes  | buraiken |
 | Turtle Ship                      |  Yes  |  Yes  |  Yes  |   No  | turtship |
 | Dyger (set 1)                    |  Yes  |  Yes  |  Yes  |   No  | dyger    |
 | Dyger (set 2)                    |  Yes  |  Yes  |  Yes  |   No  | dygera   |
-| Avengers (set 1)                 |   No  |   No  |  Yes  |  Yes  | avengers |
-| Avengers (set 2)                 |   No  |   No  |  Yes  |  Yes  | avenger2 |
+| Avengers (US set 1)              |  Yes  |  Yes  |  Yes  |  Yes  | avengers |
+| Avengers (US set 2)              |  Yes  |  Yes  |  Yes  |  Yes  | avenger2 |
 | Bionic Commando (US set 1)       |  Yes  |  Yes  |  Yes  |  Yes  | bionicc  |
 | Bionic Commando (US set 2)       |  Yes  |  Yes  |  Yes  |  Yes  | bionicc2 |
 | Top Secret (Japan)               |  Yes  |  Yes  |  Yes  |  Yes  | topsecrt |
