@@ -1,3 +1,16 @@
+MAME4ALL GCW0 1.2 (01/01/2014)
+------------------------------
+	Added: little hero in m62.cpp driver (from Mame095).
+	Added: Snapshot key with L+B.
+	Fixed: directory problem due to arg passsed to mame (now static variables are used).
+	Fixed: region1 rom added for Toki(JP) in toki.cpp driver and also fix sound.
+	Fixed: graphics glitches for Ghosts'n Goblins in tilemap.cpp (certainly fix others games).
+	Fixed: Various fixes and add Ken-Go,Cosmic Cop in m72.cpp driver, but sound is still bad and games are slow :(.
+
+	Added: history.dat  (from A380 Slaanesh Native version).
+	Fixed: Avengers in in lwings.cpp driver (from A320 Slaanesh Native version).
+	Updated: Change Jackal cpu frequency (from A380 Slaanesh Native version).
+
 MAME4ALL GCW0 1.1 (25/12/2013)
 ------------------------------
 	Added: video depth option
@@ -58,8 +71,8 @@ MAME4ALL GCW0 1.1 (25/12/2013)
 	updated: Nintendo 8080 games: Sheriff, Bandido, Space Fever and Helifire now have sound (from A320 Slaanesh Native version)
 	updated: DISCRETE SOUND from MAME 0.81 which allows many more games to have DISCRETE sound now (from A320 Slaanesh Native version)
 	updated: Night Driver. Now with sound and flashing screen on crash from Mame 0.89 (from A320 Slaanesh Native version)
-	Updated: chqflag.c driver. Chequered Flag now working (from A320 Slaanesh Native version).
-	Updated: toki.c driver from Mame 0.37b16. Toki now working  (from A320 Slaanesh Native version).
+	Updated: chqflag.cpp driver. Chequered Flag now working (from A320 Slaanesh Native version).
+	Updated: toki.cpp driver from Mame 0.37b16. Toki now working  (from A320 Slaanesh Native version).
 
 MAME4ALL OD 1.0 (21/10/2012)
 ----------------------------
