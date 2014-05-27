@@ -70,7 +70,7 @@ F_OPTS = -fpermissive -falign-functions -falign-loops -falign-labels -falign-jum
 	-ftree-vectorize -fweb -frename-registers
 
 ifeq "$(OSTYPE)" "gcw0"	
-CFLAGS = -D_GCW0_ -G0 -O3 -march=mips32 -mtune=mips32r2 -Isrc -Isrc/$(MAMEOS) -Isrc/zlib -mhard-float -mbranch-likely -mno-mips16 $(W_OPTS) $(F_OPTS)
+CFLAGS = -D_GCW0_ -G0 -O3 -Isrc -Isrc/$(MAMEOS) -Isrc/zlib $(W_OPTS) $(F_OPTS)
 else
 CFLAGS = -D_GCW0_ -G0 -O3 -march=mips32 -mtune=mips32 -Isrc -Isrc/$(MAMEOS) -Isrc/zlib -msoft-float --mbranch-likely -mno-mips16 $(W_OPTS) $(F_OPTS)
 endif

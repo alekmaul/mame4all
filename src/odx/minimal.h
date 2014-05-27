@@ -84,6 +84,7 @@ extern void odx_deinit(void);
 extern void odx_set_clock(int mhz);
 extern void odx_set_video_mode(int bpp,int width,int height);
 extern void odx_clear_video();
+extern void odx_clear_video_multibuf();
 
 extern void odx_printf(char* fmt, ...);
 extern void odx_printf_init(void);

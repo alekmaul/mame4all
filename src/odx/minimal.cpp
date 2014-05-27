@@ -50,6 +50,8 @@ unsigned char			odx_keys[OD_KEY_MAX];
 SDL_Joystick			*odx_joyanalog;
 #endif
 
+int						odx_sound_filling;
+
 extern int master_volume;
 
 signed int axis_x=0, axis_y=0;
@@ -180,6 +182,7 @@ void odx_sound_play(void *buff, int len)
 	
 	if( odx_sndlen+len > odx_audio_buffer_len ) {
 		// Overrun 
+		printf("Audio: overrun occurred, %5d/%5d\n", odx_sndlen+len, odx_audio_buffer_len);
 		odx_sndlen = 0;
 		SDL_UnlockMutex(sndlock);
 		return;
@@ -196,17 +199,33 @@ void odx_sound_play(void *buff, int len)
 static void odx_sound_callback(void *data, Uint8 *stream, int len)
 {
 	SDL_LockMutex(sndlock);
-	
-	if( odx_sndlen < len ) {
-		memcpy( stream, data, odx_sndlen );
-		memset( stream+odx_sndlen, 0, len-odx_sndlen );
-		odx_sndlen = 0;
+
+	if ( odx_sound_filling && odx_sndlen < len * 3 / 2 ) {
+		printf("Audio: filling up...\n");
+		memset( stream, 0, len );
 		SDL_UnlockMutex(sndlock);
 		return;
 	}
-	memcpy( stream, data, len );
-	odx_sndlen -= len;
-	memcpy( data, data + len, odx_sndlen );
+	else if ( odx_sound_filling ) {
+		printf("Audio: done filling up\n");
+		odx_sound_filling = 0;
+	}
+	// - - FILL LINE - -
+	// Before here, if we had insufficient sound, we'd keep on filling
+	// first. After here, if we have insufficient sound, we drain it then
+	// start filling it up.
+	if ( odx_sndlen < len ) {
+		printf("Audio: filling up after underrun, %4d/%4d\n", odx_sndlen, len);
+		odx_sound_filling = 1;
+		memcpy( stream, data, odx_sndlen );
+		memset( stream+odx_sndlen, 0, len-odx_sndlen );
+		odx_sndlen = 0;
+	}
+	else {
+		memcpy( stream, data, len );
+		odx_sndlen -= len;
+		memcpy( data, data + len, odx_sndlen );
+	}
 	
 	SDL_UnlockMutex(sndlock);
 }
@@ -234,6 +253,8 @@ void odx_sound_thread_start(void)
 		SDL_CloseAudio();
         exit(1);
 	}
+
+	odx_sound_filling = 1;
 	
 	SDL_PauseAudio(0);
 }
@@ -263,7 +284,13 @@ void odx_init(int ticks_per_second, int bpp, int rate, int bits, int stereo, int
 
 	/* General video & audio stuff */
 	SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
-	video = SDL_SetVideoMode(320, 240, 16, SDL_DOUBLEBUF | SDL_HWSURFACE );
+	video = SDL_SetVideoMode(320, 240, 16, SDL_HWSURFACE |
+#ifdef SDL_TRIPLEBUF
+		SDL_TRIPLEBUF
+#else
+		SDL_DOUBLEBUF
+#endif
+	);
 	if(video == NULL) {
 		fprintf(stderr, "Couldn't set video mode: %s\n", SDL_GetError());
 		exit(1);
@@ -309,7 +336,7 @@ void odx_init(int ticks_per_second, int bpp, int rate, int bits, int stereo, int
 	odx_video_color8(255,255,255,255);
 	odx_video_setpalette();
 	
-	odx_clear_video();
+	odx_clear_video_multibuf();
 }
 
 void odx_deinit(void)
@@ -352,7 +379,7 @@ void odx_set_video_mode(int bpp,int width,int height)
 		exit(1);
 	}
 	*/
-	odx_clear_video();
+	odx_clear_video_multibuf();
 	
 	//od_screen16=(unsigned short *) layer->pixels;
 	od_screen16=(unsigned short *) video->pixels;
@@ -360,11 +387,16 @@ void odx_set_video_mode(int bpp,int width,int height)
 }
 
 void odx_clear_video() {
-	if (SDL_MUSTLOCK(video)) SDL_LockSurface(video);
-	//SDL_FillRect( layer, NULL, 0 );
 	SDL_FillRect( video, NULL, 0 );
-	if (SDL_MUSTLOCK(video)) SDL_UnlockSurface(video);
 	odx_video_flip();
+}
+
+void odx_clear_video_multibuf() {
+	odx_clear_video();
+	odx_clear_video();
+#ifdef SDL_TRIPLEBUF
+	odx_clear_video();
+#endif
 }
 
 // Font: THIN8X8.pf : Exported from PixelFontEdit 2.7.0
@@ -555,11 +587,14 @@ void odx_printf_init(void)
 static void odx_text_log(char *texto)
 {
 	if (!log) {
-		odx_clear_video();
-		odx_clear_video(); // do twice to avoid flickering 
+		odx_clear_video_multibuf();
 	}
+	// do as many times as we have buffers to avoid flickering
 	odx_text(od_screen16,0,log,texto,255); 	odx_video_flip();
-	odx_text(od_screen16,0,log,texto,255); 	odx_video_flip(); // do twice to avoid flickering 
+	odx_text(od_screen16,0,log,texto,255); 	odx_video_flip();
+#ifdef SDL_TRIPLEBUF
+	odx_text(od_screen16,0,log,texto,255); 	odx_video_flip();
+#endif
 	log+=8;
 	if(log>239) log=0;
 }
