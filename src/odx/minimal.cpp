@@ -284,7 +284,13 @@ void odx_init(int ticks_per_second, int bpp, int rate, int bits, int stereo, int
 
 	/* General video & audio stuff */
 	SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
-	video = SDL_SetVideoMode(320, 240, 16, SDL_DOUBLEBUF | SDL_HWSURFACE );
+	video = SDL_SetVideoMode(320, 240, 16, SDL_HWSURFACE |
+#ifdef SDL_TRIPLEBUF
+		SDL_TRIPLEBUF
+#else
+		SDL_DOUBLEBUF
+#endif
+	);
 	if(video == NULL) {
 		fprintf(stderr, "Couldn't set video mode: %s\n", SDL_GetError());
 		exit(1);
@@ -330,7 +336,7 @@ void odx_init(int ticks_per_second, int bpp, int rate, int bits, int stereo, int
 	odx_video_color8(255,255,255,255);
 	odx_video_setpalette();
 	
-	odx_clear_video();
+	odx_clear_video_multibuf();
 }
 
 void odx_deinit(void)
@@ -373,7 +379,7 @@ void odx_set_video_mode(int bpp,int width,int height)
 		exit(1);
 	}
 	*/
-	odx_clear_video();
+	odx_clear_video_multibuf();
 	
 	//od_screen16=(unsigned short *) layer->pixels;
 	od_screen16=(unsigned short *) video->pixels;
@@ -381,11 +387,16 @@ void odx_set_video_mode(int bpp,int width,int height)
 }
 
 void odx_clear_video() {
-	if (SDL_MUSTLOCK(video)) SDL_LockSurface(video);
-	//SDL_FillRect( layer, NULL, 0 );
 	SDL_FillRect( video, NULL, 0 );
-	if (SDL_MUSTLOCK(video)) SDL_UnlockSurface(video);
 	odx_video_flip();
+}
+
+void odx_clear_video_multibuf() {
+	odx_clear_video();
+	odx_clear_video();
+#ifdef SDL_TRIPLEBUF
+	odx_clear_video();
+#endif
 }
 
 // Font: THIN8X8.pf : Exported from PixelFontEdit 2.7.0
@@ -576,11 +587,14 @@ void odx_printf_init(void)
 static void odx_text_log(char *texto)
 {
 	if (!log) {
-		odx_clear_video();
-		odx_clear_video(); // do twice to avoid flickering 
+		odx_clear_video_multibuf();
 	}
+	// do as many times as we have buffers to avoid flickering
 	odx_text(od_screen16,0,log,texto,255); 	odx_video_flip();
-	odx_text(od_screen16,0,log,texto,255); 	odx_video_flip(); // do twice to avoid flickering 
+	odx_text(od_screen16,0,log,texto,255); 	odx_video_flip();
+#ifdef SDL_TRIPLEBUF
+	odx_text(od_screen16,0,log,texto,255); 	odx_video_flip();
+#endif
 	log+=8;
 	if(log>239) log=0;
 }
