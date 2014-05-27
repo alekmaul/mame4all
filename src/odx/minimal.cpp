@@ -50,6 +50,8 @@ unsigned char			odx_keys[OD_KEY_MAX];
 SDL_Joystick			*odx_joyanalog;
 #endif
 
+int						odx_sound_filling;
+
 extern int master_volume;
 
 signed int axis_x=0, axis_y=0;
@@ -180,6 +182,7 @@ void odx_sound_play(void *buff, int len)
 	
 	if( odx_sndlen+len > odx_audio_buffer_len ) {
 		// Overrun 
+		printf("Audio: overrun occurred, %5d/%5d\n", odx_sndlen+len, odx_audio_buffer_len);
 		odx_sndlen = 0;
 		SDL_UnlockMutex(sndlock);
 		return;
@@ -196,17 +199,33 @@ void odx_sound_play(void *buff, int len)
 static void odx_sound_callback(void *data, Uint8 *stream, int len)
 {
 	SDL_LockMutex(sndlock);
-	
-	if( odx_sndlen < len ) {
-		memcpy( stream, data, odx_sndlen );
-		memset( stream+odx_sndlen, 0, len-odx_sndlen );
-		odx_sndlen = 0;
+
+	if ( odx_sound_filling && odx_sndlen < len * 3 / 2 ) {
+		printf("Audio: filling up...\n");
+		memset( stream, 0, len );
 		SDL_UnlockMutex(sndlock);
 		return;
 	}
-	memcpy( stream, data, len );
-	odx_sndlen -= len;
-	memcpy( data, data + len, odx_sndlen );
+	else if ( odx_sound_filling ) {
+		printf("Audio: done filling up\n");
+		odx_sound_filling = 0;
+	}
+	// - - FILL LINE - -
+	// Before here, if we had insufficient sound, we'd keep on filling
+	// first. After here, if we have insufficient sound, we drain it then
+	// start filling it up.
+	if ( odx_sndlen < len ) {
+		printf("Audio: filling up after underrun, %4d/%4d\n", odx_sndlen, len);
+		odx_sound_filling = 1;
+		memcpy( stream, data, odx_sndlen );
+		memset( stream+odx_sndlen, 0, len-odx_sndlen );
+		odx_sndlen = 0;
+	}
+	else {
+		memcpy( stream, data, len );
+		odx_sndlen -= len;
+		memcpy( data, data + len, odx_sndlen );
+	}
 	
 	SDL_UnlockMutex(sndlock);
 }
@@ -234,6 +253,8 @@ void odx_sound_thread_start(void)
 		SDL_CloseAudio();
         exit(1);
 	}
+
+	odx_sound_filling = 1;
 	
 	SDL_PauseAudio(0);
 }
