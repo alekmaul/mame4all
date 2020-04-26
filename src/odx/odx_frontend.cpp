@@ -18,7 +18,8 @@
 
 char build_version[] = "GCW0 V1.2";
 
-static unsigned char splash_bmp[BMP_SIZE];
+/* Remove splash screen */
+// static unsigned char splash_bmp[BMP_SIZE];
 static unsigned char menu_bmp[BMP_SIZE];
 
 int game_num_avail=0;
@@ -65,6 +66,7 @@ static void odx_intro_screen(void) {
 	char name[256];
 	FILE *f;
 	odx_video_flip();
+	/* Remove splash screen
 	sprintf(name,"skins/splash.bmp");
 	f=fopen(name,"rb");
 	if (f) {
@@ -75,7 +77,7 @@ static void odx_intro_screen(void) {
 	odx_gamelist_text_out(1,230,build_version);
 	odx_video_flip();
 	odx_joystick_press();
-	
+	*/
 	sprintf(name,"skins/menu.bmp");
 	f=fopen(name,"rb");
 	if (f) {
@@ -783,17 +785,23 @@ void execute_game (char *playemu, char *playgame)
 	args[n]=NULL;
 
 #if 0
-	for (i=0; i<n; i++)
+	FILE * pFile;
+	pFile=fopen("/tmp/mame4all.log","w");
+	if (pFile)
 	{
-		fprintf(stderr,"%s ",args[i]);
+		for (i=0; i<n; i++)
+		{
+			fprintf(pFile,"%s ",args[i]);
+		}
+		fprintf(pFile,"\n");
+		fclose(pFile);
+		fflush(pFile);
 	}
-	fprintf(stderr,"\n");
-	fflush(stderr);
 #endif
+
 	odx_deinit();
 	execv(args[0], args); 
 }
-
  
 #define FILE_LIST_ROWS 19
 #define MAX_FILES 512
@@ -1013,7 +1021,7 @@ int main (int argc, char **argv)
 	odx_init(1000,16,44100,16,0,60);
 
 	/* Show intro screen */
-	odx_intro_screen();
+		odx_intro_screen();
 
 	/* Read default configuration */
 	odx_load_config();
@@ -1042,14 +1050,40 @@ int main (int argc, char **argv)
 		chdir(curDir);
 	}
 
-	/* Select Game */
-	select_game(playemu,playgame); 
+	/* Display rom choice menu only is no arg is provided */
+	if (argc==1)
+	{
+		/* Select Game */
+		select_game(playemu,playgame); 
+	}
 
 	/* Write default configuration */
 	odx_save_config();
 
-	/* Execute Game */
-	execute_game (playemu,playgame);
-	
-	exit (0);
+	if (argc==1)
+	{
+		/* Execute Game */
+		execute_game (playemu,playgame);
+	}
+	else
+	{
+		char gameid[32];
+		char *p;
+		/* Remove path */
+		p = strrchr(argv[1], '/');
+		if (p != NULL)
+			argv[1] = p + 1;
+		/* Remove extension */
+		p = strrchr(argv[1], '.');
+		if (p == NULL)
+			p = argv[1] + strlen(argv[1]);
+		memcpy (gameid, argv[1], p - argv[1]);
+		gameid[p - argv[1]]='\0';
+		/* Prevents to run 2 times */
+		if (strcmp (gameid, "cache") == 0)
+			exit (0);
+		/* Start game */
+		execute_game (playemu,gameid);
+	}
+
 }
