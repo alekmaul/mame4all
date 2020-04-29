@@ -1,1 +1,5 @@
 *.o
+distrib/mame4all/mame
+distrib/mame4all/mame.dge
+distrib/mame4all/neomame
+distrib/mame4all.opk
