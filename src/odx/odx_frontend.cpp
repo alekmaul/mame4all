@@ -238,6 +238,22 @@ static void game_list_select (int index, char *game, char *emu) {
 	}
 }
 
+static char *game_list_emu (char *game)
+{
+	int i;
+	int aux_pos=0;
+	for (i=0;i<NUMGAMES;i++) {
+		if (drivers[i].available==1) {
+			if(strcmp(drivers[i].name,game) == 0) {
+				return(drivers[i].exe);
+			}
+			aux_pos++;
+		   }
+	}
+	// Game is not in list
+	exit (0);
+}
+
 static char *game_list_description (int index)
 {
 	int i;
@@ -1082,8 +1098,8 @@ int main (int argc, char **argv)
 		/* Prevents to run 2 times */
 		if (strcmp (gameid, "cache") == 0)
 			exit (0);
-		/* Start game */
-		execute_game (playemu,gameid);
+		/* Get the right emulator to run */
+		execute_game (game_list_emu (gameid),gameid);
 	}
 
 }
