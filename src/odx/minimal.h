@@ -33,11 +33,15 @@
 
 enum  { OD_UP=1<<0,         OD_LEFT=1<<1,       OD_DOWN=1<<2,  OD_RIGHT=1<<3,
         OD_START=1<<4,  OD_SELECT=1<<5,    OD_L=1<<6,    OD_R=1<<7,
-        OD_A=1<<8,       OD_B=1<<9,        OD_X=1<<10,    OD_Y=1<<11 ,
+        OD_A=1<<8,       OD_B=1<<9,        OD_X=1<<10,    OD_Y=1<<11,
 
 	/* Virtual keys * SELECT + 'button' */
         OD_SEL_START=1<<12,  OD_SEL_SELECT=1<<13,    OD_SEL_L=1<<14,    OD_SEL_R=1<<15,
         OD_SEL_A=1<<16,       OD_SEL_B=1<<17,        OD_SEL_X=1<<18,    OD_SEL_Y=1<<19
+#ifdef _GCW0_
+  /* Power button */
+        ,OD_POWER=1<<20
+#endif
 };
 
 #define OD_KEY_MAX 16

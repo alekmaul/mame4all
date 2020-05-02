@@ -157,7 +157,11 @@ static void updatekeyboard(void)
 	/* Enter */
 	key[KEY_ENTER]=(ExKey1 & OD_B);
 	/* Esc */
+	#ifdef _GCW0_
+	key[KEY_ESC]=(ExKey1 & OD_POWER);
+	#else
 	key[KEY_ESC]=((ExKey1 & OD_L) && (ExKey1 & OD_R) && (ExKey1 & OD_START));
+	#endif
 	/* Pause */
 	key[KEY_P]=((ExKey1 & OD_L) && (ExKey1 & OD_R) && (!(ExKey1 & OD_START)));
 	/* FPS */

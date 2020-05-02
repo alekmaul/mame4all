@@ -98,6 +98,12 @@ unsigned int odx_joystick_read()
 	if ( (keystates[SDLK_ESCAPE] == SDL_PRESSED) ) { res |=  OD_SELECT; } // SELECT
 
 #ifdef _GCW0_
+	// Manage power button
+	if ( event.type == SDL_KEYUP )
+		if ( event.key.keysym.sym == SDLK_HOME ) { res |=  OD_POWER;  } // POWER
+#endif
+
+#ifdef _GCW0_
 	// manage joystick
 	if (odx_joyanalog) {
 		if (!rotate_controls) {
