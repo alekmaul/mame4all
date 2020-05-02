@@ -71,7 +71,10 @@ F_OPTS = -fpermissive -falign-functions -falign-loops -falign-labels -falign-jum
 
 ifeq "$(OSTYPE)" "gcw0"	
 CFLAGS = -D_GCW0_ -G0 -O3 -Isrc -Isrc/$(MAMEOS) -Isrc/zlib $(W_OPTS) $(F_OPTS)
+# Activate triple buffering
 CFLAGS += -DSDL_TRIPLEBUF
+# If set, will skip game informations
+# CFLAGS += -DSKIPMAMEWARNINGS
 else
 CFLAGS = -D_GCW0_ -G0 -O3 -march=mips32 -mtune=mips32 -Isrc -Isrc/$(MAMEOS) -Isrc/zlib -msoft-float --mbranch-likely -mno-mips16 $(W_OPTS) $(F_OPTS)
 CFLAGS += -DSDL_TRIPLEBUF

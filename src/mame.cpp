@@ -601,13 +601,17 @@ int run_machine(void)
 				odx_clear_video();
 #endif
 
+				/* Hide disclamer if SKIPMAMEWARNINGS option is used in Makefile */
+				#ifndef SKIPMAMEWARNINGS
 				if (settingsloaded == 0)
 				{
 					/* if there is no saved config, it must be first time we run this game, */
 					/* so show the disclaimer. */
 					if (showcopyright(real_scrbitmap)) goto userquit;
 				}
+				
 				if (showgamewarnings(real_scrbitmap) == 0)  /* show info about incorrect behaviour (wrong colors etc.) */
+				#endif
 				{
 					/* shut down the leds (work around Allegro hanging bug in the DOS port) */
 					osd_led_w(0,1);
